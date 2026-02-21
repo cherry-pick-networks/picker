@@ -5,7 +5,7 @@ import { getKv } from "./system/store/kv.ts";
 
 const KvBodySchema = z.object({ key: z.string(), value: z.unknown() });
 
-export const app = new App({ root: import.meta.url })
+export const app = new App()
   .use(staticFiles())
   .get("/", (ctx) => ctx.json({ ok: true }))
   .get("/kv/:key", async (ctx) => {
