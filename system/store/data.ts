@@ -10,6 +10,7 @@ const IDENTITY_INDEX_PATH = `${DATA_DIR}identity-index.json`;
 
 export interface ExtractedIndexEntry {
   type: string;
+  name?: string;
   source?: string;
   oldPath?: string;
   createdAt?: string;
@@ -17,6 +18,7 @@ export interface ExtractedIndexEntry {
 
 export interface IdentityIndexEntry {
   kind: string;
+  name?: string;
   oldPath?: string;
   createdAt?: string;
 }

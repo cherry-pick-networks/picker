@@ -15,4 +15,5 @@ Thumbs.db
 npm-debug.log*
 
 # Local / backup
-.old
+data/
+.old/
