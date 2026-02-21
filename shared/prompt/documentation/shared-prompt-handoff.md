@@ -33,7 +33,7 @@ Add automated tests for in-scope API routes and ensure `deno task scope-check` r
 ## Next steps
 
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
-- Optional: run `deno task scope-check` in pre-push hook and document in CONTRIBUTING.
+- ~~Optional: run `deno task scope-check` in pre-push hook and document in CONTRIBUTING.~~ Done: `shared/prompt/scripts/git-hooks/pre-push`, CONTRIBUTING § Development setup.
 - Optional: grep for remaining "Hono" in docs/README and align with Fresh if any.
 
 ---

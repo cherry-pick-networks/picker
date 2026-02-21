@@ -21,6 +21,9 @@ Thank you for your interest in contributing. This project is maintained by
   - `deno test` — run tests
   - `deno task scope-check` — verify API routes are listed in the scope document
   - `deno task type-check-policy` — verify no type-check bypass (no --no-check, @ts-ignore, @ts-expect-error)
+- **Pre-push hook (optional)**: To run `deno task scope-check` automatically before
+  every push, install the hook from the repo root:
+  `cp shared/prompt/scripts/git-hooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push`
 
 ## Before submitting a PR
 
