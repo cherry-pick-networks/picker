@@ -18,7 +18,7 @@ jobs:
           deno-version: "2.x"
 
       - name: Run tests
-        run: deno test
+        run: deno task test
 
       - name: Scope check
         run: deno task scope-check
