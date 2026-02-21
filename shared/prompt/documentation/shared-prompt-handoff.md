@@ -31,8 +31,11 @@ Add automated tests for in-scope API routes and ensure `deno task scope-check` r
 ## Next steps
 
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
+- **Route consolidation (retry later)**: If the app is run via Vite (e.g. `deno task dev`/build uses Vite so that `routeDir` applies), remove programmatic API routes from `main.ts`, keep only `staticFiles()` + `fsRoutes()`, and update `check-scope.ts` to discover routes from `system/router/` (file path + handler.GET/POST) instead of `main.ts`. Re-run tests after change.
+- **Scope-check from file-based routes**: If consolidation is done, extend `shared/prompt/scripts/check-scope.ts` to walk `system/router/`, map file paths to Fresh route paths (e.g. `kv/[key].ts` → `/kv/:key`), and infer methods from `handler.GET` / `handler.POST` in each file; then compare with the scope doc table.
 - Optional: add E2E test for POST /kv (or document why deferred).
 - Optional: run `deno task scope-check` in pre-push hook and document in CONTRIBUTING.
+- Optional: grep for remaining "Hono" in docs/README and align with Fresh if any.
 
 ---
 
