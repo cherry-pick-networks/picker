@@ -241,7 +241,7 @@ feat(shared/prompt): add single AI context file and directory
 
 ## 8. Scope and dependencies (from project rules)
 
-- **§K**: The scope document (e.g. docs/scope.md) remains the single source of truth for **modules, API routes, and infrastructure**. This plan does **not** add or change those; it only adds **shared/prompt/** and the context/handoff files. Any new module, API route, or infrastructure must still be added to the scope document first.
+- **§K**: The scope document (e.g. shared/prompt/documentation/scope.md) remains the single source of truth for **modules, API routes, and infrastructure**. This plan does **not** add or change those; it only adds **shared/prompt/** and the context/handoff files. Any new module, API route, or infrastructure must still be added to the scope document first.
 - **§G, §H**: Do not add dependencies for this plan. If later you add a script or tool that depends on new packages, add them to the project's official dependency list first and satisfy §H where applicable.
 
 ---

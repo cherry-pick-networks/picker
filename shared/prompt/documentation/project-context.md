@@ -55,4 +55,5 @@ Optional tooling (status line, setup script, tips): see `shared/prompt/documenta
 - **Rules (checkable)**: `shared/prompt/documentation/conventions-rules.md`
 - **Reference (tips, not rules)**: `shared/prompt/documentation/reference.md`, `shared/prompt/documentation/tips-usage.md`
 - **Handoff**: `shared/prompt/documentation/handoff.md` (linked from README)
+- **Scope** (modules, API, infra): `shared/prompt/documentation/scope.md`
 - **AI/tool single source**: `shared/prompt/store/context.md`

@@ -360,7 +360,7 @@ Clear rules (when adding from docs):
 No speculative implementation:
   do not add modules, endpoints, or infrastructure for a future
   phase or roadmap; add only when the feature is in current scope
-  (docs/scope.md).
+  (shared/prompt/documentation/scope.md).
 
 ### §J. Migration boundary
 
@@ -380,18 +380,18 @@ Naming:
   new rule file names must follow §D and §E; use infix from Actor/Action/Entity where it
   clarifies focus (e.g. document, event, agent).
 No scope doc change:
-  adding or refactoring .cursor/rules does not require docs/scope.md
+  adding or refactoring .cursor/rules does not require shared/prompt/documentation/scope.md
   change; scope doc is for modules, API routes, infrastructure only.
 
 ### §K. Scope document boundary
 
 Scope document:
   the single source of truth for in-scope modules, API surface, and
-  infrastructure is docs/scope.md; update that doc before adding.
+  infrastructure is shared/prompt/documentation/scope.md; update that doc before adding.
 Scope-bound implementation:
   do not add new modules, API routes (routers), or infrastructure
   (broker, extra DB, queue, search engine) unless they are listed in
-  docs/scope.md; add them to docs/scope.md first, then implement.
+  shared/prompt/documentation/scope.md; add them to shared/prompt/documentation/scope.md first, then implement.
 
 ### §L. Agent and scope
 
