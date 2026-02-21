@@ -116,6 +116,67 @@ Deno.test("E2E GET /static/e2e-smoke.txt over real HTTP", handlerTestOpts, async
   });
 });
 
+Deno.test("E2E POST /ast/apply over real HTTP", handlerTestOpts, async () => {
+  await withServer(async (base) => {
+    const filename = `e2e-ast-${Date.now()}.txt`;
+    const createRes = await fetch(`${base}/scripts/${filename}`, {
+      method: "POST",
+      body: "original line",
+    });
+    assertEquals(createRes.status, 201);
+
+    const applyRes = await fetch(`${base}/ast/apply`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        path: filename,
+        oldText: "original",
+        newText: "patched",
+      }),
+    });
+    assertEquals(applyRes.status, 200);
+
+    const getRes = await fetch(`${base}/scripts/${filename}`);
+    assertEquals(getRes.status, 200);
+    assertEquals(await getRes.text(), "patched line");
+  });
+});
+
+Deno.test("E2E DELETE /kv/:key over real HTTP", handlerTestOpts, async () => {
+  await withServer(async (base) => {
+    const key = `e2e-del-${Date.now()}`;
+    const postRes = await fetch(`${base}/kv`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key, value: { toDelete: true } }),
+    });
+    assertEquals(postRes.status, 200);
+
+    const delRes = await fetch(`${base}/kv/${key}`, { method: "DELETE" });
+    assertEquals(delRes.status, 204);
+
+    const getRes = await fetch(`${base}/kv/${key}`);
+    assertEquals(getRes.status, 200);
+    assertEquals(await getRes.json(), null);
+  });
+});
+
+Deno.test("E2E POST /scripts over real HTTP", handlerTestOpts, async () => {
+  await withServer(async (base) => {
+    const filename = `e2e-script-${Date.now()}.txt`;
+    const content = "hello e2e from POST /scripts";
+    const postRes = await fetch(`${base}/scripts/${filename}`, {
+      method: "POST",
+      body: content,
+    });
+    assertEquals(postRes.status, 201);
+
+    const getRes = await fetch(`${base}/scripts/${filename}`);
+    assertEquals(getRes.status, 200);
+    assertEquals(await getRes.text(), content);
+  });
+});
+
 Deno.test(
   "E2E load: 20 concurrent GET / complete within 5s",
   handlerTestOpts,

@@ -47,8 +47,9 @@ runs in CI so new routes cannot be added without updating the scope document.
   (Hono serveStatic, root `./system`). Scope: boundary.md and ROUTES updated.
 - E2E over real HTTP: `tests/system/main_e2e_test.ts` — GET /, GET /kv,
   GET /ast, GET /ast-demo, GET /scripts, GET /scripts/hello.txt,
-  GET /static/e2e-smoke.txt, POST /kv; plus load check (20 concurrent GET /
-  within 5s). Static fixture: `system/static/e2e-smoke.txt`.
+  GET /static/e2e-smoke.txt, POST /kv, POST /ast/apply, DELETE /kv/:key,
+  POST /scripts; plus load check (20 concurrent GET / within 5s). Static
+  fixture: `system/static/e2e-smoke.txt`.
 - **Tests under root tests/**: All tests moved to `tests/system/` (app) and
   `tests/scripts/` (function-length-lint-plugin_test.ts). `deno task test`
   discovers them automatically; no path config.
@@ -68,9 +69,8 @@ runs in CI so new routes cannot be added without updating the scope document.
 
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
 
-- Optional: Add E2E for POST /ast/apply over real HTTP (e.g. in main_e2e_test.ts).
-- Optional: Add E2E for DELETE /kv/:key or POST /scripts over real HTTP.
 - Deferred: Spec summary (e.g. current phase in plan.md or documentation/guide); then extend patch format (e.g. ts-morph-based edits) or Thompson Sampling MAB per roadmap.
+- Optional: Add more E2E or integration tests for other routes or edge cases as needed.
 
 ---
 
