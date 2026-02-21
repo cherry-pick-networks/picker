@@ -23,7 +23,7 @@ All tools and models should use this file only; do not duplicate these rules in 
   - **Infix**: Actor, Action, or Entity (e.g. prompt, document, service)
   - **Suffix**: Artifact, Policy, or Meta (e.g. store, config, test)
 - **This file**: `shared/prompt/store/context.md` (shared = Scope, prompt = Entity, store = Artifact)
-- **Exceptions**: .git, .cursor, node_modules, dist, build, coverage, vendor, .cache (confirm per repo)
+- **Exceptions**: .git, .cursor, node_modules, dist, build, coverage, vendor, .cache, static (confirm per repo)
 - Do not add a fourth tier. Do not use forbidden segments (e.g. core in Context; cache as Suffix).
 
 ---
@@ -286,7 +286,7 @@ Rule content — naming:
 Exceptions:
   Maintain an explicit exception list; same list for docs and tooling.
   Typical entries: .git, .cursor, node_modules, dist, build, coverage,
-  vendor, .cache (confirm per project). Update list and any validator together.
+  vendor, .cache, static (confirm per project). Update list and any validator together.
 
 Documentation:
   Rule text lives only in this file; .cursor/rules/*.mdc state scope and when to apply (e.g. always vs on-request). In docs, state: scope, "max 3 tiers" (prefix/infix/suffix only; root not counted), the three allowed forms, order, no fourth tier, naming reference, exception list.

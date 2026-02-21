@@ -12,6 +12,7 @@ Do not add new modules, routes, or infrastructure unless listed here; update thi
 - **system/router/** — file-based routes (/, /kv/:key, /kv POST, /ast).
 - **system/store/** — storage (e.g. Deno KV client).
 - **system/service/** — shared logic (e.g. add).
+- **system/component/** — UI components and Fresh islands (e.g. Button, Counter).
 
 ---
 
