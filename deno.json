@@ -7,6 +7,10 @@
     "scope-check": "deno run --allow-read shared/prompt/scripts/check-scope.ts",
     "type-check-policy": "deno run --allow-read shared/prompt/scripts/check-type-policy.ts"
   },
+  "lint": {
+    "plugins": ["./shared/prompt/scripts/function-length-lint-plugin.ts"],
+    "exclude": ["_fresh", "node_modules", "**/*.test.ts", "**/*.spec.ts"]
+  },
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
     "fresh": "jsr:@fresh/core@^2",
