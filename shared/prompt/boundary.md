@@ -30,6 +30,7 @@ Use that document for AI direction and scope decisions.
 | Method | Path        | Purpose                                                                                                                             |
 | ------ | ----------- | ----------------------------------------------------------------------------------------------------------------------------------- |
 | GET    | `/`         | Health check; responds `{ "ok": true }`.                                                                                            |
+| GET    | `/static/*` | Serve static files from system/static/.                                                                                             |
 | GET    | `/kv`       | List keys in Deno KV; optional query `prefix` to filter. Responds `{ "keys": string[] }`.                                           |
 | GET    | `/kv/:key`  | Read value by key from Deno KV; responds value or `null`.                                                                           |
 | DELETE | `/kv/:key`  | Delete one key from Deno KV; responds 204 No Content.                                                                               |

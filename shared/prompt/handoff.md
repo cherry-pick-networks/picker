@@ -43,6 +43,12 @@ runs in CI so new routes cannot be added without updating the scope document.
 - GET /scripts, GET /scripts/*, POST /scripts/*: system/store/scripts.ts,
   system/validator, system/router/scripts.ts; tests in main_scripts_test.ts and
   scripts_store_test.ts.
+- Static file serving: GET `/static/*` serves files from `system/static/`
+  (Hono serveStatic, root `./system`). Scope: boundary.md and ROUTES updated.
+- E2E over real HTTP: `system/__tests__/main_e2e_test.ts` — GET /, GET /kv,
+  GET /ast, GET /ast-demo, GET /scripts, GET /scripts/hello.txt,
+  GET /static/e2e-smoke.txt, POST /kv; plus load check (20 concurrent GET /
+  within 5s). Static fixture: `system/static/e2e-smoke.txt`.
 
 ---
 
@@ -57,8 +63,7 @@ runs in CI so new routes cannot be added without updating the scope document.
 
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
 
-- Optional: Add static file serving (e.g. static/) via Hono if needed.
-- Optional: Add E2E or smoke test for GET /scripts and GET /ast-demo over real HTTP.
+- Optional: Add E2E for DELETE /kv/:key or POST /scripts over real HTTP.
 
 ---
 
