@@ -22,8 +22,7 @@ export const SKIP_DIRS = new Set([
 
 export const SOURCE_EXTS = [".ts", ".tsx", ".mts", ".js", ".jsx", ".mjs"];
 /** Match line: comment directive then @ts-ignore/expect-error, then whitespace. */
-export const DIRECTIVE_RE =
-  /^\s*(?:\/\/|\*)\s*@ts-(?:ignore|expect-error)\s*$/;
+export const DIRECTIVE_RE = /^\s*(?:\/\/|\*)\s*@ts-(?:ignore|expect-error)\s*$/;
 
 export async function walkSourceFiles(
   root: string,

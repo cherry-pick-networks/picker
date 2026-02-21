@@ -8,7 +8,9 @@ function variableCount(): number {
 
 function jsonResponse(count: number): Response {
   const body = JSON.stringify({ variableDeclarations: count });
-  return new Response(body, { headers: { "Content-Type": "application/json" } });
+  return new Response(body, {
+    headers: { "Content-Type": "application/json" },
+  });
 }
 
 export const handler = {

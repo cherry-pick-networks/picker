@@ -45,14 +45,15 @@ verification before any change is applied.
   Scout (external data), Governance (constitution and verification). Five
   agents; contracts and data paths per 1_SPEC §23, §34, §38.
 - **Data layout**: data/ lifecycle 0_raw → 1_interim → 2_master → 3_output,
-  9_system; UUID v7 for 2_master and 3_output; mappings in 9_system/mappings.json
-  (1_SPEC §31, §26.4).
+  9_system; UUID v7 for 2_master and 3_output; mappings in
+  9_system/mappings.json (1_SPEC §31, §26.4).
 - **Mutation**: AST-based self-edit of ops/scripts/ only; same process; no
   direct writes to data/config/ or credentials (1_SPEC §48).
 - **Selection**: Thompson Sampling MAB for high-performance logic; Governance
   verification required before apply/merge (1_SPEC §8.1, §44–§48).
-- **Output format**: Unit/content metadata `format?: "quarto"|"latex"|"markdown"`
-  (default Quarto); no per-department hardcoding (1_SPEC §2.1).
+- **Output format**: Unit/content metadata
+  `format?: "quarto"|"latex"|"markdown"` (default Quarto); no per-department
+  hardcoding (1_SPEC §2.1).
 - **Web / LLM**: Per web_spec and llm_models_spec; feature–model mapping and
   env/credentials as specified there.
 
@@ -75,9 +76,8 @@ verification before any change is applied.
 ## 6. References
 
 - **1_SPEC**: §1 (overview), §2.1 (output format), §4.4 / §23 / §34 (agents),
-  §8.1 (governance), §13 / §25 (task flow), §26.4 (entities), §31 (data
-  layout), §35 (context keys), §36 (protocol), §38 (agent I/O), §41–§48
-  (implementation and safety), §49 (10-Phase roadmap), §43 / §43.3 (DB/schema
-  when extended).
+  §8.1 (governance), §13 / §25 (task flow), §26.4 (entities), §31 (data layout),
+  §35 (context keys), §36 (protocol), §38 (agent I/O), §41–§48 (implementation
+  and safety), §49 (10-Phase roadmap), §43 / §43.3 (DB/schema when extended).
 - **This repo**: shared/prompt/boundary.md, shared/prompt/store.md.
 - **Other specs**: web_spec, llm_models_spec (when present).

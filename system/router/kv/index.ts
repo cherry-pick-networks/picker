@@ -18,9 +18,17 @@ function validationErrorResponse(flattened: unknown): Response {
 
 function parseKvBody(
   body: unknown,
-): { ok: true; data: { key: string; value: unknown } } | { ok: false; errorResponse: Response } {
+): { ok: true; data: { key: string; value: unknown } } | {
+  ok: false;
+  errorResponse: Response;
+} {
   const parsed = KvBodySchema.safeParse(body);
-  if (!parsed.success) return { ok: false, errorResponse: validationErrorResponse(parsed.error.flatten()) };
+  if (!parsed.success) {
+    return {
+      ok: false,
+      errorResponse: validationErrorResponse(parsed.error.flatten()),
+    };
+  }
   return { ok: true, data: parsed.data };
 }
 

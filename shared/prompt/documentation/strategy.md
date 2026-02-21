@@ -92,8 +92,8 @@ props, DI), not token count. Scoping by dependency tree reduces mistakes.
 
 ## Recommended workflow
 
-1. Choose or create **one entry file** for the feature (e.g. the route or top-level
-   component).
+1. Choose or create **one entry file** for the feature (e.g. the route or
+   top-level component).
 2. Run the scope-discovery script to list its direct imports (see below).
 3. Prompt the AI with that list as the in-scope set; ask to define types first,
    then implement. Do not modify files outside that set in the same session.
@@ -119,8 +119,10 @@ imports (relative imports only; npm/jsr are skipped). Use this list as the
 "in-scope files" in your prompt. Optional: `--oneline` prints a single line for
 pasting into the prompt.
 
-Task: `deno task scope-discovery -- <entry-file>` (e.g. `deno task scope-discovery --
-system/presentation/Counter.tsx`). Add `--oneline` for one-line output.
+Task: `deno task scope-discovery -- <entry-file>` (e.g.
+`deno task scope-discovery --
+system/presentation/Counter.tsx`). Add `--oneline`
+for one-line output.
 
 ## Prompt template
 

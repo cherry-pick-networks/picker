@@ -30,21 +30,33 @@ function isReturnWithJSX(stmt: Deno.lint.Statement): boolean {
 function returnExprContainsAwait(node: Deno.lint.Expression): boolean {
   if (node.type === "AwaitExpression") return true;
   const withArg = node as { argument?: Deno.lint.Expression };
-  if (withArg.argument && typeof withArg.argument === "object")
+  if (withArg.argument && typeof withArg.argument === "object") {
     if (returnExprContainsAwait(withArg.argument)) return true;
+  }
   if (node.type === "CallExpression") {
     const ce = node as Deno.lint.CallExpression;
     if (returnExprContainsAwait(ce.callee as Deno.lint.Expression)) return true;
     for (const a of ce.arguments) {
-      if (a && typeof a === "object" && "type" in a && returnExprContainsAwait(a as Deno.lint.Expression)) return true;
+      if (
+        a && typeof a === "object" && "type" in a &&
+        returnExprContainsAwait(a as Deno.lint.Expression)
+      ) return true;
     }
   }
   if (node.type === "MemberExpression") {
-    if (returnExprContainsAwait((node as Deno.lint.MemberExpression).object as Deno.lint.Expression)) return true;
+    if (
+      returnExprContainsAwait(
+        (node as Deno.lint.MemberExpression).object as Deno.lint.Expression,
+      )
+    ) return true;
   }
   if (node.type === "ConditionalExpression") {
     const c = node as Deno.lint.ConditionalExpression;
-    if (returnExprContainsAwait(c.test) || returnExprContainsAwait(c.consequent) || returnExprContainsAwait(c.alternate)) return true;
+    if (
+      returnExprContainsAwait(c.test) ||
+      returnExprContainsAwait(c.consequent) ||
+      returnExprContainsAwait(c.alternate)
+    ) return true;
   }
   return false;
 }
@@ -84,7 +96,8 @@ function checkBody(
     if (n <= MAX_STATEMENTS_JSX_TAIL) return;
     context.report({
       node: block,
-      message: `Function body with JSX return must have at most ${MAX_STATEMENTS_JSX_TAIL} statements (got ${n}).`,
+      message:
+        `Function body with JSX return must have at most ${MAX_STATEMENTS_JSX_TAIL} statements (got ${n}).`,
     });
     return;
   }
@@ -94,7 +107,8 @@ function checkBody(
   if (n >= MIN_STATEMENTS && n <= MAX_STATEMENTS) return;
   context.report({
     node: block,
-    message: `Function body must have ${MIN_STATEMENTS}–${MAX_STATEMENTS} statements (got ${n}).`,
+    message:
+      `Function body must have ${MIN_STATEMENTS}–${MAX_STATEMENTS} statements (got ${n}).`,
   });
 }
 

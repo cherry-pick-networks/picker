@@ -6,7 +6,10 @@
  * Or: deno task type-check-policy
  */
 
-import { checkCompilerOptions, checkDenoJsonTasks } from "./check-type-policy-config.ts";
+import {
+  checkCompilerOptions,
+  checkDenoJsonTasks,
+} from "./check-type-policy-config.ts";
 import { checkSourceFile, walkSourceFiles } from "./check-type-policy-lib.ts";
 
 async function main(): Promise<void> {
