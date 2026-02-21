@@ -40,7 +40,7 @@ scope.
 
 ---
 
-## 5. Do / Do not
+## 5. Must / Must not
 
 - Do follow boundary.md and the spec for the current phase.
 - Do run all autonomous mutations and applies through Governance verification.
