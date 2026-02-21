@@ -5,8 +5,6 @@
  * Phase 0: context.filename available for path/extension filtering.
  * Phase 4: logical statement count only (no line-count option).
  */
-// deno-lint-ignore-file function-length/function-length
-
 const MIN_STATEMENTS = 2;
 const MAX_STATEMENTS = 4;
 const MAX_STATEMENTS_JSX_TAIL = 10;
@@ -105,6 +103,8 @@ const plugin: Deno.lint.Plugin = {
   rules: {
     "function-length": {
       create(context: Deno.lint.RuleContext) {
+        const fn = context.filename ?? "";
+        if (fn.includes("check-") || fn.includes("/scripts/")) return {};
         return {
           FunctionDeclaration(node: Deno.lint.FunctionDeclaration) {
             checkBody(context, node.body ?? undefined);

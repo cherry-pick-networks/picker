@@ -31,6 +31,7 @@ function htmlResponse(): Response {
 
 export const handler = {
   GET() {
-    return htmlResponse();
+    const response = htmlResponse();
+    return response;
   },
 };

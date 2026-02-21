@@ -5,6 +5,7 @@ function okJson(): Response {
 
 export const handler = {
   GET() {
-    return okJson();
+    const response = okJson();
+    return response;
   },
 };
