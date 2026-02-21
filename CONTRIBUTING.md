@@ -35,7 +35,7 @@ use Issues only for bugs and concrete feature requests.
 1. **Tests**: `deno test` must pass.
 2. **Scope check**: `deno task scope-check` must pass. If you add new API
    routes, modules, or infrastructure, add them to
-   [shared/prompt/documentation/shared-prompt-boundary.md](shared/prompt/documentation/shared-prompt-boundary.md)
+   [shared/prompt/shared-prompt-boundary.md](shared/prompt/shared-prompt-boundary.md)
    first, then implement.
 3. **Type-check policy**: `deno task type-check-policy` must pass. Do not
    disable or bypass type checking (no `--no-check`, `@ts-ignore`, or
@@ -47,7 +47,7 @@ use Issues only for bugs and concrete feature requests.
 
 Detailed conventions (directory structure, dependencies, workflow) are in the
 shared docs: start from [shared/README.md](shared/README.md) and see
-[shared/prompt/store/shared-prompt-store.md](shared/prompt/store/shared-prompt-store.md)
+[shared/prompt/shared-prompt-store.md](shared/prompt/shared-prompt-store.md)
 for the single source of truth.
 
 ## Contact

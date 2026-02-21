@@ -3,7 +3,7 @@
 ## Goal
 
 - **Single source**: All rule text lives in
-  `shared/prompt/store/shared-prompt-store.md` (Part B: Rule definitions).
+  `shared/prompt/shared-prompt-store.md` (Part B: Rule definitions).
 - **Cursor Rules**: `.cursor/rules/*.mdc` only reference that file; no duplicate
   rule text. mdc files are for **when** to apply (always vs on-request).
 
@@ -15,7 +15,7 @@
 ## Scope (historical)
 
 - **Source**: 12 files under `.cursor/rules/*.mdc` (pre-simplification).
-- **Target**: `shared/prompt/store/shared-prompt-store.md` (expand with §A–§L).
+- **Target**: `shared/prompt/shared-prompt-store.md` (expand with §A–§L).
 - **No**: New deps, scope doc changes, or module/API/infra changes.
 
 ## Phases

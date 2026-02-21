@@ -1,7 +1,7 @@
 # Conventions and rules (human-readable)
 
 Rules that can be checked or defined as "this repo has X".\
-**Canonical source**: `shared/prompt/store/shared-prompt-store.md` Part B.\
+**Canonical source**: `shared/prompt/shared-prompt-store.md` Part B.\
 `.cursor/rules/*.mdc` only define **when** to apply; they do not duplicate this
 text.
 
@@ -104,7 +104,7 @@ Example: `feat(module): add handler`
   not/only, (2) concrete in scope, (3) detectable; otherwise keep in docs or
   reference.
 - No speculative implementation; scope is in
-  shared/prompt/documentation/shared-prompt-boundary.md.
+  shared/prompt/shared-prompt-boundary.md.
 
 ---
 
@@ -119,10 +119,10 @@ Example: `feat(module): add handler`
 
 ## §K. Scope document boundary
 
-- **Single source**: shared/prompt/documentation/shared-prompt-boundary.md for
+- **Single source**: shared/prompt/shared-prompt-boundary.md for
   in-scope modules, API surface, infrastructure.
 - Do not add new modules, API routes, or infrastructure unless listed there;
-  update shared/prompt/documentation/shared-prompt-boundary.md first, then
+  update shared/prompt/shared-prompt-boundary.md first, then
   implement.
 - **Check**: New routes/modules/infra have a corresponding scope doc update.
 

@@ -2,7 +2,7 @@
 
 Use this file when switching agent or starting a new session on the same task.
 New sessions should attach only this file (and optionally
-`shared/prompt/store/shared-prompt-store.md`).
+`shared/prompt/shared-prompt-store.md`).
 
 ---
 

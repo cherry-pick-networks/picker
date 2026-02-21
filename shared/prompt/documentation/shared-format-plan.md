@@ -4,7 +4,7 @@
 
 - **global-agent-policy** (always) and **global-code-format** (when editing
   `**/*.ts`, `**/*.tsx`). Rule content lives in
-  `shared/prompt/store/shared-prompt-store.md` §P; rules only reference it.
+  `shared/prompt/shared-prompt-store.md` §P; rules only reference it.
 - **§D, §E**: New rule file `global-code-format.mdc` (Scope + Entity + Artifact).
   This plan under `shared/prompt/documentation/` (naming per §D/§E).
 - **§I**: Only enforceable rules in §P (line length, file length); function
@@ -42,7 +42,7 @@ generated). **Out of scope**: Python; other languages (add later if needed).
 
 ## 3. Deliverables (done)
 
-1. **shared/prompt/store/shared-prompt-store.md**: §P. Format limits (code);
+1. **shared/prompt/shared-prompt-store.md**: §P. Format limits (code);
    line ≤80, file ≤100; scope TS/TSX; guidance for function length and
    indentation.
 2. **.cursor/rules/global-code-format.mdc**: globs `**/*.ts`, `**/*.tsx`,

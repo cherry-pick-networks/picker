@@ -3,11 +3,11 @@
 ## Relation to project rules
 
 - **global-agent-policy** (always) and **global-directory-boundary**
-  (on-request). See `shared/prompt/store/shared-prompt-store.md` Part B and
+  (on-request). See `shared/prompt/shared-prompt-store.md` Part B and
   `cursor-rules-policy.md`.
 - **§D, §E, §F**: Single AI context lives under **shared/prompt/** (prefix =
   shared [Scope], infix = prompt [Entity]); context in
-  **shared/prompt/store/shared-prompt-store.md** (suffix = store [Artifact]);
+  **shared/prompt/shared-prompt-store.md** (suffix = store [Artifact]);
   max 3 levels respected.
 - **§K, §L**: Scope document remains the single source of truth for **modules,
   API routes, and infrastructure**. This plan does **not** add modules, API, or
@@ -20,7 +20,7 @@
   avoid speculative scope; only implement what is in current scope.
 - **§G**: Do not add dependencies; use the project's official dependency list if
   any tooling is introduced later.
-- **§C**: All content inside **shared/prompt/store/shared-prompt-store.md** (and
+- **§C**: All content inside **shared/prompt/shared-prompt-store.md** (and
   any other project docs) must be in **English** (code, comments, UI strings,
   docs).
 - **§J**: This plan does not refactor existing rule files; it only adds a new
@@ -59,7 +59,7 @@
   - Prefix: **shared** (Scope).
   - Infix: **prompt** (Entity).
   - Complies with §F and §E; no `docs/` used for this.
-- **Single context file**: **shared/prompt/store/shared-prompt-store.md**
+- **Single context file**: **shared/prompt/shared-prompt-store.md**
   - All rules and context for AI/tools live here. Content in **English** (§C).
 - **This plan**: **shared/prompt/documentation/shared-document-plan.md**
   (suffix: documentation = Meta)
@@ -72,11 +72,11 @@
 
 | Purpose                   | Approach                                                                                                               |
 | ------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| Project rules and context | Single file **shared/prompt/store/shared-prompt-store.md**; each tool references or attaches it.                       |
+| Project rules and context | Single file **shared/prompt/shared-prompt-store.md**; each tool references or attaches it.                       |
 | Git / PR / issues / CI    | Use GitHub CLI (`gh`) and Git; any AI that can run the terminal uses the same commands.                                |
 | Browser / web automation  | Use Playwright or similar; MCP is one possible integration layer.                                                      |
 | Integrations / extensions | Use MCP servers where applicable; clients that support MCP can reuse them across models.                               |
-| Tips and workflow         | Use external tips as reference only; write only the chosen habits into **shared/prompt/store/shared-prompt-store.md**. |
+| Tips and workflow         | Use external tips as reference only; write only the chosen habits into **shared/prompt/shared-prompt-store.md**. |
 
 ---
 
@@ -85,7 +85,7 @@
 ### Phase 0: Preparation
 
 - **0.1** Confirm the single-context path:
-  **shared/prompt/store/shared-prompt-store.md** (no `docs/`).
+  **shared/prompt/shared-prompt-store.md** (no `docs/`).
 - **0.2** Define how each tool will use it (Cursor: reference in Rules; other
   AIs: attach file or pass path at start).
 - **0.3** List CLI and protocols in use (Git, `gh`, Playwright, MCP) without
@@ -100,7 +100,7 @@ modules/API/infra added (§K).
 
 - **1.1** Create directory **shared/prompt/** (prefix + infix only; no fourth
   level).
-- **1.2** Create **shared/prompt/store/shared-prompt-store.md** and fill it with
+- **1.2** Create **shared/prompt/shared-prompt-store.md** and fill it with
   (in English):
   - Project purpose and stack.
   - Directory structure and naming (per §D and §E).
@@ -111,7 +111,7 @@ modules/API/infra added (§K).
   duplicate that content in tool-specific configs.
 - **1.4** Keep all content in **English** (§C).
 
-**Deliverable**: **shared/prompt/store/shared-prompt-store.md** as the single
+**Deliverable**: **shared/prompt/shared-prompt-store.md** as the single
 source of truth for rules and context.
 
 ---
@@ -119,10 +119,10 @@ source of truth for rules and context.
 ### Phase 2: Tool-side "reference only" setup
 
 - **2.1** **Cursor**: Configure Rules to read
-  **shared/prompt/store/shared-prompt-store.md** (or a short citation). Do not
+  **shared/prompt/shared-prompt-store.md** (or a short citation). Do not
   copy long rule text into Rules.
 - **2.2** **Other AI tools**: Document that new conversations should attach
-  **shared/prompt/store/shared-prompt-store.md** or pass its path (e.g. in
+  **shared/prompt/shared-prompt-store.md** or pass its path (e.g. in
   README or CONTRIBUTING).
 - **2.3** Ensure that changing model or client only requires updating this one
   file.
@@ -135,7 +135,7 @@ file.
 ### Phase 3: Development workflow (in shared-prompt-store.md)
 
 - **3.1** Problem decomposition: break large work into small steps; add a
-  one-line note in **shared/prompt/store/shared-prompt-store.md**.
+  one-line note in **shared/prompt/shared-prompt-store.md**.
 - **3.2** Plan then prototype: describe "plan first, then implement" and when to
   use it in shared-prompt-store.md.
 - **3.3** Write–test cycle: implement, run tests, fix on failure; document this
@@ -166,7 +166,7 @@ modules/API/infra (§I: no speculative implementation).
   `rm -rf`, `sudo`) and, if applicable, a checklist or script.
 
 **Deliverable**: Git/PR/CI and safety policy live only in
-**shared/prompt/store/shared-prompt-store.md**.
+**shared/prompt/shared-prompt-store.md**.
 
 ---
 
@@ -182,7 +182,7 @@ modules/API/infra (§I: no speculative implementation).
   4m) for status checks in shared-prompt-store.md.
 
 **Deliverable**: MCP/Playwright/path/backoff guidance in
-**shared/prompt/store/shared-prompt-store.md** only.
+**shared/prompt/shared-prompt-store.md** only.
 
 ---
 
@@ -191,14 +191,14 @@ modules/API/infra (§I: no speculative implementation).
 - **6.1** New topic → new conversation; add a one-line note in
   shared-prompt-store.md.
 - **6.2** Handoff: use a single markdown file (e.g.
-  **shared/prompt/documentation/shared-prompt-handoff.md** or **HANDOFF.md** at
+  **shared/prompt/shared-prompt-handoff.md** or **HANDOFF.md** at
   repo root) with goal, progress, what was tried/failed, next steps. New
   sessions attach only that file. Document this in shared-prompt-store.md.
 - **6.3** Branching experiments: document "branch/fork conversation or record
   branch point in handoff" in shared-prompt-store.md.
 
 **Deliverable**: Handoff template and short handoff/branch rules in
-**shared/prompt/store/shared-prompt-store.md**. Handoff file path and name
+**shared/prompt/shared-prompt-store.md**. Handoff file path and name
 decided (stay within directory rules if under **shared/**).
 
 ---
@@ -213,7 +213,7 @@ decided (stay within directory rules if under **shared/**).
   editor; add a short note in shared-prompt-store.md.
 
 **Deliverable**: I/O habits described only in
-**shared/prompt/store/shared-prompt-store.md**.
+**shared/prompt/shared-prompt-store.md**.
 
 ---
 
@@ -227,17 +227,17 @@ decided (stay within directory rules if under **shared/**).
   (and optionally a small script or checklist; no new dependencies without §G).
 
 **Deliverable**: Quality and safety rules only in
-**shared/prompt/store/shared-prompt-store.md**.
+**shared/prompt/shared-prompt-store.md**.
 
 ---
 
 ### Phase 9: Maintenance
 
-- **9.1** Review **shared/prompt/store/shared-prompt-store.md** periodically;
+- **9.1** Review **shared/prompt/shared-prompt-store.md** periodically;
   add "repeated" instructions when they appear; document the review cadence in
   the file or in this plan.
 - **9.2** Keep a single source of truth: all new rules and habits go into
-  **shared/prompt/store/shared-prompt-store.md**; do not duplicate in
+  **shared/prompt/shared-prompt-store.md**; do not duplicate in
   tool-specific configs.
 - **9.3** Use external tips only as reference; write only the chosen practices
   into shared-prompt-store.md.
@@ -328,19 +328,19 @@ feat(shared/prompt): add single AI context file and directory
 
 | #  | Item                                                                                                                         | Notes                                   |
 | -- | ---------------------------------------------------------------------------------------------------------------------------- | --------------------------------------- |
-| 1  | Path **shared/prompt/store/shared-prompt-store.md** fixed                                                                    | Single source; directory rule compliant |
-| 2  | **shared/prompt/store/shared-prompt-store.md** created with project description, stack, structure, run/test, rules (English) | §C                                      |
-| 3  | Cursor Rules reference **shared/prompt/store/shared-prompt-store.md** only (no long copy-paste)                              | Done — reference-only stubs             |
-| 4  | Other tools: "attach shared/prompt/store/shared-prompt-store.md or pass path" documented                                     | One place to update                     |
-| 5  | Git/gh/PR/CI and safety policy in **shared/prompt/store/shared-prompt-store.md**                                             | CLI-only, model-agnostic                |
-| 6  | Handoff template and path (e.g. shared/prompt/documentation/shared-prompt-handoff.md or root HANDOFF.md)                     | Document in shared-prompt-store.md      |
-| 7  | MCP/Playwright usage described in **shared/prompt/store/shared-prompt-store.md**                                             | Protocol/CLI only                       |
-| 8  | Review cadence for **shared/prompt/store/shared-prompt-store.md** defined                                                    | e.g. quarterly                          |
+| 1  | Path **shared/prompt/shared-prompt-store.md** fixed                                                                    | Single source; directory rule compliant |
+| 2  | **shared/prompt/shared-prompt-store.md** created with project description, stack, structure, run/test, rules (English) | §C                                      |
+| 3  | Cursor Rules reference **shared/prompt/shared-prompt-store.md** only (no long copy-paste)                              | Done — reference-only stubs             |
+| 4  | Other tools: "attach shared/prompt/shared-prompt-store.md or pass path" documented                                     | One place to update                     |
+| 5  | Git/gh/PR/CI and safety policy in **shared/prompt/shared-prompt-store.md**                                             | CLI-only, model-agnostic                |
+| 6  | Handoff template and path (e.g. shared/prompt/shared-prompt-handoff.md or root HANDOFF.md)                     | Document in shared-prompt-store.md      |
+| 7  | MCP/Playwright usage described in **shared/prompt/shared-prompt-store.md**                                             | Protocol/CLI only                       |
+| 8  | Review cadence for **shared/prompt/shared-prompt-store.md** defined                                                    | e.g. quarterly                          |
 | 9  | (Phase 10) Status line script optional; path **shared/prompt/scripts/context-bar.sh** if used                                | Tip 0                                   |
 | 10 | (Phase 10) Handoff **workflow** (when to write/update, required fields) documented                                           | Tip 8                                   |
 | 11 | (Phase 10) Blocked-sites fallback (e.g. reddit-fetch, Gemini CLI) one-line ref if used                                       | Tip 11                                  |
 | 12 | (Phase 10) Approved-commands audit: **cc-safe** (e.g. `npx cc-safe .`) and schedule in shared-prompt-store.md                | Tip 33                                  |
-| 13 | (Phase 10) Tests + TDD cycle stated as expectation in **shared/prompt/store/shared-prompt-store.md**                         | Tip 34                                  |
+| 13 | (Phase 10) Tests + TDD cycle stated as expectation in **shared/prompt/shared-prompt-store.md**                         | Tip 34                                  |
 | 14 | (Phase 10) Optional **setup.sh** under **shared/prompt/scripts/**; shared-prompt-usage.md for dx, clone, etc.                | Tip 45, 44, 23                          |
 
 ---
@@ -348,7 +348,7 @@ feat(shared/prompt): add single AI context file and directory
 ## 8. Scope and dependencies (from project rules)
 
 - **§K**: The scope document (e.g.
-  shared/prompt/documentation/shared-prompt-boundary.md) remains the single
+  shared/prompt/shared-prompt-boundary.md) remains the single
   source of truth for **modules, API routes, and infrastructure**. This plan
   does **not** add or change those; it only adds **shared/prompt/** and the
   context/handoff files. Any new module, API route, or infrastructure must still
@@ -362,7 +362,7 @@ feat(shared/prompt): add single AI context file and directory
 ## 9. Summary
 
 - **Rules and context**: One file,
-  **shared/prompt/store/shared-prompt-store.md** (English); all tools reference
+  **shared/prompt/shared-prompt-store.md** (English); all tools reference
   or attach it.
 - **Paths**: **shared/prompt/** (shared = Scope, prompt = Entity); no `docs/`;
   compliant with §F and §E.

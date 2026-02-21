@@ -4,7 +4,7 @@
 
 - `.cursor/rules/*.mdc` files configure **when** rules apply (e.g. always vs
   on-request), not rule content.
-- Rule text lives only in `shared/prompt/store/shared-prompt-store.md` (Part B).
+- Rule text lives only in `shared/prompt/shared-prompt-store.md` (Part B).
   Each mdc body references § only; no duplicate rule text.
 
 ## Current layout
@@ -22,7 +22,7 @@
 ## Adding or changing rules
 
 - **Rule content**: Add or edit only in
-  `shared/prompt/store/shared-prompt-store.md` Part B.
+  `shared/prompt/shared-prompt-store.md` Part B.
 - **Apply timing**: To add a new on-request (or always) group, add one mdc that
   references the relevant §; name per §D/§E.
 - **Refactor existing mdc**: Follow **§J. Migration boundary** (plan first;
@@ -30,6 +30,6 @@
 
 ## Relation to other docs
 
-- Rule definitions: `shared/prompt/store/shared-prompt-store.md` Part B.
+- Rule definitions: `shared/prompt/shared-prompt-store.md` Part B.
 - Directory and document structure: `shared-document-plan.md`; migration history
   and current mapping: `data-migration-strategy.md`.

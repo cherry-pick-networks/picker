@@ -10,7 +10,7 @@ Use what fits your environment and habits.
 
 - **Rules** (in `shared-prompt-principle.md`): Things that can be checked
   (directory structure, naming, commit format, "this repo has X file") or
-  defined in one sentence. See `shared/prompt/store/shared-prompt-store.md` Part
+  defined in one sentence. See `shared/prompt/shared-prompt-store.md` Part
   B.
 - **Reference** (this doc): Usage tips, workflow habits, tool preferences,
   qualitative advice—things that are not checkable or that depend on the person

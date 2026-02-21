@@ -35,7 +35,7 @@ prototype (Tip 39 → §6), Simplify (Tip 40 → §11).
 
 - **When**: Before switching agent or starting a new session on the same
   long-running task.
-- **Where**: `shared/prompt/documentation/shared-prompt-handoff.md` (linked from
+- **Where**: `shared/prompt/shared-prompt-handoff.md` (linked from
   README).
 - **Fields**: Goal, progress, what was tried, what failed, next steps. New
   sessions attach only this file.

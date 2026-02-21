@@ -6,6 +6,6 @@ description: |
 alwaysApply: false
 ---
 
-This rule is defined in `shared/prompt/store/shared-prompt-store.md`.
+This rule is defined in `shared/prompt/shared-prompt-store.md`.
 Read that file and follow **§F. Directory structure and exceptions**.
 Do not duplicate the rule text here.

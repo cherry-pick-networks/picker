@@ -5,7 +5,7 @@ open-source project. Single source for CI/CD, automation, and community tooling
 decisions.
 
 **Project**: picker (Deno / Fresh 2, AGPL-3.0).\
-**Scope doc**: [shared-prompt-boundary.md](shared-prompt-boundary.md) — update
+**Scope doc**: [shared-prompt-boundary.md](../shared-prompt-boundary.md) — update
 infrastructure section when adding Pages, Packages, or deploy workflows.
 
 ---
@@ -71,7 +71,7 @@ infrastructure section when adding Pages, Packages, or deploy workflows.
 - **Options**: Export from Fresh build, or separate doc generator; publish to
   `gh-pages` or `docs/` via Actions.
 - **Scope**: When adding, list in
-  [shared-prompt-boundary.md](shared-prompt-boundary.md) under Infrastructure.
+  [shared-prompt-boundary.md](../shared-prompt-boundary.md) under Infrastructure.
 
 ### 2.5 GitHub Packages — Low priority
 
@@ -104,10 +104,10 @@ infrastructure section when adding Pages, Packages, or deploy workflows.
 
 ## 4. Doc and scope alignment
 
-- **Scope** ([shared-prompt-boundary.md](shared-prompt-boundary.md)): CI =
+- **Scope** ([shared-prompt-boundary.md](../shared-prompt-boundary.md)): CI =
   GitHub Actions. Add entries for Pages, Packages, or deploy when introduced.
-- **Store** ([shared-prompt-store.md](../store/shared-prompt-store.md)): Keep
+- **Store** ([shared-prompt-store.md](../shared-prompt-store.md)): Keep
   “Frequently used commands” in sync (e.g. `gh run view`); add deploy-related
   commands if workflows are added.
-- **Handoff** ([shared-prompt-handoff.md](shared-prompt-handoff.md)): Mention
+- **Handoff** ([shared-prompt-handoff.md](../shared-prompt-handoff.md)): Mention
   current CI/CD and GitHub feature set so sessions stay aligned with this plan.
