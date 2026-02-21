@@ -45,7 +45,8 @@ infrastructure section when adding Pages, Packages, or deploy workflows.
 **Runbook: enable Discussions and set categories**
 
 1. **Enable Discussions**
-   - In the repo: **Settings** → **General** → **Features** → check **Discussions**.
+   - In the repo: **Settings** → **General** → **Features** → check
+     **Discussions**.
    - Or, where GitHub CLI is available: `gh repo edit --enable-discussions`.
 
 2. **Create categories** (web only; no API for creating categories)
@@ -53,15 +54,16 @@ infrastructure section when adding Pages, Packages, or deploy workflows.
      **Categories** → **New category** for each below.
    - Recommended categories:
 
-     | Emoji | Name       | Description (short)              | Format        |
-     | ----- | ---------- | -------------------------------- | ------------- |
-     | 💬    | General    | General discussion about the project | Open-ended   |
-     | ❓    | Q&A        | Ask questions and get answers    | Q&A (optional) |
-     | 💡    | Ideas      | Propose ideas and feature requests | Open-ended   |
-     | 🎉    | Show and tell | Share what you built or learned | Open-ended   |
+     | Emoji | Name          | Description (short)                  | Format         |
+     | ----- | ------------- | ------------------------------------ | -------------- |
+     | 💬    | General       | General discussion about the project | Open-ended     |
+     | ❓    | Q&A           | Ask questions and get answers        | Q&A (optional) |
+     | 💡    | Ideas         | Propose ideas and feature requests   | Open-ended     |
+     | 🎉    | Show and tell | Share what you built or learned      | Open-ended     |
 
    - You can start with fewer (e.g. General + Q&A) and add more later.
-   - Ref: [Managing categories for discussions](https://docs.github.com/en/discussions/managing-discussions-for-your-community/managing-categories-for-discussions).
+   - Ref:
+     [Managing categories for discussions](https://docs.github.com/en/discussions/managing-discussions-for-your-community/managing-categories-for-discussions).
 
 ### 2.4 GitHub Pages — Phase 3 (optional)
 
