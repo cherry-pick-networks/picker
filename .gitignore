@@ -1,3 +1,19 @@
-.old
+# Build / generated
 _fresh/
 node_modules/
+
+# Environment (secrets)
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs & debug
+*.log
+npm-debug.log*
+
+# Local / backup
+.old
