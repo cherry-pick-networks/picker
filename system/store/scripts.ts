@@ -5,7 +5,9 @@
 
 import { verifyGovernance } from "../validator/index.ts";
 
-const SCRIPTS_BASE = "shared/runtime/store";
+function getScriptsBase(): string {
+  return Deno.env.get("SCRIPTS_BASE") ?? "shared/runtime/store";
+}
 
 export type ListResult =
   | { ok: true; entries: string[] }
@@ -37,7 +39,7 @@ export async function listScripts(): Promise<ListResult> {
     return { ok: false, status: 403, body: result.reason };
   }
   try {
-    const entries = await listDir(SCRIPTS_BASE);
+    const entries = await listDir(getScriptsBase());
     return { ok: true, entries };
   } catch (e) {
     return {
@@ -56,7 +58,7 @@ export async function readScript(relativePath: string): Promise<ReadResult> {
   if (!result.allowed) {
     return { ok: false, status: 403, body: result.reason };
   }
-  const fullPath = `${SCRIPTS_BASE}/${relativePath}`;
+  const fullPath = `${getScriptsBase()}/${relativePath}`;
   try {
     const content = await Deno.readTextFile(fullPath);
     return { ok: true, content };
@@ -84,7 +86,7 @@ export async function writeScript(
   if (!result.allowed) {
     return { ok: false, status: 403, body: result.reason };
   }
-  const fullPath = `${SCRIPTS_BASE}/${relativePath}`;
+  const fullPath = `${getScriptsBase()}/${relativePath}`;
   try {
     const dir = fullPath.slice(0, fullPath.lastIndexOf("/"));
     if (dir) await Deno.mkdir(dir, { recursive: true });

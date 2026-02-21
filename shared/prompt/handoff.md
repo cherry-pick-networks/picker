@@ -55,6 +55,7 @@ runs in CI so new routes cannot be added without updating the scope document.
   discovers them automatically; no path config.
 - **Scope rules split**: §K and §L moved to `.cursor/rules/system-document-boundary.mdc` and `system-agent-boundary.mdc` (store.md unchanged; global-agent-policy no longer lists §K/§L).
 - **AST self-edit phase 1**: boundary.md updated with POST `/ast/apply` and system/service role (AST read/patch for shared/runtime/store/). Implemented: `system/service/ast.ts` (applyPatch: Governance + readScript + replace oldText/newText + writeScript), `system/router/ast-apply.ts` (POST /ast/apply). ROUTES and registerRoutes updated. Tests in `tests/system/main_ast_apply_test.ts` (invalid body, empty path, path escape 403, oldText not found 400, success and content updated). scope-check and `deno task test` pass.
+- **Tests no longer write into shared/runtime/store**: `system/store/scripts.ts` uses `getScriptsBase()` (env `SCRIPTS_BASE` else `shared/runtime/store`). Helper `tests/system/with_temp_scripts_store.ts` runs tests with a temp dir and cleanup. `main_scripts_test.ts`, `main_ast_apply_test.ts`, and `main_e2e_test.ts` wrap script-store tests in `withTempScriptsStore`; E2E GET /scripts/hello.txt uses `seedHello: true`. No new files are left in the real store after test runs.
 
 ---
 

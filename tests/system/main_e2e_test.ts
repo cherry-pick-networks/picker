@@ -1,5 +1,6 @@
 import { assert, assertEquals } from "@std/assert";
 import { app } from "../../main.ts";
+import { withTempScriptsStore } from "./with_temp_scripts_store.ts";
 
 const handler = (req: Request) => app.fetch(req);
 const handlerTestOpts = { sanitizeResources: false };
@@ -49,11 +50,13 @@ Deno.test("E2E POST /kv over real HTTP", handlerTestOpts, async () => {
 });
 
 Deno.test("E2E GET /scripts over real HTTP", handlerTestOpts, async () => {
-  await withServer(async (base) => {
-    const res = await fetch(`${base}/scripts`);
-    assertEquals(res.status, 200);
-    const body = await res.json();
-    assert(Array.isArray(body.entries), "body.entries is array");
+  await withTempScriptsStore(async () => {
+    await withServer(async (base) => {
+      const res = await fetch(`${base}/scripts`);
+      assertEquals(res.status, 200);
+      const body = await res.json();
+      assert(Array.isArray(body.entries), "body.entries is array");
+    });
   });
 });
 
@@ -99,12 +102,14 @@ Deno.test("E2E GET /ast over real HTTP", handlerTestOpts, async () => {
 });
 
 Deno.test("E2E GET /scripts/hello.txt over real HTTP", handlerTestOpts, async () => {
-  await withServer(async (base) => {
-    const res = await fetch(`${base}/scripts/hello.txt`);
-    assertEquals(res.status, 200);
-    const text = await res.text();
-    assert(text.includes("hello from shared/runtime/store"), "file content");
-  });
+  await withTempScriptsStore(async () => {
+    await withServer(async (base) => {
+      const res = await fetch(`${base}/scripts/hello.txt`);
+      assertEquals(res.status, 200);
+      const text = await res.text();
+      assert(text.includes("hello from shared/runtime/store"), "file content");
+    });
+  }, { seedHello: true });
 });
 
 Deno.test("E2E GET /static/e2e-smoke.txt over real HTTP", handlerTestOpts, async () => {
@@ -117,28 +122,30 @@ Deno.test("E2E GET /static/e2e-smoke.txt over real HTTP", handlerTestOpts, async
 });
 
 Deno.test("E2E POST /ast/apply over real HTTP", handlerTestOpts, async () => {
-  await withServer(async (base) => {
-    const filename = `e2e-ast-${Date.now()}.txt`;
-    const createRes = await fetch(`${base}/scripts/${filename}`, {
-      method: "POST",
-      body: "original line",
-    });
-    assertEquals(createRes.status, 201);
+  await withTempScriptsStore(async () => {
+    await withServer(async (base) => {
+      const filename = `e2e-ast-${Date.now()}.txt`;
+      const createRes = await fetch(`${base}/scripts/${filename}`, {
+        method: "POST",
+        body: "original line",
+      });
+      assertEquals(createRes.status, 201);
 
-    const applyRes = await fetch(`${base}/ast/apply`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        path: filename,
-        oldText: "original",
-        newText: "patched",
-      }),
-    });
-    assertEquals(applyRes.status, 200);
+      const applyRes = await fetch(`${base}/ast/apply`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          path: filename,
+          oldText: "original",
+          newText: "patched",
+        }),
+      });
+      assertEquals(applyRes.status, 200);
 
-    const getRes = await fetch(`${base}/scripts/${filename}`);
-    assertEquals(getRes.status, 200);
-    assertEquals(await getRes.text(), "patched line");
+      const getRes = await fetch(`${base}/scripts/${filename}`);
+      assertEquals(getRes.status, 200);
+      assertEquals(await getRes.text(), "patched line");
+    });
   });
 });
 
@@ -162,18 +169,20 @@ Deno.test("E2E DELETE /kv/:key over real HTTP", handlerTestOpts, async () => {
 });
 
 Deno.test("E2E POST /scripts over real HTTP", handlerTestOpts, async () => {
-  await withServer(async (base) => {
-    const filename = `e2e-script-${Date.now()}.txt`;
-    const content = "hello e2e from POST /scripts";
-    const postRes = await fetch(`${base}/scripts/${filename}`, {
-      method: "POST",
-      body: content,
-    });
-    assertEquals(postRes.status, 201);
+  await withTempScriptsStore(async () => {
+    await withServer(async (base) => {
+      const filename = `e2e-script-${Date.now()}.txt`;
+      const content = "hello e2e from POST /scripts";
+      const postRes = await fetch(`${base}/scripts/${filename}`, {
+        method: "POST",
+        body: content,
+      });
+      assertEquals(postRes.status, 201);
 
-    const getRes = await fetch(`${base}/scripts/${filename}`);
-    assertEquals(getRes.status, 200);
-    assertEquals(await getRes.text(), content);
+      const getRes = await fetch(`${base}/scripts/${filename}`);
+      assertEquals(getRes.status, 200);
+      assertEquals(await getRes.text(), content);
+    });
   });
 });
 

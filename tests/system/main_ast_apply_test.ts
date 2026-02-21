@@ -1,5 +1,6 @@
 import { assertEquals } from "@std/assert";
 import { app } from "../../main.ts";
+import { withTempScriptsStore } from "./with_temp_scripts_store.ts";
 
 const handler = (req: Request) => app.fetch(req);
 
@@ -45,45 +46,49 @@ Deno.test("POST /ast/apply with path outside store returns 403", async () => {
 });
 
 Deno.test("POST /ast/apply with oldText not in file returns 400", async () => {
-  const res = await handler(
-    new Request("http://localhost/ast/apply", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        path: "hello.txt",
-        oldText: "nonexistent snippet 12345",
-        newText: "y",
+  await withTempScriptsStore(async () => {
+    const res = await handler(
+      new Request("http://localhost/ast/apply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          path: "hello.txt",
+          oldText: "nonexistent snippet 12345",
+          newText: "y",
+        }),
       }),
-    }),
-  );
-  assertEquals(res.status, 400);
-  const j = await res.json();
-  assertEquals(j.error, "oldText not found in file");
+    );
+    assertEquals(res.status, 400);
+    const j = await res.json();
+    assertEquals(j.error, "oldText not found in file");
+  }, { seedHello: true });
 });
 
 Deno.test("POST /ast/apply succeeds and file content is updated", async () => {
-  const target = "ast-patch-target.txt";
-  await handler(
-    new Request(`http://localhost/scripts/${target}`, {
-      method: "POST",
-      body: "original line",
-    }),
-  );
-  const res = await handler(
-    new Request("http://localhost/ast/apply", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        path: target,
-        oldText: "original",
-        newText: "patched",
+  await withTempScriptsStore(async () => {
+    const target = "ast-patch-target.txt";
+    await handler(
+      new Request(`http://localhost/scripts/${target}`, {
+        method: "POST",
+        body: "original line",
       }),
-    }),
-  );
-  assertEquals(res.status, 200);
-  const getRes = await handler(
-    new Request(`http://localhost/scripts/${target}`),
-  );
-  assertEquals(getRes.status, 200);
-  assertEquals(await getRes.text(), "patched line");
+    );
+    const res = await handler(
+      new Request("http://localhost/ast/apply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          path: target,
+          oldText: "original",
+          newText: "patched",
+        }),
+      }),
+    );
+    assertEquals(res.status, 200);
+    const getRes = await handler(
+      new Request(`http://localhost/scripts/${target}`),
+    );
+    assertEquals(getRes.status, 200);
+    assertEquals(await getRes.text(), "patched line");
+  });
 });
