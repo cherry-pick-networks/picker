@@ -23,5 +23,8 @@ jobs:
       - name: Scope check
         run: deno task scope-check
 
+      - name: Type-check policy
+        run: deno task type-check-policy
+
       - name: Audit dependencies
         run: deno audit

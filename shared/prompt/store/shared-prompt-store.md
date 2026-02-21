@@ -71,6 +71,7 @@ tool-specific configs.
 - `deno test` — run tests
 - `deno task scope-check` — verify API routes are listed in
   shared/prompt/documentation/shared-prompt-boundary.md (runs in CI)
+- `deno task type-check-policy` — verify no type-check bypass (runs in CI)
 - `gh pr create --draft` — create draft PR (review before marking ready)
 - `gh pr view`, `gh pr diff` — inspect PR for review
 - `gh run view` — inspect CI run (e.g. after failure)
@@ -176,6 +177,10 @@ tool-specific configs.
   low-risk work; file/function/deps-level for critical or complex code.
 - **Simplify**: Ask "why this change?" or "simplify unnecessary parts" when the
   change set is large or unclear. Prefer minimal, clear code and prose.
+- **Type-check policy**: Do not disable or bypass type checking. Do not add
+  --no-check (or equivalent) to any deno task or run command; do not set
+  skipLibCheck or disable strict mode in tsconfig; do not use // @ts-ignore or
+  // @ts-expect-error. Fix type errors by correcting types or code (see §N).
 - **Dangerous commands**: Do not approve broad or destructive commands without
   explicit need; audit approved commands periodically (see §7).
 
@@ -439,3 +444,12 @@ shared/README.md), not to files under prefix/infix/suffix. Deep links: do not
 add links from root README to individual docs (e.g. shared-prompt-store.md,
 shared-prompt-handoff.md, shared-prompt-profile.md); those live in each
 domain's README.
+
+### §N. Type-check policy
+
+Type-check policy: do not disable or bypass type checking. Do not add
+--no-check (or equivalent) to any deno task or run command; do not set
+skipLibCheck or disable strict mode in tsconfig; do not use // @ts-ignore or
+// @ts-expect-error. Fix type errors by correcting types or code. Validation:
+run deno task type-check-policy (shared/prompt/scripts/check-type-policy.ts);
+CI runs this step; fail on any violation.

@@ -20,6 +20,7 @@ Thank you for your interest in contributing. This project is maintained by
   - `deno task dev` — start dev server (watch)
   - `deno test` — run tests
   - `deno task scope-check` — verify API routes are listed in the scope document
+  - `deno task type-check-policy` — verify no type-check bypass (no --no-check, @ts-ignore, @ts-expect-error)
 
 ## Before submitting a PR
 
@@ -28,10 +29,13 @@ Thank you for your interest in contributing. This project is maintained by
    routes, modules, or infrastructure, add them to
    [shared/prompt/documentation/shared-prompt-boundary.md](shared/prompt/documentation/shared-prompt-boundary.md)
    first, then implement.
-3. **Commit messages**: Use the format `<type>[(scope)]: <description>`
+3. **Type-check policy**: `deno task type-check-policy` must pass. Do not
+   disable or bypass type checking (no `--no-check`, `@ts-ignore`, or
+   `@ts-expect-error`); fix type errors in code or types.
+4. **Commit messages**: Use the format `<type>[(scope)]: <description>`
    (imperative, lowercase). Types: `feat`, `fix`, `docs`, `chore`, `refactor`,
    `perf`, `test`, `ci`, `build`.
-4. **Language**: Code, comments, and docs are in English.
+5. **Language**: Code, comments, and docs are in English.
 
 Detailed conventions (directory structure, dependencies, workflow) are in the
 shared docs: start from [shared/README.md](shared/README.md) and see
