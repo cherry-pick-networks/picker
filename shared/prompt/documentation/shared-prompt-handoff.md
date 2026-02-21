@@ -20,6 +20,7 @@ Add automated tests for in-scope API routes and ensure `deno task scope-check` r
 - Fixed FreshConfig type: `new App({ root: import.meta.url })` → `new App()` in `main.ts`; test task no longer uses `--no-check`.
 - Documentation alignment: stack wording updated from "Hono (HTTP)" to "Fresh (HTTP)" and "Hono app" to "Fresh app" in `shared-prompt-store.md`, `shared-prompt-profile.md`; scope boundary main.ts row clarified (fsRoutes from system/router when using Vite).
 - Route consolidation: API logic lives only in `system/router/`; `main.ts` only delegates (imports handler from each route file and registers path). No inline route logic in `main.ts`. `check-scope.ts` now discovers routes from `system/router/` (walk files, map path to Fresh route pattern, infer methods from `handler.GET`/`handler.POST`).
+- E2E test for POST /kv: added in `main_test.ts` — starts real HTTP server with `Deno.serve(..., app.handler())` on port 0, fetches POST /kv then GET /kv/:key, then shuts down server.
 
 ---
 
@@ -32,7 +33,6 @@ Add automated tests for in-scope API routes and ensure `deno task scope-check` r
 ## Next steps
 
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
-- Optional: add E2E test for POST /kv (or document why deferred).
 - Optional: run `deno task scope-check` in pre-push hook and document in CONTRIBUTING.
 - Optional: grep for remaining "Hono" in docs/README and align with Fresh if any.
 
