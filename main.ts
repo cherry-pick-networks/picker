@@ -1,11 +1,12 @@
-import { App } from "fresh";
+import { App, staticFiles } from "fresh";
 import { z } from "zod";
 import { Project } from "ts-morph";
 import { getKv } from "./lib/kv.ts";
 
 const KvBodySchema = z.object({ key: z.string(), value: z.unknown() });
 
-const app = new App()
+export const app = new App({ root: import.meta.url })
+  .use(staticFiles())
   .get("/", (ctx) => ctx.json({ ok: true }))
   .get("/kv/:key", async (ctx) => {
     const kv = await getKv();
@@ -28,7 +29,8 @@ const app = new App()
     const source = project.createSourceFile("sample.ts", "const x = 1;");
     const count = source.getVariableDeclarations().length;
     return ctx.json({ variableDeclarations: count });
-  });
+  })
+  .fsRoutes();
 
 if (import.meta.main) {
   await app.listen({ port: 8000 });

@@ -1,11 +1,12 @@
 # {{repo_name}}
 
-Deno app: Fresh (HTTP), Zod, ts-morph (AST), Deno KV. Entry: `main.ts`.
+Deno app: Fresh 2 (HTTP), Zod, ts-morph (AST), Deno KV. Entry: `main.ts`; client: `client.ts`. File-based routes in `routes/` (Fresh 2 structure; dev uses programmatic routes in `main.ts`).
 
 ## Run
 
-- **Dev**: `deno task dev`
+- **Dev**: `deno task dev` (runs `main.ts` with watch)
 - **Once**: `deno run -A --unstable-kv main.ts`
+- **Build** (optional): `deno task build` — then **Start**: `deno task start`
 - **Test**: `deno test`
 
 ## Documentation

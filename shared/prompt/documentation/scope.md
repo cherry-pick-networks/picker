@@ -7,7 +7,10 @@ Do not add new modules, routes, or infrastructure unless listed here; update thi
 
 ## Modules
 
-- **main.ts** — single entry (Hono app, KV routes, AST demo). No separate modules yet.
+- **main.ts** — server entry (Fresh App, staticFiles, fsRoutes).
+- **client.ts** — client entry (loaded on every page).
+- **routes/** — file-based routes (/, /kv/:key, /kv POST, /ast).
+- **lib/** — shared logic (e.g. kv).
 
 ---
 
