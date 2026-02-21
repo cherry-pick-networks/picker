@@ -36,7 +36,7 @@ export function parseScopeApiTable(content: string): Route[] {
 
 /**
  * Convert a file path under router (e.g. index.ts, kv/index.ts, kv/[key].ts)
- * to a Fresh route path (e.g. "/", "/kv", "/kv/:key").
+ * to a route path (e.g. "/", "/kv", "/kv/:key").
  */
 export function filePathToRoutePath(relativePath: string): string {
   const withoutExt = relativePath.replace(/\.tsx?$/, "");

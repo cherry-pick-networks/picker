@@ -1,8 +1,8 @@
 # {{repo_name}}
 
-Deno app: Fresh 2 (HTTP), Zod, ts-morph (AST), Deno KV. Entry: `main.ts`;
-client: `client.ts`. File-based routes in `system/router/` (Fresh 2 structure;
-dev uses programmatic routes in `main.ts`).
+Deno app: Hono (HTTP), Zod, ts-morph (AST), Deno KV. Entry: `main.ts`;
+client: `client.ts`. File-based routes in `system/router/`; dev uses
+programmatic routes in `main.ts`.
 
 ## Run
 

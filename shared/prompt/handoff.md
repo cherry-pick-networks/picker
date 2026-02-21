@@ -30,13 +30,11 @@ runs in CI so new routes cannot be added without updating the scope document.
   leak detection.
 - Added `deno task test` (runs `deno test -A --unstable-kv`) in `deno.json`.
 - CI runs `deno task test` and `deno task scope-check`.
-- **Fresh → Hono migration**: Removed all Fresh deps, route-loader, and
-  file-based Fresh router. Reimplemented with Hono: `main.ts` creates Hono app,
-  `system/routes.ts` exports ROUTES and registerRoutes(app), `system/router/*.ts`
-  export handlers (home, kv, ast, ast-demo, scripts). Scope-check reads
-  ROUTES from system/routes.ts. Tests use `(req) => app.fetch(req)`; E2E uses
-  `Deno.serve(..., handler)` with same handler. Vite config no longer uses
-  Fresh plugin; start task runs `main.ts` directly.
+- **Hono app**: `main.ts` creates Hono app, `system/routes.ts` exports ROUTES
+  and registerRoutes(app), `system/router/*.ts` export handlers (home, kv, ast,
+  ast-demo, scripts). Scope-check reads ROUTES from system/routes.ts. Tests use
+  `(req) => app.fetch(req)`; E2E uses `Deno.serve(..., handler)` with same
+  handler. Start task runs `main.ts` directly.
 - GET /kv (list keys, optional query `prefix`), POST /kv, GET/DELETE /kv/:key:
   system/store/kv.ts, system/router/kv.ts, tests in main_test.ts and
   main_kv_test.ts.
@@ -50,9 +48,9 @@ runs in CI so new routes cannot be added without updating the scope document.
 
 ## Tried / failed
 
-- Route consolidation via fsRoutes only (Fresh): with `deno run main.ts`,
-  Fresh's fsRoutes() did not load from routeDir (Vite plugin only). Switched to
-  Hono and explicit route registration.
+- Route consolidation via fsRoutes only: with `deno run main.ts`, fsRoutes() did
+  not load from routeDir (Vite plugin only). Switched to Hono and explicit route
+  registration.
 
 ---
 
