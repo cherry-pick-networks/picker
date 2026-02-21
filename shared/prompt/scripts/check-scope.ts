@@ -27,7 +27,9 @@ function parseScopeApiTable(content: string): Route[] {
     if (cells.length < 3) continue;
     const method = (cells[1] ?? "").toUpperCase();
     const path = (cells[2] ?? "").replace(/^`|`$/g, "").trim();
-    if (/^[-]+$/.test(method) || !/^(GET|POST|PUT|PATCH|DELETE)$/.test(method)) {
+    if (
+      /^[-]+$/.test(method) || !/^(GET|POST|PUT|PATCH|DELETE)$/.test(method)
+    ) {
       continue; // separator or invalid
     }
     if (method && path) routes.push({ method, path });

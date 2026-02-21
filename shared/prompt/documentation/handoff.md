@@ -1,6 +1,8 @@
 # Handoff
 
-Use this file when switching agent or starting a new session on the same task. New sessions should attach only this file (and optionally `shared/prompt/store/context.md`).
+Use this file when switching agent or starting a new session on the same task.
+New sessions should attach only this file (and optionally
+`shared/prompt/store/context.md`).
 
 ---
 

@@ -1,6 +1,8 @@
 # {{repo_name}}
 
-Deno app: Fresh 2 (HTTP), Zod, ts-morph (AST), Deno KV. Entry: `main.ts`; client: `client.ts`. File-based routes in `system/router/` (Fresh 2 structure; dev uses programmatic routes in `main.ts`).
+Deno app: Fresh 2 (HTTP), Zod, ts-morph (AST), Deno KV. Entry: `main.ts`;
+client: `client.ts`. File-based routes in `system/router/` (Fresh 2 structure;
+dev uses programmatic routes in `main.ts`).
 
 ## Run
 
@@ -17,11 +19,13 @@ Domain entry points only; details are in each domain's README.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). For general or contribution questions: [contact@cherry-pick.net](mailto:contact@cherry-pick.net).
+See [CONTRIBUTING.md](CONTRIBUTING.md). For general or contribution questions:
+[contact@cherry-pick.net](mailto:contact@cherry-pick.net).
 
 ## Code of conduct
 
-This project follows the [Contributor Covenant](CODE_OF_CONDUCT.md). For CoC concerns: [conduct@cherry-pick.net](mailto:conduct@cherry-pick.net).
+This project follows the [Contributor Covenant](CODE_OF_CONDUCT.md). For CoC
+concerns: [conduct@cherry-pick.net](mailto:conduct@cherry-pick.net).
 
 ## License
 
