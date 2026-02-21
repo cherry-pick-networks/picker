@@ -1,4 +1,4 @@
-# picker
+# {{repo_name}}
 
 Deno app: Hono (HTTP), Zod, ts-morph (AST), Deno KV. Entry: `main.ts`.
 

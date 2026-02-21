@@ -7,7 +7,7 @@ One-page summary for onboarding and daily use.
 
 ## Project and stack
 
-- **Name**: picker
+- **Name**: {{repo_name}}
 - **Runtime**: Deno
 - **Stack**: Hono (HTTP), Zod (validation), ts-morph (AST), Deno KV (storage)
 - **Entry**: `main.ts` (Hono app, KV routes, AST demo)
