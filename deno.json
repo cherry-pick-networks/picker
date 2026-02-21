@@ -1,8 +1,6 @@
 {
   "compilerOptions": {
-    "lib": ["deno.window", "deno.unstable"],
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact"
+    "lib": ["deno.window", "deno.unstable"]
   },
   "tasks": {
     "dev": "deno run -A --unstable-kv --watch main.ts",
@@ -29,7 +27,6 @@
     "hono": "jsr:@hono/hono@^4",
     "zod": "jsr:@zod/zod@^4",
     "ts-morph": "jsr:@ts-morph/ts-morph@^27",
-    "vite": "npm:vite@^6",
-    "preact": "npm:preact@^10"
+    "vite": "npm:vite@^6"
   }
 }

@@ -12,7 +12,6 @@
     "jsr:@ts-morph/common@~0.28.1": "0.28.1",
     "jsr:@ts-morph/ts-morph@27": "27.0.2",
     "jsr:@zod/zod@4": "4.3.6",
-    "npm:preact@10": "10.28.4",
     "npm:vite@*": "6.4.1_picomatch@4.0.3",
     "npm:vite@6": "6.4.1_picomatch@4.0.3"
   },
@@ -387,9 +386,6 @@
         "source-map-js"
       ]
     },
-    "preact@10.28.4": {
-      "integrity": "sha512-uKFfOHWuSNpRFVTnljsCluEFq57OKT+0QdOiQo8XWnQ/pSvg7OpX5eNOejELXJMWy+BwM2nobz0FkvzmnpCNsQ=="
-    },
     "rollup@4.58.0": {
       "integrity": "sha512-wbT0mBmWbIvvq8NeEYWWvevvxnOyhKChir47S66WCxw1SXqhw7ssIYejnQEVt7XYQpsj2y8F9PM+Cr3SNEa0gw==",
       "dependencies": [
@@ -457,7 +453,6 @@
       "jsr:@std/assert@1",
       "jsr:@ts-morph/ts-morph@27",
       "jsr:@zod/zod@4",
-      "npm:preact@10",
       "npm:vite@6"
     ]
   }
