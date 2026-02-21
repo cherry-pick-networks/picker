@@ -462,3 +462,13 @@ When a reply presents multiple options or alternatives, list at least one pro an
 one con for each option. Keep each pro/con to one short line unless context
 requires more. Omit this only when options are trivial or the user asks for no
 comparison.
+
+### §P. Format limits (code)
+
+Line length: keep lines to 80 characters or fewer (strict); exceptions only
+where documented (e.g. long URLs in comments). File length: keep files to 100
+lines or fewer; split when longer. Scope: TypeScript and TSX source (e.g. `**/*.ts`, `**/*.tsx`); exclude
+node_modules, _fresh, vendor, generated output.
+
+Guidance (not enforced as rule): aim for 2–4 lines per function where
+practical; keep indentation depth to 1–2 levels.
