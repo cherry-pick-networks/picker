@@ -1,5 +1,5 @@
 import { assertEquals } from "@std/assert";
-import { app } from "./main.ts";
+import { app } from "../../main.ts";
 
 const handler = app.handler();
 const handlerTestOpts = { sanitizeResources: false };
