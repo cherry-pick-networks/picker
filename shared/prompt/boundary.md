@@ -21,6 +21,7 @@ Use that document for AI direction and scope decisions.
 | **system/store/**        | Storage access (e.g. Deno KV via `getKv()`).                                             |
 | **system/service/**      | Shared business logic (e.g. `add`). AST read/patch for shared/runtime/store/; apply via Governance and scripts write. |
 | **system/validator/**       | Governance verification; must pass before any apply (e.g. shared/runtime/store mutation). |
+| **system/log/**             | Log artifact storage (e.g. test run history JSON); written by tests or tooling, not served by API. |
 | **shared/runtime/store/**   | Target path for AST-based self-edit; read and write only via Governance-verified flow.     |
 
 ---
