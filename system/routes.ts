@@ -12,6 +12,7 @@ import * as astApply from "./router/ast-apply.ts";
 import * as astDemo from "./router/ast-demo.ts";
 import * as scripts from "./router/scripts.ts";
 import * as profile from "./router/profile.ts";
+import * as content from "./router/content.ts";
 
 export const ROUTES: { method: string; path: string }[] = [
   { method: "GET", path: "/" },
@@ -25,6 +26,12 @@ export const ROUTES: { method: string; path: string }[] = [
   { method: "PATCH", path: "/profile/:id" },
   { method: "GET", path: "/progress/:id" },
   { method: "PATCH", path: "/progress/:id" },
+  { method: "GET", path: "/content/items/:id" },
+  { method: "POST", path: "/content/items" },
+  { method: "PATCH", path: "/content/items/:id" },
+  { method: "GET", path: "/content/worksheets/:id" },
+  { method: "POST", path: "/content/worksheets/generate" },
+  { method: "POST", path: "/content/worksheets/build-prompt" },
   { method: "GET", path: "/ast" },
   { method: "GET", path: "/ast-demo" },
   { method: "POST", path: "/ast/apply" },
@@ -37,6 +44,7 @@ function registerRest(app: Hono) {
   registerHomeAndKv(app);
   registerProfile(app);
   registerProgress(app);
+  registerContent(app);
   registerKvMutate(app);
 }
 
@@ -71,6 +79,18 @@ function registerProfile(app: Hono) {
 function registerProgress(app: Hono) {
   app.get("/progress/:id", profile.getProgress);
   app.patch("/progress/:id", profile.patchProgress);
+}
+
+function registerContent(app: Hono) {
+  app.get("/content/items/:id", content.getItem);
+  app.post("/content/items", content.postItem);
+  app.patch("/content/items/:id", content.patchItem);
+  app.get("/content/worksheets/:id", content.getWorksheet);
+  app.post("/content/worksheets/generate", content.postWorksheetsGenerate);
+  app.post(
+    "/content/worksheets/build-prompt",
+    content.postWorksheetsBuildPrompt,
+  );
 }
 
 function registerKvMutate(app: Hono) {
