@@ -21,8 +21,6 @@ Use that document for AI direction and scope decisions.
 | **system/store/**        | Storage access (e.g. Deno KV via `getKv()`).                                             |
 | **system/service/**      | Shared business logic (e.g. `add`).                                                      |
 | **system/validator/**    | Governance verification; must pass before any apply (e.g. ops/scripts mutation).         |
-| **system/component/**    | UI components (e.g. Button).                                                             |
-| **system/presentation/** | Interactive UI (e.g. Counter).                                                           |
 | **ops/scripts/**         | Target path for AST-based self-edit; read and write only via Governance-verified flow.   |
 
 ---
