@@ -3,11 +3,15 @@
 ## Goal
 
 - **Single source**: All rule text lives in `shared/prompt/store/context.md` (Part B: Rule definitions).
-- **Cursor Rules**: `.cursor/rules/*.mdc` only reference that file; no duplicate rule text.
+- **Cursor Rules**: `.cursor/rules/*.mdc` only reference that file; no duplicate rule text. mdc files are for **when** to apply (always vs on-request).
 
-## Scope
+## Current layout (after simplification)
 
-- **Source**: 12 files under `.cursor/rules/*.mdc`.
+- **Two mdc files**: one always-applied (`global-agent-policy.mdc`), one on-request (`global-directory-boundary.mdc`). See `cursor-rules-policy.md`.
+
+## Scope (historical)
+
+- **Source**: 12 files under `.cursor/rules/*.mdc` (pre-simplification).
 - **Target**: `shared/prompt/store/context.md` (expand with §A–§L).
 - **No**: New deps, scope doc changes, or module/API/infra changes.
 
@@ -21,6 +25,15 @@
 | 3 | Verify completeness and update implementation-plan | docs(shared/prompt): verify single-source migration |
 
 ## Rule → section mapping
+
+### Current (after simplification)
+
+| § | Section ID | .mdc |
+|---|-------------|------|
+| A–E, G–L | (all except F) | global-agent-policy.mdc (always) |
+| F | Directory structure and exceptions | global-directory-boundary.mdc (on-request) |
+
+### Historical (pre-simplification)
 
 | § | Section ID | Source .mdc |
 |---|-------------|-------------|
@@ -47,3 +60,4 @@
 - [x] context.md contains full text of all 12 rules (§A–§L).
 - [x] Each .mdc contains only a reference to context.md (no rule body).
 - [x] No duplicate long-form rule content in .mdc.
+- [x] Exactly two .mdc files; one always-applied, one on-request. See cursor-rules-policy.md.

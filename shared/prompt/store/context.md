@@ -118,6 +118,7 @@ All tools and models should use this file only; do not duplicate these rules in 
 ## 12. Maintenance
 
 - **Single source**: Add or change rules and habits only in this file (`shared/prompt/store/context.md`). Do not duplicate in Cursor Rules or other tool configs; reference this file instead.
+- **.cursor/rules**: mdc files are for **when** to apply (e.g. always vs on-request); keep one file per apply timing. Rule text stays here only; mdc names follow §D and §E.
 - **Review**: Review this file periodically (e.g. quarterly); add repeated instructions as they appear; remove or update outdated lines.
 - **External tips**: Use external guides (e.g. claude-code-tips) as reference only; write only the chosen practices here.
 
@@ -125,7 +126,7 @@ All tools and models should use this file only; do not duplicate these rules in 
 
 ## Part B. Rule definitions (authoritative)
 
-Cursor Rules (`.cursor/rules/*.mdc`) reference these sections only; they do not duplicate the text below.
+Cursor Rules (`.cursor/rules/*.mdc`) reference these sections only; they do not duplicate the text below. The role of each mdc is to define **when** to apply (e.g. alwaysApply). Rule content lives only in this file; mdc bodies list which § to follow. Keep the number of mdc files aligned with apply timings (e.g. one always-applied bundle, one on-request).
 
 ### §A. Commit message format
 
@@ -285,9 +286,7 @@ Exceptions:
   vendor, .cache (confirm per project). Update list and any validator together.
 
 Documentation:
-  Place rule text in .cursor/rules or in this file.
-  State: scope, "max 3 tiers" (prefix/infix/suffix only; root not counted),
-  the three allowed forms, order, no fourth tier, naming reference, exception list.
+  Rule text lives only in this file; .cursor/rules/*.mdc state scope and when to apply (e.g. always vs on-request). In docs, state: scope, "max 3 tiers" (prefix/infix/suffix only; root not counted), the three allowed forms, order, no fourth tier, naming reference, exception list.
 
 Validation (optional):
   Script: walk directories from root; skip exception list; assert remaining

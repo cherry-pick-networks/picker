@@ -2,21 +2,22 @@
 
 ## Relation to project rules
 
-- **global-directory-boundary / global-document-format / global-document-naming**: Single AI context lives under **shared/prompt/** (prefix = shared [Scope], infix = prompt [Entity]); context in **shared/prompt/store/context.md** (suffix = store [Artifact]); max 3 levels respected.
-- **system-document-boundary / system-agent-boundary**: Scope document remains the single source of truth for **modules, API routes, and infrastructure**. This plan does **not** add modules, API, or infrastructure; it only adds **shared/prompt/** and one context file. Do not add scope-bound items without updating the scope document first.
-- **global-agent-boundary**: Implement in one logical unit per phase; commit at each phase boundary.
-- **global-event-format**: Use that commit message format for every commit.
-- **global-agent-principle**: Keep the plan simple (KISS), consistent with existing conventions, and avoid speculative scope; only implement what is in current scope.
-- **global-document-constraint**: Do not add dependencies; use the project's official dependency list if any tooling is introduced later.
-- **global-document-language**: All content inside **shared/prompt/store/context.md** (and any other project docs) must be in **English** (code, comments, UI strings, docs).
-- **global-migration-boundary**: This plan does not refactor existing rule files; it only adds a new directory and files. Any future rule refactor follows plan-first, create-then-delete, one migration per commit.
+- **global-agent-policy** (always) and **global-directory-boundary** (on-request). See `shared/prompt/store/context.md` Part B and `cursor-rules-policy.md`.
+- **§D, §E, §F**: Single AI context lives under **shared/prompt/** (prefix = shared [Scope], infix = prompt [Entity]); context in **shared/prompt/store/context.md** (suffix = store [Artifact]); max 3 levels respected.
+- **§K, §L**: Scope document remains the single source of truth for **modules, API routes, and infrastructure**. This plan does **not** add modules, API, or infrastructure; it only adds **shared/prompt/** and one context file. Do not add scope-bound items without updating the scope document first.
+- **§B**: Implement in one logical unit per phase; commit at each phase boundary.
+- **§A**: Use that commit message format for every commit.
+- **§I**: Keep the plan simple (KISS), consistent with existing conventions, and avoid speculative scope; only implement what is in current scope.
+- **§G**: Do not add dependencies; use the project's official dependency list if any tooling is introduced later.
+- **§C**: All content inside **shared/prompt/store/context.md** (and any other project docs) must be in **English** (code, comments, UI strings, docs).
+- **§J**: This plan does not refactor existing rule files; it only adds a new directory and files. Any future rule refactor follows plan-first, create-then-delete, one migration per commit.
 
 ---
 
 ## 1. Goal
 
 - Implement a **model- and tool-agnostic** AI-assisted workflow.
-- Keep **all project rules and context in one place**: a single markdown file under **shared/prompt/** (no `docs/` for this; directory naming follows global-directory-boundary and global-document-naming).
+- Keep **all project rules and context in one place**: a single markdown file under **shared/prompt/** (no `docs/` for this; directory naming follows §F and §E).
 - Rely on **open protocols (eCPM/MCP)** and **CLI (Git, gh, Playwright, etc.)** so the same workflow works regardless of which AI or client is used.
 - Use external "tips" (e.g. claude-code-tips) only as reference; **authoritative text lives in the single context file**.
 
@@ -38,9 +39,9 @@
 - **Directory**: **shared/prompt/**  
   - Prefix: **shared** (Scope).  
   - Infix: **prompt** (Entity).  
-  - Complies with global-directory-boundary and global-document-naming; no `docs/` used for this.
+  - Complies with §F and §E; no `docs/` used for this.
 - **Single context file**: **shared/prompt/store/context.md**  
-  - All rules and context for AI/tools live here. Content in **English** (global-document-language).
+  - All rules and context for AI/tools live here. Content in **English** (§C).
 - **This plan**: **shared/prompt/documentation/implementation-plan.md** (suffix: documentation = Meta)  
   - Describes how to implement and maintain the workflow; does not replace the scope document for modules/API/infra.
 
@@ -66,7 +67,7 @@
 - **0.2** Define how each tool will use it (Cursor: reference in Rules; other AIs: attach file or pass path at start).
 - **0.3** List CLI and protocols in use (Git, `gh`, Playwright, MCP) without naming a specific model or vendor.
 
-**Deliverable**: Path and "reference only" policy fixed; no scope-bound modules/API/infra added (system-document-boundary).
+**Deliverable**: Path and "reference only" policy fixed; no scope-bound modules/API/infra added (§K).
 
 ---
 
@@ -75,12 +76,12 @@
 - **1.1** Create directory **shared/prompt/** (prefix + infix only; no fourth level).
 - **1.2** Create **shared/prompt/store/context.md** and fill it with (in English):
   - Project purpose and stack.
-  - Directory structure and naming (per global-document-format / global-document-naming).
+  - Directory structure and naming (per §D and §E).
   - How to run, build, and test.
-  - Coding and commit conventions (e.g. global-event-format).
+  - Coding and commit conventions (e.g. §A).
   - Frequently used CLI commands.
 - **1.3** Add any "repeated instructions to AI" only to this file; do not duplicate that content in tool-specific configs.
-- **1.4** Keep all content in **English** (global-document-language).
+- **1.4** Keep all content in **English** (§C).
 
 **Deliverable**: **shared/prompt/store/context.md** as the single source of truth for rules and context.
 
@@ -104,7 +105,7 @@
 - **3.4** Tests / TDD: if you use "failing test first → commit → implement", state it in context.md.
 - **3.5** Verification: e.g. "verify each claim and summarize in a table"; add a short line in context.md.
 
-**Deliverable**: context.md updated with workflow rules; no new modules/API/infra (global-agent-principle: no speculative implementation).
+**Deliverable**: context.md updated with workflow rules; no new modules/API/infra (§I: no speculative implementation).
 
 ---
 
@@ -156,7 +157,7 @@
 
 - **8.1** Choose the right level of abstraction (high-level vs file/function/deps); add to context.md.
 - **8.2** Ask for simplification when needed ("why this change?" / "simplify unnecessary parts"); add to context.md.
-- **8.3** Dangerous commands: keep the audit policy in context.md (and optionally a small script or checklist; no new dependencies without global-document-constraint).
+- **8.3** Dangerous commands: keep the audit policy in context.md (and optionally a small script or checklist; no new dependencies without §G).
 
 **Deliverable**: Quality and safety rules only in **shared/prompt/store/context.md**.
 
@@ -174,8 +175,8 @@
 
 ## 6. Commit and session rules (from project rules)
 
-- **global-agent-boundary**: One logical unit per commit; commit at each phase (or feature-flag) boundary before starting the next.
-- **global-event-format**: Every commit message must follow:  
+- **§B**: One logical unit per commit; commit at each phase (or feature-flag) boundary before starting the next.
+- **§A**: Every commit message must follow:  
   `type[(scope)]: description`  
   (imperative, lowercase; types: feat, fix, docs, chore, refactor, perf, test, ci, build).
 - Do not run `git commit` unless the user asks; commits are made during the task at each boundary.
@@ -193,7 +194,7 @@ feat(shared/prompt): add single AI context file and directory
 | # | Item | Notes |
 |---|------|-------|
 | 1 | Path **shared/prompt/store/context.md** fixed | Single source; directory rule compliant |
-| 2 | **shared/prompt/store/context.md** created with project description, stack, structure, run/test, rules (English) | global-document-language |
+| 2 | **shared/prompt/store/context.md** created with project description, stack, structure, run/test, rules (English) | §C |
 | 3 | Cursor Rules reference **shared/prompt/store/context.md** only (no long copy-paste) | Done — reference-only stubs |
 | 4 | Other tools: "attach shared/prompt/store/context.md or pass path" documented | One place to update |
 | 5 | Git/gh/PR/CI and safety policy in **shared/prompt/store/context.md** | CLI-only, model-agnostic |
@@ -205,15 +206,15 @@ feat(shared/prompt): add single AI context file and directory
 
 ## 8. Scope and dependencies (from project rules)
 
-- **system-document-boundary**: The scope document (e.g. docs/scope.md) remains the single source of truth for **modules, API routes, and infrastructure**. This plan does **not** add or change those; it only adds **shared/prompt/** and the context/handoff files. Any new module, API route, or infrastructure must still be added to the scope document first.
-- **global-document-constraint**: Do not add dependencies for this plan. If later you add a script or tool that depends on new packages, add them to the project's official dependency list first and satisfy global-validation-policy where applicable.
+- **§K**: The scope document (e.g. docs/scope.md) remains the single source of truth for **modules, API routes, and infrastructure**. This plan does **not** add or change those; it only adds **shared/prompt/** and the context/handoff files. Any new module, API route, or infrastructure must still be added to the scope document first.
+- **§G, §H**: Do not add dependencies for this plan. If later you add a script or tool that depends on new packages, add them to the project's official dependency list first and satisfy §H where applicable.
 
 ---
 
 ## 9. Summary
 
 - **Rules and context**: One file, **shared/prompt/store/context.md** (English); all tools reference or attach it.
-- **Paths**: **shared/prompt/** (shared = Scope, prompt = Entity); no `docs/`; compliant with global-directory-boundary and global-document-naming.
+- **Paths**: **shared/prompt/** (shared = Scope, prompt = Entity); no `docs/`; compliant with §F and §E.
 - **Git/PR/CI**: Use **gh** and Git; same workflow for any AI that can run the terminal.
 - **Integrations**: Prefer **MCP** and **Playwright**; document usage in context.md.
-- **Commits**: One unit per phase; commit message per global-event-format.
+- **Commits**: One unit per phase; commit message per §A.
