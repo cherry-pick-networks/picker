@@ -10,7 +10,8 @@
     "test:e2e-record": "deno run -A --unstable-kv shared/prompt/scripts/run-e2e-record.ts",
     "scope-check": "deno run --allow-read shared/prompt/scripts/check-scope.ts",
     "scope-discovery": "deno run --allow-read shared/prompt/scripts/scope-discovery.ts",
-    "type-check-policy": "deno run --allow-read shared/prompt/scripts/check-type-policy.ts"
+    "type-check-policy": "deno run --allow-read shared/prompt/scripts/check-type-policy.ts",
+    "migrate:old-to-data": "deno run -A shared/prompt/scripts/migrate-old-to-data.ts"
   },
   "lint": {
     "plugins": [
@@ -26,6 +27,7 @@
   },
   "imports": {
     "@std/assert": "jsr:@std/assert@1",
+    "@std/uuid": "jsr:@std/uuid@^1.1.0",
     "hono": "jsr:@hono/hono@^4",
     "zod": "jsr:@zod/zod@^4",
     "ts-morph": "jsr:@ts-morph/ts-morph@^27",

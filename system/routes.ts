@@ -14,6 +14,7 @@ import * as scripts from "./router/scripts.ts";
 import * as profile from "./router/profile.ts";
 import * as content from "./router/content.ts";
 import * as source from "./router/source.ts";
+import * as data from "./router/data.ts";
 
 export const ROUTES: { method: string; path: string }[] = [
   { method: "GET", path: "/" },
@@ -36,6 +37,10 @@ export const ROUTES: { method: string; path: string }[] = [
   { method: "GET", path: "/sources" },
   { method: "GET", path: "/sources/:id" },
   { method: "POST", path: "/sources" },
+  { method: "GET", path: "/data/extracted-index" },
+  { method: "GET", path: "/data/identity-index" },
+  { method: "GET", path: "/data/extracted/:id" },
+  { method: "GET", path: "/data/identity/:id" },
   { method: "GET", path: "/ast" },
   { method: "GET", path: "/ast-demo" },
   { method: "POST", path: "/ast/apply" },
@@ -50,6 +55,7 @@ function registerRest(app: Hono) {
   registerProgress(app);
   registerContent(app);
   registerSource(app);
+  registerData(app);
   registerKvMutate(app);
 }
 
@@ -102,6 +108,13 @@ function registerSource(app: Hono) {
   app.get("/sources", source.getSources);
   app.get("/sources/:id", source.getSource);
   app.post("/sources", source.postSource);
+}
+
+function registerData(app: Hono) {
+  app.get("/data/extracted-index", data.getExtractedIndex);
+  app.get("/data/identity-index", data.getIdentityIndex);
+  app.get("/data/extracted/:id", data.getExtractedById);
+  app.get("/data/identity/:id", data.getIdentityById);
 }
 
 function registerKvMutate(app: Hono) {

@@ -339,7 +339,7 @@ Lowercase; one hyphen between words; no underscores or spaces.
 
 Exceptions: Maintain an explicit exception list; same list for docs and tooling.
 Typical entries: .git, .cursor, node_modules, dist, build, coverage, vendor,
-.cache, static, tests (confirm per project). Update list and any validator
+.cache, static, tests, data (confirm per project). Update list and any validator
 together.
 
 Document exceptions: Maintain a separate explicit list for .md files exempt from

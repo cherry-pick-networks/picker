@@ -5,10 +5,13 @@
     "jsr:@hono/hono@4": "4.12.0",
     "jsr:@std/assert@*": "1.0.19",
     "jsr:@std/assert@1": "1.0.19",
+    "jsr:@std/bytes@^1.0.6": "1.0.6",
+    "jsr:@std/crypto@^1.0.5": "1.0.5",
     "jsr:@std/fs@1": "1.0.23",
     "jsr:@std/internal@^1.0.12": "1.0.12",
     "jsr:@std/path@1": "1.1.4",
     "jsr:@std/path@^1.1.4": "1.1.4",
+    "jsr:@std/uuid@^1.1.0": "1.1.0",
     "jsr:@ts-morph/common@~0.28.1": "0.28.1",
     "jsr:@ts-morph/ts-morph@27": "27.0.2",
     "jsr:@zod/zod@4": "4.3.6",
@@ -28,6 +31,12 @@
         "jsr:@std/internal"
       ]
     },
+    "@std/bytes@1.0.6": {
+      "integrity": "f6ac6adbd8ccd99314045f5703e23af0a68d7f7e58364b47d2c7f408aeb5820a"
+    },
+    "@std/crypto@1.0.5": {
+      "integrity": "0dcfbb319fe0bba1bd3af904ceb4f948cde1b92979ec1614528380ed308a3b40"
+    },
     "@std/fs@1.0.23": {
       "integrity": "3ecbae4ce4fee03b180fa710caff36bb5adb66631c46a6460aaad49515565a37",
       "dependencies": [
@@ -42,6 +51,13 @@
       "integrity": "1d2d43f39efb1b42f0b1882a25486647cb851481862dc7313390b2bb044314b5",
       "dependencies": [
         "jsr:@std/internal"
+      ]
+    },
+    "@std/uuid@1.1.0": {
+      "integrity": "6268db2ccf172849c9be80763354ca305d49ef4af41fe995623d44fcc3f7457c",
+      "dependencies": [
+        "jsr:@std/bytes",
+        "jsr:@std/crypto"
       ]
     },
     "@ts-morph/common@0.28.1": {
@@ -451,6 +467,7 @@
     "dependencies": [
       "jsr:@hono/hono@4",
       "jsr:@std/assert@1",
+      "jsr:@std/uuid@^1.1.0",
       "jsr:@ts-morph/ts-morph@27",
       "jsr:@zod/zod@4",
       "npm:vite@6"
