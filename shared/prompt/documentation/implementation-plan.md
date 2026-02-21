@@ -194,7 +194,7 @@ feat(shared/prompt): add single AI context file and directory
 |---|------|-------|
 | 1 | Path **shared/prompt/store/context.md** fixed | Single source; directory rule compliant |
 | 2 | **shared/prompt/store/context.md** created with project description, stack, structure, run/test, rules (English) | global-document-language |
-| 3 | Cursor Rules reference **shared/prompt/store/context.md** only (no long copy-paste) | Reference only |
+| 3 | Cursor Rules reference **shared/prompt/store/context.md** only (no long copy-paste) | Done — reference-only stubs |
 | 4 | Other tools: "attach shared/prompt/store/context.md or pass path" documented | One place to update |
 | 5 | Git/gh/PR/CI and safety policy in **shared/prompt/store/context.md** | CLI-only, model-agnostic |
 | 6 | Handoff template and path (e.g. shared/prompt/documentation/handoff.md or root HANDOFF.md) | Document in context.md |
