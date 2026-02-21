@@ -17,9 +17,9 @@ Use that document for AI direction and scope decisions.
 | **main.ts**              | Server entry: Hono app; routes registered from system/routes.ts (imports system/router/*). |
 | **client.ts**            | Client entry (loaded on every page).                                                       |
 | **system/routes.ts**     | Route list (ROUTES) and registerRoutes(app); scope-check reads this.                      |
-| **system/router/**       | Hono handlers: home, kv, profile, content, ast, ast-demo, scripts (GET/POST /scripts, GET /scripts/*). |
-| **system/store/**        | Storage access (e.g. Deno KV via `getKv()`). Profile/progress KV under prefixes `profile`, `progress`. Content items/worksheets under `content` (item, worksheet). |
-| **system/service/**      | Shared business logic (e.g. `add`, profile/progress, content). AST read/patch for shared/runtime/store/; apply via Governance and scripts write. |
+| **system/router/**       | Hono handlers: home, kv, profile, content, source, ast, ast-demo, scripts (GET/POST /scripts, GET /scripts/*). |
+| **system/store/**        | Storage access (e.g. Deno KV via `getKv()`). Profile/progress KV under prefixes `profile`, `progress`. Content items/worksheets under `content` (item, worksheet). Source records under `source`. |
+| **system/service/**      | Shared business logic (e.g. `add`, profile/progress, content, source collect/read). AST read/patch for shared/runtime/store/; apply via Governance and scripts write. |
 | **system/validator/**       | Governance verification; must pass before any apply (e.g. shared/runtime/store mutation). |
 | **system/log/**             | Log artifact storage (e.g. test run history JSON); written by tests or tooling, not served by API. |
 | **shared/runtime/store/**   | Target path for AST-based self-edit; read and write only via Governance-verified flow.     |
@@ -53,6 +53,9 @@ Use that document for AI direction and scope decisions.
 | GET    | `/content/worksheets/:id`     | Read worksheet meta by id. Responds worksheet object or 404.                                                            |
 | POST   | `/content/worksheets/generate` | Create worksheet (meta + item_ids from concepts). Body: title, concept_ids, item_count, etc. Responds 201 with worksheet. |
 | POST   | `/content/worksheets/build-prompt` | Build worksheet prompt string from request and profile/context. Body: GenerateWorksheetRequest. Responds 200 with { prompt }. No LLM call. |
+| GET    | `/sources`              | List or query sources (optional query params). Responds `{ "sources": Source[] }`. |
+| GET    | `/sources/:id`          | Read source by id. Responds source object or 404. |
+| POST   | `/sources`              | Collect and store a source. Body: source fields (id optional). Responds 201 with source. |
 
 ---
 
@@ -70,5 +73,6 @@ Use that document for AI direction and scope decisions.
 - **Deno KV** — built-in storage only; no external DB, message broker, or queue.
   Key prefixes: `kv` (generic), `profile` (actor profile, key `["profile", id]`),
   `progress` (progress state, key `["progress", id]`),
-  `content` (items key `["content", "item", id]`; worksheets key `["content", "worksheet", id]`).
+  `content` (items key `["content", "item", id]`; worksheets key `["content", "worksheet", id]`),
+  `source` (source records key `["source", id]`).
 - **Worksheet prompt templates** — read-only from `shared/runtime/store/` (e.g. docs/contract/); Governance-verified read.
