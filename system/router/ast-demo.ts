@@ -24,10 +24,13 @@ const HTML = `<!DOCTYPE html>
 </html>
 `;
 
+function htmlResponse(): Response {
+  const headers = { "Content-Type": "text/html; charset=utf-8" };
+  return new Response(HTML, { headers });
+}
+
 export const handler = {
   GET() {
-    return new Response(HTML, {
-      headers: { "Content-Type": "text/html; charset=utf-8" },
-    });
+    return htmlResponse();
   },
 };

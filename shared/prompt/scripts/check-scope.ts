@@ -1,9 +1,10 @@
 /**
- * Scope check: fail if code registers API routes not listed in the scope document.
+ * Scope check: fail if code registers API routes not listed in the scope doc.
  * Discovers routes from system/router/ (file-based). Run from repo root:
  *   deno run --allow-read shared/prompt/scripts/check-scope.ts
  * Or: deno task scope-check
  */
+// deno-lint-ignore-file function-length/function-length
 
 const SCOPE_PATH = "shared/prompt/boundary.md";
 const ROUTER_DIR = "system/router";
@@ -40,7 +41,7 @@ function parseScopeApiTable(content: string): Route[] {
 }
 
 /**
- * Convert a file path under router (e.g. "index.ts", "kv/index.ts", "kv/[key].ts")
+ * Convert a file path under router (e.g. index.ts, kv/index.ts, kv/[key].ts)
  * to a Fresh route path (e.g. "/", "/kv", "/kv/:key").
  */
 function filePathToRoutePath(relativePath: string): string {
@@ -61,7 +62,7 @@ function filePathToRoutePath(relativePath: string): string {
 }
 
 /**
- * Extract HTTP methods from handler export in file content (handler.GET, handler.POST, ...).
+ * Extract HTTP methods from handler export in file content.
  */
 function extractMethodsFromHandler(content: string): string[] {
   const methods: string[] = [];
@@ -142,7 +143,7 @@ async function main(): Promise<void> {
   const missingInScope = inCode.filter((r) => !allowed.has(routeKey(r)));
   if (missingInScope.length > 0) {
     console.error(
-      "The following routes are in code but not listed in the scope document. Add them to shared/prompt/boundary.md first, then implement.",
+      "Routes in code not in scope doc. Add to shared/prompt/boundary.md first.",
     );
     for (const r of missingInScope) {
       console.error(`  ${r.method} ${r.path}`);

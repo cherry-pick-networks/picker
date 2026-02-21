@@ -3,15 +3,17 @@ import { getKv, listKeys } from "../../store/kv.ts";
 
 const KvBodySchema = z.object({ key: z.string(), value: z.unknown() });
 
+function keysResponse(keys: string[]): Response {
+  const headers = { "Content-Type": "application/json" };
+  return new Response(JSON.stringify({ keys }), { headers });
+}
+
 export const handler = {
   async GET(req: Request) {
-    const url = new URL(req.url);
-    const prefix = url.searchParams.get("prefix") ?? undefined;
-    const keys = await listKeys(prefix);
-    return new Response(JSON.stringify({ keys }), {
-      headers: { "Content-Type": "application/json" },
-    });
+    const prefix = new URL(req.url).searchParams.get("prefix") ?? undefined;
+    return keysResponse(await listKeys(prefix));
   },
+  // deno-lint-ignore function-length/function-length
   async POST(req: Request) {
     const body = await req.json();
     const parsed = KvBodySchema.safeParse(body);

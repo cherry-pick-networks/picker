@@ -1,15 +1,14 @@
 # Tips-derived usage
 
-Optional tooling and workflows. Reference only; use if the project adopts
-them.
+Optional tooling and workflows. Reference only; use if the project adopts them.
 
-**Tips already in store.md**: Decompose (Tip 3 → §6), Git/gh/draft
-PR/worktree (Tip 4, 16 → §7), New topic → new conversation (Tip 5 → §9), Getting
-output out (Tip 6 → §10), Aliases/setup (Tip 7 → §5), Write–test cycle (Tip 9 →
-§6), Cmd+A / paste (Tip 10 → §10), Exponential backoff (Tip 17 → §8),
-Markdown/Notion (Tip 19, 20 → §10), realpath (Tip 24 → §8), Verify output (Tip
-28 → §6), Abstraction level (Tip 32 → §11), TDD (Tip 34 → §6), Plan then
-prototype (Tip 39 → §6), Simplify (Tip 40 → §11).
+**Tips already in store.md**: Decompose (Tip 3 → §6), Git/gh/draft PR/worktree
+(Tip 4, 16 → §7), New topic → new conversation (Tip 5 → §9), Getting output out
+(Tip 6 → §10), Aliases/setup (Tip 7 → §5), Write–test cycle (Tip 9 → §6), Cmd+A
+/ paste (Tip 10 → §10), Exponential backoff (Tip 17 → §8), Markdown/Notion (Tip
+19, 20 → §10), realpath (Tip 24 → §8), Verify output (Tip 28 → §6), Abstraction
+level (Tip 32 → §11), TDD (Tip 34 → §6), Plan then prototype (Tip 39 → §6),
+Simplify (Tip 40 → §11).
 
 ---
 
@@ -35,8 +34,7 @@ prototype (Tip 39 → §6), Simplify (Tip 40 → §11).
 
 - **When**: Before switching agent or starting a new session on the same
   long-running task.
-- **Where**: `shared/prompt/handoff.md` (linked from
-  README).
+- **Where**: `shared/prompt/handoff.md` (linked from README).
 - **Fields**: Goal, progress, what was tried, what failed, next steps. New
   sessions attach only this file.
 - **Next steps format**: Bullet list; one item = one logical unit (one commit or
@@ -73,9 +71,9 @@ prototype (Tip 39 → §6), Simplify (Tip 40 → §11).
 
 ## Context review (Tip 30)
 
-- When reviewing store.md: use recent conversations to propose new
-  lines (repeated instructions → candidates for store.md).
-  Optionally use a review skill (e.g. review-claudemd) if available.
+- When reviewing store.md: use recent conversations to propose new lines
+  (repeated instructions → candidates for store.md). Optionally use a review
+  skill (e.g. review-claudemd) if available.
 
 ---
 
@@ -90,15 +88,15 @@ prototype (Tip 39 → §6), Simplify (Tip 40 → §11).
 
 - For long-running or risky work (e.g. research,
   `--dangerously-skip-permissions`): prefer running in a container so failures
-  are isolated. See store.md §8 for long-running jobs; use a
-  container when the task is both long and permission-heavy.
+  are isolated. See store.md §8 for long-running jobs; use a container when the
+  task is both long and permission-heavy.
 
 ---
 
 ## Interactive PR reviews (Tip 26)
 
-- Use `gh pr view` and `gh pr diff` (store.md §7) for step-by-step
-  or file-by-file review. Ask the agent to run tests where relevant and to
+- Use `gh pr view` and `gh pr diff` (store.md §7) for step-by-step or
+  file-by-file review. Ask the agent to run tests where relevant and to
   summarize findings. Interactive back-and-forth beats one-shot review.
 
 ---
@@ -106,17 +104,17 @@ prototype (Tip 39 → §6), Simplify (Tip 40 → §11).
 ## GitHub Actions / DevOps (Tip 29)
 
 - For CI failures: use `gh run view` and logs to find root cause or flakiness
-  (store.md §7). If using Claude with dx plugin,
-  `/dx:gha <GitHub Actions URL>` can automate investigation and suggest fixes.
+  (store.md §7). If using Claude with dx plugin, `/dx:gha <GitHub Actions URL>`
+  can automate investigation and suggest fixes.
 
 ---
 
 ## Background bash and subagents (Tip 36)
 
 - Long-running commands: run in background (e.g. Ctrl+B in Claude Code) and have
-  the agent check later or use exponential backoff (store.md §8).
-  When using subagents, run heavy or parallel analysis in background so the main
-  session stays responsive.
+  the agent check later or use exponential backoff (store.md §8). When using
+  subagents, run heavy or parallel analysis in background so the main session
+  stays responsive.
 
 ---
 

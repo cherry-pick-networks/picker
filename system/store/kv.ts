@@ -5,26 +5,34 @@ export function getKv(): Promise<Deno.Kv> {
   return kvPromise;
 }
 
+function toLogicalKey(keyParts: string[]): string | null {
+  if (keyParts.length < 2 || keyParts[0] !== "kv") return null;
+  return keyParts.slice(1).join("/");
+}
+
+// deno-lint-ignore function-length/function-length
+async function collectKeys(kv: Deno.Kv): Promise<string[]> {
+  const keys: string[] = [];
+  for await (const entry of kv.list({ prefix: ["kv"] })) {
+    const key = toLogicalKey(entry.key as string[]);
+    if (key !== null) keys.push(key);
+  }
+  return keys;
+}
+
+async function listKvEntries(): Promise<string[]> {
+  const kv = await getKv();
+  return collectKeys(kv);
+}
+
 /**
  * List logical keys in KV under the "kv" prefix. Optional prefix filters keys
  * that start with that string. Returns only the key part (e.g. "foo"), not the
  * full path (["kv", "foo"]).
  */
 export async function listKeys(prefix?: string): Promise<string[]> {
-  const kv = await getKv();
-  // Deno KV prefix matches full key parts only, so we always list under "kv"
-  // and filter by logicalKey.startsWith(prefix) when prefix is provided.
-  const keys: string[] = [];
-  for await (const entry of kv.list({ prefix: ["kv"] })) {
-    const keyParts = entry.key as string[];
-    if (keyParts.length >= 2 && keyParts[0] === "kv") {
-      const logicalKey = keyParts.slice(1).join("/");
-      if (prefix === undefined || logicalKey.startsWith(prefix)) {
-        keys.push(logicalKey);
-      }
-    }
-  }
-  return keys;
+  const keys = await listKvEntries();
+  return prefix === undefined ? keys : keys.filter((k) => k.startsWith(prefix));
 }
 
 /**

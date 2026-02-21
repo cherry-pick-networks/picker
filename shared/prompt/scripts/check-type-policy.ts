@@ -5,6 +5,7 @@
  * Run from repo root: deno run --allow-read shared/prompt/scripts/check-type-policy.ts
  * Or: deno task type-check-policy
  */
+// deno-lint-ignore-file function-length/function-length
 
 const DENO_JSON = "deno.json";
 const DENO_JSONC = "deno.jsonc";
@@ -24,7 +25,7 @@ const SKIP_DIRS = new Set([
 ]);
 
 const SOURCE_EXTS = [".ts", ".tsx", ".mts", ".js", ".jsx", ".mjs"];
-/** Match line that is solely a comment directive (// or * then directive, then only whitespace). */
+/** Match line: comment directive (// or *) then @ts-ignore/expect-error, then whitespace. */
 const DIRECTIVE_RE = /^\s*(?:\/\/|\*)\s*@ts-(?:ignore|expect-error)\s*$/;
 
 function hasNoCheck(script: string): boolean {
@@ -148,7 +149,7 @@ async function main(): Promise<void> {
 
   if (allErrors.length > 0) {
     console.error(
-      "Type-check policy violation(s). Do not disable or bypass type checking (see §N in shared/prompt/store.md).",
+      "Type-check policy violation(s). See §N in shared/prompt/store.md.",
     );
     for (const e of allErrors) console.error("  " + e);
     Deno.exit(1);

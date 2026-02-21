@@ -2,8 +2,7 @@
 
 These [claude-code-tips](https://github.com/ykdojo/claude-code-tips) are **not**
 adopted as project practice. They are listed here for optional reference. When
-the team agrees to adopt one, add it to
-[usage.md](usage.md) or to
+the team agrees to adopt one, add it to [usage.md](usage.md) or to
 [store.md](../store.md) as appropriate.
 
 ---
@@ -147,6 +146,5 @@ for workflows and updates.
 ---
 
 When the team decides to adopt any of these, add the chosen practice to
-[usage.md](usage.md) or
-[store.md](../store.md) and, if needed, remove
-or shorten the entry here.
+[usage.md](usage.md) or [store.md](../store.md) and, if needed, remove or
+shorten the entry here.

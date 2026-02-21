@@ -26,8 +26,8 @@ tool-specific configs.
     Context
   - **Infix**: Actor, Action, or Entity (e.g. prompt, document, service)
   - **Suffix**: Artifact, Policy, or Meta (e.g. store, config, test)
-- **This file**: `shared/prompt/store.md` (shared = Scope,
-  prompt = Entity; store as artifact naming in filename)
+- **This file**: `shared/prompt/store.md` (shared = Scope, prompt = Entity;
+  store as artifact naming in filename)
 - **Exceptions**: .git, .cursor, node_modules, dist, build, coverage, vendor,
   .cache, static (confirm per repo)
 - Do not add a fourth tier. Do not use forbidden segments (e.g. core in Context;
@@ -79,9 +79,9 @@ tool-specific configs.
   directory
 - `realpath <path>` — resolve absolute path when referring to files outside
   current tree
-- **Optional**: Status line `shared/prompt/scripts/context-bar.sh`;
-  setup `shared/prompt/scripts/setup.sh`; see
-  `shared/prompt/documentation/usage.md` for tips-derived options (3rd layer).
+- **Optional**: Status line `shared/prompt/scripts/context-bar.sh`; setup
+  `shared/prompt/scripts/setup.sh`; see `shared/prompt/documentation/usage.md`
+  for tips-derived options (3rd layer).
 
 ---
 
@@ -139,11 +139,10 @@ tool-specific configs.
 - **New topic**: Start a new conversation when the topic or task changes to keep
   context focused.
 - **Handoff**: For long-running or multi-session work, write a single handoff
-  doc (`shared/prompt/handoff.md`; linked from
-  README) with: goal, progress, what was tried, what failed, next steps.
-  **Workflow**: create or update the handoff file before switching agent or
-  topic; new sessions attach only that file. Optionally use `/handoff` (e.g. dx
-  plugin) if available.
+  doc (`shared/prompt/handoff.md`; linked from README) with: goal, progress,
+  what was tried, what failed, next steps. **Workflow**: create or update the
+  handoff file before switching agent or topic; new sessions attach only that
+  file. Optionally use `/handoff` (e.g. dx plugin) if available.
 - **Next steps (handoff)**: In the handoff doc, the "Next steps" section lists
   zero or more follow-up actions. Each item is one logical unit (one commit or
   one scoped task); one sentence per item so a new session can start without
@@ -162,8 +161,8 @@ tool-specific configs.
 - **Inaccessible or private content**: If a URL or resource cannot be fetched
   directly, use "select all → copy → paste" into the chat (or attach the file).
   For blocked or paywalled sites (e.g. Reddit), use a fallback (e.g.
-  reddit-fetch skill or Gemini CLI); see
-  `shared/prompt/documentation/usage.md` if used.
+  reddit-fetch skill or Gemini CLI); see `shared/prompt/documentation/usage.md`
+  if used.
 - **Output format**: Prefer Markdown for reports and docs; use a neutral format
   (e.g. paste via Notion) when copying to platforms that do not accept Markdown.
 - **Getting output out**: Copy from terminal, or write to a file and open in
@@ -189,25 +188,24 @@ tool-specific configs.
 ## 12. Maintenance
 
 - **Single source**: Add or change rules and habits only in this file
-  (`shared/prompt/store.md`). Do not duplicate in Cursor
-  Rules or other tool configs; reference this file instead.
+  (`shared/prompt/store.md`). Do not duplicate in Cursor Rules or other tool
+  configs; reference this file instead.
 - **.cursor/rules**: mdc files are for **when** to apply (e.g. always vs
   on-request); keep one file per apply timing. Rule text stays here only; mdc
   names follow §D and §E.
 - **Review**: Review this file periodically (e.g. quarterly); add repeated
   instructions as they appear; remove or update outdated lines. Use recent
   conversations to propose new lines (repeated instructions from chats →
-  candidates for store.md); optionally use a review skill (e.g.
-  review-claudemd) if available.
+  candidates for store.md); optionally use a review skill (e.g. review-claudemd)
+  if available.
 - **External tips**: Use external guides (e.g. claude-code-tips) as reference
   only; write only the chosen practices here.
 - **Human-readable docs**: Project summary and rules for people are in
   `shared/prompt/` (2nd layer: profile.md, principle.md, reference.md) and
   `shared/prompt/documentation/` (3rd layer: allowed names reference, usage,
-strategy, guide, runbook). Root README
-  Documentation section lists only domain entry points (e.g. shared/README.md);
-  do not add deep links to docs there. Do not duplicate rule text in root
-  README.
+  strategy, guide, runbook). Root README Documentation section lists only domain
+  entry points (e.g. shared/README.md); do not add deep links to docs there. Do
+  not duplicate rule text in root README.
 
 ---
 
@@ -259,14 +257,14 @@ rule files: pick one prefix from Scope/Layer/Context; one suffix from
 Artifact/Policy/Meta; add infix from Actor/Action/Entity only when the rule
 applies to a specific focus.
 
-Document files under shared/prompt/: use [suffix].md only. Prefix and infix
-are implied by the path (shared = prefix, prompt = infix). Suffix must be from
-§E allowed sets (Artifact, Policy, Meta). Same segment form: lowercase; one
-hyphen between words; no underscores. Exceptions: see §F (e.g. README.md at
-tree root). Scope for document names: the segment naming rule applies to
-exactly one document tree; in this project only .md files under shared/prompt/
-are in scope. Files outside that tree (e.g. root README.md, CONTRIBUTING.md,
-CHANGELOG.md) are not subject to document-name rules.
+Document files under shared/prompt/: use [suffix].md only. Prefix and infix are
+implied by the path (shared = prefix, prompt = infix). Suffix must be from §E
+allowed sets (Artifact, Policy, Meta). Same segment form: lowercase; one hyphen
+between words; no underscores. Exceptions: see §F (e.g. README.md at tree root).
+Scope for document names: the segment naming rule applies to exactly one
+document tree; in this project only .md files under shared/prompt/ are in scope.
+Files outside that tree (e.g. root README.md, CONTRIBUTING.md, CHANGELOG.md) are
+not subject to document-name rules.
 
 Directory structure (max 3 levels; segment order): level 1: folder name from
 approved prefix (required); level 2: folder name from approved infix (optional);
@@ -360,11 +358,11 @@ order, no fourth tier, naming reference, exception list.
 
 Validation (optional): Script: walk directories from root; skip exception list;
 assert remaining paths match prefix/(infix/)(suffix/) and tier names in allowed
-sets; exit 1 on failure. Run in pre-commit or CI. Document names: optionally walk the document tree (e.g. shared/prompt/), skip
-document exceptions, assert each remaining .md matches [suffix].md and suffix
-is in §E allowed sets (for shared/prompt/documentation/, use the documentation
-allowed list only: reference, usage, strategy, guide, runbook); run in
-pre-commit or CI.
+sets; exit 1 on failure. Run in pre-commit or CI. Document names: optionally
+walk the document tree (e.g. shared/prompt/), skip document exceptions, assert
+each remaining .md matches [suffix].md and suffix is in §E allowed sets (for
+shared/prompt/documentation/, use the documentation allowed list only:
+reference, usage, strategy, guide, runbook); run in pre-commit or CI.
 
 Agent / tool behavior: When creating directories, use only the three allowed
 forms for non-excepted paths; use only approved axis values per §E.
@@ -425,22 +423,21 @@ content first; only after that delete the old files; one logical migration (one
 plan) per commit. Naming: new rule file names must follow §D and §E; use infix
 from Actor/Action/Entity where it clarifies focus (e.g. document, event, agent).
 No scope doc change: adding or refactoring .cursor/rules does not require
-shared/prompt/boundary.md change; scope doc is for
-modules, API routes, infrastructure only. Document renames: when renaming .md
-under the document tree to comply with segment naming, (1) list current files
-and target names per §D/§E, (2) rename (prefer non-referenced files first), (3)
-update in-tree references and links, (4) verify with document-name validation if
-available; detailed steps in documentation/strategy.md or store §J.
+shared/prompt/boundary.md change; scope doc is for modules, API routes,
+infrastructure only. Document renames: when renaming .md under the document tree
+to comply with segment naming, (1) list current files and target names per
+§D/§E, (2) rename (prefer non-referenced files first), (3) update in-tree
+references and links, (4) verify with document-name validation if available;
+detailed steps in documentation/strategy.md or store §J.
 
 ### §K. Scope document boundary
 
 Scope document: the single source of truth for in-scope modules, API surface,
-and infrastructure is shared/prompt/boundary.md;
-update that doc before adding. Scope-bound implementation: do not add new
-modules, API routes (routers), or infrastructure (broker, extra DB, queue,
-search engine) unless they are listed in
-shared/prompt/boundary.md; add them to
-shared/prompt/boundary.md first, then implement.
+and infrastructure is shared/prompt/boundary.md; update that doc before adding.
+Scope-bound implementation: do not add new modules, API routes (routers), or
+infrastructure (broker, extra DB, queue, search engine) unless they are listed
+in shared/prompt/boundary.md; add them to shared/prompt/boundary.md first, then
+implement.
 
 ### §L. Agent and scope
 
@@ -453,8 +450,7 @@ Root README (repository root README.md): the Documentation section lists only
 domain entry points; each entry links to a scope-level README (e.g.
 shared/README.md), not to files under prefix/infix/suffix. Deep links: do not
 add links from root README to individual docs (e.g. store.md, handoff.md,
-  profile.md); those live in each domain's
-README.
+profile.md); those live in each domain's README.
 
 ### §N. Type-check policy
 
@@ -467,8 +463,8 @@ runs this step; fail on any violation.
 
 ### §O. Answer format (options with pros and cons)
 
-When a reply presents multiple options or alternatives, list at least one pro and
-one con for each option. Keep each pro/con to one short line unless context
+When a reply presents multiple options or alternatives, list at least one pro
+and one con for each option. Keep each pro/con to one short line unless context
 requires more. Omit this only when options are trivial or the user asks for no
 comparison.
 
@@ -476,11 +472,11 @@ comparison.
 
 Line length: keep lines to 80 characters or fewer (strict); exceptions only
 where documented (e.g. long URLs in comments). File length: keep files to 100
-lines or fewer; split when longer. Scope: TypeScript and TSX source (e.g. `**/*.ts`, `**/*.tsx`); exclude
-node_modules, _fresh, vendor, generated output.
+lines or fewer; split when longer. Scope: TypeScript and TSX source (e.g.
+`**/*.ts`, `**/*.tsx`); exclude node_modules, _fresh, vendor, generated output.
 
-Function body: block body 2–4 lines (enforced); expression body allowed
-(counts as 1). Validation: `deno lint` (plugin
-function-length/function-length in shared/prompt/scripts/function-length-lint-plugin.ts). To
-ignore per function: `// deno-lint-ignore function-length/function-length` on the line above.
+Function body: block body 2–4 lines (enforced); expression body allowed (counts
+as 1). Validation: `deno lint` (plugin function-length/function-length in
+shared/prompt/scripts/function-length-lint-plugin.ts). To ignore per function:
+`// deno-lint-ignore function-length/function-length` on the line above.
 Guidance (not enforced): keep indentation depth to 1–2 levels.

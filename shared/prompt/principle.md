@@ -103,8 +103,7 @@ Example: `feat(module): add handler`
 - **Rules vs guidance**: Add to rules only what is (1) stateable as must/do
   not/only, (2) concrete in scope, (3) detectable; otherwise keep in docs or
   reference.
-- No speculative implementation; scope is in
-  shared/prompt/boundary.md.
+- No speculative implementation; scope is in shared/prompt/boundary.md.
 
 ---
 
@@ -119,11 +118,10 @@ Example: `feat(module): add handler`
 
 ## §K. Scope document boundary
 
-- **Single source**: shared/prompt/boundary.md for
-  in-scope modules, API surface, infrastructure.
+- **Single source**: shared/prompt/boundary.md for in-scope modules, API
+  surface, infrastructure.
 - Do not add new modules, API routes, or infrastructure unless listed there;
-  update shared/prompt/boundary.md first, then
-  implement.
+  update shared/prompt/boundary.md first, then implement.
 - **Check**: New routes/modules/infra have a corresponding scope doc update.
 
 ---

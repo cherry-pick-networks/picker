@@ -8,9 +8,9 @@ Use what fits your environment and habits.
 
 ## What belongs here vs in rules
 
-- **Rules** (in `principle.md`): Things that can be checked
-  (directory structure, naming, commit format, "this repo has X file") or
-  defined in one sentence. See `shared/prompt/store.md` Part B.
+- **Rules** (in `principle.md`): Things that can be checked (directory
+  structure, naming, commit format, "this repo has X file") or defined in one
+  sentence. See `shared/prompt/store.md` Part B.
 - **Reference** (this doc): Usage tips, workflow habits, tool preferences,
   qualitative advice—things that are not checkable or that depend on the person
   or environment.
@@ -20,13 +20,13 @@ Use what fits your environment and habits.
 ## Optional tooling and workflows
 
 - **Documentation** under `documentation/`: allowed file base names are
-  reference, usage, strategy, guide, runbook (store §F). Boundaries:
-  Reference, Usage, Strategy.
+  reference, usage, strategy, guide, runbook (store §F). Boundaries: Reference,
+  Usage, Strategy.
 - **Tips-derived usage**: Scripts and workflows (e.g. status line, handoff,
   setup script, dx plugin).\
   → **[usage.md](documentation/usage.md)**
-- **Tips we reference but do not adopt (yet)**: Optional claude-code-tips;
-  add to usage.md or store.md when the team decides.\
+- **Tips we reference but do not adopt (yet)**: Optional claude-code-tips; add
+  to usage.md or store.md when the team decides.\
   → **[reference.md](documentation/reference.md)**
 
 ---

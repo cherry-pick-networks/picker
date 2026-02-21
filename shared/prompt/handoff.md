@@ -34,8 +34,8 @@ runs in CI so new routes cannot be added without updating the scope document.
 - Fixed FreshConfig type: `new App({ root: import.meta.url })` → `new App()` in
   `main.ts`; test task no longer uses `--no-check`.
 - Documentation alignment: stack wording updated from "Hono (HTTP)" to "Fresh
-  (HTTP)" and "Hono app" to "Fresh app" in `store.md`, `profile.md`; scope boundary main.ts row clarified (fsRoutes
-  from system/router when using Vite).
+  (HTTP)" and "Hono app" to "Fresh app" in `store.md`, `profile.md`; scope
+  boundary main.ts row clarified (fsRoutes from system/router when using Vite).
 - Route consolidation: API logic lives only in `system/router/`; `main.ts` only
   delegates (imports handler from each route file and registers path). No inline
   route logic in `main.ts`. `check-scope.ts` now discovers routes from
@@ -45,11 +45,12 @@ runs in CI so new routes cannot be added without updating the scope document.
   `Deno.serve(..., app.handler())` on port 0, fetches POST /kv then GET
   /kv/:key, then shuts down server.
 - GET /kv (list keys, optional query `prefix`): scope doc updated, then
-  `listKeys()` in `system/store/kv.ts`, `handler.GET` in `system/router/kv/index.ts`,
-  registration in `main.ts`, tests in `main_test.ts`.
-- DELETE /kv/:key: scope doc updated, then `deleteKey()` in `system/store/kv.ts`,
-  `handler.DELETE` in `system/router/kv/[key].ts`, registration in `main.ts`, test
-  in `main_test.ts` (204 and key gone).
+  `listKeys()` in `system/store/kv.ts`, `handler.GET` in
+  `system/router/kv/index.ts`, registration in `main.ts`, tests in
+  `main_test.ts`.
+- DELETE /kv/:key: scope doc updated, then `deleteKey()` in
+  `system/store/kv.ts`, `handler.DELETE` in `system/router/kv/[key].ts`,
+  registration in `main.ts`, test in `main_test.ts` (204 and key gone).
 
 ---
 
@@ -67,8 +68,8 @@ runs in CI so new routes cannot be added without updating the scope document.
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
 
 - ~~Optional: Add AST demo page (e.g. /ast-demo or /demo/ast) that uses GET /ast
-  API; update scope doc first, then implement.~~ Done: scope doc updated, GET /ast-demo
-  in system/router/ast-demo.ts and main.ts; test in main_test.ts.
+  API; update scope doc first, then implement.~~ Done: scope doc updated, GET
+  /ast-demo in system/router/ast-demo.ts and main.ts; test in main_test.ts.
 
 ---
 

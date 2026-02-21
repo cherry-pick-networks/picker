@@ -2,8 +2,8 @@
 
 ## Goal
 
-- **Single source**: All rule text lives in
-  `shared/prompt/store.md` (Part B: Rule definitions).
+- **Single source**: All rule text lives in `shared/prompt/store.md` (Part B:
+  Rule definitions).
 - **Cursor Rules**: `.cursor/rules/*.mdc` only reference that file; no duplicate
   rule text. mdc files are for **when** to apply (always vs on-request).
 
@@ -20,12 +20,12 @@
 
 ## Phases
 
-| Phase | Action                                                              | Commit                                                                              |
-| ----- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| 0     | Add this strategy doc                                               | docs(shared/prompt): add data migration strategy                                    |
+| Phase | Action                                                | Commit                                                                |
+| ----- | ----------------------------------------------------- | --------------------------------------------------------------------- |
+| 0     | Add this strategy doc                                 | docs(shared/prompt): add data migration strategy                      |
 | 1     | Move full rule text from 12 .mdc into store.md Part B | refactor(shared/prompt): move rule definitions into store.md          |
 | 2     | Replace each .mdc body with reference to store.md §X  | refactor(.cursor/rules): replace rule text with reference to store.md |
-| 3     | Verify completeness and update documentation                       | docs(shared/prompt): verify single-source migration                                 |
+| 3     | Verify completeness and update documentation          | docs(shared/prompt): verify single-source migration                   |
 
 ## Rule → section mapping
 
@@ -61,8 +61,7 @@
 ## Done criteria
 
 - [x] store.md contains full text of all 12 rules (§A–§L).
-- [x] Each .mdc contains only a reference to store.md (no rule
-      body).
+- [x] Each .mdc contains only a reference to store.md (no rule body).
 - [x] No duplicate long-form rule content in .mdc.
 - [x] Exactly two .mdc files; one always-applied, one on-request. See
       cursor-rules-policy.md.
