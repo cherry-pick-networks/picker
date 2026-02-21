@@ -15,7 +15,7 @@ Optional tooling and workflows from implementation-plan Phase 10. Reference only
 ## Handoff workflow (Tip 8)
 
 - **When**: Before switching agent or starting a new session on the same long-running task.
-- **Where**: `shared/prompt/documentation/handoff.md` or root `HANDOFF.md`.
+- **Where**: `shared/prompt/documentation/handoff.md` (linked from README).
 - **Fields**: Goal, progress, what was tried, what failed, next steps. New sessions attach only this file.
 - **Optional**: Use `/handoff` (e.g. dx plugin) if available.
 

@@ -95,7 +95,7 @@ All tools and models should use this file only; do not duplicate these rules in 
 ## 9. Context and handoff
 
 - **New topic**: Start a new conversation when the topic or task changes to keep context focused.
-- **Handoff**: For long-running or multi-session work, write a single handoff doc (e.g. `shared/prompt/documentation/handoff.md` or root `HANDOFF.md`) with: goal, progress, what was tried, what failed, next steps. **Workflow**: create or update the handoff file before switching agent or topic; new sessions attach only that file. Optionally use `/handoff` (e.g. dx plugin) if available.
+- **Handoff**: For long-running or multi-session work, write a single handoff doc (`shared/prompt/documentation/handoff.md`; linked from README) with: goal, progress, what was tried, what failed, next steps. **Workflow**: create or update the handoff file before switching agent or topic; new sessions attach only that file. Optionally use `/handoff` (e.g. dx plugin) if available.
 - **Branching experiments**: When trying a different approach from a point in time, fork the conversation or record the branch point in the handoff doc.
 
 ---
@@ -122,6 +122,7 @@ All tools and models should use this file only; do not duplicate these rules in 
 - **.cursor/rules**: mdc files are for **when** to apply (e.g. always vs on-request); keep one file per apply timing. Rule text stays here only; mdc names follow §D and §E.
 - **Review**: Review this file periodically (e.g. quarterly); add repeated instructions as they appear; remove or update outdated lines. Use recent conversations to propose new lines (repeated instructions from chats → candidates for context.md); optionally use a review skill (e.g. review-claudemd) if available.
 - **External tips**: Use external guides (e.g. claude-code-tips) as reference only; write only the chosen practices here.
+- **Human-readable docs**: Project summary and rules for people are in `shared/prompt/documentation/` (project-context.md, conventions-rules.md, reference.md). README has a Documentation section that points to them; do not duplicate rule text there.
 
 ---
 
