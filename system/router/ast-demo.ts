@@ -26,9 +26,7 @@ const HTML = `<!DOCTYPE html>
 </html>
 `;
 
-// deno-lint-ignore function-length/function-length
 export function getAstDemo(_c: Context) {
-  return new Response(HTML, {
-    headers: { "Content-Type": "text/html; charset=utf-8" },
-  });
+  const headers = { "Content-Type": "text/html; charset=utf-8" };
+  return new Response(HTML, { headers });
 }

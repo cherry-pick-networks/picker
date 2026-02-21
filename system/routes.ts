@@ -23,15 +23,30 @@ export const ROUTES: { method: string; path: string }[] = [
   { method: "POST", path: "/scripts/:path*" },
 ];
 
-// deno-lint-ignore function-length/function-length
 export function registerRoutes(app: Hono) {
+  registerHomeAndKv(app);
+  registerKvMutate(app);
+  registerAst(app);
+  registerScripts(app);
+}
+
+function registerHomeAndKv(app: Hono) {
   app.get("/", home.getHome);
   app.get("/kv", kv.getKvList);
-  app.post("/kv", kv.postKv);
   app.get("/kv/:key", kv.getKvKey);
+}
+
+function registerKvMutate(app: Hono) {
+  app.post("/kv", kv.postKv);
   app.delete("/kv/:key", kv.deleteKvKey);
+}
+
+function registerAst(app: Hono) {
   app.get("/ast", ast.getAst);
   app.get("/ast-demo", astDemo.getAstDemo);
+}
+
+function registerScripts(app: Hono) {
   app.get("/scripts", scripts.getScriptsList);
   app.get("/scripts/*", scripts.getScriptPath);
   app.post("/scripts/*", scripts.postScriptPath);

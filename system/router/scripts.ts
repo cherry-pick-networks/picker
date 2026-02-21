@@ -31,12 +31,16 @@ export async function getScriptPath(c: Context) {
   });
 }
 
-// deno-lint-ignore function-length/function-length
-export async function postScriptPath(c: Context) {
+export function postScriptPath(c: Context) {
   const path = scriptPathFromUrl(c.req.url);
-  if (!path.trim()) {
-    return c.json({ error: "path required" }, 400);
-  }
+  if (!path.trim()) return c.json({ error: "path required" }, 400);
+  return postScriptPathResponse(c, path);
+}
+
+async function postScriptPathResponse(
+  c: Context,
+  path: string,
+): Promise<Response> {
   const content = await c.req.text();
   const result = await writeScript(path, content);
   if (!result.ok) {
