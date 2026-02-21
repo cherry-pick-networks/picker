@@ -6,12 +6,16 @@ Thank you for your interest in contributing. This project is maintained by
 ## How to contribute
 
 - **Questions or ideas**: Open a
-  [GitHub Discussion](https://github.com/cherry-pick/picker/discussions) or
-  email [contact@cherry-pick.net](mailto:contact@cherry-pick.net).
+  [GitHub Discussion](https://github.com/cherry-pick/picker/discussions) (use
+  categories such as Q&A or Ideas) or email
+  [contact@cherry-pick.net](mailto:contact@cherry-pick.net).
 - **Bugs or features**: Open an
   [issue](https://github.com/cherry-pick/picker/issues). For security issues,
   see [SECURITY.md](SECURITY.md).
 - **Code**: Open a pull request. Follow the steps below.
+
+Use Discussions for questions and ideas (pick a category such as Q&A or Ideas);
+use Issues only for bugs and concrete feature requests.
 
 ## Development setup
 
