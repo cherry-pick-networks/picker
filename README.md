@@ -10,6 +10,7 @@ Deno app: Hono (HTTP), Zod, ts-morph (AST), Deno KV. Entry: `main.ts`.
 
 ## Documentation
 
+- **Shared (entry point)**: [shared/README.md](shared/README.md) — context, conventions, docs, scripts.
 - **Project summary (human-readable)**: [shared/prompt/documentation/project-context.md](shared/prompt/documentation/project-context.md)
 - **Rules (checkable conventions)**: [shared/prompt/documentation/conventions-rules.md](shared/prompt/documentation/conventions-rules.md)
 - **Reference (tips, not rules)**: [shared/prompt/documentation/reference.md](shared/prompt/documentation/reference.md)
