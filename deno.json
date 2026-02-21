@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
-    "lib": ["deno.window", "deno.unstable"]
+    "lib": ["deno.window", "deno.unstable"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
   },
   "tasks": {
     "dev": "deno run -A --unstable-kv --watch main.ts",

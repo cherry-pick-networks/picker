@@ -1,4 +1,3 @@
-import React from "preact/compat";
 import type { CounterViewProps } from "./useCounter.ts";
 
 export const CounterView = ({ count, increment }: CounterViewProps) => (

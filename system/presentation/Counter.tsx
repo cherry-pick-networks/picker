@@ -1,4 +1,3 @@
-import React from "preact/compat";
 import { CounterView } from "./CounterView.tsx";
 import { useCounter } from "./useCounter.ts";
 

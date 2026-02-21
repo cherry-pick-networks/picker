@@ -1,3 +1,4 @@
+/// <reference path="./fresh-core.d.ts" />
 import type { PageProps } from "fresh";
 import { AppLayout } from "./AppLayout.tsx";
 
