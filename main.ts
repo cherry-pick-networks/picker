@@ -1,7 +1,7 @@
 import { App, staticFiles } from "fresh";
 import { z } from "zod";
 import { Project } from "ts-morph";
-import { getKv } from "./lib/kv.ts";
+import { getKv } from "./system/store/kv.ts";
 
 const KvBodySchema = z.object({ key: z.string(), value: z.unknown() });
 

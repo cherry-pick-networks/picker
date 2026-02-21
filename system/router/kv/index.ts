@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { getKv } from "../../lib/kv.ts";
+import { getKv } from "../../store/kv.ts";
 
 const KvBodySchema = z.object({ key: z.string(), value: z.unknown() });
 

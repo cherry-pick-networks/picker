@@ -1,4 +1,4 @@
-import { getKv } from "../../lib/kv.ts";
+import { getKv } from "../../store/kv.ts";
 
 export const handler = {
   async GET(_req, ctx) {

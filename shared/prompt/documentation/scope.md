@@ -9,8 +9,9 @@ Do not add new modules, routes, or infrastructure unless listed here; update thi
 
 - **main.ts** — server entry (Fresh App, staticFiles, fsRoutes).
 - **client.ts** — client entry (loaded on every page).
-- **routes/** — file-based routes (/, /kv/:key, /kv POST, /ast).
-- **lib/** — shared logic (e.g. kv).
+- **system/router/** — file-based routes (/, /kv/:key, /kv POST, /ast).
+- **system/store/** — storage (e.g. Deno KV client).
+- **system/service/** — shared logic (e.g. add).
 
 ---
 
