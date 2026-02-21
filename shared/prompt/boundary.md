@@ -4,6 +4,10 @@ Single source of truth for in-scope modules, API surface, and infrastructure. Do
 not add new modules, routes, or infrastructure unless listed here; update this
 file first, then implement.
 
+**Final implementation goal**: See `shared/prompt/plan.md` for the one-line
+goal, target phases (MVP vs full spec), scope source, and must/must-not rules.
+Use that document for AI direction and scope decisions.
+
 ---
 
 ## Modules
