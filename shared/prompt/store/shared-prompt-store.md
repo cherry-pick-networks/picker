@@ -26,8 +26,8 @@ tool-specific configs.
     Context
   - **Infix**: Actor, Action, or Entity (e.g. prompt, document, service)
   - **Suffix**: Artifact, Policy, or Meta (e.g. store, config, test)
-- **This file**: `shared/prompt/store/context.md` (shared = Scope, prompt =
-  Entity, store = Artifact)
+- **This file**: `shared/prompt/store/shared-prompt-store.md` (shared = Scope,
+  prompt = Entity, store = Artifact)
 - **Exceptions**: .git, .cursor, node_modules, dist, build, coverage, vendor,
   .cache, static (confirm per repo)
 - Do not add a fourth tier. Do not use forbidden segments (e.g. core in Context;
@@ -70,7 +70,7 @@ tool-specific configs.
 - `deno run --allow-net --unstable-kv main.ts` — run server once
 - `deno test` — run tests
 - `deno task scope-check` — verify API routes are listed in
-  shared/prompt/documentation/scope.md (runs in CI)
+  shared/prompt/documentation/shared-prompt-boundary.md (runs in CI)
 - `gh pr create --draft` — create draft PR (review before marking ready)
 - `gh pr view`, `gh pr diff` — inspect PR for review
 - `gh run view` — inspect CI run (e.g. after failure)
@@ -80,7 +80,7 @@ tool-specific configs.
   current tree
 - **Optional (Phase 10)**: Status line `shared/prompt/scripts/context-bar.sh`;
   setup `shared/prompt/scripts/setup.sh`; see
-  `shared/prompt/documentation/tips-usage.md` for tips-derived options.
+  `shared/prompt/documentation/shared-prompt-usage.md` for tips-derived options.
 
 ---
 
@@ -138,7 +138,7 @@ tool-specific configs.
 - **New topic**: Start a new conversation when the topic or task changes to keep
   context focused.
 - **Handoff**: For long-running or multi-session work, write a single handoff
-  doc (`shared/prompt/documentation/handoff.md`; linked from README) with: goal,
+  doc (`shared/prompt/documentation/shared-prompt-handoff.md`; linked from README) with: goal,
   progress, what was tried, what failed, next steps. **Workflow**: create or
   update the handoff file before switching agent or topic; new sessions attach
   only that file. Optionally use `/handoff` (e.g. dx plugin) if available.
@@ -153,7 +153,7 @@ tool-specific configs.
   directly, use "select all → copy → paste" into the chat (or attach the file).
   For blocked or paywalled sites (e.g. Reddit), use a fallback (e.g.
   reddit-fetch skill or Gemini CLI); see
-  `shared/prompt/documentation/tips-usage.md` if used.
+  `shared/prompt/documentation/shared-prompt-usage.md` if used.
 - **Output format**: Prefer Markdown for reports and docs; use a neutral format
   (e.g. paste via Notion) when copying to platforms that do not accept Markdown.
 - **Getting output out**: Copy from terminal, or write to a file and open in
@@ -175,7 +175,7 @@ tool-specific configs.
 ## 12. Maintenance
 
 - **Single source**: Add or change rules and habits only in this file
-  (`shared/prompt/store/context.md`). Do not duplicate in Cursor Rules or other
+  (`shared/prompt/store/shared-prompt-store.md`). Do not duplicate in Cursor Rules or other
   tool configs; reference this file instead.
 - **.cursor/rules**: mdc files are for **when** to apply (e.g. always vs
   on-request); keep one file per apply timing. Rule text stays here only; mdc
@@ -183,13 +183,13 @@ tool-specific configs.
 - **Review**: Review this file periodically (e.g. quarterly); add repeated
   instructions as they appear; remove or update outdated lines. Use recent
   conversations to propose new lines (repeated instructions from chats →
-  candidates for context.md); optionally use a review skill (e.g.
+  candidates for shared-prompt-store.md); optionally use a review skill (e.g.
   review-claudemd) if available.
 - **External tips**: Use external guides (e.g. claude-code-tips) as reference
   only; write only the chosen practices here.
 - **Human-readable docs**: Project summary and rules for people are in
-  `shared/prompt/documentation/` (project-context.md, conventions-rules.md,
-  reference.md). Root README Documentation section lists only domain entry
+  `shared/prompt/documentation/` (shared-prompt-profile.md,
+  shared-prompt-principle.md, shared-prompt-reference.md). Root README Documentation section lists only domain entry
   points (e.g. shared/README.md); do not add deep links to docs there. Do not
   duplicate rule text in root README.
 
@@ -243,6 +243,11 @@ rule files: pick one prefix from Scope/Layer/Context; one suffix from
 Artifact/Policy/Meta; add infix from Actor/Action/Entity only when the rule
 applies to a specific focus.
 
+Document files: under shared/prompt/, name .md files with the same segment
+pattern: [prefix]-[suffix].md or [prefix]-[infix]-[suffix].md. Same axis rules
+and allowed sets as rule files; see §E. Exceptions: see §F (e.g. README.md at
+tree root).
+
 Directory structure (max 3 levels; segment order): level 1: folder name from
 approved prefix (required); level 2: folder name from approved infix (optional);
 level 3: folder name from approved suffix (optional). Order: prefix / infix /
@@ -289,7 +294,7 @@ response, middleware, format, exception, config, pipeline, metrics, trace.
 Policy (principle, constraint, or policy): boundary, constraint, contract,
 principle, safety, validation, compliance, isolation. Meta (documentation, test,
 or classification): test, documentation, naming, style, log, types, language,
-profile, assessment.
+profile, assessment, reference, plan, handoff, strategy, usage, tips.
 
 Examples: payment-infra-redis-config (Context + Layer + Entity + Artifact);
 security-application-guard-policy (Context + Layer + Actor + Policy);
@@ -369,7 +374,7 @@ three: (1) stateable as must/do not/only in one sentence, no prefer/recommended;
 by static check or simple heuristic; otherwise keep in docs or as guidance only.
 No speculative implementation: do not add modules, endpoints, or infrastructure
 for a future phase or roadmap; add only when the feature is in current scope
-(shared/prompt/documentation/scope.md).
+(shared/prompt/documentation/shared-prompt-boundary.md).
 
 ### §J. Migration boundary
 
@@ -384,17 +389,17 @@ content first; only after that delete the old files; one logical migration (one
 plan) per commit. Naming: new rule file names must follow §D and §E; use infix
 from Actor/Action/Entity where it clarifies focus (e.g. document, event, agent).
 No scope doc change: adding or refactoring .cursor/rules does not require
-shared/prompt/documentation/scope.md change; scope doc is for modules, API
+shared/prompt/documentation/shared-prompt-boundary.md change; scope doc is for modules, API
 routes, infrastructure only.
 
 ### §K. Scope document boundary
 
 Scope document: the single source of truth for in-scope modules, API surface,
-and infrastructure is shared/prompt/documentation/scope.md; update that doc
+and infrastructure is shared/prompt/documentation/shared-prompt-boundary.md; update that doc
 before adding. Scope-bound implementation: do not add new modules, API routes
 (routers), or infrastructure (broker, extra DB, queue, search engine) unless
-they are listed in shared/prompt/documentation/scope.md; add them to
-shared/prompt/documentation/scope.md first, then implement.
+they are listed in shared/prompt/documentation/shared-prompt-boundary.md; add them to
+shared/prompt/documentation/shared-prompt-boundary.md first, then implement.
 
 ### §L. Agent and scope
 
@@ -406,5 +411,6 @@ changes for human approval, then implement only after scope is updated.
 Root README (repository root README.md): the Documentation section lists only
 domain entry points; each entry links to a scope-level README (e.g.
 shared/README.md), not to files under prefix/infix/suffix. Deep links: do not
-add links from root README to individual docs (e.g. context.md, handoff.md,
-project-context.md); those live in each domain's README.
+add links from root README to individual docs (e.g. shared-prompt-store.md,
+shared-prompt-handoff.md, shared-prompt-profile.md); those live in each
+domain's README.

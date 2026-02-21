@@ -8,9 +8,9 @@ Use what fits your environment and habits.
 
 ## What belongs here vs in rules
 
-- **Rules** (in `conventions-rules.md`): Things that can be checked (directory
+- **Rules** (in `shared-prompt-principle.md`): Things that can be checked (directory
   structure, naming, commit format, "this repo has X file") or defined in one
-  sentence. See `shared/prompt/store/context.md` Part B.
+  sentence. See `shared/prompt/store/shared-prompt-store.md` Part B.
 - **Reference** (this doc): Usage tips, workflow habits, tool preferences,
   qualitative advice—things that are not checkable or that depend on the person
   or environment.
@@ -21,10 +21,10 @@ Use what fits your environment and habits.
 
 - **Tips-derived usage**: Scripts and workflows from the implementation plan
   (e.g. status line, handoff workflow, setup script, dx plugin).\
-  → **[tips-usage.md](tips-usage.md)**
+  → **[shared-prompt-usage.md](shared-prompt-usage.md)**
 - **Tips we reference but do not adopt (yet)**: Short descriptions of optional
-  claude-code-tips; add to tips-usage or context when the team decides.\
-  → **[tips-reference.md](tips-reference.md)**
+  claude-code-tips; add to shared-prompt-usage or shared-prompt-store when the team decides.\
+  → **[shared-prompt-tips.md](shared-prompt-tips.md)**
 
 ---
 
@@ -39,4 +39,4 @@ Use what fits your environment and habits.
   reference-only and is not enforced.
 
 When in doubt: if you cannot state it as "do X / do not Y" with a concrete,
-checkable outcome, keep it here or in tips-usage, not in the rules.
+checkable outcome, keep it here or in shared-prompt-usage, not in the rules.

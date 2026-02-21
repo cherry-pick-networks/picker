@@ -1,10 +1,10 @@
 /**
- * Scope check: fail if code registers API routes not listed in scope.md.
+ * Scope check: fail if code registers API routes not listed in the scope document.
  * Run from repo root: deno run shared/prompt/scripts/check-scope.ts
  * Or: deno task scope-check
  */
 
-const SCOPE_PATH = "shared/prompt/documentation/scope.md";
+const SCOPE_PATH = "shared/prompt/documentation/shared-prompt-boundary.md";
 const SOURCE_FILES = ["main.ts"];
 
 type Route = { method: string; path: string };
@@ -69,7 +69,9 @@ async function main(): Promise<void> {
 
   const allowed = new Set(parseScopeApiTable(scopeContent).map(routeKey));
   if (allowed.size === 0) {
-    console.error("No API routes found in scope.md. Check the file format.");
+    console.error(
+      "No API routes found in scope document. Check the file format.",
+    );
     Deno.exit(1);
   }
 
@@ -88,7 +90,7 @@ async function main(): Promise<void> {
   const missingInScope = inCode.filter((r) => !allowed.has(routeKey(r)));
   if (missingInScope.length > 0) {
     console.error(
-      "The following routes are in code but not listed in scope.md. Add them to shared/prompt/documentation/scope.md first, then implement.",
+      "The following routes are in code but not listed in the scope document. Add them to shared/prompt/documentation/shared-prompt-boundary.md first, then implement.",
     );
     for (const r of missingInScope) {
       console.error(`  ${r.method} ${r.path}`);
@@ -96,7 +98,9 @@ async function main(): Promise<void> {
     Deno.exit(1);
   }
 
-  console.log("Scope check passed: all routes are listed in scope.md.");
+  console.log(
+    "Scope check passed: all routes are listed in the scope document.",
+  );
 }
 
 main();

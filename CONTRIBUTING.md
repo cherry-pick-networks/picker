@@ -26,7 +26,7 @@ Thank you for your interest in contributing. This project is maintained by
 1. **Tests**: `deno test` must pass.
 2. **Scope check**: `deno task scope-check` must pass. If you add new API
    routes, modules, or infrastructure, add them to
-   [shared/prompt/documentation/scope.md](shared/prompt/documentation/scope.md)
+   [shared/prompt/documentation/shared-prompt-boundary.md](shared/prompt/documentation/shared-prompt-boundary.md)
    first, then implement.
 3. **Commit messages**: Use the format `<type>[(scope)]: <description>`
    (imperative, lowercase). Types: `feat`, `fix`, `docs`, `chore`, `refactor`,
@@ -35,7 +35,7 @@ Thank you for your interest in contributing. This project is maintained by
 
 Detailed conventions (directory structure, dependencies, workflow) are in the
 shared docs: start from [shared/README.md](shared/README.md) and see
-[shared/prompt/store/context.md](shared/prompt/store/context.md) for the single
+[shared/prompt/store/shared-prompt-store.md](shared/prompt/store/shared-prompt-store.md) for the single
 source of truth.
 
 ## Contact

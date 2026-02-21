@@ -1,9 +1,9 @@
 # Tips-derived usage (Phase 10)
 
-Optional tooling and workflows from implementation-plan Phase 10. Reference
+Optional tooling and workflows from shared-document-plan Phase 10. Reference
 only; use if the project adopts them.
 
-**Tips already in context.md**: Decompose (Tip 3 → §6), Git/gh/draft PR/worktree
+**Tips already in shared-prompt-store.md**: Decompose (Tip 3 → §6), Git/gh/draft PR/worktree
 (Tip 4, 16 → §7), New topic → new conversation (Tip 5 → §9), Getting output out
 (Tip 6 → §10), Aliases/setup (Tip 7 → §5), Write–test cycle (Tip 9 → §6), Cmd+A
 / paste (Tip 10 → §10), Exponential backoff (Tip 17 → §8), Markdown/Notion (Tip
@@ -35,7 +35,7 @@ Simplify (Tip 40 → §11).
 
 - **When**: Before switching agent or starting a new session on the same
   long-running task.
-- **Where**: `shared/prompt/documentation/handoff.md` (linked from README).
+- **Where**: `shared/prompt/documentation/shared-prompt-handoff.md` (linked from README).
 - **Fields**: Goal, progress, what was tried, what failed, next steps. New
   sessions attach only this file.
 - **Optional**: Use `/handoff` (e.g. dx plugin) if available.
@@ -46,7 +46,7 @@ Simplify (Tip 40 → §11).
 
 - For URLs that cannot be fetched directly (e.g. Reddit, paywalled): use a
   fallback skill (e.g. reddit-fetch in `~/.claude/skills/` or dx plugin) or
-  Gemini CLI. Document the chosen method here or in context.md.
+  Gemini CLI. Document the chosen method here or in shared-prompt-store.md.
 
 ---
 
@@ -68,8 +68,8 @@ Simplify (Tip 40 → §11).
 
 ## Context review (Tip 30)
 
-- When reviewing context.md: use recent conversations to propose new lines
-  (repeated instructions → candidates for context.md). Optionally use a review
+- When reviewing shared-prompt-store.md: use recent conversations to propose new lines
+  (repeated instructions → candidates for shared-prompt-store.md). Optionally use a review
   skill (e.g. review-claudemd) if available.
 
 ---
@@ -77,7 +77,7 @@ Simplify (Tip 40 → §11).
 ## Approved commands audit (Tip 33)
 
 - Run **cc-safe** (or equivalent) on a schedule: e.g. `npx cc-safe .` before
-  opening a PR or monthly. See context.md §7.
+  opening a PR or monthly. See shared-prompt-store.md §7.
 
 ---
 
@@ -85,14 +85,14 @@ Simplify (Tip 40 → §11).
 
 - For long-running or risky work (e.g. research,
   `--dangerously-skip-permissions`): prefer running in a container so failures
-  are isolated. See context.md §8 for long-running jobs; use a container when
+  are isolated. See shared-prompt-store.md §8 for long-running jobs; use a container when
   the task is both long and permission-heavy.
 
 ---
 
 ## Interactive PR reviews (Tip 26)
 
-- Use `gh pr view` and `gh pr diff` (context.md §7) for step-by-step or
+- Use `gh pr view` and `gh pr diff` (shared-prompt-store.md §7) for step-by-step or
   file-by-file review. Ask the agent to run tests where relevant and to
   summarize findings. Interactive back-and-forth beats one-shot review.
 
@@ -101,7 +101,7 @@ Simplify (Tip 40 → §11).
 ## GitHub Actions / DevOps (Tip 29)
 
 - For CI failures: use `gh run view` and logs to find root cause or flakiness
-  (context.md §7). If using Claude with dx plugin,
+  (shared-prompt-store.md §7). If using Claude with dx plugin,
   `/dx:gha <GitHub Actions URL>` can automate investigation and suggest fixes.
 
 ---
@@ -109,7 +109,7 @@ Simplify (Tip 40 → §11).
 ## Background bash and subagents (Tip 36)
 
 - Long-running commands: run in background (e.g. Ctrl+B in Claude Code) and have
-  the agent check later or use exponential backoff (context.md §8). When using
+  the agent check later or use exponential backoff (shared-prompt-store.md §8). When using
   subagents, run heavy or parallel analysis in background so the main session
   stays responsive.
 
