@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [
     fresh({
       routeDir: "./system/router",
-      islandsDir: "./system/component",
+      islandsDir: "./system/presentation",
     }),
   ],
 });
