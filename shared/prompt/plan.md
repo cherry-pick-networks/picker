@@ -19,14 +19,14 @@ is applied.
 ## 2. Target phases
 
 Phases (MVP through full spec) and current target are defined in the spec §49.
-Do not implement beyond the chosen phase until the roadmap is updated.
+Do not implement beyond the chosen phase until the spec is updated.
 
 ---
 
 ## 3. Scope source
 
 - **Modules, API, infrastructure**: This repo's `shared/prompt/boundary.md`.
-- **Product scope, governance, roadmap**: the spec.
+- **Product scope, governance**: the spec.
 - Do not add modules, routes, or infrastructure not listed in boundary.md or
   specified in the spec for the current phase.
 
@@ -55,7 +55,7 @@ Concretes are in the spec §44–§48 and store.md.
 
 ## 6. References
 
-- **The spec**: Overview, governance, roadmap, agents, data layout, protocol,
+- **The spec**: Overview, governance, agents, data layout, protocol,
   implementation and safety.
 - **This repo**: shared/prompt/boundary.md, shared/prompt/store.md.
 - **Other specs**: web_spec, llm_models_spec (when present).

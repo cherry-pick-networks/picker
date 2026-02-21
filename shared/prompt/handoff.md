@@ -70,7 +70,7 @@ runs in CI so new routes cannot be added without updating the scope document.
 
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
 
-- Deferred: Spec summary (e.g. current phase in plan.md or documentation/guide); then extend patch format (e.g. ts-morph-based edits) or Thompson Sampling MAB per roadmap.
+- Deferred: Spec summary (e.g. current phase in plan.md or documentation/guide); then extend patch format (e.g. ts-morph-based edits) or Thompson Sampling MAB.
 - Optional: Add more E2E or integration tests for other routes or edge cases as needed.
 
 ---

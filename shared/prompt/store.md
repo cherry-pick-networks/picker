@@ -410,7 +410,7 @@ three: (1) stateable as must/do not/only in one sentence, no prefer/recommended;
 (2) concrete scope (files, symbols, or patterns named); (3) violation detectable
 by static check or simple heuristic; otherwise keep in docs or as guidance only.
 No speculative implementation: do not add modules, endpoints, or infrastructure
-for a future phase or roadmap; add only when the feature is in current scope
+for a future phase; add only when the feature is in current scope
 (shared/prompt/boundary.md).
 
 ### §J. Migration boundary
