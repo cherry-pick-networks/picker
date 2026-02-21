@@ -1,5 +1,5 @@
-import { assertEquals } from "jsr:@std/assert";
-import plugin from "./function-length-lint-plugin.ts";
+import { assertEquals } from "@std/assert";
+import plugin from "../../shared/prompt/scripts/function-length-lint-plugin.ts";
 
 Deno.test("function-length: 2–4 statements ok", () => {
   const code = `

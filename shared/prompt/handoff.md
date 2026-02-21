@@ -45,10 +45,13 @@ runs in CI so new routes cannot be added without updating the scope document.
   scripts_store_test.ts.
 - Static file serving: GET `/static/*` serves files from `system/static/`
   (Hono serveStatic, root `./system`). Scope: boundary.md and ROUTES updated.
-- E2E over real HTTP: `system/__tests__/main_e2e_test.ts` — GET /, GET /kv,
+- E2E over real HTTP: `tests/system/main_e2e_test.ts` — GET /, GET /kv,
   GET /ast, GET /ast-demo, GET /scripts, GET /scripts/hello.txt,
   GET /static/e2e-smoke.txt, POST /kv; plus load check (20 concurrent GET /
   within 5s). Static fixture: `system/static/e2e-smoke.txt`.
+- **Tests under root tests/**: All tests moved to `tests/system/` (app) and
+  `tests/scripts/` (function-length-lint-plugin_test.ts). `deno task test`
+  discovers them automatically; no path config.
 - **Scope rules split**: §K and §L moved to `.cursor/rules/system-document-boundary.mdc` and `system-agent-boundary.mdc` (store.md unchanged; global-agent-policy no longer lists §K/§L).
 
 ---
