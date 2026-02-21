@@ -14,14 +14,15 @@ Use that document for AI direction and scope decisions.
 
 | Module                   | Role                                                                                     |
 | ------------------------ | ---------------------------------------------------------------------------------------- |
-| **main.ts**              | Server entry: Fresh App, staticFiles, API routes delegated from system/router, fsRoutes. |
-| **client.ts**            | Client entry (loaded on every page).                                                     |
-| **system/router/**       | File-based route handlers: `/`, GET `/kv`, `/kv/:key`, POST `/kv`, `/ast`, `/ast-demo`, GET `/scripts`, GET `/scripts/:path`, POST `/scripts/:path`. |
+| **main.ts**              | Server entry: Hono app; routes registered from system/routes.ts (imports system/router/*). |
+| **client.ts**            | Client entry (loaded on every page).                                                       |
+| **system/routes.ts**     | Route list (ROUTES) and registerRoutes(app); scope-check reads this.                      |
+| **system/router/**       | Hono handlers: home, kv, ast, ast-demo, scripts (GET/POST /scripts, GET /scripts/*).      |
 | **system/store/**        | Storage access (e.g. Deno KV via `getKv()`).                                             |
 | **system/service/**      | Shared business logic (e.g. `add`).                                                      |
 | **system/validator/**    | Governance verification; must pass before any apply (e.g. ops/scripts mutation).         |
 | **system/component/**    | UI components (e.g. Button).                                                             |
-| **system/presentation/** | Fresh islands / interactive UI (e.g. Counter).                                          |
+| **system/presentation/** | Interactive UI (e.g. Counter).                                                           |
 | **ops/scripts/**         | Target path for AST-based self-edit; read and write only via Governance-verified flow.   |
 
 ---

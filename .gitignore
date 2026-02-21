@@ -1,5 +1,4 @@
 # Build / generated
-_fresh/
 node_modules/
 
 # Environment (secrets)

@@ -1,7 +1,7 @@
 import { assertEquals } from "@std/assert";
 import { app } from "../../main.ts";
 
-const handler = app.handler();
+const handler = (req: Request) => app.fetch(req);
 const handlerTestOpts = { sanitizeResources: false };
 
 Deno.test(

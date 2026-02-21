@@ -25,50 +25,34 @@ runs in CI so new routes cannot be added without updating the scope document.
 ## Progress
 
 - Added integration-style tests in `main_test.ts` for GET `/`, GET `/kv/:key`,
-  POST `/kv` (success and 400), GET `/ast`. Tests use `app.handler()` and
+  POST `/kv` (success and 400), GET `/ast`. Tests use `app.fetch(req)` and
   `@std/assert`; KV-using tests use `sanitizeResources: false` to avoid Deno KV
   leak detection.
 - Added `deno task test` (runs `deno test -A --unstable-kv`) in `deno.json`.
-- CI (`.github/workflows/ci.yml`) runs `deno task test` and
-  `deno task scope-check`.
-- Fixed FreshConfig type: `new App({ root: import.meta.url })` → `new App()` in
-  `main.ts`; test task no longer uses `--no-check`.
-- Documentation alignment: stack wording updated from "Hono (HTTP)" to "Fresh
-  (HTTP)" and "Hono app" to "Fresh app" in `store.md`, `profile.md`; scope
-  boundary main.ts row clarified (fsRoutes from system/router when using Vite).
-- Route consolidation: API logic lives only in `system/router/`; `main.ts` only
-  delegates (imports handler from each route file and registers path). No inline
-  route logic in `main.ts`. `check-scope.ts` now discovers routes from
-  `system/router/` (walk files, map path to Fresh route pattern, infer methods
-  from `handler.GET`/`handler.POST`).
-- E2E test for POST /kv: added in `main_test.ts` — starts real HTTP server with
-  `Deno.serve(..., app.handler())` on port 0, fetches POST /kv then GET
-  /kv/:key, then shuts down server.
-- GET /kv (list keys, optional query `prefix`): scope doc updated, then
-  `listKeys()` in `system/store/kv.ts`, `handler.GET` in
-  `system/router/kv/index.ts`, registration in `main.ts`, tests in
-  `main_test.ts`.
-- DELETE /kv/:key: scope doc updated, then `deleteKey()` in
-  `system/store/kv.ts`, `handler.DELETE` in `system/router/kv/[key].ts`,
-  registration in `main.ts`, test in `main_test.ts` (204 and key gone).
-- Governance and ops/scripts: scope doc updated (GET /scripts, GET
-  /scripts/:path*). `system/validator/index.ts` (verifyGovernance for path under
-  ops/scripts/). `ops/scripts/` dir, `system/store/scripts.ts` (listScripts,
-  readScript), `system/router/scripts/` handlers, main.ts registration. Tests in
-  main_scripts_test.ts and validator_test.ts.
-- POST /scripts/:path*: scope doc updated, writeScript() in system/store/scripts.ts
-  (Governance-verified), POST in system/router/scripts/[...path].ts, main.ts
-  registration; tests in main_scripts_test.ts (201, subdir) and
-  scripts_store_test.ts (403 path escape).
+- CI runs `deno task test` and `deno task scope-check`.
+- **Fresh → Hono migration**: Removed all Fresh deps, route-loader, and
+  file-based Fresh router. Reimplemented with Hono: `main.ts` creates Hono app,
+  `system/routes.ts` exports ROUTES and registerRoutes(app), `system/router/*.ts`
+  export handlers (home, kv, ast, ast-demo, scripts). Scope-check reads
+  ROUTES from system/routes.ts. Tests use `(req) => app.fetch(req)`; E2E uses
+  `Deno.serve(..., handler)` with same handler. Vite config no longer uses
+  Fresh plugin; start task runs `main.ts` directly.
+- GET /kv (list keys, optional query `prefix`), POST /kv, GET/DELETE /kv/:key:
+  system/store/kv.ts, system/router/kv.ts, tests in main_test.ts and
+  main_kv_test.ts.
+- GET /ast, GET /ast-demo: system/router/ast.ts, ast-demo.ts; tests in
+  main_ast_test.ts.
+- GET /scripts, GET /scripts/*, POST /scripts/*: system/store/scripts.ts,
+  system/validator, system/router/scripts.ts; tests in main_scripts_test.ts and
+  scripts_store_test.ts.
 
 ---
 
 ## Tried / failed
 
-- Route consolidation via fsRoutes only: with `deno run main.ts`, Fresh's
-  `fsRoutes()` does not load from `routeDir` (Vite plugin only). So
-  consolidation was done via delegation from `main.ts` to `system/router`
-  handlers instead.
+- Route consolidation via fsRoutes only (Fresh): with `deno run main.ts`,
+  Fresh's fsRoutes() did not load from routeDir (Vite plugin only). Switched to
+  Hono and explicit route registration.
 
 ---
 
@@ -76,18 +60,8 @@ runs in CI so new routes cannot be added without updating the scope document.
 
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
 
-- ~~Optional: Implement Governance verification (system/validator/) and
-  ops/scripts read access per boundary.md; add routes only after scope doc
-  update.~~ Done: validator, ops/scripts read via store, GET /scripts and GET
-  /scripts/:path*, tests.
-- ~~Optional: Add AST demo page (e.g. /ast-demo or /demo/ast) that uses GET /ast
-  API; update scope doc first, then implement.~~ Done: scope doc updated, GET
-  /ast-demo in system/router/ast-demo.ts and main.ts; test in main_test.ts.
-- ~~Optional: Add write path (POST /scripts or apply endpoint) with
-  Governance-verified apply; update scope doc first, then implement.~~ Done:
-  scope doc updated, writeScript in system/store/scripts.ts, POST
-  /scripts/:path* in system/router/scripts/[...path].ts and main.ts; tests in
-  main_scripts_test.ts and scripts_store_test.ts.
+- Optional: Add static file serving (e.g. static/) via Hono if needed.
+- Optional: Add E2E or smoke test for GET /scripts and GET /ast-demo over real HTTP.
 
 ---
 

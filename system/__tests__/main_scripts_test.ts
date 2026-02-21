@@ -1,7 +1,7 @@
 import { assertEquals } from "@std/assert";
 import { app } from "../../main.ts";
 
-const handler = app.handler();
+const handler = (req: Request) => app.fetch(req);
 
 Deno.test("GET /scripts returns 200 and { entries: string[] }", async () => {
   const res = await handler(new Request("http://localhost/scripts"));

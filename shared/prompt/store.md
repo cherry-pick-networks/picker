@@ -11,8 +11,8 @@ tool-specific configs.
 
 - **Name**: {{repo_name}}
 - **Runtime**: Deno
-- **Stack**: Fresh (HTTP), Zod (validation), ts-morph (AST), Deno KV (storage)
-- **Entry**: `main.ts` (Fresh app, KV routes, AST demo)
+- **Stack**: Hono (HTTP), Zod (validation), ts-morph (AST), Deno KV (storage)
+- **Entry**: `main.ts` (Hono app, routes from system/routes.ts)
 
 ---
 
@@ -475,7 +475,7 @@ comparison.
 Line length: keep lines to 80 characters or fewer (strict); exceptions only
 where documented (e.g. long URLs in comments). File length: keep files to 100
 lines or fewer; split when longer. Scope: TypeScript and TSX source (e.g.
-`**/*.ts`, `**/*.tsx`); exclude node_modules, _fresh, vendor, generated output.
+`**/*.ts`, `**/*.tsx`); exclude node_modules, vendor, generated output.
 
 Function body: block body 2–4 statements (enforced); expression body allowed
 (counts as 1). Exceptions: last statement is JSX return (up to 10 statements);

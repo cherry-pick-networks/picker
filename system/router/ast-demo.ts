@@ -1,3 +1,5 @@
+import type { Context } from "hono";
+
 const HTML = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,14 +26,9 @@ const HTML = `<!DOCTYPE html>
 </html>
 `;
 
-function htmlResponse(): Response {
-  const headers = { "Content-Type": "text/html; charset=utf-8" };
-  return new Response(HTML, { headers });
+// deno-lint-ignore function-length/function-length
+export function getAstDemo(_c: Context) {
+  return new Response(HTML, {
+    headers: { "Content-Type": "text/html; charset=utf-8" },
+  });
 }
-
-export const handler = {
-  GET() {
-    const response = htmlResponse();
-    return response;
-  },
-};

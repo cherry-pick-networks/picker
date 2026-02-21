@@ -1,25 +1,18 @@
 /**
  * Scope check: fail if code registers API routes not listed in the scope doc.
- * Discovers routes from system/router/ (file-based). Run from repo root:
+ * Reads route list from system/routes.ts. Run from repo root:
  *   deno run --allow-read shared/prompt/scripts/check-scope.ts
  * Or: deno task scope-check
  */
 
-import {
-  extractMethodsFromHandler,
-  filePathToRoutePath,
-  parseScopeApiTable,
-  routeKey,
-  walkRouterFiles,
-} from "./check-scope-lib.ts";
+import { parseScopeApiTable, routeKey } from "./check-scope-lib.ts";
+import { ROUTES } from "../../../system/routes.ts";
 
 const SCOPE_PATH = "shared/prompt/boundary.md";
-const ROUTER_DIR = "system/router";
 
 async function main(): Promise<void> {
   const root = Deno.cwd();
   const scopePath = `${root}/${SCOPE_PATH}`;
-  const routerPath = `${root}/${ROUTER_DIR}`;
 
   let scopeContent: string;
   try {
@@ -37,24 +30,7 @@ async function main(): Promise<void> {
     Deno.exit(1);
   }
 
-  let routerFiles: string[];
-  try {
-    routerFiles = await walkRouterFiles(routerPath, routerPath);
-  } catch (e) {
-    console.error(`Cannot read router dir: ${routerPath}`, e);
-    Deno.exit(1);
-  }
-
-  const inCode: { method: string; path: string }[] = [];
-  for (const rel of routerFiles) {
-    const content = await Deno.readTextFile(`${routerPath}/${rel}`);
-    const path = filePathToRoutePath(rel);
-    const methods = extractMethodsFromHandler(content);
-    for (const method of methods) {
-      inCode.push({ method, path });
-    }
-  }
-
+  const inCode = ROUTES;
   const missingInScope = inCode.filter((r) => !allowed.has(routeKey(r)));
   if (missingInScope.length > 0) {
     console.error(

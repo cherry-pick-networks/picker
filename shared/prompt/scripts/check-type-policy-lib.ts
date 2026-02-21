@@ -16,7 +16,6 @@ export const SKIP_DIRS = new Set([
   "build",
   "coverage",
   "vendor",
-  "_fresh",
   "static",
 ]);
 

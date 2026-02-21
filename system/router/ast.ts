@@ -1,4 +1,5 @@
 import { Project } from "ts-morph";
+import type { Context } from "hono";
 
 function variableCount(): number {
   const project = new Project({ useInMemoryFileSystem: true });
@@ -6,16 +7,7 @@ function variableCount(): number {
   return source.getVariableDeclarations().length;
 }
 
-function jsonResponse(count: number): Response {
-  const body = JSON.stringify({ variableDeclarations: count });
-  return new Response(body, {
-    headers: { "Content-Type": "application/json" },
-  });
+export function getAst(c: Context) {
+  const count = variableCount();
+  return c.json({ variableDeclarations: count });
 }
-
-export const handler = {
-  GET() {
-    const count = variableCount();
-    return jsonResponse(count);
-  },
-};

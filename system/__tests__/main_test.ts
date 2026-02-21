@@ -6,7 +6,7 @@ Deno.test(function addTest() {
   assertEquals(add(2, 3), 5);
 });
 
-const handler = app.handler();
+const handler = (req: Request) => app.fetch(req);
 const handlerTestOpts = { sanitizeResources: false };
 
 Deno.test("GET / returns 200 and { ok: true }", handlerTestOpts, async () => {
