@@ -1,38 +1,72 @@
 import { assertEquals } from "jsr:@std/assert";
 import plugin from "./function-length-lint-plugin.ts";
 
-Deno.test("function-length: 2–4 lines ok", () => {
+Deno.test("function-length: 2–4 statements ok", () => {
   const code = `
 function ok() {
-  return 1;
+  const x = 1;
+  return x;
 }
 `;
   const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
   assertEquals(d.length, 0);
 });
 
-Deno.test("function-length: 1 line block reports", () => {
+Deno.test("function-length: 1 statement block reports", () => {
   const code = "function short() { x(); }";
   const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
   assertEquals(d.length, 1);
-  assertEquals(d[0].message, "Function body must be 2–4 lines (got 1).");
+  assertEquals(d[0].message, "Function body must have 2–4 statements (got 1).");
 });
 
-Deno.test("function-length: 5 lines reports", () => {
+Deno.test("function-length: 5 statements reports", () => {
   const code = `
 function long() {
   const a = 1;
   const b = 2;
-  return a + b;
+  const c = 3;
+  const d = 4;
+  return a + b + c + d;
 }
 `;
   const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
   assertEquals(d.length, 1);
-  assertEquals(d[0].message, "Function body must be 2–4 lines (got 5).");
+  assertEquals(d[0].message, "Function body must have 2–4 statements (got 5).");
 });
 
 Deno.test("function-length: arrow expression body allowed", () => {
   const code = "const f = () => 42;";
+  const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+  assertEquals(d.length, 0);
+});
+
+Deno.test("function-length: JSX return tail allowed up to 10 statements", () => {
+  const code = `
+const App = () => {
+  const { data } = useQuery();
+  return <div>{data}</div>;
+};
+`;
+  const d = Deno.lint.runPlugin(plugin, "dummy.tsx", code);
+  assertEquals(d.length, 0);
+});
+
+Deno.test("function-length: single pipeline (await) allowed", () => {
+  const code = `
+async function get() {
+  return await fetch("/api");
+}
+`;
+  const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+  assertEquals(d.length, 0);
+});
+
+Deno.test("function-length: single pipeline (chain) allowed", () => {
+  const code = `
+function get() {
+  return fetch("/api").then((r) => r.json()).catch(() => null);
+}
+`;
   const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
   assertEquals(d.length, 0);
 });

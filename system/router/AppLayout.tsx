@@ -1,6 +1,5 @@
 import type { PageProps } from "fresh";
 
-// deno-lint-ignore function-length/function-length
 export function AppLayout({ Component }: PageProps) {
   return (
     <html lang="en">

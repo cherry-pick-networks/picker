@@ -1,6 +1,5 @@
 import { Project } from "ts-morph";
 
-// deno-lint-ignore function-length/function-length
 function variableCount(): number {
   const project = new Project({ useInMemoryFileSystem: true });
   const source = project.createSourceFile("sample.ts", "const x = 1;");

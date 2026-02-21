@@ -10,7 +10,6 @@ function toLogicalKey(keyParts: string[]): string | null {
   return keyParts.slice(1).join("/");
 }
 
-// deno-lint-ignore function-length/function-length
 async function collectKeys(kv: Deno.Kv): Promise<string[]> {
   const keys: string[] = [];
   for await (const entry of kv.list({ prefix: ["kv"] })) {

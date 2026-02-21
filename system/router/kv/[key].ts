@@ -1,6 +1,5 @@
 import { deleteKey, getKv } from "../../store/kv.ts";
 
-// deno-lint-ignore function-length/function-length
 function getValueJson(kv: Deno.Kv, key: string): Promise<Response> {
   const h = { "Content-Type": "application/json" };
   return kv.get(["kv", key]).then((e) =>
