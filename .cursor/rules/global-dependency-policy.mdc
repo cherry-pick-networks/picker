@@ -1,0 +1,31 @@
+---
+description: |
+  Dependency addition and stable-library criteria. Apply when changing
+  deno.json or project dependencies.
+alwaysApply: true
+---
+
+Dependency addition:
+  do not add dependencies arbitrarily; only add if (a) listed in the project
+  official dependency list, or (b) the addition meets all mandatory
+  stable-library criteria below. Agent must not extend the official list
+  without human approval.
+Official list:
+  the project maintains an official list of allowed dependencies (deno.json
+  imports and optionally docs); new entries require updating that list first.
+Stable library — mandatory (all required):
+  (1) release within 12 months on JSR (or registry in use); (2) official docs
+  URL; (3) license in allowed set below; (4) no Critical/High CVE at add time,
+  and dependency audit in CI when applicable (e.g. deno audit); (5) single
+  clear purpose (no kitchen-sink).
+Stable library — recommended:
+  (6) JSR weekly downloads ≥10k or documented exception; (7) direct deps ≤10 or
+  approved exception; (8) SemVer or explicit version policy; (9) no
+  Critical/security issues open >90 days; (10) alternative libs exist and
+  migration path documented. Prefer all; document exceptions.
+Allowed licenses (project):
+  permissive: MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, ISC;
+  copyleft compatible: GPL-3.0-or-later, AGPL-3.0-or-later,
+  LGPL-2.1-only, LGPL-3.0-or-later; also MPL-2.0. Not allowed:
+  GPL-2.0-only unless explicitly approved, proprietary, or incompatible
+  copyleft terms.
