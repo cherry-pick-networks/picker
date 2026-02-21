@@ -11,8 +11,8 @@ tool-specific configs.
 
 - **Name**: {{repo_name}}
 - **Runtime**: Deno
-- **Stack**: Hono (HTTP), Zod (validation), ts-morph (AST), Deno KV (storage)
-- **Entry**: `main.ts` (Hono app, KV routes, AST demo)
+- **Stack**: Fresh (HTTP), Zod (validation), ts-morph (AST), Deno KV (storage)
+- **Entry**: `main.ts` (Fresh app, KV routes, AST demo)
 
 ---
 

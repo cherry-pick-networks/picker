@@ -10,7 +10,7 @@ this file first, then implement.
 
 | Module | Role |
 | ------ | ----- |
-| **main.ts** | Server entry: Fresh App, staticFiles, programmatic API routes, fsRoutes. |
+| **main.ts** | Server entry: Fresh App, staticFiles, programmatic API routes, fsRoutes (file-based routes from system/router when using Vite). |
 | **client.ts** | Client entry (loaded on every page). |
 | **system/router/** | File-based route handlers: `/`, `/kv/:key`, POST `/kv`, `/ast`. |
 | **system/store/** | Storage access (e.g. Deno KV via `getKv()`). |
