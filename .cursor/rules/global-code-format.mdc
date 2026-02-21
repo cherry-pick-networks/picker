@@ -1,0 +1,11 @@
+---
+description: |
+  Line and file length for TypeScript/TSX. Apply when editing .ts or .tsx.
+globs: ["**/*.ts", "**/*.tsx"]
+alwaysApply: false
+---
+
+This rule is defined in `shared/prompt/store/shared-prompt-store.md`.
+Read that file and follow:
+- **§P. Format limits (code)**
+Do not duplicate the rule text here.
