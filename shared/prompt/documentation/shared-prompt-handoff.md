@@ -45,6 +45,12 @@ runs in CI so new routes cannot be added without updating the scope document.
 - E2E test for POST /kv: added in `main_test.ts` — starts real HTTP server with
   `Deno.serve(..., app.handler())` on port 0, fetches POST /kv then GET
   /kv/:key, then shuts down server.
+- GET /kv (list keys, optional query `prefix`): scope doc updated, then
+  `listKeys()` in `system/store/kv.ts`, `handler.GET` in `system/router/kv/index.ts`,
+  registration in `main.ts`, tests in `main_test.ts`.
+- DELETE /kv/:key: scope doc updated, then `deleteKey()` in `system/store/kv.ts`,
+  `handler.DELETE` in `system/router/kv/[key].ts`, registration in `main.ts`, test
+  in `main_test.ts` (204 and key gone).
 
 ---
 
@@ -61,12 +67,8 @@ runs in CI so new routes cannot be added without updating the scope document.
 
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
 
-- ~~Optional: run `deno task scope-check` in pre-push hook and document in
-  CONTRIBUTING.~~ Done: `shared/prompt/scripts/git-hooks/pre-push`, CONTRIBUTING
-  § Development setup.
-- ~~Optional: grep for remaining "Hono" in docs/README and align with Fresh if
-  any.~~ Done: no remaining "Hono" in docs or README (only this handoff mentions
-  it as past alignment / task).
+- Optional: Add AST demo page (e.g. /ast-demo or /demo/ast) that uses GET /ast
+  API; update scope doc first, then implement.
 
 ---
 

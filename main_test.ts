@@ -116,6 +116,31 @@ Deno.test(
 );
 
 Deno.test(
+  "DELETE /kv/:key returns 204 and key is gone",
+  handlerTestOpts,
+  async () => {
+    const key = `del-${Date.now()}`;
+    await handler(
+      new Request("http://localhost/kv", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key, value: "to-delete" }),
+      }),
+    );
+    const delRes = await handler(
+      new Request(`http://localhost/kv/${key}`, { method: "DELETE" }),
+    );
+    assertEquals(delRes.status, 204);
+    assertEquals(delRes.body, null);
+
+    const getRes = await handler(new Request(`http://localhost/kv/${key}`));
+    assertEquals(getRes.status, 200);
+    const getBody = await getRes.json();
+    assertEquals(getBody, null);
+  },
+);
+
+Deno.test(
   "POST /kv with invalid body returns 400",
   handlerTestOpts,
   async () => {

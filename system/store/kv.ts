@@ -26,3 +26,11 @@ export async function listKeys(prefix?: string): Promise<string[]> {
   }
   return keys;
 }
+
+/**
+ * Delete one logical key from KV under the "kv" prefix.
+ */
+export async function deleteKey(logicalKey: string): Promise<void> {
+  const kv = await getKv();
+  await kv.delete(["kv", logicalKey]);
+}

@@ -27,6 +27,7 @@ file first, then implement.
 | GET    | `/`        | Health check; responds `{ "ok": true }`.                                                                                            |
 | GET    | `/kv`      | List keys in Deno KV; optional query `prefix` to filter. Responds `{ "keys": string[] }`.                                           |
 | GET    | `/kv/:key` | Read value by key from Deno KV; responds value or `null`.                                                                           |
+| DELETE | `/kv/:key` | Delete one key from Deno KV; responds 204 No Content.                                                                               |
 | POST   | `/kv`      | Write key-value to Deno KV. Body: `{ "key": string, "value": unknown }`. Responds `{ "key": string }` or 400 with validation error. |
 | GET    | `/ast`     | AST demo (ts-morph, in-memory sample). Responds `{ "variableDeclarations": number }`.                                               |
 

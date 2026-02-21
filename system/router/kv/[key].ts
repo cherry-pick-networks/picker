@@ -1,4 +1,4 @@
-import { getKv } from "../../store/kv.ts";
+import { deleteKey, getKv } from "../../store/kv.ts";
 
 export const handler = {
   async GET(_req: Request, ctx: { params: Record<string, string> }) {
@@ -8,5 +8,10 @@ export const handler = {
     return new Response(JSON.stringify(entry.value ?? null), {
       headers: { "Content-Type": "application/json" },
     });
+  },
+  async DELETE(_req: Request, ctx: { params: Record<string, string> }) {
+    const key = ctx.params.key;
+    await deleteKey(key);
+    return new Response(null, { status: 204 });
   },
 };
