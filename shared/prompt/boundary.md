@@ -17,9 +17,9 @@ Use that document for AI direction and scope decisions.
 | **main.ts**              | Server entry: Hono app; routes registered from system/routes.ts (imports system/router/*). |
 | **client.ts**            | Client entry (loaded on every page).                                                       |
 | **system/routes.ts**     | Route list (ROUTES) and registerRoutes(app); scope-check reads this.                      |
-| **system/router/**       | Hono handlers: home, kv, ast, ast-demo, scripts (GET/POST /scripts, GET /scripts/*).      |
-| **system/store/**        | Storage access (e.g. Deno KV via `getKv()`).                                             |
-| **system/service/**      | Shared business logic (e.g. `add`). AST read/patch for shared/runtime/store/; apply via Governance and scripts write. |
+| **system/router/**       | Hono handlers: home, kv, profile, ast, ast-demo, scripts (GET/POST /scripts, GET /scripts/*). |
+| **system/store/**        | Storage access (e.g. Deno KV via `getKv()`). Profile/progress KV under prefixes `profile`, `progress`. |
+| **system/service/**      | Shared business logic (e.g. `add`, profile/progress). AST read/patch for shared/runtime/store/; apply via Governance and scripts write. |
 | **system/validator/**       | Governance verification; must pass before any apply (e.g. shared/runtime/store mutation). |
 | **system/log/**             | Log artifact storage (e.g. test run history JSON); written by tests or tooling, not served by API. |
 | **shared/runtime/store/**   | Target path for AST-based self-edit; read and write only via Governance-verified flow.     |
@@ -42,6 +42,11 @@ Use that document for AI direction and scope decisions.
 | GET    | `/scripts/:path*` | Read file in shared/runtime/store/ by path (Governance-verified). Responds file content or 404.                                        |
 | POST   | `/scripts/:path*` | Write file in shared/runtime/store/ at path (Governance-verified). Body: raw text. Responds 201 or 400/403/500.                        |
 | POST   | `/ast/apply`      | Apply a text patch to a file in shared/runtime/store/. Body: `{ "path": string, "oldText": string, "newText": string }`. Governance-verified; responds 200 or 400/403/404/500. |
+| GET    | `/profile/:id`    | Read actor profile by id. Responds profile object or 404.                                                                 |
+| POST   | `/profile`        | Create actor profile. Body: profile fields (id optional, server-generated if omitted). Responds 201 with profile.         |
+| PATCH  | `/profile/:id`    | Update actor profile by id. Body: partial profile. Responds 200 or 404.                                                    |
+| GET    | `/progress/:id`   | Read progress state by id. Responds progress object or 404.                                                               |
+| PATCH  | `/progress/:id`   | Update progress state by id. Body: partial progress. Responds 200 or 404.                                                  |
 
 ---
 
@@ -57,3 +62,5 @@ Use that document for AI direction and scope decisions.
 ## Infrastructure
 
 - **Deno KV** — built-in storage only; no external DB, message broker, or queue.
+  Key prefixes: `kv` (generic), `profile` (actor profile, key `["profile", id]`),
+  `progress` (progress state, key `["progress", id]`).

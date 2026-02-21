@@ -7,6 +7,7 @@
     "build": "deno run -A npm:vite build",
     "start": "deno run -A --unstable-kv main.ts",
     "test": "deno test -A --unstable-kv",
+    "test:e2e-record": "deno run -A --unstable-kv shared/prompt/scripts/run-e2e-record.ts",
     "scope-check": "deno run --allow-read shared/prompt/scripts/check-scope.ts",
     "scope-discovery": "deno run --allow-read shared/prompt/scripts/scope-discovery.ts",
     "type-check-policy": "deno run --allow-read shared/prompt/scripts/check-type-policy.ts"

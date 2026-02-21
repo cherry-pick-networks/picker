@@ -11,6 +11,7 @@ import * as ast from "./router/ast.ts";
 import * as astApply from "./router/ast-apply.ts";
 import * as astDemo from "./router/ast-demo.ts";
 import * as scripts from "./router/scripts.ts";
+import * as profile from "./router/profile.ts";
 
 export const ROUTES: { method: string; path: string }[] = [
   { method: "GET", path: "/" },
@@ -19,6 +20,11 @@ export const ROUTES: { method: string; path: string }[] = [
   { method: "POST", path: "/kv" },
   { method: "GET", path: "/kv/:key" },
   { method: "DELETE", path: "/kv/:key" },
+  { method: "GET", path: "/profile/:id" },
+  { method: "POST", path: "/profile" },
+  { method: "PATCH", path: "/profile/:id" },
+  { method: "GET", path: "/progress/:id" },
+  { method: "PATCH", path: "/progress/:id" },
   { method: "GET", path: "/ast" },
   { method: "GET", path: "/ast-demo" },
   { method: "POST", path: "/ast/apply" },
@@ -27,10 +33,16 @@ export const ROUTES: { method: string; path: string }[] = [
   { method: "POST", path: "/scripts/:path*" },
 ];
 
+function registerRest(app: Hono) {
+  registerHomeAndKv(app);
+  registerProfile(app);
+  registerProgress(app);
+  registerKvMutate(app);
+}
+
 export function registerRoutes(app: Hono) {
   registerStatic(app);
-  registerHomeAndKv(app);
-  registerKvMutate(app);
+  registerRest(app);
   registerAstAndScripts(app);
 }
 
@@ -48,6 +60,17 @@ function registerHomeAndKv(app: Hono) {
   app.get("/", home.getHome);
   app.get("/kv", kv.getKvList);
   app.get("/kv/:key", kv.getKvKey);
+}
+
+function registerProfile(app: Hono) {
+  app.get("/profile/:id", profile.getProfile);
+  app.post("/profile", profile.postProfile);
+  app.patch("/profile/:id", profile.patchProfile);
+}
+
+function registerProgress(app: Hono) {
+  app.get("/progress/:id", profile.getProgress);
+  app.patch("/progress/:id", profile.patchProgress);
 }
 
 function registerKvMutate(app: Hono) {
