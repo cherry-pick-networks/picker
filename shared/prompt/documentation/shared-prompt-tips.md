@@ -2,7 +2,8 @@
 
 These [claude-code-tips](https://github.com/ykdojo/claude-code-tips) are **not**
 adopted as project practice. They are listed here for optional reference. When
-the team agrees to adopt one, add it to [shared-prompt-usage.md](shared-prompt-usage.md) or to
+the team agrees to adopt one, add it to
+[shared-prompt-usage.md](shared-prompt-usage.md) or to
 [shared-prompt-store.md](../store/shared-prompt-store.md) as appropriate.
 
 ---
@@ -146,5 +147,6 @@ for workflows and updates.
 ---
 
 When the team decides to adopt any of these, add the chosen practice to
-[shared-prompt-usage.md](shared-prompt-usage.md) or [shared-prompt-store.md](../store/shared-prompt-store.md) and, if
-needed, remove or shorten the entry here.
+[shared-prompt-usage.md](shared-prompt-usage.md) or
+[shared-prompt-store.md](../store/shared-prompt-store.md) and, if needed, remove
+or shorten the entry here.

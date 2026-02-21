@@ -139,19 +139,19 @@ tool-specific configs.
 - **New topic**: Start a new conversation when the topic or task changes to keep
   context focused.
 - **Handoff**: For long-running or multi-session work, write a single handoff
-  doc (`shared/prompt/documentation/shared-prompt-handoff.md`; linked from README) with: goal,
-  progress, what was tried, what failed, next steps. **Workflow**: create or
-  update the handoff file before switching agent or topic; new sessions attach
-  only that file. Optionally use `/handoff` (e.g. dx plugin) if available.
+  doc (`shared/prompt/documentation/shared-prompt-handoff.md`; linked from
+  README) with: goal, progress, what was tried, what failed, next steps.
+  **Workflow**: create or update the handoff file before switching agent or
+  topic; new sessions attach only that file. Optionally use `/handoff` (e.g. dx
+  plugin) if available.
 - **Next steps (handoff)**: In the handoff doc, the "Next steps" section lists
   zero or more follow-up actions. Each item is one logical unit (one commit or
   one scoped task); one sentence per item so a new session can start without
-  extra context. If there is no required follow-up, add at least one optional
-  or deferred item (e.g. "Optional: add E2E for POST /kv") so the next session
-  has a starting point. Do not add items that require a scope-doc or
-  dependency change without noting it (e.g. "Propose scope update first, then
-  implement X"). Format: bullet list; first bullet may be the recommended next
-  action.
+  extra context. If there is no required follow-up, add at least one optional or
+  deferred item (e.g. "Optional: add E2E for POST /kv") so the next session has
+  a starting point. Do not add items that require a scope-doc or dependency
+  change without noting it (e.g. "Propose scope update first, then implement
+  X"). Format: bullet list; first bullet may be the recommended next action.
 - **Branching experiments**: When trying a different approach from a point in
   time, fork the conversation or record the branch point in the handoff doc.
 
@@ -189,8 +189,8 @@ tool-specific configs.
 ## 12. Maintenance
 
 - **Single source**: Add or change rules and habits only in this file
-  (`shared/prompt/store/shared-prompt-store.md`). Do not duplicate in Cursor Rules or other
-  tool configs; reference this file instead.
+  (`shared/prompt/store/shared-prompt-store.md`). Do not duplicate in Cursor
+  Rules or other tool configs; reference this file instead.
 - **.cursor/rules**: mdc files are for **when** to apply (e.g. always vs
   on-request); keep one file per apply timing. Rule text stays here only; mdc
   names follow §D and §E.
@@ -203,9 +203,10 @@ tool-specific configs.
   only; write only the chosen practices here.
 - **Human-readable docs**: Project summary and rules for people are in
   `shared/prompt/documentation/` (shared-prompt-profile.md,
-  shared-prompt-principle.md, shared-prompt-reference.md). Root README Documentation section lists only domain entry
-  points (e.g. shared/README.md); do not add deep links to docs there. Do not
-  duplicate rule text in root README.
+  shared-prompt-principle.md, shared-prompt-reference.md). Root README
+  Documentation section lists only domain entry points (e.g. shared/README.md);
+  do not add deep links to docs there. Do not duplicate rule text in root
+  README.
 
 ---
 
@@ -260,9 +261,9 @@ applies to a specific focus.
 Document files: under shared/prompt/, name .md files with the same segment
 pattern: [prefix]-[suffix].md or [prefix]-[infix]-[suffix].md. Same axis rules
 and allowed sets as rule files; see §E. Exceptions: see §F (e.g. README.md at
-tree root). Scope for document names: the segment naming rule applies to
-exactly one document tree; in this project only .md files under shared/prompt/
-are in scope. Files outside that tree (e.g. root README.md, CONTRIBUTING.md,
+tree root). Scope for document names: the segment naming rule applies to exactly
+one document tree; in this project only .md files under shared/prompt/ are in
+scope. Files outside that tree (e.g. root README.md, CONTRIBUTING.md,
 CHANGELOG.md) are not subject to document-name rules.
 
 Directory structure (max 3 levels; segment order): level 1: folder name from
@@ -351,10 +352,10 @@ order, no fourth tier, naming reference, exception list.
 
 Validation (optional): Script: walk directories from root; skip exception list;
 assert remaining paths match prefix/(infix/)(suffix/) and tier names in allowed
-sets; exit 1 on failure. Run in pre-commit or CI. Document names: optionally walk
-the document tree (e.g. shared/prompt/), skip document exceptions, assert each
-remaining .md matches [prefix]-[suffix].md or [prefix]-[infix]-[suffix].md and
-segments are in §E allowed sets; run in pre-commit or CI.
+sets; exit 1 on failure. Run in pre-commit or CI. Document names: optionally
+walk the document tree (e.g. shared/prompt/), skip document exceptions, assert
+each remaining .md matches [prefix]-[suffix].md or [prefix]-[infix]-[suffix].md
+and segments are in §E allowed sets; run in pre-commit or CI.
 
 Agent / tool behavior: When creating directories, use only the three allowed
 forms for non-excepted paths; use only approved axis values per §E.
@@ -415,20 +416,21 @@ content first; only after that delete the old files; one logical migration (one
 plan) per commit. Naming: new rule file names must follow §D and §E; use infix
 from Actor/Action/Entity where it clarifies focus (e.g. document, event, agent).
 No scope doc change: adding or refactoring .cursor/rules does not require
-shared/prompt/documentation/shared-prompt-boundary.md change; scope doc is for modules, API
-routes, infrastructure only. Document renames: when renaming .md under the
-document tree to comply with segment naming, (1) list current files and target
-names per §D/§E, (2) rename (prefer non-referenced files first), (3) update
-in-tree references and links, (4) verify with document-name validation if
+shared/prompt/documentation/shared-prompt-boundary.md change; scope doc is for
+modules, API routes, infrastructure only. Document renames: when renaming .md
+under the document tree to comply with segment naming, (1) list current files
+and target names per §D/§E, (2) rename (prefer non-referenced files first), (3)
+update in-tree references and links, (4) verify with document-name validation if
 available; detailed steps in shared-document-plan or shared-migration-strategy.
 
 ### §K. Scope document boundary
 
 Scope document: the single source of truth for in-scope modules, API surface,
-and infrastructure is shared/prompt/documentation/shared-prompt-boundary.md; update that doc
-before adding. Scope-bound implementation: do not add new modules, API routes
-(routers), or infrastructure (broker, extra DB, queue, search engine) unless
-they are listed in shared/prompt/documentation/shared-prompt-boundary.md; add them to
+and infrastructure is shared/prompt/documentation/shared-prompt-boundary.md;
+update that doc before adding. Scope-bound implementation: do not add new
+modules, API routes (routers), or infrastructure (broker, extra DB, queue,
+search engine) unless they are listed in
+shared/prompt/documentation/shared-prompt-boundary.md; add them to
 shared/prompt/documentation/shared-prompt-boundary.md first, then implement.
 
 ### §L. Agent and scope
@@ -442,14 +444,14 @@ Root README (repository root README.md): the Documentation section lists only
 domain entry points; each entry links to a scope-level README (e.g.
 shared/README.md), not to files under prefix/infix/suffix. Deep links: do not
 add links from root README to individual docs (e.g. shared-prompt-store.md,
-shared-prompt-handoff.md, shared-prompt-profile.md); those live in each
-domain's README.
+shared-prompt-handoff.md, shared-prompt-profile.md); those live in each domain's
+README.
 
 ### §N. Type-check policy
 
-Type-check policy: do not disable or bypass type checking. Do not add
---no-check (or equivalent) to any deno task or run command; do not set
-skipLibCheck or disable strict mode in tsconfig; do not use // @ts-ignore or
-// @ts-expect-error. Fix type errors by correcting types or code. Validation:
-run deno task type-check-policy (shared/prompt/scripts/check-type-policy.ts);
-CI runs this step; fail on any violation.
+Type-check policy: do not disable or bypass type checking. Do not add --no-check
+(or equivalent) to any deno task or run command; do not set skipLibCheck or
+disable strict mode in tsconfig; do not use // @ts-ignore or //
+@ts-expect-error. Fix type errors by correcting types or code. Validation: run
+deno task type-check-policy (shared/prompt/scripts/check-type-policy.ts); CI
+runs this step; fail on any violation.

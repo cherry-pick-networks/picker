@@ -1,7 +1,8 @@
 # Project context (human-readable)
 
 One-page summary for onboarding and daily use.\
-**Single source of truth for AI and tooling**: `shared/prompt/store/shared-prompt-store.md`.
+**Single source of truth for AI and tooling**:
+`shared/prompt/store/shared-prompt-store.md`.
 
 ---
 
@@ -22,8 +23,8 @@ One-page summary for onboarding and daily use.\
 - **Naming**: Use only approved segment names per axis (Scope/Layer/Context for
   prefix; Actor/Action/Entity for infix; Artifact/Policy/Meta for suffix). See
   `shared/prompt/documentation/shared-prompt-principle.md` §D–§F.
-- **This file**: `shared/prompt/documentation/shared-prompt-profile.md` (shared =
-  Scope, prompt = Entity, profile = Meta)
+- **This file**: `shared/prompt/documentation/shared-prompt-profile.md` (shared
+  = Scope, prompt = Entity, profile = Meta)
 - **Exceptions**: .git, .cursor, node_modules, dist, build, coverage, vendor,
   .cache (confirm per repo)
 
@@ -59,9 +60,13 @@ Optional tooling (status line, setup script, tips): see
 
 ## Where to read what
 
-- **Rules (checkable)**: `shared/prompt/documentation/shared-prompt-principle.md`
-- **Reference (tips, not rules)**: `shared/prompt/documentation/shared-prompt-reference.md`,
+- **Rules (checkable)**:
+  `shared/prompt/documentation/shared-prompt-principle.md`
+- **Reference (tips, not rules)**:
+  `shared/prompt/documentation/shared-prompt-reference.md`,
   `shared/prompt/documentation/shared-prompt-usage.md`
-- **Handoff**: `shared/prompt/documentation/shared-prompt-handoff.md` (linked from README)
-- **Scope** (modules, API, infra): `shared/prompt/documentation/shared-prompt-boundary.md`
+- **Handoff**: `shared/prompt/documentation/shared-prompt-handoff.md` (linked
+  from README)
+- **Scope** (modules, API, infra):
+  `shared/prompt/documentation/shared-prompt-boundary.md`
 - **AI/tool single source**: `shared/prompt/store/shared-prompt-store.md`

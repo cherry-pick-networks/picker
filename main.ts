@@ -6,10 +6,10 @@ import { handler as astHandler } from "./system/router/ast.ts";
 
 export const app = new App()
   .use(staticFiles())
-  .get("/", (ctx) => indexHandler.GET())
+  .get("/", (_ctx) => indexHandler.GET())
   .get("/kv/:key", (ctx) => kvKeyHandler.GET(ctx.req, ctx))
   .post("/kv", (ctx) => kvIndexHandler.POST(ctx.req))
-  .get("/ast", (ctx) => astHandler.GET())
+  .get("/ast", (_ctx) => astHandler.GET())
   .fsRoutes();
 
 if (import.meta.main) {

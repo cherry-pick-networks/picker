@@ -11,8 +11,16 @@ const DENO_JSONC = "deno.jsonc";
 const TSCONFIG = "tsconfig.json";
 
 const SKIP_DIRS = new Set([
-  ".cache", ".git", ".cursor", "node_modules", "dist", "build", "coverage",
-  "vendor", "_fresh", "static",
+  ".cache",
+  ".git",
+  ".cursor",
+  "node_modules",
+  "dist",
+  "build",
+  "coverage",
+  "vendor",
+  "_fresh",
+  "static",
 ]);
 
 const SOURCE_EXTS = [".ts", ".tsx", ".mts", ".js", ".jsx", ".mjs"];
@@ -73,7 +81,9 @@ async function checkCompilerOptions(root: string): Promise<string[]> {
       continue;
     }
     try {
-      const data = JSON.parse(content) as { compilerOptions?: Record<string, unknown> };
+      const data = JSON.parse(content) as {
+        compilerOptions?: Record<string, unknown>;
+      };
       check(path, data.compilerOptions);
     } catch {
       // ignore parse errors; other tooling will report
@@ -110,7 +120,9 @@ function checkSourceFile(path: string, content: string): string[] {
     if (DIRECTIVE_RE.test(line)) {
       const match = line.match(/@ts-(ignore|expect-error)/i);
       errors.push(
-        `${path}:${i + 1}: forbidden ${match ? match[0]!.toLowerCase() : "directive"}`,
+        `${path}:${i + 1}: forbidden ${
+          match ? match[0]!.toLowerCase() : "directive"
+        }`,
       );
     }
   }

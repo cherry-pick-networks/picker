@@ -8,9 +8,10 @@ Use what fits your environment and habits.
 
 ## What belongs here vs in rules
 
-- **Rules** (in `shared-prompt-principle.md`): Things that can be checked (directory
-  structure, naming, commit format, "this repo has X file") or defined in one
-  sentence. See `shared/prompt/store/shared-prompt-store.md` Part B.
+- **Rules** (in `shared-prompt-principle.md`): Things that can be checked
+  (directory structure, naming, commit format, "this repo has X file") or
+  defined in one sentence. See `shared/prompt/store/shared-prompt-store.md` Part
+  B.
 - **Reference** (this doc): Usage tips, workflow habits, tool preferences,
   qualitative advice—things that are not checkable or that depend on the person
   or environment.
@@ -23,7 +24,8 @@ Use what fits your environment and habits.
   (e.g. status line, handoff workflow, setup script, dx plugin).\
   → **[shared-prompt-usage.md](shared-prompt-usage.md)**
 - **Tips we reference but do not adopt (yet)**: Short descriptions of optional
-  claude-code-tips; add to shared-prompt-usage or shared-prompt-store when the team decides.\
+  claude-code-tips; add to shared-prompt-usage or shared-prompt-store when the
+  team decides.\
   → **[shared-prompt-tips.md](shared-prompt-tips.md)**
 
 ---

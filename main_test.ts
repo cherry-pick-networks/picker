@@ -18,53 +18,71 @@ Deno.test("GET / returns 200 and { ok: true }", handlerTestOpts, async () => {
   assertEquals(body, { ok: true });
 });
 
-Deno.test("GET /kv/:key returns 200 and value or null", handlerTestOpts, async () => {
-  const res = await handler(new Request("http://localhost/kv/test-key-missing"));
-  assertEquals(res.status, 200);
-  const body = await res.json();
-  assertEquals(body, null);
-});
+Deno.test(
+  "GET /kv/:key returns 200 and value or null",
+  handlerTestOpts,
+  async () => {
+    const res = await handler(
+      new Request("http://localhost/kv/test-key-missing"),
+    );
+    assertEquals(res.status, 200);
+    const body = await res.json();
+    assertEquals(body, null);
+  },
+);
 
-Deno.test("POST /kv writes and GET /kv/:key reads", handlerTestOpts, async () => {
-  const key = `test-${Date.now()}`;
-  const value = { foo: "bar" };
-  const postRes = await handler(
-    new Request("http://localhost/kv", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ key, value }),
-    }),
-  );
-  assertEquals(postRes.status, 200);
-  const postBody = await postRes.json();
-  assertEquals(postBody, { key });
+Deno.test(
+  "POST /kv writes and GET /kv/:key reads",
+  handlerTestOpts,
+  async () => {
+    const key = `test-${Date.now()}`;
+    const value = { foo: "bar" };
+    const postRes = await handler(
+      new Request("http://localhost/kv", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ key, value }),
+      }),
+    );
+    assertEquals(postRes.status, 200);
+    const postBody = await postRes.json();
+    assertEquals(postBody, { key });
 
-  const getRes = await handler(new Request(`http://localhost/kv/${key}`));
-  assertEquals(getRes.status, 200);
-  const getBody = await getRes.json();
-  assertEquals(getBody, value);
-});
+    const getRes = await handler(new Request(`http://localhost/kv/${key}`));
+    assertEquals(getRes.status, 200);
+    const getBody = await getRes.json();
+    assertEquals(getBody, value);
+  },
+);
 
-Deno.test("POST /kv with invalid body returns 400", handlerTestOpts, async () => {
-  const res = await handler(
-    new Request("http://localhost/kv", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ notKey: "x" }),
-    }),
-  );
-  assertEquals(res.status, 400);
-  const body = await res.json();
-  assertEquals(typeof body.error === "object", true);
-});
+Deno.test(
+  "POST /kv with invalid body returns 400",
+  handlerTestOpts,
+  async () => {
+    const res = await handler(
+      new Request("http://localhost/kv", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ notKey: "x" }),
+      }),
+    );
+    assertEquals(res.status, 400);
+    const body = await res.json();
+    assertEquals(typeof body.error === "object", true);
+  },
+);
 
-Deno.test("GET /ast returns 200 and variableDeclarations count", handlerTestOpts, async () => {
-  const res = await handler(new Request("http://localhost/ast"));
-  assertEquals(res.status, 200);
-  const body = await res.json();
-  assertEquals(typeof body.variableDeclarations, "number");
-  assertEquals(body.variableDeclarations, 1);
-});
+Deno.test(
+  "GET /ast returns 200 and variableDeclarations count",
+  handlerTestOpts,
+  async () => {
+    const res = await handler(new Request("http://localhost/ast"));
+    assertEquals(res.status, 200);
+    const body = await res.json();
+    assertEquals(typeof body.variableDeclarations, "number");
+    assertEquals(body.variableDeclarations, 1);
+  },
+);
 
 // E2E: real HTTP server (Deno.serve), then fetch to POST /kv and GET /kv/:key.
 Deno.test("E2E POST /kv over real HTTP", handlerTestOpts, async () => {

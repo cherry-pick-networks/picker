@@ -20,9 +20,10 @@ Thank you for your interest in contributing. This project is maintained by
   - `deno task dev` — start dev server (watch)
   - `deno test` — run tests
   - `deno task scope-check` — verify API routes are listed in the scope document
-  - `deno task type-check-policy` — verify no type-check bypass (no --no-check, @ts-ignore, @ts-expect-error)
-- **Pre-push hook (optional)**: To run `deno task scope-check` automatically before
-  every push, install the hook from the repo root:
+  - `deno task type-check-policy` — verify no type-check bypass (no --no-check,
+    @ts-ignore, @ts-expect-error)
+- **Pre-push hook (optional)**: To run `deno task scope-check` automatically
+  before every push, install the hook from the repo root:
   `cp shared/prompt/scripts/git-hooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push`
 
 ## Before submitting a PR
@@ -42,8 +43,8 @@ Thank you for your interest in contributing. This project is maintained by
 
 Detailed conventions (directory structure, dependencies, workflow) are in the
 shared docs: start from [shared/README.md](shared/README.md) and see
-[shared/prompt/store/shared-prompt-store.md](shared/prompt/store/shared-prompt-store.md) for the single
-source of truth.
+[shared/prompt/store/shared-prompt-store.md](shared/prompt/store/shared-prompt-store.md)
+for the single source of truth.
 
 ## Contact
 

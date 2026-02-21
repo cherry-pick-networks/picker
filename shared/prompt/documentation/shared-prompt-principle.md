@@ -43,8 +43,8 @@ Example: `feat(module): add handler`
 
 - **Rule files**: Name as `[prefix]-[suffix].mdc` or
   `[prefix]-[infix]-[suffix].mdc`; lowercase, one hyphen between words.
-- **Document files**: Under shared/prompt/, name .md files with the same
-  segment pattern (prefix-infix-suffix); see store context §D and §E.
+- **Document files**: Under shared/prompt/, name .md files with the same segment
+  pattern (prefix-infix-suffix); see store context §D and §E.
 - **Directories**: Max 3 tiers from root (prefix → infix → suffix). Allowed
   forms: `prefix/`, `prefix/infix/`, `prefix/infix/suffix/`.
 - **Check**: New directories (except exception list) match the three forms; rule
@@ -70,8 +70,8 @@ Example: `feat(module): add handler`
 - **Exceptions**: .git, .cursor, node_modules, dist, build, coverage, vendor,
   .cache (confirm per project).
 - **Document exceptions**: For .md segment naming, see store §F (fixed names
-  e.g. README.md, CHANGELOG.md; optional single path). Do not duplicate the
-  list here.
+  e.g. README.md, CHANGELOG.md; optional single path). Do not duplicate the list
+  here.
 - **Check**: Directory walk (excluding exceptions) validates structure and
   naming; optional pre-commit or CI script.
 
@@ -119,10 +119,11 @@ Example: `feat(module): add handler`
 
 ## §K. Scope document boundary
 
-- **Single source**: shared/prompt/documentation/shared-prompt-boundary.md for in-scope modules,
-  API surface, infrastructure.
+- **Single source**: shared/prompt/documentation/shared-prompt-boundary.md for
+  in-scope modules, API surface, infrastructure.
 - Do not add new modules, API routes, or infrastructure unless listed there;
-  update shared/prompt/documentation/shared-prompt-boundary.md first, then implement.
+  update shared/prompt/documentation/shared-prompt-boundary.md first, then
+  implement.
 - **Check**: New routes/modules/infra have a corresponding scope doc update.
 
 ---
