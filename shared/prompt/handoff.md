@@ -53,6 +53,7 @@ runs in CI so new routes cannot be added without updating the scope document.
   `tests/scripts/` (function-length-lint-plugin_test.ts). `deno task test`
   discovers them automatically; no path config.
 - **Scope rules split**: §K and §L moved to `.cursor/rules/system-document-boundary.mdc` and `system-agent-boundary.mdc` (store.md unchanged; global-agent-policy no longer lists §K/§L).
+- **AST self-edit phase 1**: boundary.md updated with POST `/ast/apply` and system/service role (AST read/patch for shared/runtime/store/). Implemented: `system/service/ast.ts` (applyPatch: Governance + readScript + replace oldText/newText + writeScript), `system/router/ast-apply.ts` (POST /ast/apply). ROUTES and registerRoutes updated. Tests in `tests/system/main_ast_apply_test.ts` (invalid body, empty path, path escape 403, oldText not found 400, success and content updated). scope-check and `deno task test` pass.
 
 ---
 
@@ -67,7 +68,9 @@ runs in CI so new routes cannot be added without updating the scope document.
 
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
 
+- Optional: Add E2E for POST /ast/apply over real HTTP (e.g. in main_e2e_test.ts).
 - Optional: Add E2E for DELETE /kv/:key or POST /scripts over real HTTP.
+- Deferred: Spec summary (e.g. current phase in plan.md or documentation/guide); then extend patch format (e.g. ts-morph-based edits) or Thompson Sampling MAB per roadmap.
 
 ---
 

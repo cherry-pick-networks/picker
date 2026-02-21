@@ -19,7 +19,7 @@ Use that document for AI direction and scope decisions.
 | **system/routes.ts**     | Route list (ROUTES) and registerRoutes(app); scope-check reads this.                      |
 | **system/router/**       | Hono handlers: home, kv, ast, ast-demo, scripts (GET/POST /scripts, GET /scripts/*).      |
 | **system/store/**        | Storage access (e.g. Deno KV via `getKv()`).                                             |
-| **system/service/**      | Shared business logic (e.g. `add`).                                                      |
+| **system/service/**      | Shared business logic (e.g. `add`). AST read/patch for shared/runtime/store/; apply via Governance and scripts write. |
 | **system/validator/**       | Governance verification; must pass before any apply (e.g. shared/runtime/store mutation). |
 | **shared/runtime/store/**   | Target path for AST-based self-edit; read and write only via Governance-verified flow.     |
 
@@ -40,6 +40,7 @@ Use that document for AI direction and scope decisions.
 | GET    | `/scripts`  | List entries in shared/runtime/store/ (Governance-verified). Responds `{ "entries": string[] }`.                                             |
 | GET    | `/scripts/:path*` | Read file in shared/runtime/store/ by path (Governance-verified). Responds file content or 404.                                        |
 | POST   | `/scripts/:path*` | Write file in shared/runtime/store/ at path (Governance-verified). Body: raw text. Responds 201 or 400/403/500.                        |
+| POST   | `/ast/apply`      | Apply a text patch to a file in shared/runtime/store/. Body: `{ "path": string, "oldText": string, "newText": string }`. Governance-verified; responds 200 or 400/403/404/500. |
 
 ---
 
