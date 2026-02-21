@@ -1,11 +1,11 @@
 # {{repo_name}}
 
-Deno app: Hono (HTTP), Zod, ts-morph (AST), Deno KV. Entry: `main.ts`.
+Deno app: Fresh (HTTP), Zod, ts-morph (AST), Deno KV. Entry: `main.ts`.
 
 ## Run
 
 - **Dev**: `deno task dev`
-- **Once**: `deno run --allow-net --unstable-kv main.ts`
+- **Once**: `deno run -A --unstable-kv main.ts`
 - **Test**: `deno test`
 
 ## Documentation
