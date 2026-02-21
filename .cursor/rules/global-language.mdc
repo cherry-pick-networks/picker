@@ -1,0 +1,6 @@
+---
+alwaysApply: true
+---
+
+Language:
+  English only for code, comments, docstrings, UI/log strings, docs.

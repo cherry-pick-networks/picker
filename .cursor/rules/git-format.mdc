@@ -1,0 +1,39 @@
+---
+description: |
+  Commit message format (Conventional Commits) and mandatory
+  feature-flag-boundary commits. Apply when composing or running
+  git commit messages and when implementing multi-flag work.
+alwaysApply: true
+---
+
+Pattern:
+  <type>[optional scope]: <description>;
+  type and description required; scope optional.
+Types:
+  feat (new feature), fix (bug fix), docs, chore, refactor, perf, test,
+  ci, build; use feat for SemVer MINOR, fix for PATCH;
+  use BREAKING CHANGE in footer or type! for MAJOR.
+Scope:
+  use for feature flag or module (e.g. ff/CHECKOUT_STEP or module name)
+  when the commit is scoped to that unit.
+When to commit (mandatory):
+  commit at each feature-flag boundary; do not wait until the full task
+  is done; one logical unit (one flag or one cohesive change) per commit.
+Must commit before next unit:
+  before starting the next feature-flag or logical unit, you must run
+  git add and git commit for the current changes; do not implement the
+  next flag without committing the current one.
+Procedure for multi-flag work:
+  (1) implement one feature-flag unit only; (2) run git status, git add,
+  git commit with message per this rule; (3) only after commit succeeds,
+  proceed to the next unit. No batch commit at the end of the task.
+Description:
+  imperative, lowercase after colon; short summary (e.g. add handler,
+  fix validation); optional body after blank line for context.
+Footer:
+  BREAKING CHANGE: <description> or conventional footers (e.g. Ref: TICKET-1).
+Session end:
+  at the end of every session, always output a commit message that follows
+  this rule (type[(scope)]: description; imperative, lowercase) in a fenced
+  code block so the user can copy it; do this every time, do not skip; do not
+  run git commit unless the user explicitly asks.

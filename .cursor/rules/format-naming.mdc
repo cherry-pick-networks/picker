@@ -1,0 +1,93 @@
+---
+description: |
+  Naming format for .cursor/rules *.mdc: [prefix]-[suffix].mdc or
+  [prefix]-[infix]-[suffix].mdc. Segments lowercase, hyphen-separated.
+  Prefix = Scope | Layer | Context; Infix = Actor | Action | Entity;
+  Suffix = Artifact | Policy | Meta. One word per concept; axes orthogonal.
+alwaysApply: true
+---
+
+Pattern:
+  use [prefix]-[suffix].mdc or [prefix]-[infix]-[suffix].mdc;
+  prefix and suffix required; infix optional.
+Segment form:
+  lowercase; separate words with one hyphen; no underscores;
+  suffix singular (except types); descriptive, pronounceable, searchable.
+Axis rule:
+  each segment uses exactly one axis from its allowed set;
+  no axis pollution; one word must not appear in two axes.
+New rule files:
+  pick one prefix from Scope/Layer/Context; one suffix from
+  Artifact/Policy/Meta; add infix from Actor/Action/Entity only when
+  the rule applies to a specific focus.
+
+Directory structure (max 3 levels; segment order):
+  level 1: folder name from approved prefix (required);
+  level 2: folder name from approved infix (optional);
+  level 3: folder name from approved suffix (optional).
+  Order: prefix / infix / suffix; do not add a fourth level.
+
+Clean dictionary (one word per concept — overlap resolution):
+  middleware: only Suffix (Artifact); never Infix (use interceptor,
+  filter).
+  policy: only Suffix (Policy); never Infix (use validator, guard).
+  cache: only Infix (Entity); never Suffix (use store, storage).
+  config: only this spelling; never configuration.
+  education: only this spelling; never edu.
+  type (TS/classification): use types in Suffix Meta; never type.
+  core: forbidden in Context; use shared, base, or domain (layer).
+  context (React/API): use provider in Infix Entity; do not use
+  context as segment.
+
+Prefix — one axis only: [ Scope | Layer | Context ].
+  Rule: prefix must denote system position only; technical tools
+  (cache, redis) or artifact form (config, test) must not be prefix.
+  Axis "Context" = Bounded Context (what it is for); Layer value
+  "domain" = DDD domain layer only.
+Scope (blast radius — where impact reaches):
+  global, shared, system, module, component.
+  Never prefix: app (use system), config, file, code, architecture.
+Layer (stack position — where it sits):
+  presentation, application, domain, infrastructure.
+  Never prefix: api, web as layer (refine into above if needed);
+  security, observability, compliance (use Context instead).
+Context (bounded context — what it is for):
+  business: payment, order, auth, user, catalog, education, student,
+  ticket, bucket, item, economy, scout;
+  system: security, observability, compliance.
+  Never prefix: core (use shared, base, or domain); cache, adapter,
+  redis, test (use Infix/Suffix).
+
+Infix — one axis only: [ Actor | Action | Entity ].
+  Rule: infix must not duplicate Scope/Layer/Context meaning.
+  Forbidden in Infix: middleware (use interceptor, filter), policy
+  (use validator, guard).
+Actor (architectural role or agent):
+  router, service, repository, entity, interceptor, filter, adapter,
+  facade, client, agent, worker, guard, validator.
+Entity (data or medium kind):
+  payload, stream, blob, cache, session, document, json, sql,
+  redis, prompt, provider.
+Action (lifecycle or operation):
+  bootstrap, shutdown, runtime, build, migration, recovery,
+  read, write, batch, parse, upload, search, validate.
+
+Suffix — one axis only: [ Artifact | Policy | Meta ].
+  Rule: suffix denotes form of the deliverable; context meaning
+  belongs in Prefix, not Suffix.
+  Forbidden in Suffix: cache (use store, storage), configuration
+  (use config).
+Artifact (concrete deliverable shape):
+  schema, mapping, store, storage, event, endpoint, response,
+  middleware, format, exception, config, pipeline, metrics, trace.
+Policy (principle, constraint, or policy):
+  boundary, constraint, contract, principle, safety, validation,
+  compliance, isolation.
+Meta (documentation, test, or classification):
+  test, documentation, naming, style, log, types, language,
+  profile, assessment.
+
+Examples:
+  payment-infra-redis-config (Context + Layer + Entity + Artifact);
+  security-application-guard-policy (Context + Layer + Actor + Policy);
+  global-config (Scope + Artifact).

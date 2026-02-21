@@ -1,0 +1,17 @@
+---
+description: |
+  Project scope and in-scope context. Apply when adding modules, API
+  routes, or infrastructure.
+alwaysApply: true
+---
+
+Scope document:
+  the single source of truth for in-scope modules, API surface, and
+  infrastructure is docs/scope.md; update that doc before adding.
+Scope-bound implementation:
+  do not add new modules, API routes (routers), or infrastructure
+  (broker, extra DB, queue, search engine) unless they are listed in
+  docs/scope.md; add them to docs/scope.md first, then implement.
+Agent and scope:
+  agent must not extend scope arbitrarily; propose scope doc changes
+  for human approval, then implement only after scope is updated.

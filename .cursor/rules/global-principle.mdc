@@ -1,0 +1,34 @@
+---
+alwaysApply: true
+---
+
+Conventions:
+  follow standard conventions (formatting, naming, structure).
+KISS:
+  prefer the simplest option; reduce complexity.
+Boy scout rule:
+  leave anything you touch cleaner than you found it.
+Root cause:
+  find it; address causes, not only symptoms.
+Consistency:
+  be consistent across the project (terms, tone, layout).
+Phrasing:
+  prefer positive phrasing in docs and specs
+  ("Do X" over "Do not do Y").
+Rule file format:
+  one rule per block; no blank line between rules;
+  wrap with indent so continuation is clearly the same rule.
+Rule file line wrap:
+  break only at punctuation (;, ,) or after a complete phrase;
+  never split a noun phrase or parenthetical mid-phrase;
+  meaning per line over 80 chars in rule files.
+Clear rules (when adding from docs):
+  only add to rules what satisfies all three: (1) stateable as
+  must/do not/only in one sentence, no prefer/recommended;
+  (2) concrete scope (files, symbols, or patterns named);
+  (3) violation detectable by static check or simple heuristic;
+  otherwise keep in docs or as guidance only.
+No speculative implementation:
+  do not add modules, endpoints, or infrastructure for a future
+  phase or roadmap; add only when the feature is in current scope
+  (docs/scope.md).
