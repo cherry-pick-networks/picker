@@ -14,6 +14,10 @@ export type ReadResult =
   | { ok: true; content: string }
   | { ok: false; status: number; body: string };
 
+export type WriteResult =
+  | { ok: true; status: 201 }
+  | { ok: false; status: number; body: string };
+
 async function listDir(path: string): Promise<string[]> {
   const names: string[] = [];
   for await (const e of Deno.readDir(path)) {
@@ -63,6 +67,33 @@ export async function readScript(relativePath: string): Promise<ReadResult> {
       ok: false,
       status: 500,
       body: e instanceof Error ? e.message : "read failed",
+    };
+  }
+}
+
+/**
+ * Write one file under ops/scripts/ by relative path. Governance-verified.
+ * Creates parent directories under ops/scripts/ if needed.
+ */
+export async function writeScript(
+  relativePath: string,
+  content: string,
+): Promise<WriteResult> {
+  const result = verifyGovernance("write", relativePath);
+  if (!result.allowed) {
+    return { ok: false, status: 403, body: result.reason };
+  }
+  const fullPath = `${OPS_SCRIPTS}/${relativePath}`;
+  try {
+    const dir = fullPath.slice(0, fullPath.lastIndexOf("/"));
+    if (dir) await Deno.mkdir(dir, { recursive: true });
+    await Deno.writeTextFile(fullPath, content, { create: true });
+    return { ok: true, status: 201 };
+  } catch (e) {
+    return {
+      ok: false,
+      status: 500,
+      body: e instanceof Error ? e.message : "write failed",
     };
   }
 }

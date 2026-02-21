@@ -20,6 +20,9 @@ export const app = new App()
   .get("/scripts/:path*", (ctx) =>
     scriptsPathHandler.GET(ctx.req, ctx as { params: Record<string, string> })
   )
+  .post("/scripts/:path*", (ctx) =>
+    scriptsPathHandler.POST(ctx.req, ctx as { params: Record<string, string> })
+  )
   .fsRoutes();
 
 if (import.meta.main) {

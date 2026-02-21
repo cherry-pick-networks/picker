@@ -1,4 +1,4 @@
-import { readScript } from "../../store/scripts.ts";
+import { readScript, writeScript } from "../../store/scripts.ts";
 
 type Ctx = { params: Record<string, string> };
 
@@ -19,5 +19,17 @@ export const handler = {
     return new Response(result.content, {
       headers: { "Content-Type": "text/plain; charset=utf-8" },
     });
+  },
+  async POST(req: Request, ctx: Ctx) {
+    const path = ctx.params.path ?? "";
+    if (!path.trim()) {
+      return jsonError("path required", 400);
+    }
+    const content = await req.text();
+    const result = await writeScript(path, content);
+    if (!result.ok) {
+      return jsonError(result.body, result.status);
+    }
+    return new Response(null, { status: 201 });
   },
 };

@@ -25,3 +25,33 @@ Deno.test("GET /scripts/nonexistent returns 404", async () => {
   );
   assertEquals(res.status, 404);
 });
+
+Deno.test("POST /scripts/post-test.txt returns 201 and file is readable", async () => {
+  const res = await handler(
+    new Request("http://localhost/scripts/post-test.txt", {
+      method: "POST",
+      body: "content from POST",
+    }),
+  );
+  assertEquals(res.status, 201);
+  const getRes = await handler(
+    new Request("http://localhost/scripts/post-test.txt"),
+  );
+  assertEquals(getRes.status, 200);
+  assertEquals(await getRes.text(), "content from POST");
+});
+
+Deno.test("POST /scripts/with/subdir.txt creates subdir and returns 201", async () => {
+  const res = await handler(
+    new Request("http://localhost/scripts/with/subdir.txt", {
+      method: "POST",
+      body: "nested content",
+    }),
+  );
+  assertEquals(res.status, 201);
+  const getRes = await handler(
+    new Request("http://localhost/scripts/with/subdir.txt"),
+  );
+  assertEquals(getRes.status, 200);
+  assertEquals(await getRes.text(), "nested content");
+});

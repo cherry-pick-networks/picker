@@ -16,7 +16,7 @@ Use that document for AI direction and scope decisions.
 | ------------------------ | ---------------------------------------------------------------------------------------- |
 | **main.ts**              | Server entry: Fresh App, staticFiles, API routes delegated from system/router, fsRoutes. |
 | **client.ts**            | Client entry (loaded on every page).                                                     |
-| **system/router/**       | File-based route handlers: `/`, GET `/kv`, `/kv/:key`, POST `/kv`, `/ast`, `/ast-demo`, GET `/scripts`, GET `/scripts/:path`. |
+| **system/router/**       | File-based route handlers: `/`, GET `/kv`, `/kv/:key`, POST `/kv`, `/ast`, `/ast-demo`, GET `/scripts`, GET `/scripts/:path`, POST `/scripts/:path`. |
 | **system/store/**        | Storage access (e.g. Deno KV via `getKv()`).                                             |
 | **system/service/**      | Shared business logic (e.g. `add`).                                                      |
 | **system/validator/**    | Governance verification; must pass before any apply (e.g. ops/scripts mutation).         |
@@ -39,6 +39,7 @@ Use that document for AI direction and scope decisions.
 | GET    | `/ast-demo` | AST demo page (HTML). Fetches GET /ast and displays variableDeclarations.                                                           |
 | GET    | `/scripts`  | List entries in ops/scripts/ (Governance-verified). Responds `{ "entries": string[] }`.                                             |
 | GET    | `/scripts/:path*` | Read file in ops/scripts/ by path (Governance-verified). Responds file content or 404.                                        |
+| POST   | `/scripts/:path*` | Write file in ops/scripts/ at path (Governance-verified). Body: raw text. Responds 201 or 400/403/500.                        |
 
 ---
 

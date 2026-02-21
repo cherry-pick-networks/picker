@@ -56,6 +56,10 @@ runs in CI so new routes cannot be added without updating the scope document.
   ops/scripts/). `ops/scripts/` dir, `system/store/scripts.ts` (listScripts,
   readScript), `system/router/scripts/` handlers, main.ts registration. Tests in
   main_scripts_test.ts and validator_test.ts.
+- POST /scripts/:path*: scope doc updated, writeScript() in system/store/scripts.ts
+  (Governance-verified), POST in system/router/scripts/[...path].ts, main.ts
+  registration; tests in main_scripts_test.ts (201, subdir) and
+  scripts_store_test.ts (403 path escape).
 
 ---
 
@@ -79,8 +83,11 @@ runs in CI so new routes cannot be added without updating the scope document.
 - ~~Optional: Add AST demo page (e.g. /ast-demo or /demo/ast) that uses GET /ast
   API; update scope doc first, then implement.~~ Done: scope doc updated, GET
   /ast-demo in system/router/ast-demo.ts and main.ts; test in main_test.ts.
-- Optional: Add write path (POST /scripts or apply endpoint) with
-  Governance-verified apply; update scope doc first, then implement.
+- ~~Optional: Add write path (POST /scripts or apply endpoint) with
+  Governance-verified apply; update scope doc first, then implement.~~ Done:
+  scope doc updated, writeScript in system/store/scripts.ts, POST
+  /scripts/:path* in system/router/scripts/[...path].ts and main.ts; tests in
+  main_scripts_test.ts and scripts_store_test.ts.
 
 ---
 
