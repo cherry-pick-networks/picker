@@ -49,6 +49,7 @@ runs in CI so new routes cannot be added without updating the scope document.
   GET /ast, GET /ast-demo, GET /scripts, GET /scripts/hello.txt,
   GET /static/e2e-smoke.txt, POST /kv; plus load check (20 concurrent GET /
   within 5s). Static fixture: `system/static/e2e-smoke.txt`.
+- **Scope rules split**: §K and §L moved to `.cursor/rules/system-document-boundary.mdc` and `system-agent-boundary.mdc` (store.md unchanged; global-agent-policy no longer lists §K/§L).
 
 ---
 

@@ -2,7 +2,7 @@
 description: |
   Project conventions and agent policy. Apply in every session.
   Commit format, session boundary, language, document/dir format and naming,
-  dependency constraint, validation policy, agent principles, migration and scope.
+  dependency constraint, validation policy, agent principles, migration.
 alwaysApply: true
 ---
 
@@ -17,8 +17,6 @@ Read that file and follow:
 - **§H. Validation policy (libraries)**
 - **§I. Agent principles**
 - **§J. Migration boundary**
-- **§K. Scope document boundary**
-- **§L. Agent and scope**
 - **§N. Type-check policy**
 - **§O. Answer format (options with pros and cons)**
 - **§P. Format limits (code)**
