@@ -21,7 +21,7 @@ Use that document for AI direction and scope decisions.
 | **system/store/**        | Storage access (e.g. Deno KV via `getKv()`). Profile/progress KV under prefixes `profile`, `progress`. Content items/worksheets under `content` (item, worksheet). Source records under `source`. |
 | **system/service/**      | Shared business logic (e.g. `add`, profile/progress, content, source collect/read). AST read/patch for shared/runtime/store/; apply via Governance and scripts write. |
 | **system/validator/**       | Governance verification; must pass before any apply (e.g. shared/runtime/store mutation). |
-| **system/log/**             | Log artifact storage (e.g. test run history JSON); written by tests or tooling, not served by API. |
+| **system/log/**             | Log artifact storage (e.g. test run history JSON, change audit log). Test/tooling writes run history; routes or services append change audit entries (who, when, what) for in-scope mutations. Not served by API unless an audit read endpoint is added. |
 | **shared/runtime/store/**   | Target path for AST-based self-edit; read and write only via Governance-verified flow.     |
 
 ---
@@ -76,3 +76,4 @@ Use that document for AI direction and scope decisions.
   `content` (items key `["content", "item", id]`; worksheets key `["content", "worksheet", id]`),
   `source` (source records key `["source", id]`).
 - **Worksheet prompt templates** — read-only from `shared/runtime/store/` (e.g. docs/contract/); Governance-verified read.
+- **Change audit log** — stored under `system/log/` (e.g. JSON file(s)); one entry per mutation (profile, progress, content, scripts/store) with actor, timestamp, and change summary; written by routes or services on mutation; retention and format defined by implementation.
