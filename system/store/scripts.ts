@@ -1,10 +1,11 @@
 /**
- * Read access to ops/scripts/. All access is gated by Governance (system/validator).
+ * Read access to shared/runtime/store/. All access is gated by Governance
+ * (system/validator).
  */
 
 import { verifyGovernance } from "../validator/index.ts";
 
-const OPS_SCRIPTS = "ops/scripts";
+const SCRIPTS_BASE = "shared/runtime/store";
 
 export type ListResult =
   | { ok: true; entries: string[] }
@@ -28,7 +29,7 @@ async function listDir(path: string): Promise<string[]> {
 }
 
 /**
- * List entries in ops/scripts/. Governance-verified.
+ * List entries in shared/runtime/store/. Governance-verified.
  */
 export async function listScripts(): Promise<ListResult> {
   const result = verifyGovernance("read", "");
@@ -36,7 +37,7 @@ export async function listScripts(): Promise<ListResult> {
     return { ok: false, status: 403, body: result.reason };
   }
   try {
-    const entries = await listDir(OPS_SCRIPTS);
+    const entries = await listDir(SCRIPTS_BASE);
     return { ok: true, entries };
   } catch (e) {
     return {
@@ -48,14 +49,14 @@ export async function listScripts(): Promise<ListResult> {
 }
 
 /**
- * Read one file under ops/scripts/ by relative path. Governance-verified.
+ * Read one file under shared/runtime/store/ by relative path. Governance-verified.
  */
 export async function readScript(relativePath: string): Promise<ReadResult> {
   const result = verifyGovernance("read", relativePath);
   if (!result.allowed) {
     return { ok: false, status: 403, body: result.reason };
   }
-  const fullPath = `${OPS_SCRIPTS}/${relativePath}`;
+  const fullPath = `${SCRIPTS_BASE}/${relativePath}`;
   try {
     const content = await Deno.readTextFile(fullPath);
     return { ok: true, content };
@@ -72,8 +73,8 @@ export async function readScript(relativePath: string): Promise<ReadResult> {
 }
 
 /**
- * Write one file under ops/scripts/ by relative path. Governance-verified.
- * Creates parent directories under ops/scripts/ if needed.
+ * Write one file under shared/runtime/store/ by relative path. Governance-verified.
+ * Creates parent directories under shared/runtime/store/ if needed.
  */
 export async function writeScript(
   relativePath: string,
@@ -83,7 +84,7 @@ export async function writeScript(
   if (!result.allowed) {
     return { ok: false, status: 403, body: result.reason };
   }
-  const fullPath = `${OPS_SCRIPTS}/${relativePath}`;
+  const fullPath = `${SCRIPTS_BASE}/${relativePath}`;
   try {
     const dir = fullPath.slice(0, fullPath.lastIndexOf("/"));
     if (dir) await Deno.mkdir(dir, { recursive: true });

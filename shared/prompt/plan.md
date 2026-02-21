@@ -10,7 +10,7 @@ linked specs.
 
 PICKER's final implementation goal is to implement the **self-evolving AI
 education architect** as a single, fully working system within the scope and
-governance defined in the spec: AST-based self-edit of ops/scripts/, Thompson
+governance defined in the spec: AST-based self-edit of shared/runtime/store/, Thompson
 Sampling MAB for logic selection, and Governance verification before any change
 is applied.
 
@@ -45,8 +45,8 @@ scope.
 - Do follow boundary.md and the spec for the current phase.
 - Do run all autonomous mutations and applies through Governance verification.
 - Do not add modules, routes, or infrastructure outside scope.
-- Do not mutate outside ops/scripts/ or write directly to data/config/ or
-  credentials.
+- Do not mutate outside shared/runtime/store/ or write directly to
+  data/config/ or credentials.
 - Do not bypass type-check policy (store.md §N).
 
 Concretes are in the spec §44–§48 and store.md.

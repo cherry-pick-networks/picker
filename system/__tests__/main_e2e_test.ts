@@ -103,7 +103,7 @@ Deno.test("E2E GET /scripts/hello.txt over real HTTP", handlerTestOpts, async ()
     const res = await fetch(`${base}/scripts/hello.txt`);
     assertEquals(res.status, 200);
     const text = await res.text();
-    assert(text.includes("hello from ops/scripts"), "file content");
+    assert(text.includes("hello from shared/runtime/store"), "file content");
   });
 });
 

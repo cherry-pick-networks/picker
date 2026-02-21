@@ -1,9 +1,10 @@
 /**
- * Governance verification: must pass before any read/write of ops/scripts/.
- * Ensures path stays under ops/scripts/ and rejects escapes (e.g. ..).
+ * Governance verification: must pass before any read/write of
+ * shared/runtime/store/. Ensures path stays under that base and rejects
+ * escapes (e.g. ..).
  */
 
-const ALLOWED_BASE = "ops/scripts";
+const ALLOWED_BASE = "shared/runtime/store";
 
 export type GovernanceResult =
   | { allowed: true }
@@ -40,7 +41,7 @@ function resolveUnderBase(base: string, relative: string): string | null {
 
 /**
  * Verify that an operation on the given path is allowed under Governance.
- * Path is relative to repo root; must be under ops/scripts/.
+ * Path is relative to repo root; must be under shared/runtime/store/.
  */
 export function verifyGovernance(
   _operation: "read" | "write",
@@ -50,7 +51,10 @@ export function verifyGovernance(
     ? ALLOWED_BASE
     : resolveUnderBase(ALLOWED_BASE, path);
   if (normalized === null) {
-    return { allowed: false, reason: "Path must be under ops/scripts/" };
+    return {
+      allowed: false,
+      reason: "Path must be under shared/runtime/store/",
+    };
   }
   return { allowed: true };
 }

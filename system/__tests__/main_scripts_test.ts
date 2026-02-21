@@ -16,7 +16,7 @@ Deno.test("GET /scripts/hello.txt returns 200 and file content", async () => {
   );
   assertEquals(res.status, 200);
   const text = await res.text();
-  assertEquals(text.includes("hello from ops/scripts"), true);
+  assertEquals(text.includes("hello from shared/runtime/store"), true);
 });
 
 Deno.test("GET /scripts/nonexistent returns 404", async () => {
@@ -41,16 +41,16 @@ Deno.test("POST /scripts/post-test.txt returns 201 and file is readable", async 
   assertEquals(await getRes.text(), "content from POST");
 });
 
-Deno.test("POST /scripts/with/subdir.txt creates subdir and returns 201", async () => {
+Deno.test("POST /scripts/subdir.txt returns 201 and content is readable", async () => {
   const res = await handler(
-    new Request("http://localhost/scripts/with/subdir.txt", {
+    new Request("http://localhost/scripts/subdir.txt", {
       method: "POST",
       body: "nested content",
     }),
   );
   assertEquals(res.status, 201);
   const getRes = await handler(
-    new Request("http://localhost/scripts/with/subdir.txt"),
+    new Request("http://localhost/scripts/subdir.txt"),
   );
   assertEquals(getRes.status, 200);
   assertEquals(await getRes.text(), "nested content");

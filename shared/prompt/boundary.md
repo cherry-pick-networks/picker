@@ -20,8 +20,8 @@ Use that document for AI direction and scope decisions.
 | **system/router/**       | Hono handlers: home, kv, ast, ast-demo, scripts (GET/POST /scripts, GET /scripts/*).      |
 | **system/store/**        | Storage access (e.g. Deno KV via `getKv()`).                                             |
 | **system/service/**      | Shared business logic (e.g. `add`).                                                      |
-| **system/validator/**    | Governance verification; must pass before any apply (e.g. ops/scripts mutation).         |
-| **ops/scripts/**         | Target path for AST-based self-edit; read and write only via Governance-verified flow.   |
+| **system/validator/**       | Governance verification; must pass before any apply (e.g. shared/runtime/store mutation). |
+| **shared/runtime/store/**   | Target path for AST-based self-edit; read and write only via Governance-verified flow.     |
 
 ---
 
@@ -37,18 +37,18 @@ Use that document for AI direction and scope decisions.
 | POST   | `/kv`       | Write key-value to Deno KV. Body: `{ "key": string, "value": unknown }`. Responds `{ "key": string }` or 400 with validation error. |
 | GET    | `/ast`      | AST demo (ts-morph, in-memory sample). Responds `{ "variableDeclarations": number }`.                                               |
 | GET    | `/ast-demo` | AST demo page (HTML). Fetches GET /ast and displays variableDeclarations.                                                           |
-| GET    | `/scripts`  | List entries in ops/scripts/ (Governance-verified). Responds `{ "entries": string[] }`.                                             |
-| GET    | `/scripts/:path*` | Read file in ops/scripts/ by path (Governance-verified). Responds file content or 404.                                        |
-| POST   | `/scripts/:path*` | Write file in ops/scripts/ at path (Governance-verified). Body: raw text. Responds 201 or 400/403/500.                        |
+| GET    | `/scripts`  | List entries in shared/runtime/store/ (Governance-verified). Responds `{ "entries": string[] }`.                                             |
+| GET    | `/scripts/:path*` | Read file in shared/runtime/store/ by path (Governance-verified). Responds file content or 404.                                        |
+| POST   | `/scripts/:path*` | Write file in shared/runtime/store/ at path (Governance-verified). Body: raw text. Responds 201 or 400/403/500.                        |
 
 ---
 
 ## Mutation boundary
 
-- **Allowed mutation path**: `ops/scripts/` only. Read and write only through
-  Governance verification (system/validator); no direct write from routes.
-- **Must not**: mutate outside ops/scripts/; write directly to data/config/ or
-  credentials.
+- **Allowed mutation path**: `shared/runtime/store/` only. Read and write only
+  through Governance verification (system/validator); no direct write from routes.
+- **Must not**: mutate outside shared/runtime/store/; write directly to
+  data/config/ or credentials.
 
 ---
 
