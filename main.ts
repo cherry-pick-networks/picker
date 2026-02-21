@@ -3,6 +3,7 @@ import { handler as indexHandler } from "./system/router/index.ts";
 import { handler as kvKeyHandler } from "./system/router/kv/[key].ts";
 import { handler as kvIndexHandler } from "./system/router/kv/index.ts";
 import { handler as astHandler } from "./system/router/ast.ts";
+import { handler as astDemoHandler } from "./system/router/ast-demo.ts";
 
 export const app = new App()
   .use(staticFiles())
@@ -12,6 +13,7 @@ export const app = new App()
   .delete("/kv/:key", (ctx) => kvKeyHandler.DELETE(ctx.req, ctx))
   .post("/kv", (ctx) => kvIndexHandler.POST(ctx.req))
   .get("/ast", (_ctx) => astHandler.GET())
+  .get("/ast-demo", (_ctx) => astDemoHandler.GET())
   .fsRoutes();
 
 if (import.meta.main) {

@@ -67,8 +67,9 @@ runs in CI so new routes cannot be added without updating the scope document.
 
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
 
-- Optional: Add AST demo page (e.g. /ast-demo or /demo/ast) that uses GET /ast
-  API; update scope doc first, then implement.
+- ~~Optional: Add AST demo page (e.g. /ast-demo or /demo/ast) that uses GET /ast
+  API; update scope doc first, then implement.~~ Done: scope doc updated, GET /ast-demo
+  in system/router/ast-demo.ts and main.ts; test in main_test.ts.
 
 ---
 
