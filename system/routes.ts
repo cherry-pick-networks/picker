@@ -31,12 +31,17 @@ export function registerRoutes(app: Hono) {
   registerStatic(app);
   registerHomeAndKv(app);
   registerKvMutate(app);
-  registerAst(app);
-  registerScripts(app);
+  registerAstAndScripts(app);
 }
 
 function registerStatic(app: Hono) {
-  app.use("/static/*", serveStatic({ root: "./system" }));
+  const root = "./system";
+  app.use("/static/*", serveStatic({ root }));
+}
+
+function registerAstAndScripts(app: Hono) {
+  registerAst(app);
+  registerScripts(app);
 }
 
 function registerHomeAndKv(app: Hono) {

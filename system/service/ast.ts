@@ -10,6 +10,40 @@ export type ApplyResult =
   | { ok: true }
   | { ok: false; status: number; body: string };
 
+function failGovernance(path: string): ApplyResult | null {
+  const g = verifyGovernance("write", path);
+  return g.allowed ? null : { ok: false, status: 403, body: g.reason };
+}
+
+async function readAndCheck(
+  path: string,
+  oldText: string,
+): Promise<ApplyResult | { content: string }> {
+  const read = await readScript(path);
+  if (!read.ok) return { ok: false, status: read.status, body: read.body };
+  if (!read.content.includes(oldText)) {
+    return { ok: false, status: 400, body: "oldText not found in file" };
+  }
+  return { content: read.content };
+}
+
+async function doWrite(
+  path: string,
+  content: string,
+): Promise<ApplyResult> {
+  const write = await writeScript(path, content);
+  return write.ok ? { ok: true } : { ok: false, status: write.status, body: write.body };
+}
+
+async function readAfterGov(
+  path: string,
+  oldText: string,
+): Promise<ApplyResult | { content: string }> {
+  const govResult = failGovernance(path);
+  if (govResult) return govResult;
+  return await readAndCheck(path, oldText);
+}
+
 /**
  * Apply a text patch to a file in shared/runtime/store/. Governance-verified;
  * uses readScript and writeScript. Fails if path invalid, oldText not found,
@@ -20,25 +54,8 @@ export async function applyPatch(
   oldText: string,
   newText: string,
 ): Promise<ApplyResult> {
-  const gov = verifyGovernance("write", path);
-  if (!gov.allowed) {
-    return { ok: false, status: 403, body: gov.reason };
-  }
-  const read = await readScript(path);
-  if (!read.ok) {
-    return { ok: false, status: read.status, body: read.body };
-  }
-  if (!read.content.includes(oldText)) {
-    return {
-      ok: false,
-      status: 400,
-      body: "oldText not found in file",
-    };
-  }
-  const content = read.content.replaceAll(oldText, newText);
-  const write = await writeScript(path, content);
-  if (!write.ok) {
-    return { ok: false, status: write.status, body: write.body };
-  }
-  return { ok: true };
+  const step = await readAfterGov(path, oldText);
+  if (!("content" in step)) return step;
+  const newContent = step.content.replaceAll(oldText, newText);
+  return await doWrite(path, newContent);
 }

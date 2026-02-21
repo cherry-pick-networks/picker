@@ -19,7 +19,8 @@
       "node_modules",
       "**/*.test.ts",
       "**/*.spec.ts",
-      "**/*_test.ts"
+      "**/*_test.ts",
+      "shared/prompt/scripts/"
     ]
   },
   "imports": {
