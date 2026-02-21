@@ -259,12 +259,13 @@ rule files: pick one prefix from Scope/Layer/Context; one suffix from
 Artifact/Policy/Meta; add infix from Actor/Action/Entity only when the rule
 applies to a specific focus.
 
-Document files: under shared/prompt/, name .md files with the same segment
-pattern: [prefix]-[suffix].md or [prefix]-[infix]-[suffix].md. Same axis rules
-and allowed sets as rule files; see §E. Exceptions: see §F (e.g. README.md at
-tree root). Scope for document names: the segment naming rule applies to exactly
-one document tree; in this project only .md files under shared/prompt/ are in
-scope. Files outside that tree (e.g. root README.md, CONTRIBUTING.md,
+Document files under shared/prompt/: use [suffix].md only. Prefix and infix
+are implied by the path (shared = prefix, prompt = infix). Suffix must be from
+§E allowed sets (Artifact, Policy, Meta). Same segment form: lowercase; one
+hyphen between words; no underscores. Exceptions: see §F (e.g. README.md at
+tree root). Scope for document names: the segment naming rule applies to
+exactly one document tree; in this project only .md files under shared/prompt/
+are in scope. Files outside that tree (e.g. root README.md, CONTRIBUTING.md,
 CHANGELOG.md) are not subject to document-name rules.
 
 Directory structure (max 3 levels; segment order): level 1: folder name from
@@ -343,8 +344,9 @@ Typical entries: .git, .cursor, node_modules, dist, build, coverage, vendor,
 Document exceptions: Maintain a separate explicit list for .md files exempt from
 segment naming. Fixed names: README.md, CHANGELOG.md and similar
 platform-expected names; the document-tree root index README.md may be exempt.
-Optional: one path (e.g. a single main context file) may be listed to keep its
-current name; update this list and any document-name validator together.
+Under shared/prompt/, document names follow §D: [suffix].md only. Optional: one
+path may be listed to keep its current name (e.g. during migration). Update this
+list and any document-name validator together.
 
 Documentation: Rule text lives only in this file; .cursor/rules/*.mdc state
 scope and when to apply (e.g. always vs on-request). In docs, state: scope, "max
@@ -353,10 +355,9 @@ order, no fourth tier, naming reference, exception list.
 
 Validation (optional): Script: walk directories from root; skip exception list;
 assert remaining paths match prefix/(infix/)(suffix/) and tier names in allowed
-sets; exit 1 on failure. Run in pre-commit or CI. Document names: optionally
-walk the document tree (e.g. shared/prompt/), skip document exceptions, assert
-each remaining .md matches [prefix]-[suffix].md or [prefix]-[infix]-[suffix].md
-and segments are in §E allowed sets; run in pre-commit or CI.
+sets; exit 1 on failure. Run in pre-commit or CI. Document names: optionally walk the document tree (e.g. shared/prompt/), skip
+document exceptions, assert each remaining .md matches [suffix].md and suffix
+is in §E allowed sets; run in pre-commit or CI.
 
 Agent / tool behavior: When creating directories, use only the three allowed
 forms for non-excepted paths; use only approved axis values per §E.
