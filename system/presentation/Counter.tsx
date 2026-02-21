@@ -1,13 +1,5 @@
-import { useState } from "preact/hooks";
+import { CounterView } from "./CounterView.tsx";
+import { useCounter } from "./useCounter.ts";
 
-export default function Counter() {
-  const [count, setCount] = useState(0);
-  return (
-    <div>
-      <p>{count}</p>
-      <button type="button" onClick={() => setCount((c) => c + 1)}>
-        +1
-      </button>
-    </div>
-  );
-}
+const Counter = () => <CounterView {...useCounter()} />;
+export default Counter;
