@@ -31,6 +31,6 @@
 ## Relation to other docs
 
 - Rule definitions: `shared/prompt/store.md` Part B.
-- Documentation boundaries: Reference | Usage | Strategy
-  (`documentation/reference.md`, `usage.md`, `strategy.md`). Migration history and
-  current mapping: `documentation/strategy.md`.
+- Documentation: allowed doc names in `documentation/` are reference, usage,
+  strategy, guide, runbook (store §F). Migration history and mapping:
+  `documentation/strategy.md`.

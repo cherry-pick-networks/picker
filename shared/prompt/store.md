@@ -203,8 +203,8 @@ tool-specific configs.
   only; write only the chosen practices here.
 - **Human-readable docs**: Project summary and rules for people are in
   `shared/prompt/` (2nd layer: profile.md, principle.md, reference.md) and
-  `shared/prompt/documentation/` (3rd layer: Reference | Usage | Strategy —
-reference, usage, strategy). Root README
+  `shared/prompt/documentation/` (3rd layer: allowed names reference, usage,
+strategy, guide, runbook). Root README
   Documentation section lists only domain entry points (e.g. shared/README.md);
   do not add deep links to docs there. Do not duplicate rule text in root
   README.
@@ -348,6 +348,11 @@ Under shared/prompt/, document names follow §D: [suffix].md only. Optional: one
 path may be listed to keep its current name (e.g. during migration). Update this
 list and any document-name validator together.
 
+Documentation allowed names: Under shared/prompt/documentation/, the allowed
+document base names ([suffix] in [suffix].md) are restricted to: reference,
+usage, strategy, guide, runbook. No other segment names; new docs in this
+directory must use one of these five.
+
 Documentation: Rule text lives only in this file; .cursor/rules/*.mdc state
 scope and when to apply (e.g. always vs on-request). In docs, state: scope, "max
 3 tiers" (prefix/infix/suffix only; root not counted), the three allowed forms,
@@ -357,7 +362,9 @@ Validation (optional): Script: walk directories from root; skip exception list;
 assert remaining paths match prefix/(infix/)(suffix/) and tier names in allowed
 sets; exit 1 on failure. Run in pre-commit or CI. Document names: optionally walk the document tree (e.g. shared/prompt/), skip
 document exceptions, assert each remaining .md matches [suffix].md and suffix
-is in §E allowed sets; run in pre-commit or CI.
+is in §E allowed sets (for shared/prompt/documentation/, use the documentation
+allowed list only: reference, usage, strategy, guide, runbook); run in
+pre-commit or CI.
 
 Agent / tool behavior: When creating directories, use only the three allowed
 forms for non-excepted paths; use only approved axis values per §E.

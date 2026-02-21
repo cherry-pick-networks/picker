@@ -19,8 +19,9 @@ Use what fits your environment and habits.
 
 ## Optional tooling and workflows
 
-- **Documentation** under `documentation/` has three boundaries: **Reference**
-  (tips), **Usage** (adopted workflows), **Strategy** (migration, layout).
+- **Documentation** under `documentation/`: allowed file base names are
+  reference, usage, strategy, guide, runbook (store §F). Boundaries:
+  Reference, Usage, Strategy.
 - **Tips-derived usage**: Scripts and workflows (e.g. status line, handoff,
   setup script, dx plugin).\
   → **[usage.md](documentation/usage.md)**
