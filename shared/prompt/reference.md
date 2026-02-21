@@ -19,12 +19,13 @@ Use what fits your environment and habits.
 
 ## Optional tooling and workflows
 
-- **Tips-derived usage**: Scripts and workflows from the implementation plan
-  (e.g. status line, handoff workflow, setup script, dx plugin).\
+- **Documentation** under `documentation/` has three boundaries: **Reference**
+  (tips), **Usage** (adopted workflows), **Strategy** (migration, layout).
+- **Tips-derived usage**: Scripts and workflows (e.g. status line, handoff,
+  setup script, dx plugin).\
   → **[usage.md](documentation/usage.md)**
-- **Tips we reference but do not adopt (yet)**: Short descriptions of optional
-  claude-code-tips; add to usage.md or store.md when the
-  team decides.\
+- **Tips we reference but do not adopt (yet)**: Optional claude-code-tips;
+  add to usage.md or store.md when the team decides.\
   → **[tips.md](documentation/tips.md)**
 
 ---

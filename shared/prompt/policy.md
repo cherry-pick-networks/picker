@@ -31,5 +31,6 @@
 ## Relation to other docs
 
 - Rule definitions: `shared/prompt/store.md` Part B.
-- Directory and document structure: `documentation/document-plan.md`;
-  migration history and current mapping: `documentation/strategy.md`.
+- Documentation boundaries: Reference | Usage | Strategy
+  (`documentation/tips.md`, `usage.md`, `strategy.md`). Migration history and
+  current mapping: `documentation/strategy.md`.

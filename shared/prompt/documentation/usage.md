@@ -1,7 +1,7 @@
-# Tips-derived usage (Phase 10)
+# Tips-derived usage
 
-Optional tooling and workflows from shared-document-plan Phase 10. Reference
-only; use if the project adopts them.
+Optional tooling and workflows. Reference only; use if the project adopts
+them.
 
 **Tips already in store.md**: Decompose (Tip 3 → §6), Git/gh/draft
 PR/worktree (Tip 4, 16 → §7), New topic → new conversation (Tip 5 → §9), Getting

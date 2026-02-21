@@ -79,7 +79,7 @@ tool-specific configs.
   directory
 - `realpath <path>` — resolve absolute path when referring to files outside
   current tree
-- **Optional (Phase 10)**: Status line `shared/prompt/scripts/context-bar.sh`;
+- **Optional**: Status line `shared/prompt/scripts/context-bar.sh`;
   setup `shared/prompt/scripts/setup.sh`; see
   `shared/prompt/documentation/usage.md` for tips-derived options (3rd layer).
 
@@ -203,7 +203,8 @@ tool-specific configs.
   only; write only the chosen practices here.
 - **Human-readable docs**: Project summary and rules for people are in
   `shared/prompt/` (2nd layer: profile.md, principle.md, reference.md) and
-  `shared/prompt/documentation/` (3rd layer: usage, tips, plans). Root README
+  `shared/prompt/documentation/` (3rd layer: Reference | Usage | Strategy —
+usage, tips, strategy). Root README
   Documentation section lists only domain entry points (e.g. shared/README.md);
   do not add deep links to docs there. Do not duplicate rule text in root
   README.
@@ -422,7 +423,7 @@ modules, API routes, infrastructure only. Document renames: when renaming .md
 under the document tree to comply with segment naming, (1) list current files
 and target names per §D/§E, (2) rename (prefer non-referenced files first), (3)
 update in-tree references and links, (4) verify with document-name validation if
-available; detailed steps in shared-document-plan or shared-migration-strategy.
+available; detailed steps in documentation/strategy.md or store §J.
 
 ### §K. Scope document boundary
 

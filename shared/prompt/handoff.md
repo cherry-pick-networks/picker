@@ -10,8 +10,8 @@ New sessions should attach only this file (and optionally
 
 CI (`.github/workflows/ci.yml`): lint, format-check, test, scope-check,
 type-check-policy, deno audit; Deno cache enabled. Dependabot
-(`.github/dependabot.yml`): weekly Deno updates. Full roadmap:
-[github-features-plan.md](documentation/github-features-plan.md).
+(`.github/dependabot.yml`): weekly Deno updates. Scope and infrastructure:
+[boundary.md](boundary.md).
 
 ---
 

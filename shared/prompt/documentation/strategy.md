@@ -25,7 +25,7 @@
 | 0     | Add this strategy doc                                               | docs(shared/prompt): add data migration strategy                                    |
 | 1     | Move full rule text from 12 .mdc into store.md Part B | refactor(shared/prompt): move rule definitions into store.md          |
 | 2     | Replace each .mdc body with reference to store.md §X  | refactor(.cursor/rules): replace rule text with reference to store.md |
-| 3     | Verify completeness and update shared-document-plan                 | docs(shared/prompt): verify single-source migration                                 |
+| 3     | Verify completeness and update documentation                       | docs(shared/prompt): verify single-source migration                                 |
 
 ## Rule → section mapping
 
