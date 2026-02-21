@@ -204,7 +204,7 @@ tool-specific configs.
 - **Human-readable docs**: Project summary and rules for people are in
   `shared/prompt/` (2nd layer: profile.md, principle.md, reference.md) and
   `shared/prompt/documentation/` (3rd layer: Reference | Usage | Strategy —
-usage, tips, strategy). Root README
+reference, usage, strategy). Root README
   Documentation section lists only domain entry points (e.g. shared/README.md);
   do not add deep links to docs there. Do not duplicate rule text in root
   README.

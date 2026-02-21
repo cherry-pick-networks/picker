@@ -26,7 +26,7 @@ Use what fits your environment and habits.
   → **[usage.md](documentation/usage.md)**
 - **Tips we reference but do not adopt (yet)**: Optional claude-code-tips;
   add to usage.md or store.md when the team decides.\
-  → **[tips.md](documentation/tips.md)**
+  → **[reference.md](documentation/reference.md)**
 
 ---
 
