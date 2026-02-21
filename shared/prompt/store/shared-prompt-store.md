@@ -455,3 +455,10 @@ disable strict mode in tsconfig; do not use // @ts-ignore or //
 @ts-expect-error. Fix type errors by correcting types or code. Validation: run
 deno task type-check-policy (shared/prompt/scripts/check-type-policy.ts); CI
 runs this step; fail on any violation.
+
+### §O. Answer format (options with pros and cons)
+
+When a reply presents multiple options or alternatives, list at least one pro and
+one con for each option. Keep each pro/con to one short line unless context
+requires more. Omit this only when options are trivial or the user asks for no
+comparison.
