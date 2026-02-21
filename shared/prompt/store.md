@@ -72,6 +72,8 @@ tool-specific configs.
 - `deno task scope-check` — verify API routes are listed in
   shared/prompt/boundary.md (runs in CI)
 - `deno task type-check-policy` — verify no type-check bypass (runs in CI)
+- `deno task scope-discovery -- <entry-file>` — list direct imports for AI
+  session scope (see shared/prompt/documentation/strategy.md)
 - `gh pr create --draft` — create draft PR (review before marking ready)
 - `gh pr view`, `gh pr diff` — inspect PR for review
 - `gh run view` — inspect CI run (e.g. after failure)

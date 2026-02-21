@@ -65,3 +65,83 @@
 - [x] No duplicate long-form rule content in .mdc.
 - [x] Exactly two .mdc files; one always-applied, one on-request. See
       cursor-rules-policy.md.
+
+---
+
+# AI-assisted scope estimation
+
+Guideline for sizing AI-assisted coding sessions in micro-component (small-file,
+short-function) codebases. Use when giving the AI a multi-file task or when
+defining session boundaries.
+
+## Rule (single source)
+
+**One session = one entry file + the files it directly imports.** Do not use a
+fixed file-count limit (e.g. "3–4 files"). Define types/interfaces used in that
+tree first, then implement. Do not combine unrelated trees or project-wide
+refactors in one session.
+
+## When it applies
+
+- File size is small (e.g. &lt;100 lines per file).
+- Functions are short (e.g. ≤6 lines); single responsibility.
+- Many small files form a "ravioli" structure.
+
+In that environment the main failure mode is **connection complexity** (imports,
+props, DI), not token count. Scoping by dependency tree reduces mistakes.
+
+## Recommended workflow
+
+1. Choose or create **one entry file** for the feature (e.g. the route or top-level
+   component).
+2. Run the scope-discovery script to list its direct imports (see below).
+3. Prompt the AI with that list as the in-scope set; ask to define types first,
+   then implement. Do not modify files outside that set in the same session.
+4. (Optional) Before commit, check that changed files are within entry + script
+   output (manual or via optional check script).
+
+## Scope-discovery script
+
+From repo root:
+
+```bash
+deno run --allow-read shared/prompt/scripts/scope-discovery.ts <entry-file>
+```
+
+Example:
+
+```bash
+deno run --allow-read shared/prompt/scripts/scope-discovery.ts system/presentation/Counter.tsx
+```
+
+Output: the entry path plus one path per line for each file it **directly**
+imports (relative imports only; npm/jsr are skipped). Use this list as the
+"in-scope files" in your prompt. Optional: `--oneline` prints a single line for
+pasting into the prompt.
+
+Task: `deno task scope-discovery -- <entry-file>` (e.g. `deno task scope-discovery --
+system/presentation/Counter.tsx`). Add `--oneline` for one-line output.
+
+## Prompt template
+
+Use the script output to fill the in-scope list:
+
+```
+Entry file: <path>
+In-scope files (do not modify others): <paste script output>
+Task: <one sentence>
+Order: define types/interfaces used in this tree first, then implement.
+```
+
+## What to avoid
+
+- "Change all buttons / colors / variable names across the project" in one
+  session.
+- Editing multiple unrelated feature trees in one session.
+- Omitting the in-scope list so the model infers scope itself (often wrong).
+
+## Optional: scope-drift check
+
+Before commit you can verify that changed files are a subset of entry + direct
+dependents. Not enforced by default; add a small script or manual checklist if
+desired.
