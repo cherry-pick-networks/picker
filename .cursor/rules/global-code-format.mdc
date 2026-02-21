@@ -1,7 +1,7 @@
 ---
 description: |
-  Line and file length for TypeScript/TSX. Apply when editing .ts or .tsx.
-globs: ["**/*.ts", "**/*.tsx"]
+  Line and file length for TypeScript. Apply when editing .ts.
+globs: ["**/*.ts"]
 alwaysApply: false
 ---
 

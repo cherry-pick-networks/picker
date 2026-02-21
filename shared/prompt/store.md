@@ -281,7 +281,7 @@ Suffix (Artifact); never Infix (use interceptor, filter). policy: only Suffix
 Suffix (use store, storage). config: only this spelling; never configuration.
 education: only this spelling; never edu. type (TS/classification): use types in
 Suffix Meta; never type. core: forbidden in Context; use shared, base, or domain
-(layer). context (React/API): use provider in Infix Entity; do not use context
+(layer). context (API): use provider in Infix Entity; do not use context
 as segment.
 
 Prefix — one axis only: [ Scope | Layer | Context ]. Rule: prefix must denote
@@ -474,12 +474,11 @@ comparison.
 
 Line length: keep lines to 80 characters or fewer (strict); exceptions only
 where documented (e.g. long URLs in comments). File length: keep files to 100
-lines or fewer; split when longer. Scope: TypeScript and TSX source (e.g.
-`**/*.ts`, `**/*.tsx`); exclude node_modules, vendor, generated output.
+lines or fewer; split when longer. Scope: TypeScript source (e.g. `**/*.ts`); exclude node_modules, vendor,
+generated output.
 
 Function body: block body 2–4 statements (enforced); expression body allowed
-(counts as 1). Exceptions: last statement is JSX return (up to 10 statements);
-single return with await or 2+ level method chaining. Validation: `deno lint`
+(counts as 1). Exceptions: single return with await or 2+ level method chaining. Validation: `deno lint`
 (plugin function-length/function-length in
 shared/prompt/scripts/function-length-lint-plugin.ts). To ignore per function:
 `// deno-lint-ignore function-length/function-length` on the line above.

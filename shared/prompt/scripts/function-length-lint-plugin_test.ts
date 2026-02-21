@@ -40,33 +40,22 @@ Deno.test("function-length: arrow expression body allowed", () => {
   assertEquals(d.length, 0);
 });
 
-Deno.test("function-length: JSX return tail allowed up to 10 statements", () => {
-  const code = `
-const App = () => {
-  const { data } = useQuery();
-  return <div>{data}</div>;
-};
-`;
-  const d = Deno.lint.runPlugin(plugin, "dummy.tsx", code);
-  assertEquals(d.length, 0);
-});
-
-Deno.test("function-length: single pipeline (await) allowed", () => {
+Deno.test("function-length: 1 statement (await) reports", () => {
   const code = `
 async function get() {
   return await fetch("/api");
 }
 `;
   const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
-  assertEquals(d.length, 0);
+  assertEquals(d.length, 1);
 });
 
-Deno.test("function-length: single pipeline (chain) allowed", () => {
+Deno.test("function-length: 1 statement (chain) reports", () => {
   const code = `
 function get() {
   return fetch("/api").then((r) => r.json()).catch(() => null);
 }
 `;
   const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
-  assertEquals(d.length, 0);
+  assertEquals(d.length, 1);
 });

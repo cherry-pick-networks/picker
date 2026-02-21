@@ -48,9 +48,8 @@ runs in CI so new routes cannot be added without updating the scope document.
 
 ## Tried / failed
 
-- Route consolidation via fsRoutes only: with `deno run main.ts`, fsRoutes() did
-  not load from routeDir (Vite plugin only). Switched to Hono and explicit route
-  registration.
+- Switched to Hono and explicit route registration (replacing prior file-based
+  routing).
 
 ---
 
