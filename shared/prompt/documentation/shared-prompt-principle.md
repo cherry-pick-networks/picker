@@ -69,6 +69,9 @@ Example: `feat(module): add handler`
   fourth tier.
 - **Exceptions**: .git, .cursor, node_modules, dist, build, coverage, vendor,
   .cache (confirm per project).
+- **Document exceptions**: For .md segment naming, see store §F (fixed names
+  e.g. README.md, CHANGELOG.md; optional single path). Do not duplicate the
+  list here.
 - **Check**: Directory walk (excluding exceptions) validates structure and
   naming; optional pre-commit or CI script.
 

@@ -246,7 +246,10 @@ applies to a specific focus.
 Document files: under shared/prompt/, name .md files with the same segment
 pattern: [prefix]-[suffix].md or [prefix]-[infix]-[suffix].md. Same axis rules
 and allowed sets as rule files; see §E. Exceptions: see §F (e.g. README.md at
-tree root).
+tree root). Scope for document names: the segment naming rule applies to
+exactly one document tree; in this project only .md files under shared/prompt/
+are in scope. Files outside that tree (e.g. root README.md, CONTRIBUTING.md,
+CHANGELOG.md) are not subject to document-name rules.
 
 Directory structure (max 3 levels; segment order): level 1: folder name from
 approved prefix (required); level 2: folder name from approved infix (optional);
@@ -321,6 +324,12 @@ Exceptions: Maintain an explicit exception list; same list for docs and tooling.
 Typical entries: .git, .cursor, node_modules, dist, build, coverage, vendor,
 .cache, static (confirm per project). Update list and any validator together.
 
+Document exceptions: Maintain a separate explicit list for .md files exempt from
+segment naming. Fixed names: README.md, CHANGELOG.md and similar
+platform-expected names; the document-tree root index README.md may be exempt.
+Optional: one path (e.g. a single main context file) may be listed to keep its
+current name; update this list and any document-name validator together.
+
 Documentation: Rule text lives only in this file; .cursor/rules/*.mdc state
 scope and when to apply (e.g. always vs on-request). In docs, state: scope, "max
 3 tiers" (prefix/infix/suffix only; root not counted), the three allowed forms,
@@ -328,7 +337,10 @@ order, no fourth tier, naming reference, exception list.
 
 Validation (optional): Script: walk directories from root; skip exception list;
 assert remaining paths match prefix/(infix/)(suffix/) and tier names in allowed
-sets; exit 1 on failure. Run in pre-commit or CI.
+sets; exit 1 on failure. Run in pre-commit or CI. Document names: optionally walk
+the document tree (e.g. shared/prompt/), skip document exceptions, assert each
+remaining .md matches [prefix]-[suffix].md or [prefix]-[infix]-[suffix].md and
+segments are in §E allowed sets; run in pre-commit or CI.
 
 Agent / tool behavior: When creating directories, use only the three allowed
 forms for non-excepted paths; use only approved axis values per §E.
@@ -390,7 +402,11 @@ plan) per commit. Naming: new rule file names must follow §D and §E; use infix
 from Actor/Action/Entity where it clarifies focus (e.g. document, event, agent).
 No scope doc change: adding or refactoring .cursor/rules does not require
 shared/prompt/documentation/shared-prompt-boundary.md change; scope doc is for modules, API
-routes, infrastructure only.
+routes, infrastructure only. Document renames: when renaming .md under the
+document tree to comply with segment naming, (1) list current files and target
+names per §D/§E, (2) rename (prefer non-referenced files first), (3) update
+in-tree references and links, (4) verify with document-name validation if
+available; detailed steps in shared-document-plan or shared-migration-strategy.
 
 ### §K. Scope document boundary
 
