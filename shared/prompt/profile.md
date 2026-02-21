@@ -2,7 +2,7 @@
 
 One-page summary for onboarding and daily use.\
 **Single source of truth for AI and tooling**:
-`shared/prompt/shared-prompt-store.md`.
+`shared/prompt/store.md`.
 
 ---
 
@@ -22,8 +22,8 @@ One-page summary for onboarding and daily use.\
 - **Allowed forms**: `prefix/`, `prefix/infix/`, `prefix/infix/suffix/`
 - **Naming**: Use only approved segment names per axis (Scope/Layer/Context for
   prefix; Actor/Action/Entity for infix; Artifact/Policy/Meta for suffix). See
-  `shared/prompt/shared-prompt-principle.md` §D–§F.
-- **This file**: `shared/prompt/shared-prompt-profile.md` (shared
+  `shared/prompt/principle.md` §D–§F.
+- **This file**: `shared/prompt/profile.md` (shared
   = Scope, prompt = Entity, profile = Meta)
 - **Exceptions**: .git, .cursor, node_modules, dist, build, coverage, vendor,
   .cache (confirm per repo)
@@ -53,20 +53,20 @@ One-page summary for onboarding and daily use.\
 | `realpath <path>`                            | Resolve absolute path outside current tree     |
 
 Optional tooling (status line, setup script, tips): see
-`shared/prompt/shared-prompt-reference.md` and
-`shared/prompt/documentation/shared-prompt-usage.md`.
+`shared/prompt/reference.md` and
+`shared/prompt/documentation/usage.md`.
 
 ---
 
 ## Where to read what
 
 - **Rules (checkable)**:
-  `shared/prompt/shared-prompt-principle.md`
+  `shared/prompt/principle.md`
 - **Reference (tips, not rules)**:
-  `shared/prompt/shared-prompt-reference.md`,
-  `shared/prompt/documentation/shared-prompt-usage.md`
-- **Handoff**: `shared/prompt/shared-prompt-handoff.md` (linked
+  `shared/prompt/reference.md`,
+  `shared/prompt/documentation/usage.md`
+- **Handoff**: `shared/prompt/handoff.md` (linked
   from README)
 - **Scope** (modules, API, infra):
-  `shared/prompt/shared-prompt-boundary.md`
-- **AI/tool single source**: `shared/prompt/shared-prompt-store.md`
+  `shared/prompt/boundary.md`
+- **AI/tool single source**: `shared/prompt/store.md`

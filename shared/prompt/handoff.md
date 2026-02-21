@@ -2,7 +2,7 @@
 
 Use this file when switching agent or starting a new session on the same task.
 New sessions should attach only this file (and optionally
-`shared/prompt/shared-prompt-store.md`).
+`shared/prompt/store.md`).
 
 ---
 
@@ -11,7 +11,7 @@ New sessions should attach only this file (and optionally
 CI (`.github/workflows/ci.yml`): lint, format-check, test, scope-check,
 type-check-policy, deno audit; Deno cache enabled. Dependabot
 (`.github/dependabot.yml`): weekly Deno updates. Full roadmap:
-[shared-prompt-github-features-plan.md](shared-prompt-github-features-plan.md).
+[github-features-plan.md](documentation/github-features-plan.md).
 
 ---
 
@@ -34,8 +34,7 @@ runs in CI so new routes cannot be added without updating the scope document.
 - Fixed FreshConfig type: `new App({ root: import.meta.url })` → `new App()` in
   `main.ts`; test task no longer uses `--no-check`.
 - Documentation alignment: stack wording updated from "Hono (HTTP)" to "Fresh
-  (HTTP)" and "Hono app" to "Fresh app" in `shared-prompt-store.md`,
-  `shared-prompt-profile.md`; scope boundary main.ts row clarified (fsRoutes
+  (HTTP)" and "Hono app" to "Fresh app" in `store.md`, `profile.md`; scope boundary main.ts row clarified (fsRoutes
   from system/router when using Vite).
 - Route consolidation: API logic lives only in `system/router/`; `main.ts` only
   delegates (imports handler from each route file and registers path). No inline

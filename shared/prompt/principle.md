@@ -1,7 +1,7 @@
 # Conventions and rules (human-readable)
 
 Rules that can be checked or defined as "this repo has X".\
-**Canonical source**: `shared/prompt/shared-prompt-store.md` Part B.\
+**Canonical source**: `shared/prompt/store.md` Part B.\
 `.cursor/rules/*.mdc` only define **when** to apply; they do not duplicate this
 text.
 
@@ -43,8 +43,8 @@ Example: `feat(module): add handler`
 
 - **Rule files**: Name as `[prefix]-[suffix].mdc` or
   `[prefix]-[infix]-[suffix].mdc`; lowercase, one hyphen between words.
-- **Document files**: Under shared/prompt/, name .md files with the same segment
-  pattern (prefix-infix-suffix); see store context §D and §E.
+- **Document files**: Under shared/prompt/, use [suffix].md only; see store §D
+  and §E.
 - **Directories**: Max 3 tiers from root (prefix → infix → suffix). Allowed
   forms: `prefix/`, `prefix/infix/`, `prefix/infix/suffix/`.
 - **Check**: New directories (except exception list) match the three forms; rule
@@ -57,7 +57,7 @@ Example: `feat(module): add handler`
 - Each segment uses one axis only: Prefix (Scope / Layer / Context), Infix
   (Actor / Action / Entity), Suffix (Artifact / Policy / Meta).
 - Use the clean dictionary (e.g. config not configuration; cache only as Infix;
-  core forbidden in Context). See shared-prompt-store.md §E for full lists.
+  core forbidden in Context). See store.md §E for full lists.
 - **Check**: Segment names come from the approved sets; no forbidden or
   duplicate-axis usage.
 
@@ -104,7 +104,7 @@ Example: `feat(module): add handler`
   not/only, (2) concrete in scope, (3) detectable; otherwise keep in docs or
   reference.
 - No speculative implementation; scope is in
-  shared/prompt/shared-prompt-boundary.md.
+  shared/prompt/boundary.md.
 
 ---
 
@@ -119,10 +119,10 @@ Example: `feat(module): add handler`
 
 ## §K. Scope document boundary
 
-- **Single source**: shared/prompt/shared-prompt-boundary.md for
+- **Single source**: shared/prompt/boundary.md for
   in-scope modules, API surface, infrastructure.
 - Do not add new modules, API routes, or infrastructure unless listed there;
-  update shared/prompt/shared-prompt-boundary.md first, then
+  update shared/prompt/boundary.md first, then
   implement.
 - **Check**: New routes/modules/infra have a corresponding scope doc update.
 

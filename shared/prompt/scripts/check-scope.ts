@@ -5,7 +5,7 @@
  * Or: deno task scope-check
  */
 
-const SCOPE_PATH = "shared/prompt/shared-prompt-boundary.md";
+const SCOPE_PATH = "shared/prompt/boundary.md";
 const ROUTER_DIR = "system/router";
 
 type Route = { method: string; path: string };
@@ -142,7 +142,7 @@ async function main(): Promise<void> {
   const missingInScope = inCode.filter((r) => !allowed.has(routeKey(r)));
   if (missingInScope.length > 0) {
     console.error(
-      "The following routes are in code but not listed in the scope document. Add them to shared/prompt/shared-prompt-boundary.md first, then implement.",
+      "The following routes are in code but not listed in the scope document. Add them to shared/prompt/boundary.md first, then implement.",
     );
     for (const r of missingInScope) {
       console.error(`  ${r.method} ${r.path}`);

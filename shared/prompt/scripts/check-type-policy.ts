@@ -148,7 +148,7 @@ async function main(): Promise<void> {
 
   if (allErrors.length > 0) {
     console.error(
-      "Type-check policy violation(s). Do not disable or bypass type checking (see §N in shared-prompt-store.md).",
+      "Type-check policy violation(s). Do not disable or bypass type checking (see §N in shared/prompt/store.md).",
     );
     for (const e of allErrors) console.error("  " + e);
     Deno.exit(1);

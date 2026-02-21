@@ -6,7 +6,7 @@ description: |
 alwaysApply: true
 ---
 
-This rule is defined in `shared/prompt/shared-prompt-store.md`.
+This rule is defined in `shared/prompt/store.md`.
 Read that file and follow:
 - **§A. Commit message format**
 - **§B. Commit and session boundary**

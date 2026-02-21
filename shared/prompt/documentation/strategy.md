@@ -3,7 +3,7 @@
 ## Goal
 
 - **Single source**: All rule text lives in
-  `shared/prompt/shared-prompt-store.md` (Part B: Rule definitions).
+  `shared/prompt/store.md` (Part B: Rule definitions).
 - **Cursor Rules**: `.cursor/rules/*.mdc` only reference that file; no duplicate
   rule text. mdc files are for **when** to apply (always vs on-request).
 
@@ -15,7 +15,7 @@
 ## Scope (historical)
 
 - **Source**: 12 files under `.cursor/rules/*.mdc` (pre-simplification).
-- **Target**: `shared/prompt/shared-prompt-store.md` (expand with §A–§L).
+- **Target**: `shared/prompt/store.md` (expand with §A–§L).
 - **No**: New deps, scope doc changes, or module/API/infra changes.
 
 ## Phases
@@ -23,8 +23,8 @@
 | Phase | Action                                                              | Commit                                                                              |
 | ----- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
 | 0     | Add this strategy doc                                               | docs(shared/prompt): add data migration strategy                                    |
-| 1     | Move full rule text from 12 .mdc into shared-prompt-store.md Part B | refactor(shared/prompt): move rule definitions into shared-prompt-store.md          |
-| 2     | Replace each .mdc body with reference to shared-prompt-store.md §X  | refactor(.cursor/rules): replace rule text with reference to shared-prompt-store.md |
+| 1     | Move full rule text from 12 .mdc into store.md Part B | refactor(shared/prompt): move rule definitions into store.md          |
+| 2     | Replace each .mdc body with reference to store.md §X  | refactor(.cursor/rules): replace rule text with reference to store.md |
 | 3     | Verify completeness and update shared-document-plan                 | docs(shared/prompt): verify single-source migration                                 |
 
 ## Rule → section mapping
@@ -55,13 +55,13 @@
 
 ## Rollback
 
-- Revert Phase 1 commit to restore shared-prompt-store.md.
+- Revert Phase 1 commit to restore store.md.
 - Revert Phase 2 commit to restore .mdc rule text.
 
 ## Done criteria
 
-- [x] shared-prompt-store.md contains full text of all 12 rules (§A–§L).
-- [x] Each .mdc contains only a reference to shared-prompt-store.md (no rule
+- [x] store.md contains full text of all 12 rules (§A–§L).
+- [x] Each .mdc contains only a reference to store.md (no rule
       body).
 - [x] No duplicate long-form rule content in .mdc.
 - [x] Exactly two .mdc files; one always-applied, one on-request. See
