@@ -2,7 +2,7 @@
 
 ## Supported versions
 
-We release security updates for the current stable branch. Check the [releases](https://github.com/cherry-pick/{{repo_name}}/releases) page for supported versions.
+We release security updates for the current stable branch. Check the [releases](https://github.com/cherry-pick/picker/releases) page for supported versions.
 
 ## Reporting a vulnerability
 
