@@ -1,4 +1,6 @@
+/// <reference path="./fresh-core.d.ts" />
 import type { PageProps } from "fresh";
+import React from "preact/compat";
 
 export function AppLayout({ Component }: PageProps) {
   return (
