@@ -1,11 +1,12 @@
 /**
  * Scope check: fail if code registers API routes not listed in the scope document.
- * Run from repo root: deno run shared/prompt/scripts/check-scope.ts
+ * Discovers routes from system/router/ (file-based). Run from repo root:
+ *   deno run --allow-read shared/prompt/scripts/check-scope.ts
  * Or: deno task scope-check
  */
 
 const SCOPE_PATH = "shared/prompt/documentation/shared-prompt-boundary.md";
-const SOURCE_FILES = ["main.ts"];
+const ROUTER_DIR = "system/router";
 
 type Route = { method: string; path: string };
 
@@ -38,18 +39,61 @@ function parseScopeApiTable(content: string): Route[] {
   return routes;
 }
 
-function extractRoutesFromSource(content: string): Route[] {
-  const routes: Route[] = [];
-  // app.get("/path", ...) or app.post('path', ...)
-  const re = /app\.(get|post|put|patch|delete)\s*\(\s*["']([^"']+)["']/gi;
+/**
+ * Convert a file path under router (e.g. "index.ts", "kv/index.ts", "kv/[key].ts")
+ * to a Fresh route path (e.g. "/", "/kv", "/kv/:key").
+ */
+function filePathToRoutePath(relativePath: string): string {
+  const withoutExt = relativePath.replace(/\.tsx?$/, "");
+  const segments = withoutExt.split("/").filter(Boolean);
+  const routeSegments = segments.map((seg) => {
+    if (seg === "index") return "";
+    const dynamic = seg.match(/^\[\.\.\.([^\]]+)\]$/);
+    if (dynamic) return `:${dynamic[1]}*`;
+    const optional = seg.match(/^\[\[([^\]]+)\]\]$/);
+    if (optional) return `{/:${optional[1]}}?`;
+    const single = seg.match(/^\[([^\]]+)\]$/);
+    if (single) return `:${single[1]}`;
+    return seg;
+  });
+  const path = "/" + routeSegments.filter(Boolean).join("/");
+  return path === "/" ? path : path.replace(/\/$/, "") || "/";
+}
+
+/**
+ * Extract HTTP methods from handler export in file content (handler.GET, handler.POST, ...).
+ */
+function extractMethodsFromHandler(content: string): string[] {
+  const methods: string[] = [];
+  const re = /handler\.\s*(GET|POST|PUT|PATCH|DELETE)\s*[\(\{]/g;
   let m: RegExpExecArray | null;
   while ((m = re.exec(content)) !== null) {
-    routes.push({
-      method: (m[1] ?? "").toUpperCase(),
-      path: (m[2] ?? "").trim(),
-    });
+    const method = (m[1] ?? "").toUpperCase();
+    if (method && !methods.includes(method)) methods.push(method);
   }
-  return routes;
+  return methods;
+}
+
+async function walkRouterFiles(
+  root: string,
+  dir: string,
+  files: string[] = [],
+): Promise<string[]> {
+  for await (const e of Deno.readDir(dir)) {
+    const full = `${dir}/${e.name}`;
+    const rel = full.slice(root.length + 1);
+    if (e.isDirectory) {
+      if (e.name.startsWith("_") || e.name === "node_modules") continue;
+      await walkRouterFiles(root, full, files);
+    } else if (
+      e.isFile &&
+      (e.name.endsWith(".ts") || e.name.endsWith(".tsx")) &&
+      !e.name.startsWith("_")
+    ) {
+      files.push(rel);
+    }
+  }
+  return files;
 }
 
 function routeKey(r: Route): string {
@@ -59,6 +103,8 @@ function routeKey(r: Route): string {
 async function main(): Promise<void> {
   const root = Deno.cwd();
   const scopePath = `${root}/${SCOPE_PATH}`;
+  const routerPath = `${root}/${ROUTER_DIR}`;
+
   let scopeContent: string;
   try {
     scopeContent = await Deno.readTextFile(scopePath);
@@ -75,15 +121,21 @@ async function main(): Promise<void> {
     Deno.exit(1);
   }
 
+  let routerFiles: string[];
+  try {
+    routerFiles = await walkRouterFiles(routerPath, routerPath);
+  } catch (e) {
+    console.error(`Cannot read router dir: ${routerPath}`, e);
+    Deno.exit(1);
+  }
+
   const inCode: Route[] = [];
-  for (const rel of SOURCE_FILES) {
-    const path = `${root}/${rel}`;
-    try {
-      const content = await Deno.readTextFile(path);
-      inCode.push(...extractRoutesFromSource(content));
-    } catch {
-      // file may not exist in some check contexts
-      continue;
+  for (const rel of routerFiles) {
+    const content = await Deno.readTextFile(`${routerPath}/${rel}`);
+    const path = filePathToRoutePath(rel);
+    const methods = extractMethodsFromHandler(content);
+    for (const method of methods) {
+      inCode.push({ method, path });
     }
   }
 

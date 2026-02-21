@@ -4,7 +4,7 @@ import { getKv } from "../../store/kv.ts";
 const KvBodySchema = z.object({ key: z.string(), value: z.unknown() });
 
 export const handler = {
-  async POST(req) {
+  async POST(req: Request) {
     const body = await req.json();
     const parsed = KvBodySchema.safeParse(body);
     if (!parsed.success) {

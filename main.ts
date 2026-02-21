@@ -1,35 +1,15 @@
 import { App, staticFiles } from "fresh";
-import { z } from "zod";
-import { Project } from "ts-morph";
-import { getKv } from "./system/store/kv.ts";
-
-const KvBodySchema = z.object({ key: z.string(), value: z.unknown() });
+import { handler as indexHandler } from "./system/router/index.ts";
+import { handler as kvKeyHandler } from "./system/router/kv/[key].ts";
+import { handler as kvIndexHandler } from "./system/router/kv/index.ts";
+import { handler as astHandler } from "./system/router/ast.ts";
 
 export const app = new App()
   .use(staticFiles())
-  .get("/", (ctx) => ctx.json({ ok: true }))
-  .get("/kv/:key", async (ctx) => {
-    const kv = await getKv();
-    const key = ctx.params.key;
-    const entry = await kv.get(["kv", key]);
-    return ctx.json(entry.value ?? null);
-  })
-  .post("/kv", async (ctx) => {
-    const body = await ctx.req.json();
-    const parsed = KvBodySchema.safeParse(body);
-    if (!parsed.success) {
-      return ctx.json({ error: parsed.error.flatten() }, { status: 400 });
-    }
-    const kv = await getKv();
-    await kv.set(["kv", parsed.data.key], parsed.data.value);
-    return ctx.json({ key: parsed.data.key });
-  })
-  .get("/ast", (ctx) => {
-    const project = new Project({ useInMemoryFileSystem: true });
-    const source = project.createSourceFile("sample.ts", "const x = 1;");
-    const count = source.getVariableDeclarations().length;
-    return ctx.json({ variableDeclarations: count });
-  })
+  .get("/", (ctx) => indexHandler.GET())
+  .get("/kv/:key", (ctx) => kvKeyHandler.GET(ctx.req, ctx))
+  .post("/kv", (ctx) => kvIndexHandler.POST(ctx.req))
+  .get("/ast", (ctx) => astHandler.GET())
   .fsRoutes();
 
 if (import.meta.main) {

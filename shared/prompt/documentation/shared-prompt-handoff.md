@@ -19,20 +19,19 @@ Add automated tests for in-scope API routes and ensure `deno task scope-check` r
 - CI (`.github/workflows/ci.yml`) runs `deno task test` and `deno task scope-check`.
 - Fixed FreshConfig type: `new App({ root: import.meta.url })` → `new App()` in `main.ts`; test task no longer uses `--no-check`.
 - Documentation alignment: stack wording updated from "Hono (HTTP)" to "Fresh (HTTP)" and "Hono app" to "Fresh app" in `shared-prompt-store.md`, `shared-prompt-profile.md`; scope boundary main.ts row clarified (fsRoutes from system/router when using Vite).
+- Route consolidation: API logic lives only in `system/router/`; `main.ts` only delegates (imports handler from each route file and registers path). No inline route logic in `main.ts`. `check-scope.ts` now discovers routes from `system/router/` (walk files, map path to Fresh route pattern, infer methods from `handler.GET`/`handler.POST`).
 
 ---
 
 ## Tried / failed
 
-- Route consolidation (serve API from `system/router` only): reverted. With `deno run main.ts`, Fresh's `fsRoutes()` does not load from `routeDir` (that is only applied by the Vite plugin at build/dev). So removing programmatic routes from `main.ts` caused 404 in tests. Full consolidation would require running the app via Vite or Fresh supporting a runtime route-dir option.
+- Route consolidation via fsRoutes only: with `deno run main.ts`, Fresh's `fsRoutes()` does not load from `routeDir` (Vite plugin only). So consolidation was done via delegation from `main.ts` to `system/router` handlers instead.
 
 ---
 
 ## Next steps
 
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
-- **Route consolidation (retry later)**: If the app is run via Vite (e.g. `deno task dev`/build uses Vite so that `routeDir` applies), remove programmatic API routes from `main.ts`, keep only `staticFiles()` + `fsRoutes()`, and update `check-scope.ts` to discover routes from `system/router/` (file path + handler.GET/POST) instead of `main.ts`. Re-run tests after change.
-- **Scope-check from file-based routes**: If consolidation is done, extend `shared/prompt/scripts/check-scope.ts` to walk `system/router/`, map file paths to Fresh route paths (e.g. `kv/[key].ts` → `/kv/:key`), and infer methods from `handler.GET` / `handler.POST` in each file; then compare with the scope doc table.
 - Optional: add E2E test for POST /kv (or document why deferred).
 - Optional: run `deno task scope-check` in pre-push hook and document in CONTRIBUTING.
 - Optional: grep for remaining "Hono" in docs/README and align with Fresh if any.
