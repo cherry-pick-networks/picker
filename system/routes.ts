@@ -13,6 +13,7 @@ import * as astDemo from "./router/ast-demo.ts";
 import * as scripts from "./router/scripts.ts";
 import * as profile from "./router/profile.ts";
 import * as content from "./router/content.ts";
+import * as source from "./router/source.ts";
 
 export const ROUTES: { method: string; path: string }[] = [
   { method: "GET", path: "/" },
@@ -32,6 +33,9 @@ export const ROUTES: { method: string; path: string }[] = [
   { method: "GET", path: "/content/worksheets/:id" },
   { method: "POST", path: "/content/worksheets/generate" },
   { method: "POST", path: "/content/worksheets/build-prompt" },
+  { method: "GET", path: "/sources" },
+  { method: "GET", path: "/sources/:id" },
+  { method: "POST", path: "/sources" },
   { method: "GET", path: "/ast" },
   { method: "GET", path: "/ast-demo" },
   { method: "POST", path: "/ast/apply" },
@@ -45,6 +49,7 @@ function registerRest(app: Hono) {
   registerProfile(app);
   registerProgress(app);
   registerContent(app);
+  registerSource(app);
   registerKvMutate(app);
 }
 
@@ -91,6 +96,12 @@ function registerContent(app: Hono) {
     "/content/worksheets/build-prompt",
     content.postWorksheetsBuildPrompt,
   );
+}
+
+function registerSource(app: Hono) {
+  app.get("/sources", source.getSources);
+  app.get("/sources/:id", source.getSource);
+  app.post("/sources", source.postSource);
 }
 
 function registerKvMutate(app: Hono) {
