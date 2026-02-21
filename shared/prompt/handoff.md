@@ -51,6 +51,11 @@ runs in CI so new routes cannot be added without updating the scope document.
 - DELETE /kv/:key: scope doc updated, then `deleteKey()` in
   `system/store/kv.ts`, `handler.DELETE` in `system/router/kv/[key].ts`,
   registration in `main.ts`, test in `main_test.ts` (204 and key gone).
+- Governance and ops/scripts: scope doc updated (GET /scripts, GET
+  /scripts/:path*). `system/validator/index.ts` (verifyGovernance for path under
+  ops/scripts/). `ops/scripts/` dir, `system/store/scripts.ts` (listScripts,
+  readScript), `system/router/scripts/` handlers, main.ts registration. Tests in
+  main_scripts_test.ts and validator_test.ts.
 
 ---
 
@@ -67,9 +72,15 @@ runs in CI so new routes cannot be added without updating the scope document.
 
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
 
+- ~~Optional: Implement Governance verification (system/validator/) and
+  ops/scripts read access per boundary.md; add routes only after scope doc
+  update.~~ Done: validator, ops/scripts read via store, GET /scripts and GET
+  /scripts/:path*, tests.
 - ~~Optional: Add AST demo page (e.g. /ast-demo or /demo/ast) that uses GET /ast
   API; update scope doc first, then implement.~~ Done: scope doc updated, GET
   /ast-demo in system/router/ast-demo.ts and main.ts; test in main_test.ts.
+- Optional: Add write path (POST /scripts or apply endpoint) with
+  Governance-verified apply; update scope doc first, then implement.
 
 ---
 
