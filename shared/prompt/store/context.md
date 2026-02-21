@@ -120,3 +120,282 @@ All tools and models should use this file only; do not duplicate these rules in 
 - **Single source**: Add or change rules and habits only in this file (`shared/prompt/store/context.md`). Do not duplicate in Cursor Rules or other tool configs; reference this file instead.
 - **Review**: Review this file periodically (e.g. quarterly); add repeated instructions as they appear; remove or update outdated lines.
 - **External tips**: Use external guides (e.g. claude-code-tips) as reference only; write only the chosen practices here.
+
+---
+
+## Part B. Rule definitions (authoritative)
+
+Cursor Rules (`.cursor/rules/*.mdc`) reference these sections only; they do not duplicate the text below.
+
+### §A. Commit message format
+
+Pattern:
+  <type>[optional scope]: <description>;
+  type and description required; scope optional.
+Types:
+  feat (new feature), fix (bug fix), docs, chore, refactor, perf, test,
+  ci, build; use feat for SemVer MINOR, fix for PATCH;
+  use BREAKING CHANGE in footer or type! for MAJOR.
+Scope:
+  use for feature flag or module (e.g. ff/CHECKOUT_STEP or module name)
+  when the commit is scoped to that unit.
+Description:
+  imperative, lowercase after colon; short summary (e.g. add handler,
+  fix validation); optional body after blank line for context.
+Footer:
+  BREAKING CHANGE: <description> or conventional footers (e.g. Ref: TICKET-1).
+
+### §B. Commit and session boundary
+
+When to commit (mandatory):
+  commit at each feature-flag boundary; do not wait until the full task
+  is done; one logical unit (one flag or one cohesive change) per commit.
+Must commit before next unit:
+  before starting the next feature-flag or logical unit, you must run
+  git add and git commit for the current changes; do not implement the
+  next flag without committing the current one.
+Procedure for multi-flag work:
+  (1) implement one feature-flag unit only; (2) run git status, git add,
+  git commit with message per this rule; (3) only after commit succeeds,
+  proceed to the next unit. No batch commit at the end of the task.
+Session end:
+  at the end of every session, always output a commit message that follows
+  this rule (type[(scope)]: description; imperative, lowercase) in a fenced
+  code block so the user can copy it; do this every time, do not skip; do not
+  run git commit unless the user explicitly asks.
+
+### §C. Language
+
+Language:
+  English only for code, comments, docstrings, UI/log strings, docs.
+
+### §D. Document and directory format
+
+Pattern:
+  use [prefix]-[suffix].mdc or [prefix]-[infix]-[suffix].mdc;
+  prefix and suffix required; infix optional.
+Segment form:
+  lowercase; separate words with one hyphen; no underscores;
+  suffix singular (except types); descriptive, pronounceable, searchable.
+Axis rule:
+  each segment uses exactly one axis from its allowed set;
+  no axis pollution; one word must not appear in two axes.
+New rule files:
+  pick one prefix from Scope/Layer/Context; one suffix from
+  Artifact/Policy/Meta; add infix from Actor/Action/Entity only when
+  the rule applies to a specific focus.
+
+Directory structure (max 3 levels; segment order):
+  level 1: folder name from approved prefix (required);
+  level 2: folder name from approved infix (optional);
+  level 3: folder name from approved suffix (optional).
+  Order: prefix / infix / suffix; do not add a fourth level.
+
+### §E. Document and directory naming
+
+Clean dictionary (one word per concept — overlap resolution):
+  middleware: only Suffix (Artifact); never Infix (use interceptor,
+  filter).
+  policy: only Suffix (Policy); never Infix (use validator, guard).
+  cache: only Infix (Entity); never Suffix (use store, storage).
+  config: only this spelling; never configuration.
+  education: only this spelling; never edu.
+  type (TS/classification): use types in Suffix Meta; never type.
+  core: forbidden in Context; use shared, base, or domain (layer).
+  context (React/API): use provider in Infix Entity; do not use
+  context as segment.
+
+Prefix — one axis only: [ Scope | Layer | Context ].
+  Rule: prefix must denote system position only; technical tools
+  (cache, redis) or artifact form (config, test) must not be prefix.
+  Axis "Context" = Bounded Context (what it is for); Layer value
+  "domain" = DDD domain layer only.
+Scope (blast radius — where impact reaches):
+  global, shared, system, module, component.
+  Never prefix: app (use system), config, file, code, architecture.
+Layer (stack position — where it sits):
+  presentation, application, domain, infrastructure.
+  Never prefix: api, web as layer (refine into above if needed);
+  security, observability, compliance (use Context instead).
+Context (bounded context — what it is for):
+  business: payment, order, auth, user, catalog, education, student,
+  ticket, bucket, item, economy, scout;
+  system: security, observability, compliance.
+  Never prefix: core (use shared, base, or domain); cache, adapter,
+  redis, test (use Infix/Suffix).
+
+Infix — one axis only: [ Actor | Action | Entity ].
+  Rule: infix must not duplicate Scope/Layer/Context meaning.
+  Forbidden in Infix: middleware (use interceptor, filter), policy
+  (use validator, guard).
+Actor (architectural role or agent):
+  router, service, repository, entity, interceptor, filter, adapter,
+  facade, client, agent, worker, guard, validator.
+Entity (data or medium kind):
+  payload, stream, blob, cache, session, document, json, sql,
+  redis, prompt, provider.
+Action (lifecycle or operation):
+  bootstrap, shutdown, runtime, build, migration, recovery,
+  read, write, batch, parse, upload, search, validate.
+
+Suffix — one axis only: [ Artifact | Policy | Meta ].
+  Rule: suffix denotes form of the deliverable; context meaning
+  belongs in Prefix, not Suffix.
+  Forbidden in Suffix: cache (use store, storage), configuration
+  (use config).
+Artifact (concrete deliverable shape):
+  schema, mapping, store, storage, event, endpoint, response,
+  middleware, format, exception, config, pipeline, metrics, trace.
+Policy (principle, constraint, or policy):
+  boundary, constraint, contract, principle, safety, validation,
+  compliance, isolation.
+Meta (documentation, test, or classification):
+  test, documentation, naming, style, log, types, language,
+  profile, assessment.
+
+Examples:
+  payment-infra-redis-config (Context + Layer + Entity + Artifact);
+  security-application-guard-policy (Context + Layer + Actor + Policy);
+  global-config (Scope + Artifact).
+
+### §F. Directory structure and exceptions
+
+Purpose:
+  Apply a single rule to all directory creation except exceptions;
+  keep structure as prefix → infix → suffix for discoverability and maintenance.
+
+Scope:
+  All directories not in the exception list (root and any depth).
+  "Level" means directory tiers only: prefix, infix, suffix.
+  Root is not counted as a level; max depth is 3 tiers (prefix / infix / suffix).
+
+Rule content — structure:
+  Allowed forms (exactly one of three):
+    prefix/
+    prefix/infix/
+    prefix/infix/suffix/
+  Order fixed: prefix then infix then suffix; no fourth tier.
+
+Rule content — naming:
+  Each tier name must use only approved values for that axis
+  (prefix / infix / suffix); see §E. Document and directory naming.
+  Lowercase; one hyphen between words; no underscores or spaces.
+
+Exceptions:
+  Maintain an explicit exception list; same list for docs and tooling.
+  Typical entries: .git, .cursor, node_modules, dist, build, coverage,
+  vendor, .cache (confirm per project). Update list and any validator together.
+
+Documentation:
+  Place rule text in .cursor/rules or in this file.
+  State: scope, "max 3 tiers" (prefix/infix/suffix only; root not counted),
+  the three allowed forms, order, no fourth tier, naming reference, exception list.
+
+Validation (optional):
+  Script: walk directories from root; skip exception list; assert remaining
+  paths match prefix/(infix/)(suffix/) and tier names in allowed sets; exit 1 on failure.
+  Run in pre-commit or CI.
+
+Agent / tool behavior:
+  When creating directories, use only the three allowed forms for non-excepted paths;
+  use only approved axis values per §E.
+
+### §G. Dependency constraint
+
+Dependency addition:
+  do not add dependencies arbitrarily; only add if (a) listed in the project
+  official dependency list, or (b) the addition meets all mandatory
+  stable-library criteria below. Agent must not extend the official list
+  without human approval.
+Official list:
+  the project maintains an official list of allowed dependencies (deno.json
+  imports and optionally docs); new entries require updating that list first.
+
+### §H. Validation policy (libraries)
+
+Stable library — mandatory (all required):
+  (1) release within 12 months on JSR (or registry in use); (2) official docs
+  URL; (3) license in allowed set below; (4) no Critical/High CVE at add time,
+  and dependency audit in CI when applicable (e.g. deno audit); (5) single
+  clear purpose (no kitchen-sink).
+Stable library — recommended:
+  (6) JSR weekly downloads ≥10k or documented exception; (7) direct deps ≤10 or
+  approved exception; (8) SemVer or explicit version policy; (9) no
+  Critical/security issues open >90 days; (10) alternative libs exist and
+  migration path documented. Prefer all; document exceptions.
+Allowed licenses (project):
+  permissive: MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause, ISC;
+  copyleft compatible: GPL-3.0-or-later, AGPL-3.0-or-later,
+  LGPL-2.1-only, LGPL-3.0-or-later; also MPL-2.0. Not allowed:
+  GPL-2.0-only unless explicitly approved, proprietary, or incompatible
+  copyleft terms.
+
+### §I. Agent principles
+
+Conventions:
+  follow standard conventions (formatting, naming, structure).
+KISS:
+  prefer the simplest option; reduce complexity.
+Boy scout rule:
+  leave anything you touch cleaner than you found it.
+Root cause:
+  find it; address causes, not only symptoms.
+Consistency:
+  be consistent across the project (terms, tone, layout).
+Phrasing:
+  prefer positive phrasing in docs and specs
+  ("Do X" over "Do not do Y").
+Rule file format:
+  one rule per block; no blank line between rules;
+  wrap with indent so continuation is clearly the same rule.
+Rule file line wrap:
+  break only at punctuation (;, ,) or after a complete phrase;
+  never split a noun phrase or parenthetical mid-phrase;
+  meaning per line over 80 chars in rule files.
+Clear rules (when adding from docs):
+  only add to rules what satisfies all three: (1) stateable as
+  must/do not/only in one sentence, no prefer/recommended;
+  (2) concrete scope (files, symbols, or patterns named);
+  (3) violation detectable by static check or simple heuristic;
+  otherwise keep in docs or as guidance only.
+No speculative implementation:
+  do not add modules, endpoints, or infrastructure for a future
+  phase or roadmap; add only when the feature is in current scope
+  (docs/scope.md).
+
+### §J. Migration boundary
+
+When to migrate (diagnosis):
+  rule files that mix axes (e.g. two suffixes in one name or one file)
+  or use forbidden prefix/segment must be refactored; plan first, then
+  execute; do not rename or split without a migration plan.
+Plan before execute:
+  write a migration plan: for each current file, list target filename(s)
+  with axis (prefix, infix, suffix), content responsibility per new
+  file, and which current files will be removed; do not execute
+  renames or splits without this mapping.
+Execute order:
+  create all new rule files with split content first; only after that
+  delete the old files; one logical migration (one plan) per commit.
+Naming:
+  new rule file names must follow §D and §E; use infix from Actor/Action/Entity where it
+  clarifies focus (e.g. document, event, agent).
+No scope doc change:
+  adding or refactoring .cursor/rules does not require docs/scope.md
+  change; scope doc is for modules, API routes, infrastructure only.
+
+### §K. Scope document boundary
+
+Scope document:
+  the single source of truth for in-scope modules, API surface, and
+  infrastructure is docs/scope.md; update that doc before adding.
+Scope-bound implementation:
+  do not add new modules, API routes (routers), or infrastructure
+  (broker, extra DB, queue, search engine) unless they are listed in
+  docs/scope.md; add them to docs/scope.md first, then implement.
+
+### §L. Agent and scope
+
+Agent and scope:
+  agent must not extend scope arbitrarily; propose scope doc changes
+  for human approval, then implement only after scope is updated.
