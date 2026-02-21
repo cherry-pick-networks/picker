@@ -31,12 +31,8 @@ function long() {
   assertEquals(d[0].message, "Function body must be 2–4 lines (got 5).");
 });
 
-Deno.test("function-length: arrow expression body reports", () => {
+Deno.test("function-length: arrow expression body allowed", () => {
   const code = "const f = () => 42;";
   const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
-  assertEquals(d.length, 1);
-  assertEquals(
-    d[0].message,
-    "Function body must be 2–4 lines (expression body counts as 1).",
-  );
+  assertEquals(d.length, 0);
 });

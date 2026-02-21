@@ -479,7 +479,8 @@ where documented (e.g. long URLs in comments). File length: keep files to 100
 lines or fewer; split when longer. Scope: TypeScript and TSX source (e.g. `**/*.ts`, `**/*.tsx`); exclude
 node_modules, _fresh, vendor, generated output.
 
-Function body: 2–4 lines (enforced). Validation: `deno lint` (plugin
+Function body: block body 2–4 lines (enforced); expression body allowed
+(counts as 1). Validation: `deno lint` (plugin
 function-length/function-length in shared/prompt/scripts/function-length-lint-plugin.ts). To
 ignore per function: `// deno-lint-ignore function-length/function-length` on the line above.
 Guidance (not enforced): keep indentation depth to 1–2 levels.

@@ -1,5 +1,5 @@
 /**
- * Deno lint plugin: enforce 2–4 lines per function body (§P).
+ * Deno lint plugin: enforce 2–4 lines per block body; expression body allowed (§P).
  * Rule ID: function-length/function-length.
  * Ignore: // deno-lint-ignore function-length/function-length
  */
@@ -20,13 +20,7 @@ function checkBody(
   body: Deno.lint.Expression | Deno.lint.BlockStatement | null | undefined,
 ): void {
   if (!body) return;
-  if (body.type !== "BlockStatement") {
-    context.report({
-      node: body,
-      message: `Function body must be 2–4 lines (expression body counts as 1).`,
-    });
-    return;
-  }
+  if (body.type !== "BlockStatement") return; // expression body allowed (counts as 1)
   const n = bodyLineCount(context, body);
   if (n < MIN_LINES || n > MAX_LINES) {
     context.report({
