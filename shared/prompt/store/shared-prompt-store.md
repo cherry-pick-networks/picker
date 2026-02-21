@@ -142,6 +142,15 @@ tool-specific configs.
   progress, what was tried, what failed, next steps. **Workflow**: create or
   update the handoff file before switching agent or topic; new sessions attach
   only that file. Optionally use `/handoff` (e.g. dx plugin) if available.
+- **Next steps (handoff)**: In the handoff doc, the "Next steps" section lists
+  zero or more follow-up actions. Each item is one logical unit (one commit or
+  one scoped task); one sentence per item so a new session can start without
+  extra context. If there is no required follow-up, add at least one optional
+  or deferred item (e.g. "Optional: add E2E for POST /kv") so the next session
+  has a starting point. Do not add items that require a scope-doc or
+  dependency change without noting it (e.g. "Propose scope update first, then
+  implement X"). Format: bullet list; first bullet may be the recommended next
+  action.
 - **Branching experiments**: When trying a different approach from a point in
   time, fork the conversation or record the branch point in the handoff doc.
 

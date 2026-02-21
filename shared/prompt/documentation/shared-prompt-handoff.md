@@ -30,7 +30,9 @@ Add automated tests for in-scope API routes and ensure `deno task scope-check` r
 
 ## Next steps
 
-- None (optional items addressed or deferred).
+<!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
+- Optional: add E2E test for POST /kv (or document why deferred).
+- Optional: run `deno task scope-check` in pre-push hook and document in CONTRIBUTING.
 
 ---
 

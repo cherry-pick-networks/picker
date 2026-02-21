@@ -38,6 +38,10 @@ Simplify (Tip 40 → §11).
 - **Where**: `shared/prompt/documentation/shared-prompt-handoff.md` (linked from README).
 - **Fields**: Goal, progress, what was tried, what failed, next steps. New
   sessions attach only this file.
+- **Next steps format**: Bullet list; one item = one logical unit (one commit
+  or one scoped task); one sentence per item. If no required follow-up, add at
+  least one optional or deferred item. For scope or dependency changes, note
+  "Propose scope update first" (or similar). See shared-prompt-store.md §9.
 - **Optional**: Use `/handoff` (e.g. dx plugin) if available.
 
 ---
