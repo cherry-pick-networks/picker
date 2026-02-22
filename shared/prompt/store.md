@@ -29,7 +29,7 @@ tool-specific configs.
 - **This file**: `shared/prompt/store.md` (shared = Scope, prompt = Entity;
   store as artifact naming in filename)
 - **Exceptions**: .git, .cursor, node_modules, dist, build, coverage, vendor,
-  .cache, static, tests (confirm per repo)
+  .cache, tests (confirm per repo)
 - Do not add a fourth tier. Do not use forbidden segments (e.g. core in Context;
   cache as Suffix).
 
@@ -368,7 +368,7 @@ hyphen between words; no underscores or spaces.
 
 Exceptions: Maintain an explicit exception list; same list for docs and tooling.
 Typical entries: .git, .cursor, node_modules, dist, build, coverage, vendor,
-.cache, static, tests, data (confirm per project). Update list and any validator
+.cache, tests, data (confirm per project). Update list and any validator
 together.
 
 Document exceptions: Maintain a separate explicit list for .md files exempt from

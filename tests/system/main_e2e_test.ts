@@ -112,15 +112,6 @@ Deno.test("E2E GET /scripts/hello.txt over real HTTP", handlerTestOpts, async ()
   }, { seedHello: true });
 });
 
-Deno.test("E2E GET /static/e2e-smoke.txt over real HTTP", handlerTestOpts, async () => {
-  await withServer(async (base) => {
-    const res = await fetch(`${base}/static/e2e-smoke.txt`);
-    assertEquals(res.status, 200);
-    const text = await res.text();
-    assert(text.includes("e2e smoke"), "static file content");
-  });
-});
-
 Deno.test("E2E POST /ast/apply over real HTTP", handlerTestOpts, async () => {
   await withTempScriptsStore(async () => {
     await withServer(async (base) => {

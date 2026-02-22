@@ -3,7 +3,6 @@
  * Must match shared/prompt/boundary.md API surface table.
  */
 
-import { serveStatic } from "hono/deno";
 import type { Hono } from "hono";
 import * as home from "./router/home.ts";
 import * as kv from "./router/kv.ts";
@@ -18,7 +17,6 @@ import * as data from "./router/data.ts";
 
 export const ROUTES: { method: string; path: string }[] = [
   { method: "GET", path: "/" },
-  { method: "GET", path: "/static/*" },
   { method: "GET", path: "/kv" },
   { method: "POST", path: "/kv" },
   { method: "GET", path: "/kv/:key" },
@@ -60,14 +58,8 @@ function registerRest(app: Hono) {
 }
 
 export function registerRoutes(app: Hono) {
-  registerStatic(app);
   registerRest(app);
   registerAstAndScripts(app);
-}
-
-function registerStatic(app: Hono) {
-  const root = "./system";
-  app.use("/static/*", serveStatic({ root }));
 }
 
 function registerAstAndScripts(app: Hono) {
