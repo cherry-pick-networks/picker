@@ -20,17 +20,18 @@ JSON. List rulesets: `gh ruleset list`.
 
 ## Option B: Branch protection rule (UI)
 
-1. **Repo** → **Settings** → **Branches** (or **Rules** → **Rulesets** for ruleset UI).
+1. **Repo** → **Settings** → **Branches** (or **Rules** → **Rulesets** for
+   ruleset UI).
 2. Under **Branch protection rules**, click **Add rule** (or edit the rule for
    `main`).
 3. **Branch name pattern**: `main` (or your default branch).
 4. Enable **Require status checks to pass before merging**.
 5. In **Status checks that are required**, search and select **check** (the CI
-   job name from [.github/workflows/ci.yml](.github/workflows/ci.yml)). If the list is
-   empty, push a commit that runs CI once so the check appears.
+   job name from [.github/workflows/ci.yml](.github/workflows/ci.yml)). If the
+   list is empty, push a commit that runs CI once so the check appears.
 6. Save the rule.
 
 After this, PRs cannot be merged until the **check** workflow succeeds. That
-ensures lint (including function-length), format, line-length, ts-filename-check,
-tests, scope-check, boundary-check, dependency-check, type-check-policy, and
-audit all pass before merge.
+ensures lint (including function-length), format, line-length,
+ts-filename-check, tests, scope-check, boundary-check, dependency-check,
+type-check-policy, and audit all pass before merge.
