@@ -18,8 +18,7 @@ import {
 // function-length-ignore
 function isFileLengthExempt(rel: string): boolean {
   return rel.endsWith("_test.ts") || rel.startsWith("tests/") ||
-    rel.includes("/tests/") ||
-    rel === "shared/prompt/scripts/check-ts-filename.ts";
+    rel.includes("/tests/");
 }
 
 function logViolationsAndExit(

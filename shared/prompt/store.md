@@ -619,6 +619,12 @@ constants module. Separate assignment and evaluation: when destructuring the
 result of a complex call would exceed 80 chars, introduce an intermediate
 variable or break the right-hand side across lines for clarity.
 
+File-length conflict protocol: when keeping to the function body limit (2–4
+statements) would make a file exceed 100 effective lines, do not add a
+file-length exempt. Split into sibling modules in the same directory (e.g.
+-helpers, -validate); keep the entry file as orchestrator only so every file
+stays under 100 effective lines.
+
 ### §Q. Phase-gated feature implementation
 
 When it applies: only when implementing a new feature (adding or changing code
