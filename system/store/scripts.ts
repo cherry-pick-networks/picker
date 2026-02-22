@@ -79,7 +79,10 @@ function toWriteError(e: unknown): WriteResult {
   return { ok: false, status: 500, body };
 }
 
-async function doWrite(fullPath: string, content: string): Promise<WriteResult> {
+async function doWrite(
+  fullPath: string,
+  content: string,
+): Promise<WriteResult> {
   await ensureParentDir(fullPath);
   await Deno.writeTextFile(fullPath, content, { create: true });
   return { ok: true, status: 201 };
