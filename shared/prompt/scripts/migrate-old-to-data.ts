@@ -2,7 +2,7 @@
  * Migrate .old (knowledge, identity) to shared/record/ with UUID v7.
  * Usage: deno run -A shared/prompt/scripts/migrate-old-to-data.ts
  */
-// deno-lint-ignore-file function-length/function-length
+// function-length-ignore-file
 
 import type {
   ExtractedIndex,

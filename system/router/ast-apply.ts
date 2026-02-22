@@ -4,6 +4,7 @@ import { applyPatch } from "../service/ast.ts";
 const isPathOldNewObject = (o: Record<string, unknown>): o is { path: string; oldText: string; newText: string } =>
   typeof o.path === "string" && typeof o.oldText === "string" && typeof o.newText === "string";
 
+// function-length-ignore
 function invalidAstBody(body: unknown, o: Record<string, unknown>): boolean {
   return body === null || typeof body !== "object" || Array.isArray(body) || !isPathOldNewObject(o);
 }

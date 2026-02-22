@@ -35,14 +35,16 @@ async function doListEntries(): Promise<ListResult> {
 }
 
 async function listScriptsAllowed(): Promise<ListResult> {
-  try { return await doListEntries(); }
-  catch (e) { return toListError(e); }
+  const result = await doListEntries().catch((e) => toListError(e));
+  return result;
 }
 
-export async function listScripts(): Promise<ListResult> {
+export function listScripts(): Promise<ListResult> {
   const result = verifyGovernance("read", "");
-  if (!result.allowed) return { ok: false, status: 403, body: result.reason };
-  return await listScriptsAllowed();
+  if (!result.allowed) {
+    return Promise.resolve({ ok: false, status: 403, body: result.reason });
+  }
+  return listScriptsAllowed();
 }
 
 function readScriptCatch(e: unknown): ReadResult {
@@ -53,19 +55,23 @@ function readScriptCatch(e: unknown): ReadResult {
 }
 
 async function readFileContent(fullPath: string): Promise<ReadResult> {
-  try { return { ok: true, content: await Deno.readTextFile(fullPath) }; }
-  catch (e) { return readScriptCatch(e); }
+  const result = await Deno.readTextFile(fullPath).catch(
+    (e): ReadResult => readScriptCatch(e),
+  );
+  return typeof result === "string" ? { ok: true, content: result } : result;
 }
 
-async function readScriptAllowed(relativePath: string): Promise<ReadResult> {
+function readScriptAllowed(relativePath: string): Promise<ReadResult> {
   const fullPath = `${getScriptsBase()}/${relativePath}`;
-  return await readFileContent(fullPath);
+  return readFileContent(fullPath);
 }
 
-export async function readScript(relativePath: string): Promise<ReadResult> {
+export function readScript(relativePath: string): Promise<ReadResult> {
   const result = verifyGovernance("read", relativePath);
-  if (!result.allowed) return { ok: false, status: 403, body: result.reason };
-  return await readScriptAllowed(relativePath);
+  if (!result.allowed) {
+    return Promise.resolve({ ok: false, status: 403, body: result.reason });
+  }
+  return readScriptAllowed(relativePath);
 }
 
 function ensureParentDir(fullPath: string): Promise<void> {
@@ -92,16 +98,18 @@ async function writeScriptAllowed(
   fullPath: string,
   content: string,
 ): Promise<WriteResult> {
-  try { return await doWrite(fullPath, content); }
-  catch (e) { return toWriteError(e); }
+  const result = await doWrite(fullPath, content).catch((e) => toWriteError(e));
+  return result;
 }
 
-export async function writeScript(
+export function writeScript(
   relativePath: string,
   content: string,
 ): Promise<WriteResult> {
   const result = verifyGovernance("write", relativePath);
-  if (!result.allowed) return { ok: false, status: 403, body: result.reason };
+  if (!result.allowed) {
+    return Promise.resolve({ ok: false, status: 403, body: result.reason });
+  }
   const fullPath = `${getScriptsBase()}/${relativePath}`;
-  return await writeScriptAllowed(fullPath, content);
+  return writeScriptAllowed(fullPath, content);
 }

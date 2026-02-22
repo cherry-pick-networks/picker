@@ -1,7 +1,10 @@
 import { assertEquals } from "@std/assert";
 import plugin from "../../shared/prompt/scripts/function-length-lint-plugin.ts";
 
-Deno.test("function-length: 2–4 effective lines ok", () => {
+const MSG_OK = (n: number) =>
+  `Function body must have 2–4 statements (got ${n}).`;
+
+Deno.test("function-length: 2–4 statements ok", () => {
   const code = `
 function ok() {
   const x = 1;
@@ -12,17 +15,14 @@ function ok() {
   assertEquals(d.length, 0);
 });
 
-Deno.test("function-length: 1 effective line block reports", () => {
+Deno.test("function-length: 1 statement block reports", () => {
   const code = "function short() { x(); }";
   const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
   assertEquals(d.length, 1);
-  assertEquals(
-    d[0].message,
-    "Function body must have 2–4 lines (80-char units) (got 0).",
-  );
+  assertEquals(d[0].message, MSG_OK(1));
 });
 
-Deno.test("function-length: 5 effective lines reports", () => {
+Deno.test("function-length: 5 statements reports", () => {
   const code = `
 function long() {
   const a = 1;
@@ -34,10 +34,7 @@ function long() {
 `;
   const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
   assertEquals(d.length, 1);
-  assertEquals(
-    d[0].message,
-    "Function body must have 2–4 lines (80-char units) (got 5).",
-  );
+  assertEquals(d[0].message, MSG_OK(5));
 });
 
 Deno.test("function-length: arrow expression body allowed", () => {
@@ -46,7 +43,7 @@ Deno.test("function-length: arrow expression body allowed", () => {
   assertEquals(d.length, 0);
 });
 
-Deno.test("function-length: 1 effective line (await) reports", () => {
+Deno.test("function-length: 1 statement (await) reports", () => {
   const code = `
 async function get() {
   return await fetch("/api");
@@ -54,9 +51,10 @@ async function get() {
 `;
   const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
   assertEquals(d.length, 1);
+  assertEquals(d[0].message, MSG_OK(1));
 });
 
-Deno.test("function-length: 1 effective line (chain) reports", () => {
+Deno.test("function-length: 1 statement (chain) reports", () => {
   const code = `
 function get() {
   return fetch("/api").then((r) => r.json()).catch(() => null);
@@ -64,4 +62,31 @@ function get() {
 `;
   const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
   assertEquals(d.length, 1);
+  assertEquals(d[0].message, MSG_OK(1));
+});
+
+Deno.test("function-length: try/catch counts as 1 statement", () => {
+  const code = `
+function withTry() {
+  try {
+    return doSomething();
+  } catch (e) {
+    return fallback();
+  }
+}
+`;
+  const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+  assertEquals(d.length, 1);
+  assertEquals(d[0].message, MSG_OK(1));
+});
+
+Deno.test("function-length: 2 statements with try/catch ok", () => {
+  const code = `
+function two() {
+  const x = 1;
+  try { return x; } catch { return 0; }
+}
+`;
+  const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+  assertEquals(d.length, 0);
 });

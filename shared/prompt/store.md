@@ -545,16 +545,19 @@ File length: keep files to 100 effective lines or fewer (sum of effective
 lines over all physical lines); split when longer. Scope: TypeScript source
 (e.g. `**/*.ts`); exclude node_modules, vendor, generated output.
 
-Function body: block body 2–4 effective lines (80-char units over body
-lines; body = interior of block only); expression body allowed (counts as
-1). Exceptions: single return with await or 2+ level method chaining.
+Function body: block body 2–4 statements (AST direct statements in block
+body only); expression body allowed (counts as 1). Line length in body is
+not enforced by this rule; use the formatter and line-length check instead.
 Validation: line-length and file-length by
 shared/prompt/scripts/check-line-length.ts; function body by `deno lint`
 (plugin function-length/function-length in
-shared/prompt/scripts/function-length-lint-plugin.ts, counts 80-char units
-per line in body). To ignore per function:
-`// deno-lint-ignore function-length/function-length` on the line above.
-Guidance (not enforced): keep indentation depth to 1–2 levels.
+shared/prompt/scripts/function-length-lint-plugin.ts, counts statements in
+body). To ignore per function:
+`// function-length-ignore` on the line above; or `// function-length-ignore-file` at top of file.
+Async: when the body only returns a promise from a helper, return the promise
+without `async`/`return await` (avoids an extra microtask); outside try/catch
+do not use `return await`. Guidance (not enforced): keep indentation depth
+to 1–2 levels.
 
 ### §Q. Phase-gated feature implementation
 

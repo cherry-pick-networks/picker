@@ -59,6 +59,7 @@ export async function readE2eRuns(): Promise<E2ERunsFile> {
   return raw !== null ? parseE2eRunsRaw(raw) : { schemaVersion: 1, runs: [] };
 }
 
+// function-length-ignore
 function trimRunsToMax(data: E2ERunsFile): void {
   if (data.runs.length > MAX_RUNS) {
     data.runs = data.runs.slice(-MAX_RUNS);

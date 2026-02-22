@@ -2,7 +2,7 @@
  * Scope check helpers: parse scope doc, map file paths to routes,
  * extract handler methods, walk router dir. Used by check-scope.ts.
  */
-// deno-lint-ignore-file function-length/function-length
+// function-length-ignore-file
 
 export type Route = { method: string; path: string };
 

@@ -18,6 +18,7 @@ export async function getSource(c: Context) {
   return c.json(source);
 }
 
+// function-length-ignore
 async function doPostSource(
   c: Context,
   data: Parameters<typeof createSource>[0],

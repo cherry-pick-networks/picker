@@ -19,6 +19,7 @@ export async function getItem(c: Context) {
   return c.json(item);
 }
 
+// function-length-ignore
 async function doPostItem(
   c: Context,
   data: Parameters<typeof createItem>[0],
@@ -65,6 +66,7 @@ export async function getWorksheet(c: Context) {
   return c.json(worksheet);
 }
 
+// function-length-ignore
 async function doPostWorksheetsGenerate(
   c: Context,
   data: Parameters<typeof generateWorksheet>[0],
@@ -80,6 +82,7 @@ export async function postWorksheetsGenerate(c: Context) {
   return doPostWorksheetsGenerate(c, parsed.data);
 }
 
+// function-length-ignore
 async function doPostWorksheetsBuildPrompt(
   c: Context,
   data: Parameters<typeof buildWorksheetPrompt>[0],

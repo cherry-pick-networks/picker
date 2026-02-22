@@ -1,6 +1,7 @@
 import type { Context } from "hono";
 import { listScripts, readScript, writeScript } from "../store/scripts.ts";
 
+// function-length-ignore
 function toScriptErrorResponse(
   status: number,
   body: string,
@@ -20,6 +21,7 @@ export async function getScriptsList(c: Context) {
 const scriptPathFromUrl = (url: string): string =>
   new URL(url).pathname.replace(/^\/scripts\/?/, "") ?? "";
 
+// function-length-ignore
 function toScriptContentResponse(content: string): Response {
   return new Response(content, {
     headers: { "Content-Type": "text/plain; charset=utf-8" },

@@ -17,6 +17,7 @@ export interface FileLengthViolation {
   effectiveLines: number;
 }
 
+// function-length-ignore
 export function effectiveLineCount(lines: string[]): number {
   return lines.reduce(
     (sum, line) => sum + Math.ceil(line.length / MAX_LINE_LENGTH),

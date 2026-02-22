@@ -18,7 +18,7 @@ export async function withTempScriptsStore(
     await fn();
   } finally {
     Deno.env.delete("SCRIPTS_BASE");
-    // deno-lint-ignore function-length/function-length
+    // function-length-ignore
     await Deno.remove(tmpDir, { recursive: true }).catch(() => {});
   }
 }
