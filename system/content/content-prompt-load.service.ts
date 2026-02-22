@@ -19,16 +19,16 @@ const TEMPLATE_PATHS: Record<
   { templatePath: string; formatPath: string }
 > = {
   mid_skills: {
-    templatePath: "docs/contract/contract-pedagogy-prompt.md",
-    formatPath: "docs/contract/contract-pedagogy-format.md",
+    templatePath: "contract-pedagogy-prompt.md",
+    formatPath: "contract-pedagogy-format.md",
   },
   mid_grammar: {
-    templatePath: "docs/contract/contract-syllabus-prompt.md",
-    formatPath: "docs/contract/contract-syllabus-format.md",
+    templatePath: "contract-syllabus-prompt.md",
+    formatPath: "contract-syllabus-format.md",
   },
   mid_reading: {
-    templatePath: "docs/contract/contract-read-prompt.md",
-    formatPath: "docs/contract/contract-read-format.md",
+    templatePath: "contract-read-prompt.md",
+    formatPath: "contract-read-format.md",
   },
 };
 
@@ -36,8 +36,8 @@ export function resolveTemplatePaths(
   qt: string,
 ): { templatePath: string; formatPath: string } {
   const fallback = {
-    templatePath: "docs/contract/contract-prompt.md",
-    formatPath: "docs/contract/contract-assessment-format.md",
+    templatePath: "contract-prompt.md",
+    formatPath: "contract-assessment-format.md",
   };
   return TEMPLATE_PATHS[qt] ?? fallback;
 }
@@ -55,7 +55,7 @@ export async function loadTemplateAndFormat(
   qt: string,
 ): Promise<{ template: string; formatBlock: string }> {
   if (qt === "elem") {
-    const t = (await loadTemplate("docs/contract/contract-edu-prompt.md")) ||
+    const t = (await loadTemplate("contract-edu-prompt.md")) ||
       DEFAULT_TEMPLATE;
     return { template: t, formatBlock: "" };
   }

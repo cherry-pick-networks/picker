@@ -4,6 +4,7 @@ import { getKv } from "#shared/infra/kv.client.ts";
 
 const ITEM_PREFIX = ["content", "item"] as const;
 const WORKSHEET_PREFIX = ["content", "worksheet"] as const;
+const SUBMISSION_PREFIX = ["content", "submission"] as const;
 
 export async function getItem(id: string): Promise<unknown | null> {
   const kv = await getKv();
@@ -58,4 +59,28 @@ export async function setWorksheet(
   const id = value.worksheet_id as string;
   if (!id) throw new Error("worksheet_id required");
   await kv.set([...WORKSHEET_PREFIX, id], value);
+}
+
+export async function getSubmission(id: string): Promise<unknown | null> {
+  const kv = await getKv();
+  const e = await kv.get([...SUBMISSION_PREFIX, id]);
+  return e.value ?? null;
+}
+
+export async function setSubmission(
+  value: Record<string, unknown>,
+): Promise<void> {
+  const kv = await getKv();
+  const id = value.submission_id as string;
+  if (!id) throw new Error("submission_id required");
+  await kv.set([...SUBMISSION_PREFIX, id], value);
+}
+
+export async function listSubmissions(): Promise<Record<string, unknown>[]> {
+  const kv = await getKv();
+  const out: Record<string, unknown>[] = [];
+  for await (const entry of kv.list({ prefix: [...SUBMISSION_PREFIX] })) {
+    out.push(entry.value as Record<string, unknown>);
+  }
+  return out;
 }

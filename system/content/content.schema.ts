@@ -56,3 +56,41 @@ export type WorksheetPromptResponse = z.infer<
 
 export const ItemPatchSchema = ItemSchema.partial().omit({ item_id: true });
 export type ItemPatch = z.infer<typeof ItemPatchSchema>;
+
+export const SubmissionSchema = z.object({
+  submission_id: z.string(),
+  worksheet_id: z.string(),
+  student_id: z.string(),
+  answers: z.record(z.string(), z.number()),
+  submitted_at: z.string(),
+});
+export type Submission = z.infer<typeof SubmissionSchema>;
+
+export const CreateSubmissionRequestSchema = z.object({
+  worksheet_id: z.string(),
+  student_id: z.string(),
+  answers: z.record(z.string(), z.number()),
+  submission_id: z.string().optional(),
+});
+export type CreateSubmissionRequest = z.infer<
+  typeof CreateSubmissionRequestSchema
+>;
+
+export const ItemResultSchema = z.object({
+  item_id: z.string(),
+  chosen: z.number(),
+  correct_index: z.number(),
+  is_correct: z.boolean(),
+  options: z.array(z.string()).optional(),
+  chosen_text: z.string().optional(),
+  correct_text: z.string().optional(),
+});
+export type ItemResult = z.infer<typeof ItemResultSchema>;
+
+export const GradingResultSchema = z.object({
+  total: z.number(),
+  correct: z.number(),
+  score: z.number(),
+  results: z.array(ItemResultSchema),
+});
+export type GradingResult = z.infer<typeof GradingResultSchema>;

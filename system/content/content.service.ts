@@ -1,27 +1,43 @@
 import * as contentStore from "./content.store.ts";
-import type { Item, ItemPatch, Worksheet } from "./content.schema.ts";
-import {
-  type CreateItemRequest as CreateItemRequestType,
-  ItemSchema,
-  WorksheetSchema,
+import type {
+  CreateItemRequest as CreateItemRequestType,
+  Item,
+  ItemPatch,
+  Worksheet,
 } from "./content.schema.ts";
+import { ItemSchema, WorksheetSchema } from "./content.schema.ts";
 import { nowIso, parseItem } from "./content-parse.service.ts";
 export {
   CreateItemRequestSchema,
+  CreateSubmissionRequestSchema,
   GenerateWorksheetRequestSchema,
+  GradingResultSchema,
   ItemPatchSchema,
+  ItemResultSchema,
   ItemSchema,
+  SubmissionSchema,
   WorksheetPromptResponseSchema,
   WorksheetSchema,
 } from "./content.schema.ts";
 export type {
   CreateItemRequest,
+  CreateSubmissionRequest,
+  GradingResult,
   Item,
   ItemPatch,
+  ItemResult,
+  Submission,
   Worksheet,
 } from "./content.schema.ts";
 export { buildWorksheetPrompt } from "./content-prompt.service.ts";
 export { generateWorksheet } from "./content-worksheet.service.ts";
+export {
+  createSubmission,
+  getItemsForWorksheet,
+  getSubmission,
+  gradeSubmission,
+  listSubmissions,
+} from "./content-submission.service.ts";
 
 export async function getItem(id: string): Promise<Item | null> {
   const raw = await contentStore.getItem(id);

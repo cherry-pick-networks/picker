@@ -31,6 +31,13 @@ function registerProgress(app: Hono) {
 function registerContent(app: Hono) {
   registerContentItems(app);
   registerContentWorksheets(app);
+  registerContentSubmissions(app);
+}
+
+function registerContentSubmissions(app: Hono) {
+  app.post("/content/submissions", content.postSubmission);
+  app.get("/content/submissions/:id", content.getSubmission);
+  app.get("/content/submissions", content.getSubmissions);
 }
 
 function registerContentItems(app: Hono) {

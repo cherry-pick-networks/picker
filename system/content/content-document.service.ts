@@ -9,7 +9,8 @@ export interface DocumentWithFm {
 
 /**
  * Reads a file and returns parsed YAML attrs and body, or null if missing.
- * Use for shared/prompt/ or docs/contract/ .md files with optional --- ... ---.
+ * Use for shared/prompt/ or shared/runtime/store/ .md files
+ * with optional --- ... ---.
  */
 export async function readDocument(
   path: string,
