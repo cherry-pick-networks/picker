@@ -155,6 +155,12 @@ tool-specific configs.
   X"). Format: bullet list; first bullet may be the recommended next action.
 - **Branching experiments**: When trying a different approach from a point in
   time, fork the conversation or record the branch point in the handoff doc.
+- **Session start (first message)**: When starting a new agent or chat session,
+  the first user message should be a single short sentence in Korean that states
+  the session goal (one task or one question). This improves auto-generated
+  chat titles (e.g. in Cursor). Prefer under 15 words or about 40 characters.
+  Example: "POST /content/worksheets API에 스코프 검증 추가해줘". Full procedure
+  and examples: `shared/prompt/documentation/usage.md` (Session start).
 
 ---
 

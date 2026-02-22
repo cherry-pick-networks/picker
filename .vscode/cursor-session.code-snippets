@@ -1,0 +1,7 @@
+{
+  "Agent session first message (Korean)": {
+    "prefix": "agent-start",
+    "body": ["${1:[할 일 또는 질문을 한국어 한 줄로]} 해줘"],
+    "description": "First message template for new Cursor agent/chat session (Korean, one sentence). See usage.md Session start."
+  }
+}

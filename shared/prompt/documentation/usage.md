@@ -45,6 +45,24 @@ Simplify (Tip 40 → §11).
 
 ---
 
+## Session start (first message)
+
+- **When**: Starting a new agent or chat session in Cursor (store.md §9).
+- **Goal**: First message in Korean, one short sentence stating the session goal,
+  so auto-generated chat titles are Korean and brief.
+- **Format**: One sentence; under 15 words or ~40 characters; state one task or
+  one question. Add context in a second message if needed.
+- **Templates**:
+  - Task: `[대상/범위] + [할 일] + 해줘` — e.g. `boundary.md에 없는 라우트 scope-check에 넣어줘`
+  - Analysis: `[현상/에러] + 원인 찾아줘` — e.g. `type-check-policy 실패 이유 찾아줘`
+  - Refactor: `[대상] + [방향] + 해줘` — e.g. `content 서비스 함수 80줄 넘는 거 쪼개줘`
+- **Procedure**: Open new chat → state goal in one Korean sentence → send;
+  optionally rename the tab later in chat history if the auto-title is not ideal.
+- **Snippet**: Use the `agent-start` snippet (`.vscode/cursor-session.code-snippets`)
+  to paste the template and fill in the bracketed part.
+
+---
+
 ## Blocked or private sites (Tip 11)
 
 - For URLs that cannot be fetched directly (e.g. Reddit, paywalled): use a
