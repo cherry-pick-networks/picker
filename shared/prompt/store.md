@@ -9,7 +9,7 @@ tool-specific configs.
 
 ## 1. Project and stack
 
-- **Name**: {{repo_name}}
+- **Name**: picker
 - **Runtime**: Deno
 - **Stack**: Hono (HTTP), Zod (validation), ts-morph (AST), Deno KV (storage)
 - **Entry**: `main.ts` (Hono app, routes from system/routes.ts)
