@@ -5,7 +5,7 @@
  * Or: deno task scope-check
  */
 import { parseScopeApiTable, routeKey } from "./check-scope-lib.ts";
-import { ROUTES } from "../../../system/routes.ts";
+import { ROUTES } from "#system/routes.ts";
 
 const SCOPE_PATH = "shared/prompt/boundary.md";
 

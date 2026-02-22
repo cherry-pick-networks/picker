@@ -1,7 +1,7 @@
 /** KV under prefix ["kv"]; logical key part only (e.g. "foo"). */
-import { getKv } from "../../shared/infra/kv.client.ts";
+import { getKv } from "#shared/infra/kv.client.ts";
 
-export { getKv } from "../../shared/infra/kv.client.ts";
+export { getKv } from "#shared/infra/kv.client.ts";
 
 function toLogicalKey(keyParts: string[]): string | null {
   if (keyParts.length < 2 || keyParts[0] !== "kv") return null;

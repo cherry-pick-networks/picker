@@ -9,7 +9,7 @@ import {
 } from "./content-prompt.types.ts";
 
 export type { WorksheetContext };
-import { getProfile } from "../actor/profile.service.ts";
+import { getProfile } from "#system/actor/profile.service.ts";
 import {
   DEFAULT_GOAL_ACCURACY,
   DEFAULT_TEMPLATE,

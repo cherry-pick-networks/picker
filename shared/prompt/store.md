@@ -394,12 +394,11 @@ of the deliverable; context meaning belongs in Prefix, not Suffix. Forbidden in
 Suffix: cache (use store, storage), configuration (use config). Artifact
 (concrete deliverable shape): schema, mapping, store, storage, event, endpoint,
 response, middleware, format, exception, config, pipeline, metrics, trace,
-transfer, client.
-Policy (principle, constraint, or policy): boundary, constraint, contract,
-principle, safety, validation, compliance, isolation. Meta (documentation, test,
-or classification): test, documentation, naming, style, log, types, language,
-profile, assessment, reference, plan, handoff, strategy, usage, tips, overview,
-goal.
+transfer, client. Policy (principle, constraint, or policy): boundary,
+constraint, contract, principle, safety, validation, compliance, isolation. Meta
+(documentation, test, or classification): test, documentation, naming, style,
+log, types, language, profile, assessment, reference, plan, handoff, strategy,
+usage, tips, overview, goal.
 
 Examples: payment-infra-redis-config (Context + Layer + Entity + Artifact);
 security-application-guard-policy (Context + Layer + Actor + Policy);
@@ -599,9 +598,8 @@ it is a try/catch, switch, or block-bodied if (complex statement exemption).
 Line length in body is not enforced by this rule; use the formatter and
 line-length check instead. Validation: line-length and file-length by
 shared/prompt/scripts/check-line-length.ts (which applies the test-file
-exception above); pre-commit and CI run this check. Function body by
-`deno lint` (plugin
-function-length/function-length in
+exception above); pre-commit and CI run this check. Function body by `deno lint`
+(plugin function-length/function-length in
 shared/prompt/scripts/function-length-lint-plugin.ts, counts statements in
 body). To ignore per function: `// function-length-ignore` on the line above; or
 `// function-length-ignore-file` at top of file. Async: when the body only

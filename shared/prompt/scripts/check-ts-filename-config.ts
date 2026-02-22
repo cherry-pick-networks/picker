@@ -36,7 +36,7 @@ export const SYSTEM_INFIX = new Set([
   "app",
 ]);
 
-/** Allowed filename suffix for [name].[suffix].ts (reference.md + store.md §E). */
+/** Allowed suffix for [name].[suffix].ts (reference.md, store.md §E). */
 export const ALLOWED_SUFFIX = new Set([
   "endpoint",
   "service",

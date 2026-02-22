@@ -29,8 +29,14 @@ export function parseCrossDomainEdge(
   fromDomain: string,
   domains: string[],
 ): string | null {
-  if (!importPath.startsWith("../")) return null;
-  const rest = importPath.slice(3);
+  let rest: string;
+  if (importPath.startsWith("#system/")) {
+    rest = importPath.slice(8);
+  } else if (importPath.startsWith("../")) {
+    rest = importPath.slice(3);
+  } else {
+    return null;
+  }
   const nextSlash = rest.indexOf("/");
   const toDomain = nextSlash === -1 ? rest : rest.slice(0, nextSlash);
   if (toDomain === fromDomain || !domains.includes(toDomain)) return null;

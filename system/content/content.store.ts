@@ -1,6 +1,6 @@
 /** Content storage in Deno KV. Keys: ["content","item"|"worksheet", id]. */
 
-import { getKv } from "../../shared/infra/kv.client.ts";
+import { getKv } from "#shared/infra/kv.client.ts";
 
 const ITEM_PREFIX = ["content", "item"] as const;
 const WORKSHEET_PREFIX = ["content", "worksheet"] as const;

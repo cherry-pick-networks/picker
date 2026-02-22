@@ -2,7 +2,7 @@
  * Log artifacts under system/audit/ (e2e-runs.toml); not served.
  */
 
-import { readTomlFile, writeTomlFile } from "../record/toml.service.ts";
+import { readTomlFile, writeTomlFile } from "#system/record/toml.service.ts";
 
 const LOG_DIR = new URL(".", import.meta.url).pathname;
 const E2E_RUNS_PATH = `${LOG_DIR}e2e-runs.toml`;

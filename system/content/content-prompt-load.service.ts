@@ -1,4 +1,4 @@
-import { getScriptContent } from "../script/scripts.service.ts";
+import { getScriptContent } from "#system/script/scripts.service.ts";
 
 export const DEFAULT_GOAL_ACCURACY = "85%";
 export const DEFAULT_VOCABULARY = "Fry Sight Words + attached list";

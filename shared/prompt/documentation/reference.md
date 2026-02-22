@@ -40,7 +40,7 @@ with store.md §E/§F and modular monolith.
 | schema     | Zod schemas and domain types          | Artifact |
 | types      | Type-only definitions                 | Meta     |
 | transfer   | Request/response or DTO types         | Artifact |
-| client     | Client wrapper (e.g. KV, API)          | Artifact |
+| client     | Client wrapper (e.g. KV, API)         | Artifact |
 | validation | Policy/verification (e.g. Governance) | Policy   |
 | log        | Log artifact storage                  | Meta     |
 | config     | Wiring (e.g. route registration)      | Artifact |
@@ -79,12 +79,12 @@ system/
 
 ### Data file locations (TOML)
 
-| Path | Purpose |
-| ---- | ------- |
-| `shared/record/reference/extracted-data-index.toml` | Extracted-data index (UUID → entry) |
-| `shared/record/reference/identity-index.toml` | Identity index (UUID → entry) |
-| `shared/record/store/<uuid>.toml` | Single record (UUID v7) |
-| `system/audit/e2e-runs.toml` | E2E run log (schemaVersion + runs[]) |
+| Path                                                | Purpose                              |
+| --------------------------------------------------- | ------------------------------------ |
+| `shared/record/reference/extracted-data-index.toml` | Extracted-data index (UUID → entry)  |
+| `shared/record/reference/identity-index.toml`       | Identity index (UUID → entry)        |
+| `shared/record/store/<uuid>.toml`                   | Single record (UUID v7)              |
+| `system/audit/e2e-runs.toml`                        | E2E run log (schemaVersion + runs[]) |
 
 ### Modular monolith rules
 

@@ -4,12 +4,12 @@
  */
 
 import type { Hono } from "hono";
-import * as content from "../content/content.endpoint.ts";
-import * as data from "../record/data.endpoint.ts";
+import * as content from "#system/content/content.endpoint.ts";
+import * as data from "#system/record/data.endpoint.ts";
 import * as home from "./home.config.ts";
-import * as kv from "../kv/kv.endpoint.ts";
-import * as profile from "../actor/profile.endpoint.ts";
-import * as source from "../source/source.endpoint.ts";
+import * as kv from "#system/kv/kv.endpoint.ts";
+import * as profile from "#system/actor/profile.endpoint.ts";
+import * as source from "#system/source/source.endpoint.ts";
 
 function registerHomeAndKv(app: Hono) {
   app.get("/", home.getHome);

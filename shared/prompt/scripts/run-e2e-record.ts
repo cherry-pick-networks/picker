@@ -4,7 +4,7 @@
  * Or: deno task test:e2e-record
  */
 
-import { appendE2eRun } from "../../../system/audit/audit.log.ts";
+import { appendE2eRun } from "#system/audit/audit.log.ts";
 
 const E2E_TEST_FILE = "tests/system/main_e2e_test.ts";
 

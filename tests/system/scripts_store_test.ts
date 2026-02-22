@@ -1,5 +1,5 @@
 import { assertEquals } from "@std/assert";
-import { writeScript } from "../../system/script/scripts.store.ts";
+import { writeScript } from "#system/script/scripts.store.ts";
 
 Deno.test("writeScript rejects path escape with 403", async () => {
   const result = await writeScript("x/../../../other", "content");

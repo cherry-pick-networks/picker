@@ -6,8 +6,8 @@ import { generate as uuidV7 } from "@std/uuid/v7";
 import type {
   ExtractedIndex,
   ExtractedIndexEntry,
-} from "../../../system/record/data.store.ts";
-import { writeTomlFile } from "../../../system/record/toml.service.ts";
+} from "#system/record/data.store.ts";
+import { writeTomlFile } from "#system/record/toml.service.ts";
 import {
   deriveExtractedName,
   deriveType,

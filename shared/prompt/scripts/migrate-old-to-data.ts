@@ -7,7 +7,7 @@
 import type {
   ExtractedIndex,
   IdentityIndex,
-} from "../../../system/record/data.store.ts";
+} from "#system/record/data.store.ts";
 import {
   getExtractedDir,
   getExtractedIndexPath,
@@ -15,8 +15,8 @@ import {
   getIdentityIndexPath,
   readExtractedIndex,
   readIdentityIndex,
-} from "../../../system/record/data.store.ts";
-import { writeTomlFile } from "../../../system/record/toml.service.ts";
+} from "#system/record/data.store.ts";
+import { writeTomlFile } from "#system/record/toml.service.ts";
 import { ensureDir } from "./migrate-old-to-data-helpers.ts";
 import {
   runExtractedMigration,

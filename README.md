@@ -16,6 +16,7 @@ uses `main.ts`.
 Domain entry points only; details are in each domain's README.
 
 - **Shared**: [shared/README.md](shared/README.md)
+- **System**: [system/README.md](system/README.md)
 
 ## Contributing
 
