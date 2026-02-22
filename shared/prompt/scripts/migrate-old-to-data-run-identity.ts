@@ -7,6 +7,7 @@ import type {
   IdentityIndex,
   IdentityIndexEntry,
 } from "../../../system/record/data.store.ts";
+import { writeTomlFile } from "../../../system/record/toml.service.ts";
 import {
   deriveIdentityName,
   isMeaninglessFilename,
@@ -39,10 +40,11 @@ async function writeFileAndBuildEntry(
   parsed: unknown,
   identityDir: string,
   uuid: string,
-  raw: string,
+  _raw: string,
   now: string,
 ): Promise<IdentityIndexEntry> {
-  await Deno.writeTextFile(`${identityDir}${uuid}.json`, raw);
+  const path = `${identityDir}${uuid}.toml`;
+  await writeTomlFile(path, parsed as Record<string, unknown>);
   return buildEntry(rel, parsed, kindFromRel(rel), now);
 }
 

@@ -1,3 +1,8 @@
+---
+title: boundary
+description: In-scope modules, API surface, and infrastructure.
+---
+
 # Scope
 
 Single source of truth for in-scope modules, API surface, and infrastructure.
@@ -24,7 +29,7 @@ Use that document for AI direction and scope decisions.
 | **system/script/**        | Scripts store, AST apply, Governance: endpoint, service, store, validation.                                                                                       |
 | **system/record/**        | Record store (extracted/identity): endpoint, store.                                                                                                               |
 | **system/kv/**            | Generic Deno KV: endpoint, store.                                                                                                                                 |
-| **system/audit/**         | Log artifact storage (e.g. e2e-runs.json in same dir as audit.log.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added. |
+| **system/audit/**         | Log artifact storage (e.g. e2e-runs.toml in same dir as audit.log.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added. |
 | **shared/runtime/store/** | Target path for AST-based self-edit; read and write only via Governance-verified flow.                                                                            |
 | **shared/infra/**         | Shared infrastructure. KV client (`getKv()`) only; no business logic.                                                                                             |
 
@@ -88,10 +93,10 @@ Use that document for AI direction and scope decisions.
   worksheets key `["content", "worksheet", id]`), `source` (source records key
   `["source", id]`).
 - **File-based data** — under `shared/record/`: suffix `store` (payload) or
-  `reference` (index). Store: `shared/record/store/*.json`. Indexes:
-  `shared/record/reference/extracted-data-index.json`,
-  `shared/record/reference/identity-index.json`. Populated by migration from
-  `.old`; read/write via system/record/store/data.ts.
+  `reference` (index). Store: `shared/record/store/*.toml`. Indexes:
+  `shared/record/reference/extracted-data-index.toml`,
+  `shared/record/reference/identity-index.toml`. Populated by migration from
+  `.old`; read/write via system/record/data.store.ts.
 - **Worksheet prompt templates** — read-only from `shared/runtime/store/` (e.g.
   docs/contract/); Governance-verified read.
 - **Change audit log** — stored under `system/audit/log/` (e.g. JSON file(s));

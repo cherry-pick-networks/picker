@@ -1,9 +1,11 @@
 /** File-based UUID v7 storage under shared/record/ (store/, reference/). */
 
+import { readTomlFile } from "./toml.service.ts";
+
 const DATA_DIR = new URL("../../../shared/record/", import.meta.url).pathname;
 const RECORD_STORE = `${DATA_DIR}store/`;
-const EXTRACTED_INDEX_PATH = `${DATA_DIR}reference/extracted-data-index.json`;
-const IDENTITY_INDEX_PATH = `${DATA_DIR}reference/identity-index.json`;
+const EXTRACTED_INDEX_PATH = `${DATA_DIR}reference/extracted-data-index.toml`;
+const IDENTITY_INDEX_PATH = `${DATA_DIR}reference/identity-index.toml`;
 
 export interface ExtractedIndexEntry {
   type: string;
@@ -48,32 +50,24 @@ export function getIdentityIndexPath(): string {
   return out;
 }
 
-const readOne = (path: string): Promise<string | null> =>
-  Deno.readTextFile(path).then((s) => s).catch(() => null);
-
-async function readTextOrNull(path: string): Promise<string | null> {
-  const raw = await readOne(path);
-  return raw;
-}
+const recordPath = (id: string): string => `${RECORD_STORE}${id}.toml`;
 
 export async function readExtractedIndex(): Promise<ExtractedIndex> {
-  const raw = await readTextOrNull(EXTRACTED_INDEX_PATH);
-  return raw !== null ? (JSON.parse(raw) as ExtractedIndex) : {};
+  const data = await readTomlFile<ExtractedIndex>(EXTRACTED_INDEX_PATH);
+  return data ?? {};
 }
 
 export async function readIdentityIndex(): Promise<IdentityIndex> {
-  const raw = await readTextOrNull(IDENTITY_INDEX_PATH);
-  return raw !== null ? (JSON.parse(raw) as IdentityIndex) : {};
+  const data = await readTomlFile<IdentityIndex>(IDENTITY_INDEX_PATH);
+  return data ?? {};
 }
 
-const recordPath = (id: string): string => `${RECORD_STORE}${id}.json`;
-
 export async function readExtractedFile(id: string): Promise<unknown | null> {
-  const raw = await readTextOrNull(recordPath(id));
-  return raw !== null ? (JSON.parse(raw) as unknown) : null;
+  const data = await readTomlFile<unknown>(recordPath(id));
+  return data ?? null;
 }
 
 export async function readIdentityFile(id: string): Promise<unknown | null> {
-  const raw = await readTextOrNull(recordPath(id));
-  return raw !== null ? (JSON.parse(raw) as unknown) : null;
+  const data = await readTomlFile<unknown>(recordPath(id));
+  return data ?? null;
 }

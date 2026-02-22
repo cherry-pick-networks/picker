@@ -7,6 +7,7 @@ import type {
   ExtractedIndex,
   ExtractedIndexEntry,
 } from "../../../system/record/data.store.ts";
+import { writeTomlFile } from "../../../system/record/toml.service.ts";
 import {
   deriveExtractedName,
   deriveType,
@@ -40,10 +41,11 @@ async function writeFileAndBuildEntry(
   parsed: unknown,
   extractedDir: string,
   uuid: string,
-  raw: string,
+  _raw: string,
   now: string,
 ): Promise<ExtractedIndexEntry> {
-  await Deno.writeTextFile(`${extractedDir}${uuid}.json`, raw);
+  const path = `${extractedDir}${uuid}.toml`;
+  await writeTomlFile(path, parsed as Record<string, unknown>);
   return buildEntry(rel, parsed, deriveType(rel), now);
 }
 

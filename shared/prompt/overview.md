@@ -1,3 +1,8 @@
+---
+title: overview
+description: One-page summary for onboarding and daily use.
+---
+
 # Project context (human-readable)
 
 One-page summary for onboarding and daily use.\

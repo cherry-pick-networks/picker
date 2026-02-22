@@ -16,6 +16,7 @@ import {
   readExtractedIndex,
   readIdentityIndex,
 } from "../../../system/record/data.store.ts";
+import { writeTomlFile } from "../../../system/record/toml.service.ts";
 import { ensureDir } from "./migrate-old-to-data-helpers.ts";
 import {
   runExtractedMigration,
@@ -57,13 +58,13 @@ async function main(): Promise<void> {
   );
   await runIdentityMigration(OLD_DIR, identityDir, identityIndex, now);
 
-  await Deno.writeTextFile(
+  await writeTomlFile(
     getExtractedIndexPath(),
-    JSON.stringify(extractedIndex, null, 2),
+    extractedIndex as Record<string, unknown>,
   );
-  await Deno.writeTextFile(
+  await writeTomlFile(
     getIdentityIndexPath(),
-    JSON.stringify(identityIndex, null, 2),
+    identityIndex as Record<string, unknown>,
   );
 
   console.log("Migration done.");

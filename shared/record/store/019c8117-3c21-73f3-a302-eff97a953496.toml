@@ -1,0 +1,51 @@
+book_id = "grammar-link-l1"
+type = "grammar"
+title = "LINK Grammar L1"
+
+[[units]]
+unit_id = "ch1"
+main_theme = "LINK Grammar L1 (Ch1)"
+action_plan = "Ch1 Be동사"
+tip = ""
+
+[[units]]
+unit_id = "ch2"
+main_theme = "LINK Grammar L1 (Ch2)"
+action_plan = "Ch2 일반동사"
+tip = ""
+
+[[units]]
+unit_id = "ch3"
+main_theme = "LINK Grammar L1 (Ch3)"
+action_plan = "Ch3 명사와 관사"
+tip = ""
+
+[[units]]
+unit_id = "ch4"
+main_theme = "LINK Grammar L1 (Ch4)"
+action_plan = "Ch4 대명사"
+tip = ""
+
+[[units]]
+unit_id = "ch5"
+main_theme = "LINK Grammar L1 (Ch5)"
+action_plan = "Ch5 시제"
+tip = ""
+
+[[units]]
+unit_id = "ch6"
+main_theme = "LINK Grammar L1 (Ch6)"
+action_plan = "Ch6 조동사"
+tip = ""
+
+[[units]]
+unit_id = "ch7"
+main_theme = "LINK Grammar L1 (Ch7)"
+action_plan = "Ch7 To부정사"
+tip = ""
+
+[[units]]
+unit_id = "ch8"
+main_theme = "LINK Grammar L1 (Ch8)"
+action_plan = "Ch8 동명사"
+tip = ""

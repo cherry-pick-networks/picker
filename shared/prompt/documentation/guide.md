@@ -1,3 +1,8 @@
+---
+title: guide
+description: Tips and usage; reference only.
+---
+
 # Tips and usage (reference only)
 
 Optional tooling and workflows. Reference only; use if the project adopts them.\

@@ -1,7 +1,9 @@
-/** Log artifacts under system/audit/ (e.g. e2e-runs.json); written by tests or tooling, not served. */
+/** Log artifacts under system/audit/ (e2e-runs.toml); not served. */
+
+import { readTomlFile, writeTomlFile } from "../record/toml.service.ts";
 
 const LOG_DIR = new URL(".", import.meta.url).pathname;
-const E2E_RUNS_PATH = `${LOG_DIR}e2e-runs.json`;
+const E2E_RUNS_PATH = `${LOG_DIR}e2e-runs.toml`;
 const MAX_RUNS = 20;
 
 export interface E2ERunSummary {
@@ -41,22 +43,9 @@ function normalizeRuns(data: E2ERunsFile): E2ERunsFile {
   return data;
 }
 
-function parseE2eRunsRaw(raw: string): E2ERunsFile {
-  const data = JSON.parse(raw) as E2ERunsFile;
-  return normalizeRuns(data);
-}
-
-const readE2eRunsFile = (): Promise<string | null> =>
-  Deno.readTextFile(E2E_RUNS_PATH).then((s) => s).catch(() => null);
-
-async function readE2eRunsRaw(): Promise<string | null> {
-  const raw = await readE2eRunsFile();
-  return raw;
-}
-
 export async function readE2eRuns(): Promise<E2ERunsFile> {
-  const raw = await readE2eRunsRaw();
-  return raw !== null ? parseE2eRunsRaw(raw) : { schemaVersion: 1, runs: [] };
+  const data = await readTomlFile<E2ERunsFile>(E2E_RUNS_PATH);
+  return data !== null ? normalizeRuns(data) : { schemaVersion: 1, runs: [] };
 }
 
 // function-length-ignore
@@ -70,5 +59,5 @@ export async function appendE2eRun(entry: E2ERunEntry): Promise<void> {
   const data = await readE2eRuns();
   data.runs.push(entry);
   trimRunsToMax(data);
-  await Deno.writeTextFile(E2E_RUNS_PATH, JSON.stringify(data, null, 2));
+  await writeTomlFile(E2E_RUNS_PATH, data as Record<string, unknown>);
 }

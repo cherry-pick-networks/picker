@@ -1,0 +1,51 @@
+book_id = "reading-1316-l1"
+type = "discourse"
+title = "1316 Reading L1"
+
+[[units]]
+unit_id = "sec1"
+main_theme = "1316 Reading L1 (Sec1)"
+action_plan = "Section 1"
+tip = ""
+
+[[units]]
+unit_id = "sec2"
+main_theme = "1316 Reading L1 (Sec2)"
+action_plan = "Section 2"
+tip = ""
+
+[[units]]
+unit_id = "sec3"
+main_theme = "1316 Reading L1 (Sec3)"
+action_plan = "Section 3"
+tip = ""
+
+[[units]]
+unit_id = "sec4"
+main_theme = "1316 Reading L1 (Sec4)"
+action_plan = "Section 4"
+tip = ""
+
+[[units]]
+unit_id = "sec5"
+main_theme = "1316 Reading L1 (Sec5)"
+action_plan = "Section 5"
+tip = ""
+
+[[units]]
+unit_id = "sec6"
+main_theme = "1316 Reading L1 (Sec6)"
+action_plan = "Section 6"
+tip = ""
+
+[[units]]
+unit_id = "sec7"
+main_theme = "1316 Reading L1 (Sec7)"
+action_plan = "Section 7"
+tip = ""
+
+[[units]]
+unit_id = "sec8"
+main_theme = "1316 Reading L1 (Sec8)"
+action_plan = "Section 8"
+tip = ""

@@ -1,3 +1,8 @@
+---
+title: policy
+description: Cursor Rules (mdc) management policy.
+---
+
 # Cursor Rules (mdc) management policy
 
 ## Purpose
@@ -11,7 +16,7 @@
 
 See `.cursor/rules/global-agent-policy.mdc` and
 `.cursor/rules/global-directory-boundary.mdc` for the current list of files and
-which § each applies. Rule definitions: store.md Part B (§A–§S).
+which § each applies. Rule definitions: store.md Part B (§A���§S).
 
 ## Naming
 

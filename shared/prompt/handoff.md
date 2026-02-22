@@ -1,3 +1,8 @@
+---
+title: handoff
+description: Context for switching agent or starting a new session.
+---
+
 # Handoff
 
 Use this file when switching agent or starting a new session on the same task.

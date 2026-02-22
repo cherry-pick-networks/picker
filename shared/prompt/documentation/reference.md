@@ -1,3 +1,8 @@
+---
+title: reference
+description: Project reference for structure, naming, and migration.
+---
+
 # Reference
 
 Project reference for structure, naming, and migration.

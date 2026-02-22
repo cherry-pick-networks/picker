@@ -1,3 +1,8 @@
+---
+title: store
+description: Single source of truth for project description, structure, conventions, and workflow.
+---
+
 # Project context (AI / tooling)
 
 Single source of truth for project description, structure, conventions, and
@@ -32,6 +37,9 @@ tool-specific configs.
   .cache, temp, tests (confirm per repo)
 - Do not add a fourth tier. Do not use forbidden segments (e.g. core in Context;
   cache as Suffix).
+- **Data and document format**: Data files use TOML (`.toml`); documents use
+  Markdown with optional YAML front matter (`.md`, `.mdc`). See
+  `shared/prompt/plan-data-document-format.md` for paths and migration.
 
 ---
 

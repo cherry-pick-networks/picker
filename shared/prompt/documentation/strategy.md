@@ -1,3 +1,8 @@
+---
+title: strategy
+description: Data migration strategy and shared single source.
+---
+
 # Data migration strategy — shared single source
 
 ## Goal

@@ -1,0 +1,1257 @@
+grade = 10
+
+[[slots]]
+sequence_index = 1
+track = "Reading"
+main_theme = "Atmosphere & Mood"
+action_plan = "Type 18-19 (Purpose/Mood): Analyzing lexical indicators of urgency vs. calm. Identifying the 'I am writing to' anchor in formal correspondence."
+tip = "KICE Logic: Purpose is usually hidden in the final 1/3 of the text. Look for performative verbs like \"request,\" \"urge,\" or \"invite.\""
+concept_ids = []
+
+[[slots]]
+sequence_index = 2
+track = "Skills"
+main_theme = "FSRS & Listening"
+action_plan = "Foundation Setup: FSRS Anki setup for 'High School Foundation 1500'. 1.0x dictation of G1 March Mock Listening. Focus on 'Time/Price' precision."
+tip = "Skill: Capturing the 'Content Words' (Nouns/Verbs) while ignoring 'Function Words' (Prepositions/Articles) during rapid speech."
+concept_ids = []
+
+[[slots]]
+sequence_index = 3
+track = "Grammar"
+main_theme = "Intuition: Present"
+action_plan = "EGIU U1-4 (Present Simple vs Cont.): Analyzing 'Always True' (Scientific Fact) vs 'Temporary Action' in descriptive passages."
+tip = "EGIU Tip: Simple Present (V/−s) creates a 'Fact' anchor. Continuous (be −ing) signals a 'Specific Event' used as an example or mood setter."
+concept_ids = []
+
+[[slots]]
+sequence_index = 4
+track = "Reading"
+main_theme = "The Claim"
+action_plan = "Type 20 (Author's Claim): Locating 'Modal Clusters' (should, must, need to). Differentiating between 'Example' and 'Argument'."
+tip = "KICE Logic: Claim sentences often follow \"I think,\" \"It is important,\" or \"The point is.\" Everything else is supporting evidence."
+concept_ids = []
+
+[[slots]]
+sequence_index = 5
+track = "Skills"
+main_theme = "Logic Mapping"
+action_plan = "Micro-Structure Drill: Identifying the 'Definition -> Example' flow in 10 G1 level passages. Identifying 'Synonym Links' between sentences."
+tip = "Skill: Drawing a 'Logic Flowchart' (Topic -> Development -> Rebuttal -> Conclusion) for every paragraph to visualize information weight."
+concept_ids = []
+
+[[slots]]
+sequence_index = 6
+track = "Grammar"
+main_theme = "Intuition: Past"
+action_plan = "EGIU U5-6 (Past Simple vs Cont.): Understanding 'Background vs Event' logic. Using Past Continuous to set the stage for a past narrative."
+tip = "EGIU Tip: When 'When/While' clauses appear, the 'Simple Past' is the main plot point, and the 'Continuous' is the atmospheric background."
+concept_ids = []
+
+[[slots]]
+sequence_index = 7
+track = "Reading"
+main_theme = "Story Sequencing"
+action_plan = "Type 43-45 (Long Passage): Mastering 'Time Adverbs' (Meanwhile, Afterwards). Tracking Character A vs Character B pronoun shifts across paragraphs."
+tip = "KICE Logic: Sequencing is a game of 'Pointers'. A noun in Paragraph (B) must have its 'Determiner' (a/an) in Paragraph (A)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 8
+track = "Skills"
+main_theme = "Narrative Writing"
+action_plan = "Past Tense Synthesis: Writing 5-sentence summaries of G1 narratives. Practice using 'Sequence Markers' (First, Then, Finally) for cohesion."
+tip = "Skill: Practice using 'Relational Nouns' (Correlation, Proportion, Inverse) to describe the relationship between two variables."
+concept_ids = []
+
+[[slots]]
+sequence_index = 9
+track = "Grammar"
+main_theme = "Intuition: Perfect"
+action_plan = "EGIU U7-14 (Present Perfect 1): Past events with Present Impact. Distinguishing 'Experience' from 'Result' in dialogue-heavy texts."
+tip = "EGIU Tip: Present Perfect (have+p.p) creates a bridge between past data and the author's current claim. In Type 21, it signals 'State of Art'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 10
+track = "Reading"
+main_theme = "Implied Meaning"
+action_plan = "Type 21 (Underlined Meaning): Decoding metaphorical phrases. Practicing 'Literal-to-Contextual' mapping using the main theme."
+tip = "KICE Logic: Metaphors in KICE are always defined within the 2 sentences preceding or following the underline. Never use outside common sense."
+concept_ids = []
+
+[[slots]]
+sequence_index = 11
+track = "Skills"
+main_theme = "Dictation"
+action_plan = "Dialogue Analysis: Capturing 'Conversational Signposts' (Guess what, I was wondering if) in G1 Mock Listening (Type 13-15)."
+tip = "Skill: Learning to 'Filter' filler words and focusing on the logical transition markers to stay ahead of the speaker."
+concept_ids = []
+
+[[slots]]
+sequence_index = 12
+track = "Grammar"
+main_theme = "Perfect vs Past"
+action_plan = "EGIU U11-18 (Perfect vs Past Simple): Identifying 'Explicit Time Anchors' (yesterday, since 2010). Analyzing why certain verbs prefer 'Past'."
+tip = "EGIU Tip: If a specific time is mentioned (e.g., \"in 1999\"), Present Perfect is ILLEGAL. This is the #1 'Killer' grammar point in G1 school exams."
+concept_ids = []
+
+[[slots]]
+sequence_index = 13
+track = "Reading"
+main_theme = "Main Idea Logic"
+action_plan = "Type 22 (Gist): Distinguishing 'Main Theme' from 'Sub-topic'. Eliminating options that only mention one specific example."
+tip = "KICE Logic: The 'Correct' title often contains the 'Conflict' (e.g., \"Privacy vs. Security\") rather than just one side of the argument."
+concept_ids = []
+
+[[slots]]
+sequence_index = 14
+track = "Skills"
+main_theme = "FSRS Review"
+action_plan = "Monthly Cumulative Blitz: G1 March Mock simulation (Full). Analyzing error patterns (Vocabulary vs Syntax vs Logic)."
+tip = "Skill: FSRS Reset - identifying words that were 'Hard' and moving them to a daily 'Intensive Review' list for the next week."
+concept_ids = []
+
+[[slots]]
+sequence_index = 15
+track = "Grammar"
+main_theme = "Nuance: Future"
+action_plan = "EGIU U19-25 (Will vs Be going to): Predicting outcomes vs reporting planned experiments. Present Continuous for the 'Fixed Future'."
+tip = "EGIU Tip: 'Will' is a 'Spontaneous Decision' or 'Prediction'. 'Be going to' is a 'Pre-made Plan'. KICE uses 'Will' for hypothetical results."
+concept_ids = []
+
+[[slots]]
+sequence_index = 16
+track = "Reading"
+main_theme = "Topic & Title"
+action_plan = "Type 23-24 (Topic/Title): Mastering 'Abstracting' specific examples. Finding the 'Keyword Cluster' that appears throughout the text."
+tip = "KICE Logic: Titles often use a 'Hook' (e.g., \"The Paradox of Choice\") to summarize the tension between two variables in the text."
+concept_ids = []
+
+[[slots]]
+sequence_index = 17
+track = "Skills"
+main_theme = "Slash Reading"
+action_plan = "Syntax Drill: Breaking down 2-line sentences into Subject/Verb/Object. Identifying 'Hidden Subjects' in participial phrases."
+tip = "Skill: Using 'Slash Reading' to prevent 'Re-reading' (Regression). Train the eye to move only forward, processing info in chunks."
+concept_ids = []
+
+[[slots]]
+sequence_index = 18
+track = "Grammar"
+main_theme = "Nuance: Modals 1"
+action_plan = "EGIU U26-30 (Can/Could/May/Might): The 'Scale of Probability'. Analyzing how 'Might' functions to soften scientific claims."
+tip = "**AGIU Tip: Modals of deduction (Must be,Can′t be) are the strongest indicators of the author's stance in 'Blank' or 'Main Idea' types."
+concept_ids = []
+
+[[slots]]
+sequence_index = 19
+track = "Reading"
+main_theme = "Paragraph Logic"
+action_plan = "Type 35 (Unrelated Sentence): Spotting the 'Keyword Trap'. Sentences that use the right words but change the 'Topic Direction'."
+tip = "KICE Logic: A sentence can have all the right keywords but change the 'Causal Direction' (A causes B vs B causes A). That's the one to remove."
+concept_ids = []
+
+[[slots]]
+sequence_index = 20
+track = "Skills"
+main_theme = "Note-Taking"
+action_plan = "Logical Relationship Symbols: Developing a shorthand (e.g., ↑ for increase, → for cause, = for contrast) for quick margin notes."
+tip = "Skill: Margin notes should take <2 seconds. They act as a 'Mental Anchor' so you don't lose the thread in long paragraphs."
+concept_ids = []
+
+[[slots]]
+sequence_index = 21
+track = "Grammar"
+main_theme = "Nuance: Modals 2"
+action_plan = "EGIU U31-37 (Should/Must/Had better): The logic of 'Necessity'. Identifying the 'Problem-Solution' structure via modal verbs."
+tip = "EGIU Tip: 'Should' doesn't always mean advice; in KICE, it can mean 'Expectation' (e.g., \"The result should be...\"), signaling a hypothesis."
+concept_ids = []
+
+[[slots]]
+sequence_index = 22
+track = "Reading"
+main_theme = "Information Flow"
+action_plan = "Type 36 (Ordering - Intro): Box-to-Head logic. Identifying 'Pronoun Chains' (A scientist → He → This researcher)."
+tip = "KICE Logic: Look for 'Lexical Chains'—repeating themes with different words (e.g., The scientist → The researcher → He)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 23
+track = "Skills"
+main_theme = "Paraphrasing"
+action_plan = "Synonym Substitution Drill: Replacing 10 keywords in a G1 passage with academic synonyms. Training the brain for 'Blank' options."
+tip = "Skill: Train the brain to see the 'Universal Concept' rather than the 'Specific Word'. This is the key to solving 3점 (3-point) blanks."
+concept_ids = []
+
+[[slots]]
+sequence_index = 24
+track = "Grammar"
+main_theme = "Conditionals"
+action_plan = "EGIU U38-41 (If & Wish): Intro to 'Unreal' logic. \"If I had X, I would do Y.\" (Imagining a solution to a current problem)."
+tip = "**AGIU Tip: Conditionals are often 'Hidden'. Phrases like \"Without X\" or \"But for Y\" are 100% equivalent to \"If it were not for...\"."
+concept_ids = []
+
+[[slots]]
+sequence_index = 25
+track = "Reading"
+main_theme = "Insertion Logic"
+action_plan = "Type 38 (Insertion - Intro): Finding the 'Gap'. Looking for the sentence where 'B' suddenly follows 'A' without a bridge."
+tip = "**KICE Logic: Look for 'Specific Determiners' (The/Such/These) in the inserted sentence. They must point to something in the previous sentence."
+concept_ids = []
+
+[[slots]]
+sequence_index = 26
+track = "Skills"
+main_theme = "Time Attack"
+action_plan = "March Mock Simulation: 70-min trial run. Identifying 'Time Eaters' (long grammar questions). Focus on 'Strategic Skipping'."
+tip = "Skill: Identifying 'Black Hole' questions (ones that suck time but don't yield answers). Mark them and move on to 'easy points' first."
+concept_ids = []
+
+[[slots]]
+sequence_index = 27
+track = "Grammar"
+main_theme = "Passive Voice 1"
+action_plan = "EGIU U42-44 (Basic Passive): Focus on the 'Event' rather than the 'Actor'. Converting active textbook sentences to passive."
+tip = "**AGIU Tip: In scientific KICE texts, the 'Agent' is often omitted to maintain objectivity. \"It is assumed that...\" hides the 'Who'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 28
+track = "Reading"
+main_theme = "March Mock Clinic"
+action_plan = "Exam Review: Deep analysis of the G1 March Mock. Mapping missed questions back to specific EGIU units."
+tip = "**KICE Logic: The March Mock is the 'Baseline'. It determines your 'Core Speed' before high school academic density increases."
+concept_ids = []
+
+[[slots]]
+sequence_index = 29
+track = "Skills"
+main_theme = "GPA Block 1-1"
+action_plan = "Textbook Unit 1 Analysis: Slash Reading school textbooks. Identifying 'Seo-sul-hyung' (Descriptive) grammar candidates."
+tip = "**Skill: Predicting 'Transformation' questions (e.g., turning an Active sentence into Passive or a Clause into a Participle)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 30
+track = "Grammar"
+main_theme = "Passive Voice 2"
+action_plan = "EGIU U45-46 (Advanced Passive): \"It is said that...\" / \"He is expected to...\". Understanding 'General Opinion' structures."
+tip = "EGIU Tip: Passive Reporting (It is believed that...) is a standard way to introduce a 'Common Belief' before the author refutes it."
+concept_ids = []
+
+[[slots]]
+sequence_index = 31
+track = "Reading"
+main_theme = "EBS Mini Logic"
+action_plan = "EBS G1 Supplementary: Applying 'Box-to-Head' logic to non-mock passages. Mastering 'Cohesion' indicators (The, Such)."
+tip = "**KICE Logic: EBS 연계 (Linking) is not about memorizing the text, but the 'Logic Flow'. KICE will change the vocabulary but keep the flow."
+concept_ids = []
+
+[[slots]]
+sequence_index = 32
+track = "Skills"
+main_theme = "GPA Block 1-2"
+action_plan = "Vocabulary & Grammar: Mastering 'Textbook Collocations'. Identifying the 'Top 5 Killer Sentences' for midterm 영작."
+tip = "**Skill: Writing 'Summary Sentences' for each EBS paragraph to master the 'Topic' and 'Keywords' simultaneously for Naesin."
+concept_ids = []
+
+[[slots]]
+sequence_index = 33
+track = "Grammar"
+main_theme = "Reported Speech"
+action_plan = "EGIU U47-52 (Reporting): The logic of \"backshifting\" tenses. Analyzing how 'say' vs 'tell' works in formal dialogue."
+tip = "**AGIU Tip: 'Suggest' + 'Should' (often omitted) indicates a 'Proposition', which is almost always the 'Main Idea' of the passage."
+concept_ids = []
+
+[[slots]]
+sequence_index = 34
+track = "Reading"
+main_theme = "Summary Strategy"
+action_plan = "Type 40 (Summary): Identifying 'Factor A' and 'Result B'. Condensing a 150-word text into a 20-word logic box."
+tip = "**KICE Logic: The summary box is a 'Compressed Version' of the logic. If the text says \"higher X leads to lower Y\", look for 'Inversely' in the box."
+concept_ids = []
+
+[[slots]]
+sequence_index = 35
+track = "Skills"
+main_theme = "GPA Block 1-3"
+action_plan = "Previous Paper (Jokbo): Solving 3 years of school midterms. Identifying 'School-Specific' grammar traps (e.g., plurals, articles)."
+tip = "**Skill: Mastering 'Substitution' (One, That, Do so) within EBS texts. Identifying exactly what each substitute refers to."
+concept_ids = []
+
+[[slots]]
+sequence_index = 36
+track = "Grammar"
+main_theme = "Questions & Tags"
+action_plan = "EGIU U53-54 (Questions): Rhetorical questions in essays. Analyzing how a question at the start of a paragraph dictates the logic."
+tip = "**AGIU Tip: A question in an academic text is a 'Thesis Statement' in disguise. The answer provided in the next sentence is the 'Main Idea'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 37
+track = "Reading"
+main_theme = "Blank Logic 1"
+action_plan = "Type 31 (Word Blanks): Finding 'Repeated Concepts'. Learning to ignore 'Distractors' that are in the text but not logical."
+tip = "**KICE Logic: The blank is never a 'guess'. It is a mathematical substitution of a synonym already present in the text (Paraphrasing)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 38
+track = "Skills"
+main_theme = "GPA Block 1-4"
+action_plan = "Midterm Simulation: 50-minute practice exam (Naesin style). Focus on 'Descriptive Accuracy' (Spelling/Tense)."
+tip = "**Skill: Developing a 'Checklist' for 영작: 1. S-V Agreement, 2. Tense, 3. Articles, 4. Collocations."
+concept_ids = []
+
+[[slots]]
+sequence_index = 39
+track = "Grammar"
+main_theme = "Verb Patterns 1"
+action_plan = "EGIU U55-58 (Verb + to/-ing): The 'Future(to) vs Past(-ing)' nuance. Mastering fixed patterns (expect, decide, enjoy, avoid)."
+tip = "EGIU Tip: Verbs of 'Thinking/Planning' usually take 'To'. Verbs of 'Experience/Method' usually take '-ing'. This is a 100% G1 exam target."
+concept_ids = []
+
+[[slots]]
+sequence_index = 40
+track = "Reading"
+main_theme = "Blank Logic 2"
+action_plan = "Type 32 (Phrase Blanks): Identifying the 'Logic of Negative'. When the text is (+), and the blank is (-), look for \"Not\"."
+tip = "**KICE Logic: Look for 'Logical Inversion' words (e.g., refute, deny, paradoxically) that flip the expected meaning of the blank."
+concept_ids = []
+
+[[slots]]
+sequence_index = 41
+track = "Skills"
+main_theme = "GPA Block 1-5"
+action_plan = "Killer Sentence Memorization: Rapid-fire 영작 practice of textbook 'Core Structures' (e.g., So...that, Relative clauses)."
+tip = "**Skill: 'Error Detection' Drill—finding 5 errors in a modified EBS passage within 2 minutes."
+concept_ids = []
+
+[[slots]]
+sequence_index = 42
+track = "Grammar"
+main_theme = "Verb Patterns 2"
+action_plan = "EGIU U59-63 (Prep + -ing): \"Look forward to -ing\". Mastering prepositions as 'Gerund Anchors'."
+tip = "**AGIU Tip: Many academic verbs (attempt, tend, fail) take 'To-infinitive'. Verbs of 'considering' or 'method' (involve, suggest) take '-ing'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 43
+track = "Reading"
+main_theme = "Advanced Syntax"
+action_plan = "Nested Structures: Decoding sentences with relative clauses inside participial phrases. Finding the 'Root Subject'."
+tip = "**KICE Logic: If a sentence has [Noun + V-ing + V-ed + Verb], the first 'Verb' is usually a modifier and the final 'Verb' is the main action."
+concept_ids = []
+
+[[slots]]
+sequence_index = 44
+track = "Skills"
+main_theme = "GPA Block 1-6"
+action_plan = "Final Night Check: Rapid review of 50 'Killer Sentences' from the exam scope. Focus on 'Word-for-Word' 영작 accuracy."
+tip = "**Skill: Visualizing the 'Full Page' of the textbook to recall the position of key info (Spatial Memory)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 45
+track = "Grammar"
+main_theme = "Purpose & Result"
+action_plan = "EGIU U64-68 (to-inf for purpose): \"In order to,\" \"So as to.\" Understanding the 'Motivation' of the author's argument."
+tip = "**EGIU Tip: Dummy 'It' is used to move long, heavy subject clauses to the end of the sentence to maintain 'End-Weight' (easier reading)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 46
+track = "Reading"
+main_theme = "June Mock Prep"
+action_plan = "G1 Mock Analysis: Reviewing 'Types 31-40' from previous June papers. Focusing on 'Academic Topic' vocabulary (Science/History)."
+tip = "**KICE Logic: Look for 'Implicit Logic'—where the answer isn't in the words, but in the 'Relationship' established by the tone."
+concept_ids = []
+
+[[slots]]
+sequence_index = 47
+track = "Skills"
+main_theme = "FSRS Vocabulary"
+action_plan = "Level 3 Academic Vocab Blitz: FSRS review of G1-G2 'High Priority' words. Focusing on 'Abstract Nouns' (Ability, Concept, Factor)."
+tip = "**Skill: Learning 'Word Roots' (Morphology) to guess the meaning of unknown academic words (e.g., In- (not) + vulner- (wound))."
+concept_ids = []
+
+[[slots]]
+sequence_index = 48
+track = "Grammar"
+main_theme = "Countability"
+action_plan = "EGIU U69-73 (Nouns/Articles): Abstract Nouns as 'Uncountable'. Understanding how 'A/An' changes the nuance (Concrete vs General)."
+tip = "**AGIU Tip: 'The' is used for 'Generic Reference' in science (e.g., \"The whale is a mammal\"), referring to the whole species, not one animal."
+concept_ids = []
+
+[[slots]]
+sequence_index = 49
+track = "Reading"
+main_theme = "Blank Logic 3"
+action_plan = "Type 33-34 (Killer Blanks): Mapping 'Logical Equivalence'. If [Sentence 1] = [Sentence 3], the blank in [S2] is the bridge."
+tip = "**KICE Logic: Science passages are 'Causal Chains'. If Step 1 is inhibited, Step 4 fails. The blank often asks for the 'Inhibited Result'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 50
+track = "Skills"
+main_theme = "Logic Chain"
+action_plan = "Bridge Prediction Drill: Given only the 1st and last sentence, 'predict' the logical bridge required. Training 'Gap Instinct'."
+tip = "**Skill: This trains the 'Logic Gap' instinct. If sentence 1 is 'Problem' and sentence 3 is 'Solution', sentence 2 must be the 'Action'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 51
+track = "Grammar"
+main_theme = "Articles & Nouns"
+action_plan = "EGIU U74-78 (Determiners): All/Every/Each. Understanding 'Generics' in academic reporting."
+tip = "**AGIU Tip: 'Each' focuses on individuals, 'Every' focuses on the group. KICE uses 'Each' to emphasize specific steps in a process."
+concept_ids = []
+
+[[slots]]
+sequence_index = 52
+track = "Reading"
+main_theme = "June Mock Trial"
+action_plan = "70-Min Simulation: Full trial run of a G1 June Mock. Analyzing 'Decision Fatigue' in the final 10 minutes."
+tip = "**KICE Logic: The June Mock is the 'Pilot Test' for the CSAT. It introduces the 'Style' of traps that will be used in November."
+concept_ids = []
+
+[[slots]]
+sequence_index = 53
+track = "Skills"
+main_theme = "Listening 1.2x"
+action_plan = "Speed Adaptation: Listening to G1 Mock Listening at 1.2x speed. Focusing on 'Signpost Phrases' (However, First of all)."
+tip = "**Skill: Training the brain to 'Buffer' information. Listen to 5 words, hold them, then write, while still listening to the next 5."
+concept_ids = []
+
+[[slots]]
+sequence_index = 54
+track = "Grammar"
+main_theme = "Pronoun Logic"
+action_plan = "EGIU U79-83 (It/This/That/One): Tracking 'Referents'. Mastering 'One...Another...The other' for contrast."
+tip = "**AGIU Tip: 'That' can refer to a whole preceding clause, whereas 'It' usually refers to a specific noun. This is crucial for 'Insertion' (Type 38)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 55
+track = "Reading"
+main_theme = "Order & Insertion"
+action_plan = "Type 36-39 (Deep Drill): Practicing 'Tail-to-Head' connections. Circle the 'Linker' (Therefore, But) that connects the two halves."
+tip = "**KICE Logic: Look for 'Lexical Chains'—repeating themes with different words (e.g., The scientist → The researcher → He)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 56
+track = "Skills"
+main_theme = "Logic Mapping 2"
+action_plan = "Complex Argument Mapping: Using 'Premise 1 + Premise 2 = Conclusion' notation for EBS G1 passages."
+tip = "**Skill: Spotting 'Faulty Logic' in the text (e.g., circular reasoning) which often becomes the basis for an 'Unrelated Sentence' question."
+concept_ids = []
+
+[[slots]]
+sequence_index = 57
+track = "Grammar"
+main_theme = "Adjectives & Adverbs"
+action_plan = "EGIU U84-91 (Adj/Adv): Order of adjectives. -ing vs -ed adjectives (surprising vs surprised)."
+tip = "**AGIU Tip: Adverbs of degree (substantially, marginally) are the 'Valuation' markers. They tell you how much the author cares about a result."
+concept_ids = []
+
+[[slots]]
+sequence_index = 58
+track = "Reading"
+main_theme = "Syntax: Relatives 1"
+action_plan = "EGIU U92-94 (Relative Clauses 1): Who/Which/That. Understanding how 'Extra Info' clauses are inserted into a sentence."
+tip = "**KICE Logic: If a sentence has [Noun + V-ing + V-ed + Verb], the first 'Verb' is usually a modifier and the final 'Verb' is the main action."
+concept_ids = []
+
+[[slots]]
+sequence_index = 59
+track = "Skills"
+main_theme = "FSRS Academic"
+action_plan = "Logic Connectors Drill: FSRS review for 'However, Therefore, Thus, In contrast, Moreover, Consequently'."
+tip = "**Skill: Knowing the 'Logical Force' of each connector. 'Nonetheless' is stronger than 'But'. 'Accordingly' implies a direct logical result."
+concept_ids = []
+
+[[slots]]
+sequence_index = 60
+track = "Grammar"
+main_theme = "Relatives 2"
+action_plan = "EGIU U95-97 (Relatives with/without commas): Defining vs Non-defining. Analyzing how commas change the meaning."
+tip = "**AGIU Tip: \"He was late, which surprised us.\" 'Which' refers to the whole fact. In KICE, this is used to comment on a 'Result' in science."
+concept_ids = []
+
+[[slots]]
+sequence_index = 61
+track = "Reading"
+main_theme = "Syntax: Relatives 3"
+action_plan = "EGIU U98-100 (Relative Clauses + Preps): \"In which,\" \"At which.\" Decoding formal relative structures in science."
+tip = "**KICE Logic: Evaluators love 'Nesting'. A refers to B, which refers to C. Map this chain to find the correct subject."
+concept_ids = []
+
+[[slots]]
+sequence_index = 62
+track = "Skills"
+main_theme = "Writing Clinic"
+action_plan = "Sentence Expansion: Taking a 5-word sentence and expanding it to 20 words using Relative Clauses and Modals."
+tip = "**Skill: This reverse-engineering of complex sentences makes 'Slash Reading' natural because you've built the structures yourself."
+concept_ids = []
+
+[[slots]]
+sequence_index = 63
+track = "Grammar"
+main_theme = "Prepositions 1"
+action_plan = "EGIU U101-108 (Time/Place): In/At/On advanced usage. Prepositions after specific verbs/adjectives (Interested in, Depend on)."
+tip = "**AGIU Tip: Prepositions dictate 'Scope'. \"In a vacuum\" sets a condition. \"At a rate\" sets a measurement. Watch these for 'Blank' limits."
+concept_ids = []
+
+[[slots]]
+sequence_index = 64
+track = "Reading"
+main_theme = "6-Mo Final Sprint"
+action_plan = "Trial Run: Solving the 2024 June G1 Mock. Focus on 'Evaluator Mindset'—predicting trap locations in the blanks."
+tip = "**KICE Logic: Trap선지 (Trap options) often use 'Opposite Meaning' or 'Partial Truth'. Only the 'Global Truth' of the text is correct."
+concept_ids = []
+
+[[slots]]
+sequence_index = 65
+track = "Skills"
+main_theme = "Time Management"
+action_plan = "Sector Training: Solving 18-30 (Easy) in 15 minutes. Practice 'Switching' from story logic to academic logic."
+tip = "**Skill: Developing 'Cognitive Flexibility'—moving from a simple 'Letter' to a complex 'Philosophy' passage without losing focus."
+concept_ids = []
+
+[[slots]]
+sequence_index = 66
+track = "Grammar"
+main_theme = "Prepositions 2"
+action_plan = "EGIU U109-115 (Conjunctions): Although, Because, Unless. Mastering the 'Conditions' for a statement's truth."
+tip = "**AGIU Tip: 'Unless' is a 'Negative Condition'. In KICE, it's often used to provide the only exception to a universal rule."
+concept_ids = []
+
+[[slots]]
+sequence_index = 67
+track = "Reading"
+main_theme = "6-Mo Analysis"
+action_plan = "Mock Review: Deep analysis of today's June Mock. Identifying 'Personal Killer Types'."
+tip = "**KICE Logic: The June Mock is the 'Pilot Test' for the year. It introduces the 'Style' of traps that will be used in the second semester."
+concept_ids = []
+
+[[slots]]
+sequence_index = 68
+track = "Skills"
+main_theme = "GPA Block 2-1"
+action_plan = "Textbook Unit 3-4 Analysis: Identifying 'Relative Clauses' and 'Passives' in the final exam scope."
+tip = "**Skill: Identifying 'Seo-sul-hyung' candidates in textbooks. Focus on 'Inversion' and 'Compound Relatives'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 69
+track = "Grammar"
+main_theme = "Sentence Structure"
+action_plan = "EGIU U116-121 (Prep Phrases): Logic of \"In spite of,\" \"Instead of.\" Distinguishing 'Preposition + Noun' vs 'Conjunction + Clause'."
+tip = "**AGIU Tip: These are 'Fixed Codes'. If you see 'Solution', expect 'To'. If you see 'Reason', expect 'For'. Don't waste time thinking."
+concept_ids = []
+
+[[slots]]
+sequence_index = 70
+track = "Reading"
+main_theme = "GPA Supplemental"
+action_plan = "School Printout Analysis: Drawing logic maps for external reading passages provided by the school."
+tip = "**KICE Logic: Parentheticals are 'Non-essential' for the main logic. Skip them on first read to find the core S-V-O."
+concept_ids = []
+
+[[slots]]
+sequence_index = 71
+track = "Skills"
+main_theme = "GPA Block 2-2"
+action_plan = "Vocabulary & Grammar: Mastering 'Exam-Specific' 어법. Solving 100 variation questions for Textbook Unit 3."
+tip = "**Skill: Writing 'Summary Sentences' for paragraphs. These are often used as 'Heading' or 'Topic' questions in school exams."
+concept_ids = []
+
+[[slots]]
+sequence_index = 72
+track = "Grammar"
+main_theme = "Adverbs & Order"
+action_plan = "EGIU U122-127 (Word Order): Position of adverbs (always, usually). \"So do I\" / \"Neither do I\" logic."
+tip = "**AGIU Tip: 'Though' at the end of a sentence (e.g., \"It's hard, though.\") is a common academic marker for 'Qualification' or 'Soft Contrast'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 73
+track = "Reading"
+main_theme = "GPA Intensive"
+action_plan = "Killer Passage Review: Re-reading the 5 most difficult passages in the final exam scope until 'Logic Recall' is <2 seconds."
+tip = "**KICE Logic: Transitioning from 'Understanding' to 'Retrieval'. How fast can you recall the 'Core Logic' of a passage just from the title?"
+concept_ids = []
+
+[[slots]]
+sequence_index = 74
+track = "Skills"
+main_theme = "GPA Block 2-3"
+action_plan = "Seo-sul-hyung Drill: Re-writing textbook sentences using 'Relative Clauses' to prepare for transformation questions."
+tip = "**Skill: Spotting the 'Hidden Subject' in complex sentences. Essential for 'Subject-Verb Agreement' questions in Naesin."
+concept_ids = []
+
+[[slots]]
+sequence_index = 75
+track = "Grammar"
+main_theme = "Final Review 1"
+action_plan = "EGIU U128-136 (Participles Intro): -ing/-ed as adjectives. Mastering the 'Active vs Passive' nuance in descriptors."
+tip = "**AGIU Tip: 'As' is the most 'Ambiguous' word in English. Use the context to lock its meaning: [As + Noun] = Role, [As + Clause] = Time/Reason."
+concept_ids = []
+
+[[slots]]
+sequence_index = 76
+track = "Reading"
+main_theme = "GPA Final Prep"
+action_plan = "Midterm Final Mock: Solving a 20-question custom mock based on school scope. Focus on 'Error Detection'."
+tip = "**Skill: 'Error Detection'—finding 5 errors in a modified textbook passage within 2 minutes."
+concept_ids = []
+
+[[slots]]
+sequence_index = 77
+track = "Skills"
+main_theme = "GPA Block 2-4"
+action_plan = "Final Night Check: Rapid review of core grammar points (Relatives/Passives). Focus on 'Spelling Accuracy'."
+tip = "**Skill: Focusing on 'Irregular' patterns (e.g., Subjunctive 'Should' omission) that schools love to test in Seo-sul-hyung."
+concept_ids = []
+
+[[slots]]
+sequence_index = 78
+track = "Grammar"
+main_theme = "Final Review 2"
+action_plan = "EGIU U137-145 (Conjunctions/Relatives): Synthesis check. Can you identify the S-V-O in a 3-clause sentence?"
+tip = "**AGIU Tip: Most G1 students fail at 'Articles' and 'Noun/Verb Collocations'. These are the 'Polishing' points for a perfect score."
+concept_ids = []
+
+[[slots]]
+sequence_index = 79
+track = "Reading"
+main_theme = "G2 Prep Start"
+action_plan = "Level Up Reading: Solving 5 'Killer Blanks' from a Grade 2 Mock. Identifying the jump in 'Vocabulary Density'."
+tip = "**KICE Logic: Su-wan is the 'Final Polish'. It has more 'KICE-style' variation problems. Treat it as a 'Practice Mock'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 80
+track = "Skills"
+main_theme = "Summer FSRS"
+action_plan = "Vocab Blitz: Adding 500 G2 level 'Advanced Academic' words to FSRS. Focus on 'Abstract Philosophy' terms."
+tip = "**Skill: 'Contextual Guessing'—reading a paragraph and guessing the meaning of bolded words before checking the glossary."
+concept_ids = []
+
+[[slots]]
+sequence_index = 81
+track = "Grammar"
+main_theme = "Advanced Syntax"
+action_plan = "EGIU U1-145 Overview: Identifying the 'Top 10 Personal Weaknesses'. Targeted re-reading of EGIU units."
+tip = "**AGIU Tip: In academic English, 'The' + [Singular Noun] often refers to a whole 'Technology' or 'Concept'. This is 'Generic The'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 82
+track = "Reading"
+main_theme = "Logic: Comparison"
+action_plan = "Type 22-24 (Advanced): Differentiating 'Positive vs Negative' tone via comparison. Mastering \"The more..., the more...\"."
+tip = "**KICE Logic: In high-difficulty texts, the 'Topic Sentence' is often 'Implicit' (not written). You must infer it from the 'Lexical Chain'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 83
+track = "Skills"
+main_theme = "Logic Mapping 3"
+action_plan = "Information Flow Analysis: Mapping how 'New Info' becomes 'Old Info' in sentence 2. Practicing 'Insertion' logic."
+tip = "**Skill: This is the key to 'Ordering' (Type 36). Info always flows from 'Known' to 'Unknown'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 84
+track = "Grammar"
+main_theme = "Advanced Modals"
+action_plan = "AGIU U31-37 (Modals of Deduction): Must have been, Could have been. Decoding 'Retrospective Logic' in history texts."
+tip = "**AGIU Tip: These forms are 100% about the 'Past'. If you see 'Must have done', the author is '90% certain' about a past cause."
+concept_ids = []
+
+[[slots]]
+sequence_index = 85
+track = "Reading"
+main_theme = "Blank Logic 4"
+action_plan = "Type 31-34 (Dual Strategy): Finding 'Logical Antonyms'. When the text is (+), and the answer is (+), but the option is (-)."
+tip = "**KICE Logic: The 'Not A' part is often a 'Common Myth' and the 'But B' part is the 'Author's New Theory'. The blank is usually 'B'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 86
+track = "Skills"
+main_theme = "Writing Summaries"
+action_plan = "EBS Mini Summary: Creating 1-sentence logic summaries for G2 level passages. Simplifying complex 'Causal Chains'."
+tip = "**Skill: If you can't summarize it in 1 sentence, you don't understand the 'Macro-Logic'. Keep simplifying until the core 'A -> B' remains."
+concept_ids = []
+
+[[slots]]
+sequence_index = 87
+track = "Grammar"
+main_theme = "Substitution Logic"
+action_plan = "AGIU 'It/This/That/One': Distinguishing referents in dense paragraphs. Mapping what each pronoun replaces."
+tip = "**AGIU Tip: 'This' usually refers to the 'Immediate' previous sentence. 'That' can refer to a 'Remote' idea mentioned earlier."
+concept_ids = []
+
+[[slots]]
+sequence_index = 88
+track = "Reading"
+main_theme = "Ordering Strategy"
+action_plan = "Type 36-37 (Advanced): Mastering 'Logical Continuity' markers (Similarly, Consequently)."
+tip = "**KICE Logic: Look for 'Continuity' markers (e.g., \"By contrast\", \"Similarly\"). They are the 'Connectors' that lock the sequence."
+concept_ids = []
+
+[[slots]]
+sequence_index = 89
+track = "Skills"
+main_theme = "Listening 1.4x"
+action_plan = "Speed Dictation: Listening to G1/G2 Mocks at 1.4x speed. Training 'Echoic Memory' (holding words in the brain)."
+tip = "**Skill: At this speed, you must 'Predict' the end of the sentence before it's spoken based on the 'Collocation' (e.g., \"In order... [to]\")."
+concept_ids = []
+
+[[slots]]
+sequence_index = 90
+track = "Grammar"
+main_theme = "Relative Nuance"
+action_plan = "AGIU 'What' vs 'Which' vs 'That': Noun Clause 'What' vs Adjective Clause 'Which'. Decoding 'Complex Objects'."
+tip = "**AGIU Tip: 'What' is a 'Noun Clause' (includes the noun). 'Which' is an 'Adjective Clause' (needs a noun). This is a 'Killer 어법' point."
+concept_ids = []
+
+[[slots]]
+sequence_index = 91
+track = "Reading"
+main_theme = "Summer Final Trial"
+action_plan = "G1 November Mock Preview: Solving last year's Nov Mock. Analyzing 'Academic Endurance' over 70 minutes."
+tip = "**KICE Logic: G1 Nov Mock is the 'Final Exam' of foundation English. Treat it as the 'Gate' to G2 mastery."
+concept_ids = []
+
+[[slots]]
+sequence_index = 92
+track = "Skills"
+main_theme = "Cumulative Review"
+action_plan = "Summer Mastery Check: Reviewing 1000 'Hard' words from the summer blitz. Resetting FSRS for Sept Mock."
+tip = "**Skill: Identifying 'Persistent Mistakes'—words you've missed 3+ times. Move them to a 'Physical Flashcard' for constant visual exposure."
+concept_ids = []
+
+[[slots]]
+sequence_index = 93
+track = "Grammar"
+main_theme = "Participles 1"
+action_plan = "EGIU U132-136 (Participle Clauses): -ing vs -ed as modifiers. Mastering the 'Subject of the Participle'."
+tip = "**AGIU Tip: Verbs like 'Enable, Cause, Force' take 'Obj + To'. These are the 'Engine' verbs of causal passages."
+concept_ids = []
+
+[[slots]]
+sequence_index = 94
+track = "Reading"
+main_theme = "9-Mo Prep"
+action_plan = "Mock Analysis (Sept): Solving previous September G1 Mocks. Identifying the 'Transition' to G2-style abstraction."
+tip = "**KICE Logic: The Sept Mock is the 'Final Warning'. It often tests the 'Upper Limit' of abstraction and grammar for G1."
+concept_ids = []
+
+[[slots]]
+sequence_index = 95
+track = "Skills"
+main_theme = "Slash Reading 2"
+action_plan = "Complex Syntax Breakdown: Decoding 40-word sentences from Sept killer passages. Finding the 'Action Verb'."
+tip = "**Skill: Using 'Brackets' to isolate modifiers [ ] so that the main S-V relation becomes 'Visible' at a glance."
+concept_ids = []
+
+[[slots]]
+sequence_index = 96
+track = "Grammar"
+main_theme = "Participles 2"
+action_plan = "EGIU U137-140 (Participial Phrases): Conjunction + Participle (When doing, Although done). Mastering sentence compression."
+tip = "**AGIU Tip: 'Beyond' (e.g., \"Beyond the reach of...\") is a favorite KICE way to set 'Limits of Human Knowledge'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 97
+track = "Reading"
+main_theme = "9-Mo Simulation"
+action_plan = "70-Min Mock Trial: Solving the 2024 Sept Mock under 65 minutes. Practicing 'Panic Recovery' for killer blanks."
+tip = "**KICE Logic: Look for 'Indirect Linking'—where the 'Concept' of an EBS passage is used in a completely new context."
+concept_ids = []
+
+[[slots]]
+sequence_index = 98
+track = "Skills"
+main_theme = "Logic Gap Drill"
+action_plan = "Paragraph Reconstruction: Rebuilding 5 scrambled sentences from a Sept mock. Focus on 'Conjunction Links'."
+tip = "**Skill: Pronouns are 'Glue'. If you find 'This', you must find the singular noun it refers to in the immediate past."
+concept_ids = []
+
+[[slots]]
+sequence_index = 99
+track = "Grammar"
+main_theme = "Conjunctions Deep"
+action_plan = "EGIU U141-145 (Conjunction Synthesis): Though vs Despite. While vs During. Mastering 'Formal Contrast'."
+tip = "**AGIU Tip: 'While' is more common than 'But' in formal texts for 'Balanced Contrast' (Theory A says X, while Theory B says Y)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 100
+track = "Reading"
+main_theme = "9-Mo Final Sprint"
+action_plan = "Killer Type Focus: Intensive solving of 20 Sept 'Killer Blanks'. Analyzing the 'Directional Cues' in the sentences."
+tip = "**KICE Logic: Topics like 'Behavioral Economics', 'Evolutionary Psychology', and 'Meta-cognition' are KICE's current favorites."
+concept_ids = []
+
+[[slots]]
+sequence_index = 101
+track = "Skills"
+main_theme = "Time Management"
+action_plan = "Sector Blitz: Solving 18-30 (15m), 41-45 (10m), 31-40 (25m). Training 'Internal Clock'."
+tip = "**Skill: 'Noise Isolation'—using 'Sub-vocalization' (reading slightly aloud in your head) to block out external sounds."
+concept_ids = []
+
+[[slots]]
+sequence_index = 102
+track = "Grammar"
+main_theme = "Prepositions Final"
+action_plan = "EGIU U146-150 (Final Units): Prepositional nuances (Except for, Apart from). Mastering fixed collocations."
+tip = "**AGIU Tip: This structure is used to set the 'Background' or 'Condition' for the main action. It's 100% equivalent to a 'While' clause."
+concept_ids = []
+
+[[slots]]
+sequence_index = 103
+track = "Reading"
+main_theme = "Logic of Paradox"
+action_plan = "G2 Preview (Blanks): Identifying 'Double Negatives' and 'Paradoxes' in G2 level passages."
+tip = "**KICE Logic: September blanks often have a 'Not' in them. If the text is (+), the blank must be (-) to make the whole sentence (+)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 104
+track = "Skills"
+main_theme = "FSRS Final Review"
+action_plan = "Pre-Sept Mock Blitz: Reviewing 2000 'Academic Transition' words. Instant recall of 'Logical Force' (Thus = Result)."
+tip = "**Skill: 'Rapid Retrieval'—seeing the word and knowing its 'Logical Role' (e.g., Notwithstanding = Contrast) in <0.5 seconds."
+concept_ids = []
+
+[[slots]]
+sequence_index = 105
+track = "Reading"
+main_theme = "9-Mo Mock Analysis"
+action_plan = "Exam Review (Actual): Deep analysis of today's September Mock. Identifying 'Type-Specific' errors."
+tip = "**KICE Logic: This is the 'Master Blueprint' for the year. Identify which EBS passages were used and how they were modified."
+concept_ids = []
+
+[[slots]]
+sequence_index = 106
+track = "Grammar"
+main_theme = "Error Correction"
+action_plan = "Type 29 (어법) Mastery: Analyzing 5 years of G1 Sept/Nov 어법 questions. Identifying 'The Three Patterns'."
+tip = "**AGIU Tip: 90% of 어법 answers are: 1. S-V Agreement, 2. Participle (ing vs ed), 3. Relatives (that vs what/which)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 107
+track = "Skills"
+main_theme = "Weakness Clinic"
+action_plan = "Mistake Analysis: Categorizing errors into 'Syntax', 'Vocab', or 'Logic'. Creating a 'Correction Guide'."
+tip = "**Skill: Developing 'Metacognitive Awareness'—knowing exactly what kind of trap you are most likely to fall for (e.g., 'keyword trap')."
+concept_ids = []
+
+[[slots]]
+sequence_index = 108
+track = "Grammar"
+main_theme = "GPA Block 3-1"
+action_plan = "Textbook Unit 5 Analysis: Slash-reading for midterm prep. Mapping 'Passive Voice' and 'Conditionals' in the text."
+tip = "**AGIU Tip: 'Should have p.p' in an essay is a 'Critique'. The author is saying a past action was a 'Failure'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 109
+track = "Reading"
+main_theme = "GPA Supplemental"
+action_plan = "School Printout Logic: Analyzing external reading passages for the 2nd semester midterm."
+tip = "**KICE Logic: Master the 'Antonym Strategy'. If you can't find the 'Right' answer, find the 'Perfectly Wrong' one and eliminate it."
+concept_ids = []
+
+[[slots]]
+sequence_index = 110
+track = "Skills"
+main_theme = "Logic Mapping 4"
+action_plan = "Transition Mapping: Identifying 'Invisible Logic' where no connector is used but the tone changes."
+tip = "**Skill: Identifying the 'Transition of Tone' (Positive words → Negative words). This is 'Invisible Logic'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 111
+track = "Grammar"
+main_theme = "Pronoun Depth"
+action_plan = "EGIU/AGIU Synthesis: Tracking 'The Latter' vs 'The Former' in complex textbook sentences."
+tip = "**AGIU Tip: 'The latter' is a favorite academic referent. Identify it as the 'Second' of the two things mentioned in the previous sentence."
+concept_ids = []
+
+[[slots]]
+sequence_index = 112
+track = "Reading"
+main_theme = "GPA Killer Review"
+action_plan = "Textbook 'Seo-sul-hyung' Prep: Memorizing 10 'Killer Sentences' for the school midterm."
+tip = "**KICE Logic: 'Indirect Linking' is about 'Knowledge Transfer'. If you know the 'Concept of Nudge', you can solve a new passage about it faster."
+concept_ids = []
+
+[[slots]]
+sequence_index = 113
+track = "Skills"
+main_theme = "50-Min Simulation"
+action_plan = "GPA Mock Exam: Solving a custom midterm simulation. Focus on 'Writing Accuracy' (Punctuation/Spelling)."
+tip = "**Skill: 'Recovery Routine'—if you get stuck on question 31, how do you 'reset' your brain to solve 32 without bringing the stress?"
+concept_ids = []
+
+[[slots]]
+sequence_index = 114
+track = "Grammar"
+main_theme = "Comparison Logic"
+action_plan = "EGIU U105-112 (Comparison): As...as. No more than vs Not more than. Mastering 'Data Logic'."
+tip = "**AGIU Tip: 'No more than' = 'Only' (Negative tone). 'Not more than' = 'At most' (Factual limit). These nuances matter for 'Summary' (Type 40)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 115
+track = "Reading"
+main_theme = "Inversion Intro"
+action_plan = "AGIU Word Order: \"Not only did he...\" / \"Seldom does she...\". Identifying 'Aggressive Emphasis'."
+tip = "**KICE Logic: Negative inversion is the most 'Aggressive' form of emphasis. Whatever is in that sentence is the author's 'Hard Truth'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 116
+track = "Skills"
+main_theme = "Vocabulary FSRS"
+action_plan = "Final Midterm Blitz: Reviewing 500 textbook keywords. Focusing on 'Second Meanings' (e.g., Subject → Topic/Subject)."
+tip = "**Skill: 'Contextual Flex'—instantly switching between the common meaning and the academic meaning of a word based on the passage theme."
+concept_ids = []
+
+[[slots]]
+sequence_index = 117
+track = "Grammar"
+main_theme = "Sentence Cohesion"
+action_plan = "EGIU/AGIU Synthesis: Using 'Substitution' (One, That, Do so) to create cohesive paragraphs."
+tip = "**AGIU Tip: This inversion moves the 'New Information' (the person sitting) to the 'End' of the sentence for emphasis (End−Focus)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 118
+track = "Reading"
+main_theme = "Nov Mock Prep 1"
+action_plan = "G1 Nov Mock Analysis: Solving previous years' 11-Mo Mocks. Identifying the 'Logic Gaps' in killer blanks."
+tip = "**KICE Logic: Blank = X. Paragraph = Equation. Solve for X by identifying the 'Constant' (the repeating core idea)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 119
+track = "Skills"
+main_theme = "Nov Mock Trial"
+action_plan = "70-Min Simulation: Full trial run of a Nov Mock. Analyzing 'Focus Drops' in the 41-45 segment."
+tip = "**Skill: 'Mechanical Execution'—solving the easy questions with 0% emotion to save 'Decision Energy' for the killer blanks."
+concept_ids = []
+
+[[slots]]
+sequence_index = 120
+track = "Grammar"
+main_theme = "Synthesis 1"
+action_plan = "Mastery Check (U1-145): Identifying remaining G1 grammar gaps. Intensive re-reading of 'Relatives/Participles'."
+tip = "**AGIU Tip: Identify the 'Core Predicate'. Ignore everything between the subject and its main verb [Mod 1, Mod 2, Mod 3] to find the 'Action'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 121
+track = "Reading"
+main_theme = "Nov Mock Prep 2"
+action_plan = "Indirect Writing Mastery: Focus on 'Gap Detection' in Type 38-39 (Insertion). Mastering 'Specific Determiners'."
+tip = "**KICE Logic: In 'Insertion' (38-39), the 'Logic Gap' is often a 'Sudden Change in Specificity' (General → Very Specific without bridge)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 122
+track = "Skills"
+main_theme = "FSRS Logic"
+action_plan = "Academic Tier 1 Blitz: Reviewing 'Pragmatic, Ambiguity, Empirical, Paradox, Paradigm' via FSRS."
+tip = "**Skill: 'Logical Role' Recognition. Seeing 'Conversely' and immediately expecting a 'Reversal of Variables' (A → B becomes B → A)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 123
+track = "Grammar"
+main_theme = "Synthesis 2"
+action_plan = "EGIU/AGIU Complex Clauses: Relative Clauses within Conditional sentences. Decoding 'Nested Information'."
+tip = "**AGIU Tip: 'Might have been' expresses the author's 'Tentative Explanation'. This is often the answer in a 'Blank' about a hypothesis."
+concept_ids = []
+
+[[slots]]
+sequence_index = 124
+track = "Reading"
+main_theme = "Nov Mock Prep 3"
+action_plan = "Long Passage Mastery: Type 41-45 speed-reading drill. Finding the 'Narrative Arc' in <2 minutes."
+tip = "**KICE Logic: Type 42 (Vocabulary) is often a 'Logic Reversal' trap. If sentence A is (+), and B is connected by 'However', sentence B must be (-)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 125
+track = "Skills"
+main_theme = "Nov Mock Final Trial"
+action_plan = "Real-Time Simulation: 1:10 PM mock exam. Focus on 'Sector Timing' (18-30 in 15 mins)."
+tip = "**Skill: 'Breath Control'—using 5-second rhythmic breathing when you encounter a sentence that makes 'no sense' on the first read."
+concept_ids = []
+
+[[slots]]
+sequence_index = 126
+track = "Grammar"
+main_theme = "G1 어법 Final"
+action_plan = "G1 Final Syntax Check: Mastering 'Subject-Verb Agreement' in sentences with long modifiers."
+tip = "**AGIU Tip: Parallel structure (A, B, and C) requires all components to have the same grammatical form. School exams love to break this."
+concept_ids = []
+
+[[slots]]
+sequence_index = 127
+track = "Reading"
+main_theme = "Evaluator Mindset"
+action_plan = "Trap Creation Drill: Taking a G1 passage and writing 5 'Wrong Options' based on 'Partial Truth' logic."
+tip = "**KICE Logic: Understanding the 'Trap Maker's Logic' is the final stage of mastery. You stop being the prey and start being the hunter."
+concept_ids = []
+
+[[slots]]
+sequence_index = 128
+track = "Skills"
+main_theme = "Logic Mapping 5"
+action_plan = "Scientific Flow Mapping: (Observation → Experiment → Result). Mapping G1 science passages."
+tip = "**Skill: Recognizing the 'Standard Story' of science in KICE. Usually, an 'Old Theory' is proven wrong by 'New Evidence'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 129
+track = "Grammar"
+main_theme = "Nuance Final"
+action_plan = "AGIU 'Logic Markers': Rather, Instead, Simply. Understanding how these mark a 'Rejection of Old Idea'."
+tip = "**AGIU Tip: 'Rather' and 'Instead' are 'Substitution' markers. They tell you the author is rejecting the previous idea and offering a 'New One'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 130
+track = "Reading"
+main_theme = "The Final 50"
+action_plan = "Nov Mock Killer Drill: Solving 50 candidate '31-34 Blanks' from previous mocks. Focus on 'Abstract Theme' logic."
+tip = "**KICE Logic: Focus on 'Universal Human Truths'. Evaluators choose texts that are 'Timeless' (e.g., the nature of perception, the bias of memory)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 131
+track = "Skills"
+main_theme = "Final Trial"
+action_plan = "Perfect Score Simulation: Solving a Nov Mock with 0% mistakes. Focus on 'Verification Logic'."
+tip = "**Skill: 'Verification Routine'—re-reading the blank within the sentence to ensure it fits both grammatically and logically."
+concept_ids = []
+
+[[slots]]
+sequence_index = 132
+track = "Reading"
+main_theme = "Conditioning 1"
+action_plan = "Morning English: Reading 1 G1 Mock passage at 8:00 AM to prime the brain for 'Academic English'."
+tip = "**KICE Logic: Morning reading builds 'Cognitive Momentum'. By 1:10 PM, your brain should already be in 'English Mode'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 133
+track = "Skills"
+main_theme = "Conditioning 2"
+action_plan = "Time Ritual: Doing nothing but English from 1:10 PM to 2:20 PM. Mastering 'Biological Focus'."
+tip = "**Skill: Training the 'Biological Clock'. Your peak concentration must align with the 70-minute CSAT window."
+concept_ids = []
+
+[[slots]]
+sequence_index = 134
+track = "Skills"
+main_theme = "FSRS G1 Finale"
+action_plan = "FSRS Final Lock: Reviewing all 2500 G1 words. Moving them to 'Lifetime Known' status."
+tip = "**Skill: 'Semantic Depth'—knowing that 'Observation' can mean 'watching' OR 'following a rule' OR 'a scientific remark'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 135
+track = "Reading"
+main_theme = "Nov Mock Finale"
+action_plan = "November Mock (Actual): The final graduation of G1 English. Applying the 'Intuition + Logic' framework."
+tip = "**KICE Logic: Visual memory is faster than verbal memory. Recall the 'Shape' of the argument to unlock the meaning instantly."
+concept_ids = []
+
+[[slots]]
+sequence_index = 136
+track = "Skills"
+main_theme = "GPA Block 4-1"
+action_plan = "Textbook Unit 7-8 Analysis: Final exam prep (Semester 2 Final). Identifying 'Killer Grammar' in the scope."
+tip = "**Action: Maintain 'Emotional Flatness'. One hard question does not define the exam. Solve the next one."
+concept_ids = []
+
+[[slots]]
+sequence_index = 137
+track = "Skills"
+main_theme = "GPA Block 4-2"
+action_plan = "School Printout Review: Logic-mapping the final external reading list for the semester."
+tip = "**Reflection: How did the 'AGIU Nuances' help in the actual paper? (e.g., did a modal 'might' reveal the answer?)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 138
+track = "Reading"
+main_theme = "G2 Bridge 1"
+action_plan = "Abstract Transition: Reading G2-level philosophy texts. Identifying the jump in 'Metaphorical Density'."
+tip = "**Logic: Moving from 'Test English' to 'Research English'. The structures are the same, but the 'Stakes' are real-world discovery."
+concept_ids = []
+
+[[slots]]
+sequence_index = 139
+track = "Skills"
+main_theme = "GPA Block 4-3"
+action_plan = "Jokbo Intensive: Solving 3 years of school finals. Focus on 'Multi-Clause' 영작 questions."
+tip = "**Skill: Using 'AGIU Complex Structures' (Conditionals/Relatives) to express sophisticated opinions in writing."
+concept_ids = []
+
+[[slots]]
+sequence_index = 140
+track = "Grammar"
+main_theme = "Style Refinement"
+action_plan = "EGIU/AGIU Final Synthesis: Mastering 'Punctuation' logic (Semi-colon, Dash) for complex reading."
+tip = "**AGIU Tip: A semi-colon (;) is a 'Logic Equalizer'. It connects two independent ideas that are too closely related for a period."
+concept_ids = []
+
+[[slots]]
+sequence_index = 141
+track = "Skills"
+main_theme = "GPA Block 4-4"
+action_plan = "Seo-sul-hyung Final: Memorizing 20 'Killer Sentences' for the last G1 exam. Focus on 'Precision'."
+tip = "**Logic: Real-world English is full of 'Bias'. In CSAT, the author is 'Objective'. In the real world, you must detect the 'hidden agenda'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 142
+track = "Reading"
+main_theme = "G2 Bridge 2"
+action_plan = "9-Mo Mock Analysis (G2): Solving a G2 Sept Mock (half). Analyzing where your 'G1 Logic' fails in G2 density."
+tip = "**Skill: 'Note-Taking Hierarchy'—distinguishing between 'Main Theory', 'Evidence 1', and 'Critical Exception'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 143
+track = "Skills"
+main_theme = "GPA Block 4-5"
+action_plan = "Final Night Check: Rapid review of all G1 Final Exam scope. Focus on 'Thematic Retrieval'."
+tip = "**AGIU Tip: Periodic sentences keep the 'Main Verb' until the very end to create 'Suspense' or 'Cumulative Force'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 144
+track = "Reading"
+main_theme = "G2 Logic Intro"
+action_plan = "The G2 Mindset: Mastering 'Double Negatives' and 'Opposite Logic' in high-level G2 blanks."
+tip = "**Logic: Professional English is 'Efficient'. It values 'Clarity' over 'Complexity'. Practice 'Simplifying' dense academic structures."
+concept_ids = []
+
+[[slots]]
+sequence_index = 145
+track = "Skills"
+main_theme = "G2 Vocab Blitz"
+action_plan = "FSRS G2 Start: Adding the first 500 G2-specific academic words. Focus on 'Academic Verbs' (Utilize, Refute)."
+tip = "**Skill: 'Oral Logic'—using 'Transition Sounds' (Pause, Emphasis, Inflection) to signal logical changes to an audience."
+concept_ids = []
+
+[[slots]]
+sequence_index = 146
+track = "Grammar"
+main_theme = "Advanced Syntax G2"
+action_plan = "AGIU U1-10 (Review for G2): Re-analyzing tenses in the context of G2 scientific abstracts."
+tip = "**AGIU Tip: 'Virtually' means '99% but not 100%'. In professional English, this protects you from being 'Factually Wrong'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 147
+track = "Reading"
+main_theme = "Philosophy Logic"
+action_plan = "The Abstract Jump: Decoding G2 passages on 'Morality' and 'Cognition'. Mapping 'Abstract Nouns'."
+tip = "**Logic: Literature is 'Ambiguous' on purpose. Practice 'Embracing Ambiguity' while still tracking the 'Narrative Arc'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 148
+track = "Skills"
+main_theme = "Winter Planning"
+action_plan = "G2 Mastery Roadmap: Setting 'Weekly Logic Goals' for the winter break. Mapping G2 March Mock prep."
+tip = "**Skill: 'Impact Writing'—focusing on 'Metrics' (e.g., \"Increased X by 20%\") rather than just 'Duties'."
+concept_ids = []
+
+[[slots]]
+sequence_index = 149
+track = "Grammar"
+main_theme = "Clause Synthesis"
+action_plan = "AGIU Relatives (Final): Mastering 'Whom', 'Whose' and 'Prep + Relatives' for G2 level writing."
+tip = "**AGIU Tip: Using the 'Formal Register' (e.g., commence instead of start) instantly increases your 'Perceived Authority' in writing."
+concept_ids = []
+
+[[slots]]
+sequence_index = 150
+track = "Reading"
+main_theme = "Cultural Literacy"
+action_plan = "Abstract-to-Concrete: Practicing 'Example-to-Them' mapping in sociology texts. Decoding 'Social Criticism'."
+tip = "**Logic: These texts use 'Irony' and 'Sarcasm'. Practice identifying when an author is saying the 'Opposite' of what they mean."
+concept_ids = []
+
+[[slots]]
+sequence_index = 151
+track = "Skills"
+main_theme = "G1 Review Final"
+action_plan = "G1 Exit Exam: Solving a 2025 Nov Mock (Full) to confirm 100% foundation mastery."
+tip = "**Skill: 'PEEL' Method—Point, Evidence, Explanation, Link. This ensures your spoken answer is as logical as a CSAT passage."
+concept_ids = []
+
+[[slots]]
+sequence_index = 152
+track = "Grammar"
+main_theme = "Logic Graduation"
+action_plan = "G1 Final Review: Reflecting on how EGIU intuition has changed your reading speed."
+tip = "**Reflex: Grammar is not a 'Rule'; it's a 'Cognitive Map'. You now have the map to navigate any complex English environment."
+concept_ids = []
+
+[[slots]]
+sequence_index = 153
+track = "Reading"
+main_theme = "Winter Reading"
+action_plan = "G2 March Mock (Preview): Analyzing the 'G2 Intro' level. Mapping 'Academic Genre' patterns."
+tip = "**Logic: 'Systemic Logic'—understanding how one change in a complex system ripples through all other parts. (Advanced Type 40)."
+concept_ids = []
+
+[[slots]]
+sequence_index = 154
+track = "Skills"
+main_theme = "Reflection Letter"
+action_plan = "English Mastery Letter: Writing a 200-word letter to your 'Future G2 Self' in English."
+tip = "**Skill: 'Expressive Fluency'—the ability to write your deepest thoughts without searching for words or structures."
+concept_ids = []
+
+[[slots]]
+sequence_index = 155
+track = "Reading"
+main_theme = "Macro Logic"
+action_plan = "The Big Picture: Analyzing the 'Macro-Structure' of 5 G2 killer passages. Finding the 'Thesis'."
+tip = "**Logic: Mastery is when you see the 'Invisible Logic' in great writing. You don't need the questions to see the answer."
+concept_ids = []
+
+[[slots]]
+sequence_index = 156
+track = "Skills"
+main_theme = "Final FSRS Lock"
+action_plan = "G1-G2 Maintenance: Setting up a 'Lifetime FSRS' for G1 words while focusing on G2 new cards."
+tip = "**Skill: 'Continuous Learning'—setting up a system to keep your English at 'Peak Level' throughout university and beyond."
+concept_ids = []
+
+[[slots]]
+sequence_index = 157
+track = "Conclusion"
+main_theme = "Graduation"
+action_plan = "G1 Architect Final Step: Closing the G1 Foundation Phase. You are ready for the 'G2 Advancement Phase'."
+tip = "**Action: Close the book. Step out. You are ready for the world."
+concept_ids = []

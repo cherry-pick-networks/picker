@@ -1,0 +1,489 @@
+grade = 7
+
+[[slots]]
+sequence_index = 1
+track = "Skills"
+main_theme = "능률 듣기(1회) & 서술형(Ch1)"
+action_plan = "듣기 모의고사 1회 / 쓰기 Ch1 문장의 기본"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 2
+track = "Grammar"
+main_theme = "LINK Grammar L1 (Ch1)"
+action_plan = "Ch1 Be동사"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 3
+track = "Reading"
+main_theme = "1316 Reading L1 (Sec1)"
+action_plan = "Section 1"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 4
+track = "Skills"
+main_theme = "능률 듣기(2회) & 서술형(Ch2)"
+action_plan = "듣기 모의고사 2회 / 쓰기 Ch2 시제"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 5
+track = "Reading"
+main_theme = "1316 Reading L1 (Sec2)"
+action_plan = "Section 2"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 6
+track = "Skills"
+main_theme = "능률 듣기(3회) & 서술형(Ch3)"
+action_plan = "듣기 모의고사 3회 / 쓰기 Ch3 조동사"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 7
+track = "Grammar"
+main_theme = "LINK Grammar L1 (Ch2)"
+action_plan = "Ch2 일반동사"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 8
+track = "Reading"
+main_theme = "1316 Reading L1 (Sec3)"
+action_plan = "Section 3"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 9
+track = "Skills"
+main_theme = "능률 듣기(4회) & 서술형(Ch4)"
+action_plan = "듣기 모의고사 4회 / 쓰기 Ch4 명사와 관사"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 10
+track = "Grammar"
+main_theme = "LINK Grammar L1 (Ch3)"
+action_plan = "Ch3 명사와 관사"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 11
+track = "Reading"
+main_theme = "1316 Reading L1 (Sec4)"
+action_plan = "Section 4"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 12
+track = "Skills"
+main_theme = "능률 듣기(5회) & 서술형(Ch5)"
+action_plan = "듣기 모의고사 5회 / 쓰기 Ch5 대명사"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 13
+track = "Grammar"
+main_theme = "LINK Grammar L1 (Ch4)"
+action_plan = "Ch4 대명사"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 14
+track = "Reading"
+main_theme = "1316 Reading L1 (Sec5)"
+action_plan = "Section 5"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 15
+track = "Skills"
+main_theme = "능률 듣기(6회) & 서술형(Ch6)"
+action_plan = "듣기 모의고사 6회 / 쓰기 Ch6 형용사와 부사"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 16
+track = "Grammar"
+main_theme = "LINK Grammar L1 (Ch5)"
+action_plan = "Ch5 시제"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 17
+track = "Reading"
+main_theme = "1316 Reading L1 (Sec6)"
+action_plan = "Section 6"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 18
+track = "Skills"
+main_theme = "능률 듣기(7회) & 서술형(Ch7)"
+action_plan = "듣기 모의고사 7회 / 쓰기 Ch7 To부정사"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 19
+track = "Grammar"
+main_theme = "LINK Grammar L1 (Ch6)"
+action_plan = "Ch6 조동사"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 20
+track = "Reading"
+main_theme = "1316 Reading L1 (Sec7)"
+action_plan = "Section 7"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 21
+track = "Skills"
+main_theme = "능률 듣기(8회) & 서술형(Ch8)"
+action_plan = "듣기 모의고사 8회 / 쓰기 Ch8 동명사"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 22
+track = "Grammar"
+main_theme = "LINK Grammar L1 (Ch7)"
+action_plan = "Ch7 To부정사"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 23
+track = "Reading"
+main_theme = "1316 Reading L1 (Sec8)"
+action_plan = "Section 8"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 24
+track = "Skills"
+main_theme = "능률 듣기(9회) & 서술형(Review)"
+action_plan = "듣기 모의고사 9회 / 쓰기 오답노트 및 복습"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 25
+track = "Grammar"
+main_theme = "LINK Grammar L1 (Ch8)"
+action_plan = "Ch8 동명사"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 26
+track = "Reading"
+main_theme = "1316 Reading L1 (Sec9)"
+action_plan = "Section 9"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 27
+track = "Skills"
+main_theme = "능률 듣기(10회) & 서술형(Review)"
+action_plan = "듣기 모의고사 10회 / 쓰기 실전 연습"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 28
+track = "Grammar"
+main_theme = "LINK Grammar L1 (Ch9)"
+action_plan = "Ch9 분사"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 29
+track = "Reading"
+main_theme = "1316 Reading L1 (Sec10)"
+action_plan = "Section 10"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 30
+track = "Skills"
+main_theme = "능률 듣기(11회) & 서술형(Review)"
+action_plan = "듣기 모의고사 11회 / 쓰기 실전 연습"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 31
+track = "Grammar"
+main_theme = "LINK Grammar L1 (Ch10)"
+action_plan = "Ch10 문장의 형식"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 32
+track = "Reading"
+main_theme = "1316 Reading L1 (Sec11)"
+action_plan = "Section 11"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 33
+track = "Skills"
+main_theme = "능률 듣기(12회) & 서술형(Review)"
+action_plan = "듣기 모의고사 12회 / 쓰기 실전 연습"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 34
+track = "Grammar"
+main_theme = "LINK Grammar L1 (Ch11)"
+action_plan = "Ch11 접속사"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 35
+track = "Reading"
+main_theme = "1316 Reading L1 (Sec12)"
+action_plan = "Section 12"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 36
+track = "Skills"
+main_theme = "능률 듣기(13회) & 서술형(Review)"
+action_plan = "듣기 모의고사 13회 / 쓰기 실전 연습"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 37
+track = "Grammar"
+main_theme = "LINK Grammar L1 (Ch12-End)"
+action_plan = "Ch12 전치사(완강)"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 38
+track = "Reading"
+main_theme = "1316 Reading L1 (Sec13)"
+action_plan = "Section 13"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 39
+track = "Skills"
+main_theme = "능률 듣기(14회) & 서술형(Review)"
+action_plan = "듣기 모의고사 14회 / 쓰기 실전 연습"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 40
+track = "Reading"
+main_theme = "1316 Reading L1 (Sec14)"
+action_plan = "Section 14"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 41
+track = "Skills"
+main_theme = "능률 듣기(15회) & 서술형(Review)"
+action_plan = "듣기 모의고사 15회 / 쓰기 실전 연습"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 42
+track = "Grammar"
+main_theme = "Grammar Review (1)"
+action_plan = "문법 총정리 및 문제풀이 1"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 43
+track = "Skills"
+main_theme = "능률 듣기(16회) & 서술형(Review)"
+action_plan = "듣기 모의고사 16회 / 쓰기 실전 연습"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 44
+track = "Grammar"
+main_theme = "Grammar Review (2)"
+action_plan = "문법 총정리 및 문제풀이 2"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 45
+track = "Reading"
+main_theme = "1316 Reading L1 (Sec15)"
+action_plan = "Section 15"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 46
+track = "Skills"
+main_theme = "능률 듣기(17회) & 서술형(Review)"
+action_plan = "듣기 모의고사 17회 / 쓰기 실전 연습"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 47
+track = "Grammar"
+main_theme = "Grammar Review (3)"
+action_plan = "문법 총정리 및 문제풀이 3"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 48
+track = "Reading"
+main_theme = "1316 Reading L1 (Sec16-End)"
+action_plan = "Section 16(완강)"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 49
+track = "Skills"
+main_theme = "능률 듣기(18회) & 서술형(Review)"
+action_plan = "듣기 모의고사 18회 / 쓰기 실전 연습"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 50
+track = "Grammar"
+main_theme = "Grammar Review (4)"
+action_plan = "문법 심화학습"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 51
+track = "Reading"
+main_theme = "Reading Review (1)"
+action_plan = "독해 복습 및 어휘 심화 1"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 52
+track = "Skills"
+main_theme = "능률 듣기(19회) & 서술형(Review)"
+action_plan = "듣기 모의고사 19회 / 쓰기 실전 연습"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 53
+track = "Grammar"
+main_theme = "Grammar Review (5)"
+action_plan = "문법 심화학습"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 54
+track = "Reading"
+main_theme = "Reading Review (2)"
+action_plan = "독해 복습 및 어휘 심화 2"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 55
+track = "Skills"
+main_theme = "능률 듣기(20회) & 서술형(Review)"
+action_plan = "듣기 모의고사 20회 / 쓰기 실전 연습"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 56
+track = "Grammar"
+main_theme = "Grammar Review (6)"
+action_plan = "문법 심화학습"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 57
+track = "Reading"
+main_theme = "Reading Review (3)"
+action_plan = "독해 복습 및 어휘 심화 3"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 58
+track = "Skills"
+main_theme = "능률 듣기(21회) & 서술형(Review)"
+action_plan = "듣기 모의고사 21회 / 쓰기 실전 연습"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 59
+track = "Grammar"
+main_theme = "Grammar Review (7)"
+action_plan = "문법 심화학습"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 60
+track = "Reading"
+main_theme = "Reading Review (4)"
+action_plan = "독해 복습 및 어휘 심화 4"
+tip = ""
+concept_ids = []
+
+[[slots]]
+sequence_index = 61
+track = "Skills"
+main_theme = "능률 듣기(22회-End)"
+action_plan = "듣기 모의고사 22회(종강) / 1학기 전체 과정 수료"
+tip = ""
+concept_ids = []

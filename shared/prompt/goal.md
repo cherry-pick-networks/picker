@@ -1,3 +1,8 @@
+---
+title: goal
+description: Final implementation goal for PICKER; scope, phase, and alignment.
+---
+
 # Final implementation goal (for AI)
 
 Single source for PICKER end-state. Use this document to decide scope, phase,
