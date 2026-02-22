@@ -31,6 +31,9 @@ jobs:
       - name: Format check
         run: deno fmt --check
 
+      - name: Line length check
+        run: deno task line-length-check
+
       - name: Run tests
         run: deno task test
 

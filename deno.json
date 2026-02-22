@@ -15,7 +15,8 @@
     "scope-discovery": "deno run --allow-read shared/prompt/scripts/scope-discovery.ts",
     "type-check-policy": "deno run --allow-read shared/prompt/scripts/check-type-policy.ts",
     "migrate:old-to-data": "deno run -A shared/prompt/scripts/migrate-old-to-data.ts",
-    "naming-layer-check": "deno run --allow-read shared/prompt/scripts/check-naming-layer.ts"
+    "naming-layer-check": "deno run --allow-read shared/prompt/scripts/check-naming-layer.ts",
+    "line-length-check": "deno run --allow-read shared/prompt/scripts/check-line-length.ts"
   },
   "lint": {
     "plugins": [
