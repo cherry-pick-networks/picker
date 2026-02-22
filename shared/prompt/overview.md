@@ -20,8 +20,9 @@ One-page summary for onboarding and daily use.\
   counted.
 - **Allowed forms**: `prefix/`, `prefix/infix/`, `prefix/infix/suffix/`
 - **Naming**: Use only approved segment names per axis (Scope/Layer/Context for
-  prefix; Actor/Action/Entity for infix; Artifact/Policy/Meta for suffix). See
-  Rules summary below (§D–§F).
+  prefix; Actor/Action/Entity for infix; Artifact/Policy/Meta for suffix). The
+  same names are the approved vocabulary at each tier (files, subfolders,
+  modules, symbols); see §E. Rules summary below (§D–§F).
 - **This file**: `shared/prompt/overview.md` (shared = Scope, prompt = Entity,
   overview = Meta)
 - **Exceptions**: .git, .cursor, node_modules, dist, build, coverage, vendor,
@@ -116,6 +117,9 @@ Example: `feat(module): add handler`
 
 - Each segment uses one axis only: Prefix (Scope / Layer / Context), Infix
   (Actor / Action / Entity), Suffix (Artifact / Policy / Meta).
+- The same axis allowed values are the approved names for that tier and below
+  (files, subfolders, modules, symbols); folder and rule/doc naming are
+  mandatory per §D/§F.
 - Use the clean dictionary (e.g. config not configuration; cache only as Infix;
   core forbidden in Context). See store.md §E for full lists.
 - **Check**: Segment names come from the approved sets; no forbidden or

@@ -272,8 +272,9 @@ Pattern: use [prefix]-[suffix].mdc or [prefix]-[infix]-[suffix].mdc; prefix and
 suffix required; infix optional. Segment form: lowercase; separate words with
 one hyphen; no underscores; suffix singular (except types); descriptive,
 pronounceable, searchable. Axis rule: each segment uses exactly one axis from
-its allowed set; no axis pollution; one word must not appear in two axes. New
-rule files: pick one prefix from Scope/Layer/Context; one suffix from
+its allowed set (see §E); no axis pollution; one word must not appear in two
+axes. The same §E sets are the approved names for that tier and below (files,
+subfolders, modules, symbols). New rule files: pick one prefix from Scope/Layer/Context; one suffix from
 Artifact/Policy/Meta; add infix from Actor/Action/Entity only when the rule
 applies to a specific focus.
 
@@ -292,6 +293,13 @@ level 3: folder name from approved suffix (optional). Order: prefix / infix /
 suffix; do not add a fourth level.
 
 ### §E. Document and directory naming
+
+Directory tier names use prefix (level 1), infix (level 2), and suffix (level 3)
+from the allowed sets below. The same allowed values for each axis are the
+approved names for that tier and its subtree: use them for tier names and,
+within that tier, for file names, subfolder names, module/namespace names, and
+public symbol names. Mandatory scope: directory and rule/document naming per
+§D and §F; other uses apply from new or renamed items (see §J).
 
 Clean dictionary (one word per concept — overlap resolution): middleware: only
 Suffix (Artifact); never Infix (use interceptor, filter). policy: only Suffix
@@ -354,8 +362,9 @@ prefix/infix/ prefix/infix/suffix/ Order fixed: prefix then infix then suffix;
 no fourth tier.
 
 Rule content — naming: Each tier name must use only approved values for that
-axis (prefix / infix / suffix); see §E. Document and directory naming.
-Lowercase; one hyphen between words; no underscores or spaces.
+axis (prefix / infix / suffix); see §E. That same §E vocabulary applies to
+names within that tier (files, subfolders, modules, symbols). Lowercase; one
+hyphen between words; no underscores or spaces.
 
 Exceptions: Maintain an explicit exception list; same list for docs and tooling.
 Typical entries: .git, .cursor, node_modules, dist, build, coverage, vendor,

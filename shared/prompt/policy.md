@@ -18,6 +18,8 @@
 
 - All mdc file names follow **§D. Document and directory format** and **§E.
   Document and directory naming** (prefix[-infix]-suffix; approved axes only).
+  The same §E segment names are the approved vocabulary at each tier (files,
+  subfolders, modules, symbols within that tier).
 
 ## Adding or changing rules
 
