@@ -1,4 +1,4 @@
-import { getKv } from "../kv/kv.store.ts";
+import { getKv } from "../../shared/infra/kv.client.ts";
 
 export async function getProfile(id: string): Promise<unknown | null> {
   const kv = await getKv();

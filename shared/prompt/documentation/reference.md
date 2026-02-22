@@ -21,7 +21,7 @@ with store.md §E/§F and modular monolith.
 | source  | Source collection and read             |
 | script  | Scripts store, AST apply, Governance   |
 | record  | Record store (extracted/identity data) |
-| kv      | Generic Deno KV access                 |
+| kv      | Generic Deno KV HTTP API; KV instance from shared/infra. |
 | audit   | Change/run log artifacts               |
 | app     | Route registration and app wiring      |
 
@@ -77,6 +77,8 @@ system/
   if needed.
 - app/*.config.ts only imports domain endpoints and registers routes; no
   business logic.
+- KV instance: `shared/infra/kv.client.ts` provides `getKv()`. Domain stores
+  and system/kv use it; do not open Kv elsewhere.
 
 ---
 

@@ -1,10 +1,7 @@
 /** KV under prefix ["kv"]; logical key part only (e.g. "foo"). */
-let kvPromise: Promise<Deno.Kv> | null = null;
+import { getKv } from "../../shared/infra/kv.client.ts";
 
-export function getKv(): Promise<Deno.Kv> {
-  if (!kvPromise) kvPromise = Deno.openKv();
-  return kvPromise;
-}
+export { getKv } from "../../shared/infra/kv.client.ts";
 
 function toLogicalKey(keyParts: string[]): string | null {
   if (keyParts.length < 2 || keyParts[0] !== "kv") return null;

@@ -26,6 +26,7 @@ Use that document for AI direction and scope decisions.
 | **system/kv/**            | Generic Deno KV: endpoint, store.                                                                                                                   |
 | **system/audit/log/**     | Log artifact storage (e.g. e2e-runs.json, change audit). Test/tooling writes run history. Not served by API unless an audit read endpoint is added. |
 | **shared/runtime/store/** | Target path for AST-based self-edit; read and write only via Governance-verified flow.                                                              |
+| **shared/infra/**         | Shared infrastructure. KV client (`getKv()`) only; no business logic.                                                                               |
 
 ---
 
@@ -80,7 +81,8 @@ Use that document for AI direction and scope decisions.
 ## Infrastructure
 
 - **Deno KV** — built-in storage only; no external DB, message broker, or queue.
-  Key prefixes: `kv` (generic), `profile` (actor profile, key
+  KV instance: `shared/infra/kv.client.ts` (`getKv()`). Domain stores and
+  system/kv import from there. Key prefixes: `kv` (generic), `profile` (actor profile, key
   `["profile", id]`), `progress` (progress state, key `["progress", id]`),
   `content` (items key `["content", "item", id]`; worksheets key
   `["content", "worksheet", id]`), `source` (source records key
