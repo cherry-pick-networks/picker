@@ -3,7 +3,6 @@
  * Run: deno run --allow-read shared/prompt/scripts/check-line-length.ts
  * Or: deno task line-length-check
  */
-// deno-lint-ignore-file function-length/function-length
 
 const MAX_LINE_LENGTH = 80;
 const SKIP_DIRS = new Set([
@@ -22,7 +21,8 @@ async function walkTsFiles(
   dir: string,
   out: string[],
 ): Promise<void> {
-  for await (const e of Deno.readDir(dir)) {
+  const entries = await Array.fromAsync(Deno.readDir(dir));
+  for (const e of entries) {
     const full = `${dir}/${e.name}`;
     const rel = full.slice(root.length + 1);
     if (e.isDirectory) {
@@ -34,10 +34,16 @@ async function walkTsFiles(
   }
 }
 
-async function main(): Promise<void> {
-  const root = Deno.cwd();
-  const files: string[] = [];
-  await walkTsFiles(root, root, files);
+async function collectTsFiles(root: string): Promise<string[]> {
+  const out: string[] = [];
+  await walkTsFiles(root, root, out);
+  return out;
+}
+
+async function collectViolations(
+  root: string,
+  files: string[],
+): Promise<{ file: string; line: number; length: number }[]> {
   const violations: { file: string; line: number; length: number }[] = [];
   for (const rel of files) {
     const path = `${root}/${rel}`;
@@ -50,16 +56,36 @@ async function main(): Promise<void> {
       }
     }
   }
-  if (violations.length > 0) {
-    console.error(
-      `Line length check failed (store.md §P: max ${MAX_LINE_LENGTH} chars):`,
-    );
-    for (const v of violations) {
-      console.error(`  ${v.file}:${v.line}: ${v.length} chars`);
-    }
-    Deno.exit(1);
+  return violations;
+}
+
+function logViolationsAndExit(
+  violations: { file: string; line: number; length: number }[],
+): void {
+  console.error(
+    `Line length check failed (store.md §P: max ${MAX_LINE_LENGTH} chars):`,
+  );
+  for (const v of violations) {
+    console.error(`  ${v.file}:${v.line}: ${v.length} chars`);
   }
-  console.log("Line length check passed: all lines ≤ 80 characters.");
+  Deno.exit(1);
+}
+
+function reportResult(
+  violations: { file: string; line: number; length: number }[],
+): void {
+  const hasFail = violations.length > 0;
+  if (hasFail) logViolationsAndExit(violations);
+  if (!hasFail) {
+    console.log("Line length check passed: all lines ≤ 80 characters.");
+  }
+}
+
+async function main(): Promise<void> {
+  const root = Deno.cwd();
+  const files = await collectTsFiles(root);
+  const violations = await collectViolations(root, files);
+  reportResult(violations);
 }
 
 main();
