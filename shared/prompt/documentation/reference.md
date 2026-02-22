@@ -77,3 +77,30 @@ system/
   if needed.
 - app/*.config.ts only imports domain endpoints and registers routes; no
   business logic.
+
+---
+
+## TypeScript symbol naming (§T)
+
+Rules are in store.md §T. This section gives examples and exceptions from
+`system/` and shared scripts.
+
+| Symbol kind           | Case              | Example |
+| --------------------- | ----------------- | ------- |
+| Type, interface       | PascalCase        | `Profile`, `Item`, `PatchProfileInput`, `ApplyResult` |
+| Function, method      | camelCase         | `getProfile`, `createItem`, `applyPatch`, `getPatchProfileInput` |
+| Variable, parameter   | camelCase         | `id`, `profile`, `parsed`, `raw` |
+| Zod schema constant  | PascalCase        | `ProfileSchema`, `ItemSchema`, `CreateItemRequestSchema` |
+| Magic-string constant| UPPER_SNAKE_CASE  | §P; e.g. long error messages, headers |
+| Class                 | PascalCase        | — (use when introducing classes) |
+| Enum name             | PascalCase        | — |
+| Enum member           | One style project-wide | UPPER_SNAKE_CASE or PascalCase |
+
+### Schema property names (exception)
+
+- **Default**: camelCase for new domains (e.g. `createdAt`, `updatedAt` in
+  `system/actor/profile.schema.ts`).
+- **Exception**: snake_case when the shape is dictated by an external API or
+  persistence contract; document in the file (e.g. "API/DB contract"). Example:
+  `system/content/content.schema.ts` uses `item_id`, `created_at`, `worksheet_id`
+  for stored/API payload shape.

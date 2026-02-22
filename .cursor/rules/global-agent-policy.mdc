@@ -1,8 +1,9 @@
 ---
 description: |
   Project conventions and agent policy. Apply in every session.
-  Commit format, session boundary, language, document/dir format and naming,
-  dependency constraint, validation policy, agent principles, migration.
+  Commit format, session boundary, language, TS comment/symbol naming,
+  document/dir format and naming, dependency constraint, validation policy,
+  agent principles, migration.
 alwaysApply: true
 ---
 
@@ -12,6 +13,7 @@ Read that file and follow:
 - **§B. Commit and session boundary**
 - **§C. Language**
 - **§S. Comment policy (TS)**
+- **§T. TypeScript symbol naming**
 - **§D. Document and directory format**
 - **§E. Document and directory naming**
 - **§G. Dependency constraint**

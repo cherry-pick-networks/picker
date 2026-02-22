@@ -283,6 +283,21 @@ constraint. Remove: function JSDoc and inline comments that only repeat what the
 code does. Single source: detailed rules stay in this file; comments do not
 duplicate them.
 
+### §T. TypeScript symbol naming
+
+Scope: TypeScript source files (`**/*.ts`); exclude node_modules, vendor,
+generated output. Type and interface names: PascalCase. Function and method
+names: camelCase. Variable and parameter names: camelCase. Zod schema
+constants (e.g. export const XSchema): PascalCase. Constants for magic strings
+or long literals: UPPER_SNAKE_CASE (see §P). Schema or JSON property names:
+use camelCase for new domains; snake_case allowed only when required by
+external API or persistence contract, and document the exception in the file
+or schema. Class names: PascalCase. Enum type names: PascalCase; enum
+members: use one style project-wide (UPPER_SNAKE_CASE or PascalCase).
+Re-exports of third-party types or functions: keep original names. Examples
+and domain exceptions: shared/prompt/documentation/reference.md (TS symbol
+naming).
+
 ### §D. Document and directory format
 
 Pattern: use [prefix]-[suffix].mdc or [prefix]-[infix]-[suffix].mdc; prefix and
