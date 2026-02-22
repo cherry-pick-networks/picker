@@ -6,7 +6,7 @@
 
 import { appendE2eRun } from "#system/audit/audit.log.ts";
 
-const E2E_TEST_FILE = "tests/system/main_e2e_test.ts";
+const E2E_TEST_FILE = "tests/system/main-e2e_test.ts";
 
 // function-length-ignore
 function nowIso(): string {

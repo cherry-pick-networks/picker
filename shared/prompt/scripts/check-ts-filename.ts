@@ -11,6 +11,7 @@ import {
   ROOT_ALLOWED,
   SKIP_DIRS,
   SYSTEM_INFIX,
+  TEST_NAME_REGEX,
 } from "./check-ts-filename-config.ts";
 
 async function walkTsFiles(
@@ -89,8 +90,12 @@ function validateRoot(base: string): string | null {
 }
 
 function validateTests(base: string): string | null {
-  if (base.endsWith("_test.ts")) return null;
-  return "tests/ file must end with _test.ts";
+  if (!base.endsWith("_test.ts")) return "tests/ file must end with _test.ts";
+  const name = base.slice(0, base.length - 8);
+  if (!TEST_NAME_REGEX.test(name)) {
+    return "tests/ name must be lowercase with hyphens (e.g. main-ast-apply_test.ts)";
+  }
+  return null;
 }
 
 function validateSystemRoot(rel: string): string | null {
@@ -146,8 +151,8 @@ function reportAndExit(errors: [string, string][]): void {
     Deno.exit(1);
   }
   console.log(
-    "TS filename check passed: system/ and shared/infra use " +
-      "[name].[suffix].ts.",
+    "TS filename check passed: system/, shared/infra, and tests/ " +
+      "follow naming rules.",
   );
 }
 

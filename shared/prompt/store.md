@@ -86,8 +86,8 @@ tool-specific configs.
   (runs in CI)
 - `deno task naming-layer-check` — verify layer-prefixed paths use allowed
   infix/suffix per §E (optional; run in pre-commit or CI)
-- `deno task ts-filename-check` — verify system/ and shared/infra TS files use
-  [name].[suffix].ts per §E and reference.md (optional; run in pre-commit or CI)
+- `deno task ts-filename-check` — verify system/, shared/infra, and tests/ TS
+  filenames per §E and reference.md (optional; run in pre-commit or CI)
 - `deno task pre-push` — run before push; same as CI (lint, fmt, line-length,
   ts-filename-check, test, scope-check, boundary-check, dependency-check,
   type-check-policy, audit)

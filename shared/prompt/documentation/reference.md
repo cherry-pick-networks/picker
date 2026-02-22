@@ -60,6 +60,14 @@ system/
   routes.ts  (entry; imports app/routes-register.config.ts)
 ```
 
+### Test file names (tests/)
+
+Under `tests/`, every `.ts` file must be `[name]_test.ts` (Deno convention).
+The **name** part must use lowercase and hyphens only (§E), e.g.
+`main-ast-apply_test.ts`, `scripts-store_test.ts`. Non-test helpers (e.g.
+`with_temp_scripts_store.ts`) are listed in PATH_EXCEPTIONS. Validated by
+`deno task ts-filename-check`.
+
 ### Migration mapping (3-layer → flat, completed)
 
 | Old path (3-layer)                 | New path (flat)                    |

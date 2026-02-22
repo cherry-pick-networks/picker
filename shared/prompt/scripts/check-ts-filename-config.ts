@@ -58,3 +58,6 @@ export const PATH_EXCEPTIONS = new Set([
 
 /** Path prefix: no filename rule (e.g. scripts). */
 export const EXEMPT_PREFIXES = ["shared/prompt/scripts/"];
+
+/** Test file name (part before _test.ts) must be lowercase + hyphens only (§E). */
+export const TEST_NAME_REGEX = /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/;
