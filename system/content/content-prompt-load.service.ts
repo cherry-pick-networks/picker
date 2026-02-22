@@ -1,4 +1,4 @@
-import { readScript } from "../script/scripts.store.ts";
+import { getScriptContent } from "../script/scripts.service.ts";
 
 export const DEFAULT_GOAL_ACCURACY = "85%";
 export const DEFAULT_VOCABULARY = "Fry Sight Words + attached list";
@@ -10,7 +10,7 @@ export const DEFAULT_TEMPLATE = "# Role: English Test Creator\n" +
   "{{output_format}}";
 
 export async function loadTemplate(relativePath: string): Promise<string> {
-  const result = await readScript(relativePath);
+  const result = await getScriptContent(relativePath);
   return result.ok ? result.content : "";
 }
 
