@@ -282,7 +282,8 @@ Suffix (use store, storage). config: only this spelling; never configuration.
 education: only this spelling; never edu. type (TS/classification): use types in
 Suffix Meta; never type. core: forbidden in Context; use shared, base, or domain
 (layer). context (API): use provider in Infix Entity; do not use context
-as segment.
+as segment. record: only Entity; stored units of data (e.g. extracted record,
+identity record); one record per file or index entry.
 
 Prefix — one axis only: [ Scope | Layer | Context ]. Rule: prefix must denote
 system position only; technical tools (cache, redis) or artifact form (config,
@@ -302,8 +303,8 @@ duplicate Scope/Layer/Context meaning. Forbidden in Infix: middleware (use
 interceptor, filter), policy (use validator, guard). Actor (architectural role
 or agent): router, service, repository, entity, interceptor, filter, adapter,
 facade, client, agent, worker, guard, validator. Entity (data or medium kind):
-payload, stream, blob, cache, session, document, json, sql, redis, prompt,
-provider. Action (lifecycle or operation): bootstrap, shutdown, runtime, build,
+payload, stream, blob, cache, session, document, record, json, sql, redis,
+prompt, provider. Action (lifecycle or operation): bootstrap, shutdown, runtime, build,
 migration, recovery, read, write, batch, parse, upload, search, validate.
 
 Suffix — one axis only: [ Artifact | Policy | Meta ]. Rule: suffix denotes form

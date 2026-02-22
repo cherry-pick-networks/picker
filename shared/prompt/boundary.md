@@ -18,7 +18,7 @@ Use that document for AI direction and scope decisions.
 | **client.ts**            | Client entry (loaded on every page).                                                       |
 | **system/routes.ts**     | Route list (ROUTES) and registerRoutes(app); scope-check reads this.                      |
 | **system/router/**       | Hono handlers: home, kv, profile, content, source, ast, ast-demo, scripts (GET/POST /scripts, GET /scripts/*). |
-| **system/store/**        | Storage access (e.g. Deno KV via `getKv()`). Profile/progress KV under prefixes `profile`, `progress`. Content items/worksheets under `content` (item, worksheet). Source records under `source`. File-based UUID v7 storage under `data/` in 2-tier layout (document/store, document/reference) via system/store/data.ts. |
+| **system/store/**        | Storage access (e.g. Deno KV via `getKv()`). Profile/progress KV under prefixes `profile`, `progress`. Content items/worksheets under `content` (item, worksheet). Source records under `source`. File-based UUID v7 storage under `data/` in 2-tier layout (record/store, record/reference) via system/store/data.ts. |
 | **system/service/**      | Shared business logic (e.g. `add`, profile/progress, content, source collect/read). AST read/patch for shared/runtime/store/; apply via Governance and scripts write. |
 | **system/validator/**       | Governance verification; must pass before any apply (e.g. shared/runtime/store mutation). |
 | **system/log/**             | Log artifact storage (e.g. test run history JSON, change audit log). Test/tooling writes run history; routes or services append change audit entries (who, when, what) for in-scope mutations. Not served by API unless an audit read endpoint is added. |
@@ -79,6 +79,6 @@ Use that document for AI direction and scope decisions.
   `progress` (progress state, key `["progress", id]`),
   `content` (items key `["content", "item", id]`; worksheets key `["content", "worksheet", id]`),
   `source` (source records key `["source", id]`).
-- **File-based data** — 2-tier layout under `data/`: infix `document`, suffix `store` (payload) or `reference` (index). Single store: `data/document/store/*.json`. Indexes: `data/document/reference/extracted-data-index.json`, `data/document/reference/identity-index.json`. Populated by migration from `.old`; read/write via system/store/data.ts.
+- **File-based data** — 2-tier layout under `data/`: infix `record`, suffix `store` (payload) or `reference` (index). Single store: `data/record/store/*.json`. Indexes: `data/record/reference/extracted-data-index.json`, `data/record/reference/identity-index.json`. Populated by migration from `.old`; read/write via system/store/data.ts.
 - **Worksheet prompt templates** — read-only from `shared/runtime/store/` (e.g. docs/contract/); Governance-verified read.
 - **Change audit log** — stored under `system/log/` (e.g. JSON file(s)); one entry per mutation (profile, progress, content, scripts/store) with actor, timestamp, and change summary; written by routes or services on mutation; retention and format defined by implementation.
