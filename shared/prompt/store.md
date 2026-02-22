@@ -109,7 +109,7 @@ tool-specific configs.
   approval. (2) Interface design — AI proposes only `interface`/`type` for that
   tree, no implementation or JSX; gate: stop, ask approval of the design, do not
   write implementation until approved. (3) Implementation — code per §P (file
-  ≤100 lines, function 2–4 statements). (4) Test and commit — add or update
+  ≤100 effective lines, function body 2–4 effective lines). (4) Test and commit — add or update
   tests, then commit per §B. One cycle = one entry file + its direct imports;
   see shared/prompt/documentation/strategy.md for scope-discovery and prompt
   template. Optionally: after phase 2 approval, writing a failing test before
@@ -529,14 +529,20 @@ comparison.
 ### §P. Format limits (code)
 
 Line length: keep lines to 80 characters or fewer (strict); exceptions only
-where documented (e.g. long URLs in comments). File length: keep files to 100
-lines or fewer; split when longer. Scope: TypeScript source (e.g. `**/*.ts`);
-exclude node_modules, vendor, generated output.
+where documented (e.g. long URLs in comments). One effective line = 80
+character units per physical line: ceil(length/80); empty line = 0.
+File length: keep files to 100 effective lines or fewer (sum of effective
+lines over all physical lines); split when longer. Scope: TypeScript source
+(e.g. `**/*.ts`); exclude node_modules, vendor, generated output.
 
-Function body: block body 2–4 statements (enforced); expression body allowed
-(counts as 1). Exceptions: single return with await or 2+ level method chaining.
-Validation: `deno lint` (plugin function-length/function-length in
-shared/prompt/scripts/function-length-lint-plugin.ts). To ignore per function:
+Function body: block body 2–4 effective lines (80-char units over body
+lines; body = interior of block only); expression body allowed (counts as
+1). Exceptions: single return with await or 2+ level method chaining.
+Validation: line-length and file-length by
+shared/prompt/scripts/check-line-length.ts; function body by `deno lint`
+(plugin function-length/function-length in
+shared/prompt/scripts/function-length-lint-plugin.ts, counts 80-char units
+per line in body). To ignore per function:
 `// deno-lint-ignore function-length/function-length` on the line above.
 Guidance (not enforced): keep indentation depth to 1–2 levels.
 

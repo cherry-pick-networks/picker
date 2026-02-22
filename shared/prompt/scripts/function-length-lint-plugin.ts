@@ -1,14 +1,26 @@
 /**
- * Deno lint plugin: enforce 2–4 statements per block body (§P).
+ * Deno lint plugin: enforce 2–4 effective lines per block body (§P).
+ * Effective line = ceil(line.length/80); body = interior of block only.
  * Rule ID: function-length/function-length.
  * Ignore: // deno-lint-ignore function-length/function-length
  */
 // deno-lint-ignore-file function-length/function-length
-const MIN_STATEMENTS = 2;
-const MAX_STATEMENTS = 4;
+const CHARS_PER_LINE = 80;
+const MIN_EFFECTIVE_LINES = 2;
+const MAX_EFFECTIVE_LINES = 4;
 
-function statementCount(body: Deno.lint.BlockStatement): number {
-  return body.body.length;
+function effectiveLineCount(lines: string[]): number {
+  return lines.reduce(
+    (sum, line) => sum + Math.ceil(line.length / CHARS_PER_LINE),
+    0,
+  );
+}
+
+function bodyEffectiveLines(source: string): number {
+  const lines = source.split(/\n/);
+  const interior =
+    lines.length >= 2 ? lines.slice(1, -1) : [];
+  return effectiveLineCount(interior);
 }
 
 function checkBody(
@@ -17,13 +29,14 @@ function checkBody(
 ): void {
   if (!body) return;
   if (body.type !== "BlockStatement") return;
-  // expression body ok (counts as 1)
   const block = body as Deno.lint.BlockStatement;
-  const n = statementCount(block);
+  const text = context.sourceCode.getText(block);
+  const n = bodyEffectiveLines(text);
 
-  if (n >= MIN_STATEMENTS && n <= MAX_STATEMENTS) return;
-  const msg = `Function body must have ${MIN_STATEMENTS}–${MAX_STATEMENTS} ` +
-    `statements (got ${n}).`;
+  if (n >= MIN_EFFECTIVE_LINES && n <= MAX_EFFECTIVE_LINES) return;
+  const msg =
+    `Function body must have ${MIN_EFFECTIVE_LINES}–${MAX_EFFECTIVE_LINES} ` +
+    `lines (80-char units) (got ${n}).`;
   context.report({ node: block, message: msg });
 }
 

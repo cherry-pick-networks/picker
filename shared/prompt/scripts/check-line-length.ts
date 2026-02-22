@@ -1,10 +1,19 @@
 /**
- * Line-length check: fail if any TS source line exceeds 80 chars (store.md §P).
+ * Line-length and file-length check (store.md §P).
+ * - No physical line may exceed 80 chars.
+ * - File effective line count (sum of ceil(len/80) per line, empty=0) ≤ 100.
  * Run: deno run --allow-read shared/prompt/scripts/check-line-length.ts
  * Or: deno task line-length-check
  */
 
-const MAX_LINE_LENGTH = 80;
+import {
+  collectViolations,
+  FileLengthViolation,
+  LineLengthViolation,
+  MAX_EFFECTIVE_LINES_PER_FILE,
+  MAX_LINE_LENGTH,
+} from "./check-line-length-helpers.ts";
+
 const SKIP_DIRS = new Set([
   ".cache",
   ".git",
@@ -40,52 +49,52 @@ async function collectTsFiles(root: string): Promise<string[]> {
   return out;
 }
 
-async function collectViolations(
-  root: string,
-  files: string[],
-): Promise<{ file: string; line: number; length: number }[]> {
-  const violations: { file: string; line: number; length: number }[] = [];
-  for (const rel of files) {
-    const path = `${root}/${rel}`;
-    const content = await Deno.readTextFile(path);
-    const lines = content.split(/\r?\n/);
-    for (let i = 0; i < lines.length; i++) {
-      const len = lines[i]!.length;
-      if (len > MAX_LINE_LENGTH) {
-        violations.push({ file: rel, line: i + 1, length: len });
-      }
+function logViolationsAndExit(
+  lineLength: LineLengthViolation[],
+  fileLength: FileLengthViolation[],
+): void {
+  if (lineLength.length > 0) {
+    console.error(
+      `Line length check failed (store.md §P: max ${MAX_LINE_LENGTH} chars):`,
+    );
+    for (const v of lineLength) {
+      console.error(`  ${v.file}:${v.line}: ${v.length} chars`);
     }
   }
-  return violations;
-}
-
-function logViolationsAndExit(
-  violations: { file: string; line: number; length: number }[],
-): void {
-  console.error(
-    `Line length check failed (store.md §P: max ${MAX_LINE_LENGTH} chars):`,
-  );
-  for (const v of violations) {
-    console.error(`  ${v.file}:${v.line}: ${v.length} chars`);
+  if (fileLength.length > 0) {
+    console.error(
+      `File length check failed (§P: max ${MAX_EFFECTIVE_LINES_PER_FILE} ` +
+        "effective lines, 80-char units):",
+    );
+    for (const v of fileLength) {
+      console.error(
+        `  ${v.file}: ${v.effectiveLines} effective lines ` +
+          `(max ${MAX_EFFECTIVE_LINES_PER_FILE})`,
+      );
+    }
   }
   Deno.exit(1);
 }
 
 function reportResult(
-  violations: { file: string; line: number; length: number }[],
+  lineLength: LineLengthViolation[],
+  fileLength: FileLengthViolation[],
 ): void {
-  const hasFail = violations.length > 0;
-  if (hasFail) logViolationsAndExit(violations);
+  const hasFail = lineLength.length > 0 || fileLength.length > 0;
+  if (hasFail) logViolationsAndExit(lineLength, fileLength);
   if (!hasFail) {
-    console.log("Line length check passed: all lines ≤ 80 characters.");
+    console.log(
+      "Line length check passed: all lines ≤ 80 chars, " +
+        "all files ≤ 100 effective lines.",
+    );
   }
 }
 
 async function main(): Promise<void> {
   const root = Deno.cwd();
   const files = await collectTsFiles(root);
-  const violations = await collectViolations(root, files);
-  reportResult(violations);
+  const { lineLength, fileLength } = await collectViolations(root, files);
+  reportResult(lineLength, fileLength);
 }
 
 main();
