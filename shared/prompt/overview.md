@@ -22,8 +22,8 @@ One-page summary for onboarding and daily use.\
 - **Naming**: Use only approved segment names per axis (Scope/Layer/Context for
   prefix; Actor/Action/Entity for infix; Artifact/Policy/Meta for suffix). See
   Rules summary below (§D–§F).
-- **This file**: `shared/prompt/profile.md` (shared = Scope, prompt = Entity,
-  profile = Meta)
+- **This file**: `shared/prompt/overview.md` (shared = Scope, prompt = Entity,
+  overview = Meta)
 - **Exceptions**: .git, .cursor, node_modules, dist, build, coverage, vendor,
   .cache (confirm per repo)
 
@@ -63,6 +63,7 @@ Optional tooling (status line, setup script, tips): see
 - **Reference (tips, not rules)**: `shared/prompt/documentation/guide.md`
 - **Handoff**: `shared/prompt/handoff.md` (linked from README)
 - **Scope** (modules, API, infra): `shared/prompt/boundary.md`
+- **Final goal** (for AI): `shared/prompt/goal.md`
 - **AI/tool single source**: `shared/prompt/store.md`
 
 ---

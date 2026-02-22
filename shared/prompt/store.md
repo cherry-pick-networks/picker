@@ -221,7 +221,7 @@ tool-specific configs.
 - **External tips**: Use external guides (e.g. claude-code-tips) as reference
   only; write only the chosen practices here.
 - **Human-readable docs**: Project summary and rules for people are in
-  `shared/prompt/` (2nd layer: profile.md) and
+  `shared/prompt/` (2nd layer: overview.md) and
   `shared/prompt/documentation/` (3rd layer: guide, strategy; allowed names
   reference, usage, strategy, guide, runbook). Root README Documentation section lists only domain
   entry points (e.g. shared/README.md); do not add deep links to docs there. Do
@@ -333,7 +333,8 @@ response, middleware, format, exception, config, pipeline, metrics, trace.
 Policy (principle, constraint, or policy): boundary, constraint, contract,
 principle, safety, validation, compliance, isolation. Meta (documentation, test,
 or classification): test, documentation, naming, style, log, types, language,
-profile, assessment, reference, plan, handoff, strategy, usage, tips.
+profile, assessment, reference, plan, handoff, strategy, usage, tips,
+overview, goal.
 
 Examples: payment-infra-redis-config (Context + Layer + Entity + Artifact);
 security-application-guard-policy (Context + Layer + Actor + Policy);
@@ -472,7 +473,7 @@ Root README (repository root README.md): the Documentation section lists only
 domain entry points; each entry links to a scope-level README (e.g.
 shared/README.md), not to files under prefix/infix/suffix. Deep links: do not
 add links from root README to individual docs (e.g. store.md, handoff.md,
-profile.md); those live in each domain's README.
+overview.md); those live in each domain's README.
 
 ### §N. Type-check policy
 
