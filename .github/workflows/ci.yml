@@ -34,6 +34,9 @@ jobs:
       - name: Line length check
         run: deno task line-length-check
 
+      - name: TS filename check
+        run: deno task ts-filename-check
+
       - name: Run tests
         run: deno task test
 

@@ -54,6 +54,11 @@ Detailed conventions (directory structure, dependencies, workflow) are in the
 shared docs: start from [shared/README.md](shared/README.md) and see
 [shared/prompt/store.md](shared/prompt/store.md) for the single source of truth.
 
+## Maintainers: branch protection
+
+To require CI (lint, line-length, ts-filename-check, tests, etc.) to pass before
+merging PRs, see [.github/BRANCH_PROTECTION.md](.github/BRANCH_PROTECTION.md).
+
 ## Contact
 
 - **General and contribution questions**:
