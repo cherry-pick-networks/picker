@@ -606,6 +606,10 @@ body). To ignore per function: `// function-length-ignore` on the line above; or
 returns a promise from a helper, return the promise without
 `async`/`return await` (avoids an extra microtask); outside try/catch do not use
 `return await`. Guidance (not enforced): keep indentation depth to 1–2 levels.
+Endpoint handlers (`*.endpoint.ts`): do not use try/catch for business-failure
+handling. Have services return a Result (discriminated union); map that in the
+handler in at most two statements (e.g. assign result, then return via ternary)
+so the body stays within 2–4 statements per §P.
 
 80-character defense (Track B — architectural extraction): when line length
 would otherwise exceed 80 chars or harm readability, apply these rules. Extract

@@ -19,16 +19,16 @@ const TEMPLATE_PATHS: Record<
   { templatePath: string; formatPath: string }
 > = {
   mid_skills: {
-    templatePath: "docs/contract/contract-pedagogy-prompt.md",
-    formatPath: "docs/contract/contract-pedagogy-format.md",
+    templatePath: "contract-pedagogy-prompt.md",
+    formatPath: "contract-pedagogy-format.md",
   },
   mid_grammar: {
-    templatePath: "docs/contract/contract-syllabus-prompt.md",
-    formatPath: "docs/contract/contract-syllabus-format.md",
+    templatePath: "contract-syllabus-prompt.md",
+    formatPath: "contract-syllabus-format.md",
   },
   mid_reading: {
-    templatePath: "docs/contract/contract-read-prompt.md",
-    formatPath: "docs/contract/contract-read-format.md",
+    templatePath: "contract-read-prompt.md",
+    formatPath: "contract-read-format.md",
   },
 };
 
@@ -36,8 +36,41 @@ export function resolveTemplatePaths(
   qt: string,
 ): { templatePath: string; formatPath: string } {
   const fallback = {
-    templatePath: "docs/contract/contract-prompt.md",
-    formatPath: "docs/contract/contract-assessment-format.md",
+    templatePath: "contract-prompt.md",
+    formatPath: "contract-assessment-format.md",
   };
   return TEMPLATE_PATHS[qt] ?? fallback;
+}
+
+async function loadMidTemplateAndFormat(
+  qt: string,
+): Promise<{ template: string; formatBlock: string }> {
+  const { templatePath, formatPath } = resolveTemplatePaths(qt);
+  const template = (await loadTemplate(templatePath)) || DEFAULT_TEMPLATE;
+  const formatBlock = await loadTemplate(formatPath);
+  return { template, formatBlock };
+}
+
+export async function loadTemplateAndFormat(
+  qt: string,
+): Promise<{ template: string; formatBlock: string }> {
+  if (qt === "elem") {
+    const t = (await loadTemplate("contract-edu-prompt.md")) ||
+      DEFAULT_TEMPLATE;
+    return { template: t, formatBlock: "" };
+  }
+  return await loadMidTemplateAndFormat(qt);
+}
+
+const BRIEFING_MAIN_PATH = "contract-briefing-prompt.md";
+const BRIEFING_BLOCK_PATH = "contract-briefing-block.md";
+
+export async function loadBriefingTemplate(): Promise<string> {
+  const result = await getScriptContent(BRIEFING_MAIN_PATH);
+  return result.ok ? result.content : "";
+}
+
+export async function loadBriefingBlockTemplate(): Promise<string> {
+  const result = await getScriptContent(BRIEFING_BLOCK_PATH);
+  return result.ok ? result.content : "";
 }

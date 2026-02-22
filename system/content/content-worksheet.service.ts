@@ -1,6 +1,9 @@
+import type { CreateResult } from "#shared/infra/result.types.ts";
 import * as contentStore from "./content.store.ts";
 import type { GenerateWorksheetRequest, Worksheet } from "./content.schema.ts";
 import { nowIso } from "./content-parse.service.ts";
+
+const ERROR_GENERATE_FAILED = "Generate failed";
 
 async function collectItemIds(
   conceptIds: string[],
@@ -17,19 +20,34 @@ async function collectItemIds(
   return item_ids;
 }
 
+function worksheetMetadata(
+  request: GenerateWorksheetRequest,
+  generated_at: string,
+): Record<string, unknown> {
+  const conceptIds = request.concept_ids?.length ? request.concept_ids : [];
+  const date_iso = request.date_iso ?? generated_at.slice(0, 10);
+  return {
+    concept_ids: conceptIds,
+    date_iso,
+    ...(request.session_id != null && { session_id: request.session_id }),
+    ...(request.sheet_label != null && { sheet_label: request.sheet_label }),
+  };
+}
+
 function buildWorksheetMeta(
   request: GenerateWorksheetRequest,
   worksheet_id: string,
   item_ids: string[],
 ): Worksheet {
-  const conceptIds = request.concept_ids?.length ? request.concept_ids : [];
+  const generated_at = nowIso();
   const title = request.title ?? `Worksheet ${worksheet_id.slice(0, 8)}`;
+  const metadata = worksheetMetadata(request, generated_at);
   return {
     worksheet_id,
     title,
     item_ids,
-    generated_at: nowIso(),
-    metadata: { concept_ids: conceptIds },
+    generated_at,
+    metadata,
   };
 }
 
@@ -51,11 +69,16 @@ async function saveWorksheet(worksheet: Worksheet): Promise<Worksheet> {
 
 export async function generateWorksheet(
   request: GenerateWorksheetRequest,
-): Promise<Worksheet> {
-  const { worksheet_id, conceptIds, perConcept } = initWorksheetRequest(
-    request,
-  );
-  const item_ids = await collectItemIds(conceptIds, perConcept);
-  const worksheet = buildWorksheetMeta(request, worksheet_id, item_ids);
-  return saveWorksheet(worksheet);
+): Promise<CreateResult<Worksheet>> {
+  try {
+    const { worksheet_id, conceptIds, perConcept } = initWorksheetRequest(
+      request,
+    );
+    const item_ids = await collectItemIds(conceptIds, perConcept);
+    const worksheet = buildWorksheetMeta(request, worksheet_id, item_ids);
+    const saved = await saveWorksheet(worksheet);
+    return { ok: true, data: saved };
+  } catch {
+    return { ok: false, error: ERROR_GENERATE_FAILED };
+  }
 }

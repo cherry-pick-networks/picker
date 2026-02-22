@@ -140,6 +140,27 @@ introduce a cycle; (2) add the edge to this matrix and to the allowlist in
 
 ---
 
+## Profile preferences.worksheet_generation (contract)
+
+Actor profile `preferences.worksheet_generation` is a document/contract-only
+shape (schema remains `Record<string, unknown>`). Fields used by worksheet
+prompt building:
+
+| Field               | Type    | Description                                                                 |
+| ------------------- | ------- | --------------------------------------------------------------------------- |
+| `goal_accuracy`     | number? | 0–1; existing. Rendered as percentage in prompt.                            |
+| `structural_notes`  | string? | Existing. Passage structure / clue placement instructions.                  |
+| `vocabulary_policy` | string? | Existing. Vocabulary control.                                               |
+| `gimmick`           | string? | **New.** One-line summary of wrong-answer gimmick (e.g. perfectionism).     |
+| `gimmick_notes`     | string? | **New.** Optional detailed description.                                     |
+| `distractor_policy` | string? | **New.** Distractor design instructions (e.g. "plausible but not in text"). |
+
+Only `distractor_policy` is currently substituted into the worksheet prompt
+(`{{distractor_policy}}`). `gimmick` and `gimmick_notes` are stored for future
+use (e.g. Scope B/C).
+
+---
+
 ## TypeScript symbol naming (§T)
 
 Rules are in store.md §T. This section gives examples and exceptions from

@@ -61,6 +61,10 @@ Use that document for AI direction and scope decisions.
 | GET    | `/content/worksheets/:id`          | Read worksheet meta by id. Responds worksheet object or 404.                                                                                                                   |
 | POST   | `/content/worksheets/generate`     | Create worksheet (meta + item_ids from concepts). Body: title, concept_ids, item_count, etc. Responds 201 with worksheet.                                                      |
 | POST   | `/content/worksheets/build-prompt` | Build worksheet prompt string from request and profile/context. Body: GenerateWorksheetRequest. Responds 200 with { prompt }. No LLM call.                                     |
+| POST   | `/content/submissions`             | Create submission. Body: worksheet_id, student_id, answers (item_id → option index); submission_id optional. Responds 201 with Submission.                                     |
+| GET    | `/content/submissions/:id`         | Read submission by id. Query `include=grading` optional: attach grading result (total, correct, score, results). Responds 200 or 404.                                          |
+| GET    | `/content/submissions`             | List submissions. Query `worksheet_id` optional; `include=grading` optional. Responds 200 with `{ submissions: Submission[] }`.                                                |
+| POST   | `/content/briefing/build-prompt`   | Build briefing prompt from worksheet submissions, grading, and profiles. Body: worksheet_id, student_ids optional. Responds 200 with { prompt } or 404 if worksheet not found. |
 | GET    | `/sources`                         | List or query sources (optional query params). Responds `{ "sources": Source[] }`.                                                                                             |
 | GET    | `/sources/:id`                     | Read source by id. Responds source object or 404.                                                                                                                              |
 | POST   | `/sources`                         | Collect and store a source. Body: source fields (id optional). Responds 201 with source.                                                                                       |
@@ -90,15 +94,16 @@ Use that document for AI direction and scope decisions.
   system/kv import from there. Key prefixes: `kv` (generic), `profile` (actor
   profile, key `["profile", id]`), `progress` (progress state, key
   `["progress", id]`), `content` (items key `["content", "item", id]`;
-  worksheets key `["content", "worksheet", id]`), `source` (source records key
+  worksheets key `["content", "worksheet", id]`; submissions key
+  `["content", "submission", id]`), `source` (source records key
   `["source", id]`).
 - **File-based data** — under `shared/record/`: suffix `store` (payload) or
   `reference` (index). Store: `shared/record/store/*.toml`. Indexes:
   `shared/record/reference/extracted-data-index.toml`,
   `shared/record/reference/identity-index.toml`. Populated by migration from
   `.old`; read/write via system/record/data.store.ts.
-- **Worksheet prompt templates** — read-only from `shared/runtime/store/` (e.g.
-  docs/contract/); Governance-verified read.
+- **Worksheet prompt templates** — read-only from `shared/runtime/store/`;
+  Governance-verified read.
 - **Change audit log** — stored under `system/audit/log/` (e.g. JSON file(s));
   one entry per mutation (profile, progress, content, scripts/store) with actor,
   timestamp, and change summary; written by routes or services on mutation;

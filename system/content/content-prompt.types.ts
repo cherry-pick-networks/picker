@@ -8,13 +8,17 @@ export type WorksheetContext = {
   goal_accuracy: string;
   structural_notes: string;
   vocabulary_policy: string;
+  distractor_policy: string;
 };
 
 export const DEFAULT_QUESTION_TYPE = "CSAT Type 40 (Summary Completion)";
+
+export const DEFAULT_DISTRACTOR_POLICY = "";
 
 export const DEFAULT_WORKSHEET_CONTEXT: WorksheetContext = {
   student_name: "Unknown",
   goal_accuracy: DEFAULT_GOAL_ACCURACY,
   structural_notes: "",
   vocabulary_policy: DEFAULT_VOCABULARY,
+  distractor_policy: DEFAULT_DISTRACTOR_POLICY,
 };
