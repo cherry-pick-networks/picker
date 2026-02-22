@@ -6,9 +6,11 @@ Project reference for structure, naming, and migration.
 
 ## System structure (system/ infix/suffix)
 
-Under `system/` only the form `system/<infix>/<suffix>` is allowed (plus
-optional `system/<infix>/` with no suffix). Infix = domain (bounded context);
-suffix = artifact type. Aligns with store.md §E/§F and modular monolith.
+Under `system/` the form is `system/<infix>/` (one folder per domain). Artifact
+type is expressed in the **filename** as `[name].[suffix].ts` (e.g.
+`profile.endpoint.ts`, `profile.service.ts`). Infix = domain (bounded context);
+suffix = artifact type. Flat layout improves AI context and discovery. Aligns
+with store.md §E/§F and modular monolith.
 
 ### Allowed infix (domains)
 
@@ -36,49 +38,42 @@ suffix = artifact type. Aligns with store.md §E/§F and modular monolith.
 | log        | Log artifact storage                  | Meta     |
 | config     | Wiring (e.g. route registration)      | Artifact |
 
-### Target layout
+### Target layout (flat domain: files under system/<infix>/)
 
 ```
 system/
-  actor/     endpoint, service, store, schema
-  content/   endpoint, service, store, schema
-  source/    endpoint, service, store
-  script/    endpoint, service, store, validation
-  record/    endpoint, store
-  kv/        endpoint, store
-  audit/     log
-  app/       config
+  actor/     *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts, *.dto.ts
+  content/   *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts
+  source/    *.endpoint.ts, *.service.ts, *.store.ts
+  script/    *.endpoint.ts, *.service.ts, *.store.ts, *.types.ts, *.validation.ts
+  record/    *.endpoint.ts, *.store.ts
+  kv/        *.endpoint.ts, *.store.ts
+  audit/     *.log.ts
+  app/       *.config.ts
+  routes.ts  (entry; imports app/routes-register.config.ts)
 ```
 
-### Migration mapping (old → new)
+### Migration mapping (3-layer → flat, completed)
 
-| Old path                                                  | New path                                                            |
-| --------------------------------------------------------- | ------------------------------------------------------------------- |
-| system/router/home.ts                                     | system/app/config (or keep at app level)                            |
-| system/router/profile*.ts                                 | system/actor/endpoint/                                              |
-| system/router/content.ts                                  | system/content/endpoint/                                            |
-| system/router/source.ts                                   | system/source/endpoint/                                             |
-| system/router/scripts.ts, ast*.ts                         | system/script/endpoint/                                             |
-| system/router/data.ts                                     | system/record/endpoint/                                             |
-| system/router/kv.ts                                       | system/kv/endpoint/                                                 |
-| system/service/profile.ts, progress.ts, profile-schema.ts | system/actor/service/                                               |
-| system/service/content*.ts, content-schema.ts             | system/content/service/                                             |
-| system/service/source.ts                                  | system/source/service/                                              |
-| system/service/ast.ts                                     | system/script/service/                                              |
-| system/store/profile.ts                                   | system/actor/store/                                                 |
-| system/store/content.ts                                   | system/content/store/                                               |
-| system/store/source.ts                                    | system/source/store/                                                |
-| system/store/scripts*.ts                                  | system/script/store/                                                |
-| system/store/data.ts                                      | system/record/store/                                                |
-| system/store/kv.ts                                        | system/kv/store/                                                    |
-| system/store/log.ts                                       | system/audit/log/ (or audit/store)                                  |
-| system/validator/                                         | system/script/validation/                                           |
-| system/routes*.ts                                         | system/app/config/ (or system/routes.ts re-exports from app/config) |
+| Old path (3-layer)              | New path (flat)                     |
+| ------------------------------- | ----------------------------------- |
+| system/actor/endpoint/profile.ts | system/actor/profile.endpoint.ts    |
+| system/actor/service/profile.ts | system/actor/profile.service.ts     |
+| system/actor/store/profile.ts   | system/actor/profile.store.ts      |
+| system/content/endpoint/content.ts | system/content/content.endpoint.ts |
+| system/content/service/*.ts     | system/content/*.service.ts         |
+| system/content/schema/*.ts      | system/content/*.schema.ts           |
+| system/source/endpoint|service|store/*.ts | system/source/*.endpoint|service|store.ts |
+| system/script/endpoint|service|store|validation/*.ts | system/script/*.endpoint|service|store|validation.ts |
+| system/record/endpoint|store/data.ts | system/record/data.endpoint.ts, data.store.ts |
+| system/kv/endpoint|store/kv.ts | system/kv/kv.endpoint.ts, kv.store.ts |
+| system/audit/log/log.ts        | system/audit/audit.log.ts           |
+| system/app/config/*.ts         | system/app/*.config.ts              |
 
 ### Modular monolith rules
 
 - Within a domain: endpoint → service → store/schema only.
 - Cross-domain: do not import another domain's store; use that domain's service
   if needed.
-- app/config only imports domain endpoints and registers routes; no business
-  logic.
+- app/*.config.ts only imports domain endpoints and registers routes; no
+  business logic.
