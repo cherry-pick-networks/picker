@@ -6,3 +6,4 @@ set -e
 cd "$(git rev-parse --show-toplevel)"
 deno lint
 deno fmt --check
+deno task line-length-check

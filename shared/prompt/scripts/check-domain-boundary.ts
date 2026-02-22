@@ -1,7 +1,8 @@
 /**
  * Domain boundary check: fail if any system/<domain> file imports another
  * domain's *.store.ts. Cross-domain access must use that domain's service.
- * Run from repo root: deno run --allow-read shared/prompt/scripts/check-domain-boundary.ts
+ * Run from repo root:
+ *   deno run --allow-read shared/prompt/scripts/check-domain-boundary.ts
  */
 
 const SYSTEM_DIR = "system";
@@ -77,7 +78,8 @@ async function main(): Promise<void> {
 
   if (violations.length > 0) {
     console.error(
-      "Domain boundary violation: do not import another domain's store. Use that domain's service.",
+      "Domain boundary violation: do not import another domain's store. " +
+        "Use that domain's service.",
     );
     for (const v of violations) {
       console.error(`  ${v.file} → ${v.importPath}`);
