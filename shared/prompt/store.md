@@ -100,6 +100,18 @@ tool-specific configs.
   the default for non-trivial code.
 - **Verify output**: For research or non-code output, ask to verify claims and
   summarize (e.g. table of what was verified).
+- **Phase-gated feature cycle (recommended when implementing features)**: For one small feature unit
+  (entry file + direct imports), follow four phases: (1) Requirement — AI
+  outputs only a short requirement/constraint summary; gate: stop generation,
+  ask user approval, do not proceed to phase 2 until explicit approval. (2)
+  Interface design — AI proposes only `interface`/`type` for that tree, no
+  implementation or JSX; gate: stop, ask approval of the design, do not write
+  implementation until approved. (3) Implementation — code per §P (file ≤100
+  lines, function 2–4 statements). (4) Test and commit — add or update tests,
+  then commit per §B. One cycle = one entry file + its direct imports; see
+  shared/prompt/documentation/strategy.md for scope-discovery and prompt
+  template. Optionally: after phase 2 approval, writing a failing test before
+  phase 3 is allowed (TDD); state this in the same workflow.
 
 ---
 
@@ -159,7 +171,7 @@ tool-specific configs.
   the first user message should be a single short sentence in Korean that states
   the session goal (one task or one question). This improves auto-generated
   chat titles (e.g. in Cursor). Prefer under 15 words or about 40 characters.
-  Example: "POST /content/worksheets API에 스코프 검증 추가해줘". Full procedure
+  Example: "Add scope validation to POST /content/worksheets API". Full procedure
   and examples: `shared/prompt/documentation/usage.md` (Session start).
 
 ---
@@ -491,3 +503,26 @@ Function body: block body 2–4 statements (enforced); expression body allowed
 shared/prompt/scripts/function-length-lint-plugin.ts). To ignore per function:
 `// deno-lint-ignore function-length/function-length` on the line above.
 Guidance (not enforced): keep indentation depth to 1–2 levels.
+
+### §Q. Phase-gated feature implementation
+
+When it applies: only when implementing a new feature (adding or changing code
+for a feature). Refactor-only, docs-only, or urgent bugfix work are explicit
+exceptions; §Q does not apply. Non-code tasks may use requirement summary and
+approval only; design phase is "not applicable" then.
+Four phases: (1) Requirement — present only a short requirement/constraint
+summary; do not write code or types. (2) After explicit user approval —
+propose only interfaces/types for the tree; do not write implementation or
+JSX. (3) After explicit user approval — implement per approved design. (4)
+Add or update tests, then commit per §B.
+CRITICAL RULE (AI output control): At phase 1 completion: stop generating
+further text; ask the user "Do you approve this requirement summary?" (or
+equivalent); do not proceed to the next phase until the user gives explicit
+confirmation (e.g. Yes, Approved, Go ahead). At phase 2 completion: stop
+generating; ask "Do you approve this design (interfaces/types)?" (or
+equivalent); do not write implementation (logic or JSX) until explicit
+approval.
+Approval definition: the user has approved when they indicate in chat that the
+next phase may proceed (e.g. "Approve", "OK", "Proceed to next phase", "Go ahead",
+"Approved"). One-line definition; agent must not advance phase without
+such a response.

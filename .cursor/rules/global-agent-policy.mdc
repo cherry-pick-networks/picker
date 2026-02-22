@@ -20,4 +20,5 @@ Read that file and follow:
 - **§N. Type-check policy**
 - **§O. Answer format (options with pros and cons)**
 - **§P. Format limits (code)**
+- **§Q. Phase-gated feature implementation** (feature implementation only; see store.md)
 Do not duplicate the rule text here.

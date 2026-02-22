@@ -51,6 +51,16 @@ Current scope and implementation state: [boundary.md](boundary.md).
 
 ---
 
+## Phase status (when ending mid-feature)
+
+When a session stops in the middle of a **feature implementation** (store.md
+§Q): record the **current phase** and where the next session should start.
+Example: "Status: Phase 2 (Design) approved. Next session starts from Phase 3
+(Implementation)." Then in a new session you can say "Phase 3부터 진행" and
+the agent can restore context. See strategy.md for phase flags [Phase 1/2/3].
+
+---
+
 ## Next steps
 
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->

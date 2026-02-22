@@ -95,8 +95,9 @@ props, DI), not token count. Scoping by dependency tree reduces mistakes.
 1. Choose or create **one entry file** for the feature (e.g. the route or
    top-level component).
 2. Run the scope-discovery script to list its direct imports (see below).
-3. Prompt the AI with that list as the in-scope set; ask to define types first,
-   then implement. Do not modify files outside that set in the same session.
+3. Prompt the AI with that list as the in-scope set. Between each step
+   (requirement summary → interface proposal → implementation), proceed only
+   after **user approval**; see store.md §Q.
 4. (Optional) Before commit, check that changed files are within entry + script
    output (manual or via optional check script).
 
@@ -123,11 +124,24 @@ Task: `deno task scope-discovery -- <entry-file>` (e.g.
 `deno task scope-discovery -- system/router/home.ts`). Add `--oneline`
 for one-line output.
 
+## Phase flags (explicit prompt flags)
+
+Put one of these at the **first line** (or a clear, fixed position) of the
+prompt so the agent knows the current phase:
+
+- **`[Phase 1]`** — When stating the requirement. AI outputs only a
+  requirement/constraint summary, then asks for approval and waits.
+- **`[Phase 2]`** — After phase 1 is approved. AI proposes only
+  `interface`/`type` for the tree, then asks for approval and waits.
+- **`[Phase 3]`** — After phase 2 is approved. AI implements logic and view
+  per the approved design.
+
 ## Prompt template
 
-Use the script output to fill the in-scope list:
+Use the script output and phase when filling the prompt:
 
 ```
+Phase: [1 | 2 | 3]. If 1: summarize requirement only. If 2: propose only interfaces/types. If 3: implement per approved design.
 Entry file: <path>
 In-scope files (do not modify others): <paste script output>
 Task: <one sentence>

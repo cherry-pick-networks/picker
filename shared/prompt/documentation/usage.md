@@ -47,6 +47,19 @@ Simplify (Tip 40 → §11).
 
 ---
 
+## Phase-gated feature (store.md §Q)
+
+When implementing a **new feature** (not refactor/docs/urgent fix), use the
+four-phase cycle: requirement summary → interface design → implementation →
+test/commit. Between phase 1 and 2, and between 2 and 3, the agent stops and
+asks for your approval; do not proceed until you reply (e.g. "승인해줘", "OK",
+"다음 단계로 진행해줘").
+**Phase flags** (strategy.md): Start your prompt with `[Phase 1]`, `[Phase 2]`,
+or `[Phase 3]` so the agent knows which step to run. Example: "[Phase 1] POST
+/content/worksheets 검증 로직 추가해줘. entry는 system/routes/content.ts."
+
+---
+
 ## Session start (first message)
 
 - **When**: Starting a new agent or chat session in Cursor (store.md §9).
