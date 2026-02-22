@@ -15,8 +15,8 @@ Thumbs.db
 npm-debug.log*
 
 # File-based record store: ignore data, keep structure
-shared/record/store/*.json
-shared/record/reference/*.json
+shared/record/store/*.toml
+shared/record/reference/*.toml
 
 # Temp: ignore contents, keep directory (temp/.gitkeep staged)
 temp/*
