@@ -1,7 +1,8 @@
 # Project context (human-readable)
 
 One-page summary for onboarding and daily use.\
-**Single source of truth for AI and tooling**: `shared/prompt/store.md`.
+**Single source of truth for AI and tooling**: `shared/prompt/store.md`.\
+When writing or editing AI-facing docs in this folder, follow store.md §R.
 
 ---
 

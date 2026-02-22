@@ -226,6 +226,8 @@ tool-specific configs.
   reference, usage, strategy, guide, runbook). Root README Documentation section lists only domain
   entry points (e.g. shared/README.md); do not add deep links to docs there. Do
   not duplicate rule text in root README.
+- **AI-facing docs**: When writing or editing .md under shared/prompt/ (except
+  documentation/), follow §R.
 
 ---
 
@@ -536,3 +538,24 @@ Approval definition: the user has approved when they indicate in chat that the
 next phase may proceed (e.g. "Approve", "OK", "Proceed to next phase", "Go ahead",
 "Approved"). One-line definition; agent must not advance phase without
 such a response.
+
+### §R. AI document writing principles
+
+Scope: documents under shared/prompt/ that are consumed by AI; that is, all .md
+files there except under shared/prompt/documentation/. Files under
+documentation/ are for people and tips; §R does not apply there.
+Language: Use English only in those AI-facing docs (§C).
+Phrasing: Prefer positive phrasing ("Do X" over "Do not do Y"); see §I.
+Rule-like content: When stating a rule or constraint, use one sentence per
+rule; state scope concretely (files, symbols, or patterns); make violations
+detectable where possible; otherwise keep as guidance only.
+Structure: One idea per block; no blank line between continuations of the same
+rule; wrap lines at punctuation or phrase boundaries; do not split a noun
+phrase or parenthetical mid-phrase (§I rule file format).
+Single source: Keep authoritative rule text only in this file (store.md);
+other AI-facing docs reference store sections and do not duplicate rule text.
+Naming: Use [suffix].md only under shared/prompt/; suffix from §E allowed sets;
+see §D and §F.
+Scannability: Use clear headings and one concept per bullet or block; state
+when a rule applies (scope, exceptions); include short fixed examples where
+they help agents parse intent.
