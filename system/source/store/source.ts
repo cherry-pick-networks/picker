@@ -2,7 +2,7 @@
  * Source storage in Deno KV. Keys: ["source", id].
  */
 
-import { getKv } from "./kv.ts";
+import { getKv } from "../../kv/store/kv.ts";
 
 const PREFIX = ["source"] as const;
 

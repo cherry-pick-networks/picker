@@ -7,7 +7,7 @@ import type { Hono } from "hono";
 import {
   registerAstAndScripts,
   registerRestHandlers,
-} from "./routes-register.ts";
+} from "./app/config/routes-register.ts";
 
 export const ROUTES: { method: string; path: string }[] = [
   { method: "GET", path: "/" },

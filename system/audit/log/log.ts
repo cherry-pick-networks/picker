@@ -1,6 +1,6 @@
-/** Log artifacts under system/log/; written by tests or tooling, not served. */
+/** Log artifacts under system/audit/log/; written by tests or tooling, not served. */
 
-const LOG_DIR = new URL("../log/", import.meta.url).pathname;
+const LOG_DIR = new URL(".", import.meta.url).pathname;
 const E2E_RUNS_PATH = `${LOG_DIR}e2e-runs.json`;
 const MAX_RUNS = 20;
 

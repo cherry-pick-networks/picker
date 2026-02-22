@@ -1,5 +1,5 @@
 import { assertEquals } from "@std/assert";
-import { verifyGovernance } from "../../system/validator/index.ts";
+import { verifyGovernance } from "../../system/script/validation/index.ts";
 
 Deno.test("verifyGovernance allows empty path for list", () => {
   const r = verifyGovernance("read", "");

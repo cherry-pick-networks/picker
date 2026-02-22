@@ -1,5 +1,5 @@
 import { assertEquals } from "@std/assert";
-import { add } from "../../system/service/add.ts";
+import { add } from "../../system/app/config/add.ts";
 import { app } from "../../main.ts";
 
 Deno.test(function addTest() {

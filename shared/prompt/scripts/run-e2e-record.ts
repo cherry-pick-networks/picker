@@ -1,10 +1,10 @@
 /**
- * Run E2E tests and append one run entry to system/log/e2e-runs.json.
+ * Run E2E tests and append one run entry to system/audit/log/e2e-runs.json.
  * Usage: deno run -A --unstable-kv shared/prompt/scripts/run-e2e-record.ts
  * Or: deno task test:e2e-record
  */
 
-import { appendE2eRun } from "../../../system/store/log.ts";
+import { appendE2eRun } from "../../../system/audit/log/log.ts";
 
 const E2E_TEST_FILE = "tests/system/main_e2e_test.ts";
 

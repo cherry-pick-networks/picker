@@ -4,7 +4,7 @@
  */
 
 import { readScript, writeScript } from "../store/scripts.ts";
-import { verifyGovernance } from "../validator/index.ts";
+import { verifyGovernance } from "../validation/index.ts";
 
 export type ApplyResult =
   | { ok: true }

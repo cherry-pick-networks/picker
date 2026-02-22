@@ -1,5 +1,5 @@
-import type { Item, Worksheet } from "./content-schema.ts";
-import { ItemSchema, WorksheetSchema } from "./content-schema.ts";
+import type { Item, Worksheet } from "../schema/content-schema.ts";
+import { ItemSchema, WorksheetSchema } from "../schema/content-schema.ts";
 
 export function nowIso(): string {
   const s = new Date().toISOString();

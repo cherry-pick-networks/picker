@@ -1,4 +1,4 @@
-import { readScript } from "../store/scripts.ts";
+import { readScript } from "../../script/store/scripts.ts";
 
 export const DEFAULT_GOAL_ACCURACY = "85%";
 export const DEFAULT_VOCABULARY = "Fry Sight Words + attached list";

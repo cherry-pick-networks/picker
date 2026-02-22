@@ -6,7 +6,7 @@ import { generate as uuidV7 } from "@std/uuid/v7";
 import type {
   ExtractedIndex,
   ExtractedIndexEntry,
-} from "../../../system/store/data.ts";
+} from "../../../system/record/store/data.ts";
 import {
   deriveExtractedName,
   deriveType,

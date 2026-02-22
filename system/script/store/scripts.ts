@@ -1,9 +1,9 @@
 /**
  * Read access to shared/runtime/store/. All access is gated by Governance
- * (system/validator).
+ * (script/validation).
  */
 
-import { verifyGovernance } from "../validator/index.ts";
+import { verifyGovernance } from "../validation/index.ts";
 import type { ListResult, ReadResult, WriteResult } from "./scripts-types.ts";
 
 export type { ListResult, ReadResult, WriteResult } from "./scripts-types.ts";

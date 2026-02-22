@@ -10,7 +10,7 @@ import {
   ItemPatchSchema,
   updateItem,
 } from "../service/content.ts";
-import type { ItemPatch } from "../service/content-schema.ts";
+import type { ItemPatch } from "../schema/content-schema.ts";
 
 export async function getItem(c: Context) {
   const id = c.req.param("id");

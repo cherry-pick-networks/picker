@@ -1,10 +1,10 @@
 import * as contentStore from "../store/content.ts";
-import type { Item, ItemPatch, Worksheet } from "./content-schema.ts";
+import type { Item, ItemPatch, Worksheet } from "../schema/content-schema.ts";
 import {
   type CreateItemRequest as CreateItemRequestType,
   ItemSchema,
   WorksheetSchema,
-} from "./content-schema.ts";
+} from "../schema/content-schema.ts";
 import { nowIso, parseItem } from "./content-parse.ts";
 export {
   CreateItemRequestSchema,
@@ -13,13 +13,13 @@ export {
   ItemSchema,
   WorksheetPromptResponseSchema,
   WorksheetSchema,
-} from "./content-schema.ts";
+} from "../schema/content-schema.ts";
 export type {
   CreateItemRequest,
   Item,
   ItemPatch,
   Worksheet,
-} from "./content-schema.ts";
+} from "../schema/content-schema.ts";
 export { buildWorksheetPrompt } from "./content-prompt.ts";
 export { generateWorksheet } from "./content-worksheet.ts";
 

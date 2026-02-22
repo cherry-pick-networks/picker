@@ -1,7 +1,7 @@
 import type {
   GenerateWorksheetRequest,
   WorksheetPromptResponse,
-} from "./content-schema.ts";
+} from "../schema/content-schema.ts";
 import {
   DEFAULT_QUESTION_TYPE,
   DEFAULT_WORKSHEET_CONTEXT,
@@ -9,7 +9,7 @@ import {
 } from "./content-prompt.types.ts";
 
 export type { WorksheetContext };
-import { getProfile } from "./profile.ts";
+import { getProfile } from "../../actor/service/profile.ts";
 import {
   DEFAULT_GOAL_ACCURACY,
   DEFAULT_TEMPLATE,

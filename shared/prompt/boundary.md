@@ -14,14 +14,17 @@ Use that document for AI direction and scope decisions.
 
 | Module                    | Role                                                                                                                                                                                                                                                                                                           |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **main.ts**               | Server entry: Hono app; routes registered from system/routes.ts (imports system/router/*).                                                                                                                                                                                                                     |
+| **main.ts**               | Server entry: Hono app; routes registered from system/routes.ts (imports system/app/config).                                                                                                                                                                                                                   |
 | **client.ts**             | Client entry (loaded on every page).                                                                                                                                                                                                                                                                           |
 | **system/routes.ts**      | Route list (ROUTES) and registerRoutes(app); scope-check reads this.                                                                                                                                                                                                                                           |
-| **system/router/**        | Hono handlers: home, kv, profile, content, source, ast, ast-demo, scripts (GET/POST /scripts, GET /scripts/*).                                                                                                                                                                                                 |
-| **system/store/**         | Storage access (e.g. Deno KV via `getKv()`). Profile/progress KV under prefixes `profile`, `progress`. Content items/worksheets under `content` (item, worksheet). Source records under `source`. File-based UUID v7 storage under `shared/record/` (record/store, record/reference) via system/store/data.ts. |
-| **system/service/**       | Shared business logic (e.g. `add`, profile/progress, content, source collect/read). AST read/patch for shared/runtime/store/; apply via Governance and scripts write.                                                                                                                                          |
-| **system/validator/**     | Governance verification; must pass before any apply (e.g. shared/runtime/store mutation).                                                                                                                                                                                                                      |
-| **system/log/**           | Log artifact storage (e.g. test run history JSON, change audit log). Test/tooling writes run history; routes or services append change audit entries (who, when, what) for in-scope mutations. Not served by API unless an audit read endpoint is added.                                                       |
+| **system/app/config/**    | Route registration (home, rest, ast, scripts). Imports domain endpoints only.                                                                                                                                                                                                                                |
+| **system/actor/**         | Profile, progress: endpoint, service, store, schema.                                                                                                                                                                                                                                                          |
+| **system/content/**       | Items, worksheets, prompt: endpoint, service, store, schema.                                                                                                                                                                                                                                                |
+| **system/source/**        | Source collection: endpoint, service, store.                                                                                                                                                                                                                                                                 |
+| **system/script/**        | Scripts store, AST apply, Governance: endpoint, service, store, validation.                                                                                                                                                                                                                                  |
+| **system/record/**        | Record store (extracted/identity): endpoint, store.                                                                                                                                                                                                                                                          |
+| **system/kv/**            | Generic Deno KV: endpoint, store.                                                                                                                                                                                                                                                                            |
+| **system/audit/log/**     | Log artifact storage (e.g. e2e-runs.json, change audit). Test/tooling writes run history. Not served by API unless an audit read endpoint is added.                                                                                                                                                         |
 | **shared/runtime/store/** | Target path for AST-based self-edit; read and write only via Governance-verified flow.                                                                                                                                                                                                                         |
 
 ---
@@ -65,11 +68,11 @@ Use that document for AI direction and scope decisions.
 ## Mutation boundary
 
 - **When mutating**: Use only path `shared/runtime/store/`. Read and write only
-  through Governance verification (system/validator).
-- **Routes**: Do not write directly from routes; use system/validator flow.
+  through Governance verification (system/script/validation).
+- **Routes**: Do not write directly from routes; use system/script/validation flow.
 - **Off-limits**: Do not write directly to config/ or credentials; use approved
   mechanisms only. File-based record store (shared/record/) is written only via
-  system/store/data.ts.
+  system/record/store/data.ts.
 
 ---
 
@@ -85,10 +88,10 @@ Use that document for AI direction and scope decisions.
   `reference` (index). Store: `shared/record/store/*.json`. Indexes:
   `shared/record/reference/extracted-data-index.json`,
   `shared/record/reference/identity-index.json`. Populated by migration from
-  `.old`; read/write via system/store/data.ts.
+  `.old`; read/write via system/record/store/data.ts.
 - **Worksheet prompt templates** — read-only from `shared/runtime/store/` (e.g.
   docs/contract/); Governance-verified read.
-- **Change audit log** — stored under `system/log/` (e.g. JSON file(s)); one
+- **Change audit log** — stored under `system/audit/log/` (e.g. JSON file(s)); one
   entry per mutation (profile, progress, content, scripts/store) with actor,
   timestamp, and change summary; written by routes or services on mutation;
   retention and format defined by implementation.

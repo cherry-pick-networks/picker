@@ -1,5 +1,5 @@
 import * as contentStore from "../store/content.ts";
-import type { GenerateWorksheetRequest, Worksheet } from "./content-schema.ts";
+import type { GenerateWorksheetRequest, Worksheet } from "../schema/content-schema.ts";
 import { nowIso } from "./content-parse.ts";
 
 async function collectItemIds(

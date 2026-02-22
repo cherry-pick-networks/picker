@@ -7,7 +7,7 @@
 import type {
   ExtractedIndex,
   IdentityIndex,
-} from "../../../system/store/data.ts";
+} from "../../../system/record/store/data.ts";
 import {
   getExtractedDir,
   getExtractedIndexPath,
@@ -15,7 +15,7 @@ import {
   getIdentityIndexPath,
   readExtractedIndex,
   readIdentityIndex,
-} from "../../../system/store/data.ts";
+} from "../../../system/record/store/data.ts";
 import { ensureDir } from "./migrate-old-to-data-helpers.ts";
 import {
   runExtractedMigration,

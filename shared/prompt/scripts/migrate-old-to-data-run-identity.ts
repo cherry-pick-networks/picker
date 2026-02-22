@@ -6,7 +6,7 @@ import { generate as uuidV7 } from "@std/uuid/v7";
 import type {
   IdentityIndex,
   IdentityIndexEntry,
-} from "../../../system/store/data.ts";
+} from "../../../system/record/store/data.ts";
 import {
   deriveIdentityName,
   isMeaninglessFilename,
