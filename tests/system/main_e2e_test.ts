@@ -97,20 +97,30 @@ Deno.test("E2E GET /ast over real HTTP", handlerTestOpts, async () => {
     const res = await fetch(`${base}/ast`);
     assertEquals(res.status, 200);
     const body = await res.json();
-    assert(typeof body.variableDeclarations === "number", "variableDeclarations");
+    assert(
+      typeof body.variableDeclarations === "number",
+      "variableDeclarations",
+    );
   });
 });
 
-Deno.test("E2E GET /scripts/hello.txt over real HTTP", handlerTestOpts, async () => {
-  await withTempScriptsStore(async () => {
-    await withServer(async (base) => {
-      const res = await fetch(`${base}/scripts/hello.txt`);
-      assertEquals(res.status, 200);
-      const text = await res.text();
-      assert(text.includes("hello from shared/runtime/store"), "file content");
-    });
-  }, { seedHello: true });
-});
+Deno.test(
+  "E2E GET /scripts/hello.txt over real HTTP",
+  handlerTestOpts,
+  async () => {
+    await withTempScriptsStore(async () => {
+      await withServer(async (base) => {
+        const res = await fetch(`${base}/scripts/hello.txt`);
+        assertEquals(res.status, 200);
+        const text = await res.text();
+        assert(
+          text.includes("hello from shared/runtime/store"),
+          "file content",
+        );
+      });
+    }, { seedHello: true });
+  },
+);
 
 Deno.test("E2E POST /ast/apply over real HTTP", handlerTestOpts, async () => {
   await withTempScriptsStore(async () => {
@@ -186,8 +196,9 @@ Deno.test(
     await withServer(async (base) => {
       const start = performance.now();
       const results = await Promise.all(
-        Array.from({ length: concurrency }, () =>
-          fetch(`${base}/`).then((r) => r.status),
+        Array.from(
+          { length: concurrency },
+          () => fetch(`${base}/`).then((r) => r.status),
         ),
       );
       const elapsed = performance.now() - start;

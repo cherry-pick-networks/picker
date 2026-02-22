@@ -1,10 +1,13 @@
 // deno-lint-ignore-file function-length/function-length
-import type { GenerateWorksheetRequest, WorksheetPromptResponse } from "./content-schema.ts";
+import type {
+  GenerateWorksheetRequest,
+  WorksheetPromptResponse,
+} from "./content-schema.ts";
 import { getProfile } from "./profile.ts";
 import {
   DEFAULT_GOAL_ACCURACY,
-  DEFAULT_VOCABULARY,
   DEFAULT_TEMPLATE,
+  DEFAULT_VOCABULARY,
   loadTemplate,
   resolveTemplatePaths,
 } from "./content-prompt-load.ts";
@@ -27,8 +30,9 @@ export function contextFromProfile(profile: {
     unknown
   >;
   const goal = wg.goal_accuracy as number | undefined;
-  const goalStr =
-    goal != null ? `${Math.round(goal * 100)}%` : DEFAULT_GOAL_ACCURACY;
+  const goalStr = goal != null
+    ? `${Math.round(goal * 100)}%`
+    : DEFAULT_GOAL_ACCURACY;
   return {
     student_name: profile.id,
     goal_accuracy: goalStr,

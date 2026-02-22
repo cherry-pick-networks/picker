@@ -1,35 +1,23 @@
 import { z } from "zod";
 import * as store from "../store/profile.ts";
+import {
+  type Profile,
+  ProfileCreateSchema,
+  ProfilePatchSchema,
+  ProfileSchema,
+  type Progress,
+  ProgressPatchSchema,
+  ProgressSchema,
+} from "./profile-schema.ts";
 
-export const ProfileSchema = z.object({
-  id: z.string(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  grade: z.string().optional(),
-  preferences: z.record(z.string(), z.unknown()).optional(),
-  goals: z.array(z.string()).optional(),
-});
-export type Profile = z.infer<typeof ProfileSchema>;
-
-export const ProgressSchema = z.object({
-  id: z.string(),
-  updatedAt: z.string(),
-  state: z.string().optional(),
-  currentStep: z.string().optional(),
-});
-export type Progress = z.infer<typeof ProgressSchema>;
-
-export const ProfileCreateSchema = ProfileSchema.omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-}).extend({
-  id: z.string().optional(),
-  createdAt: z.string().optional(),
-  updatedAt: z.string().optional(),
-});
-export const ProfilePatchSchema = ProfileSchema.partial().omit({ id: true });
-export const ProgressPatchSchema = ProgressSchema.partial().omit({ id: true });
+export type { Profile, Progress };
+export {
+  ProfileCreateSchema,
+  ProfilePatchSchema,
+  ProfileSchema,
+  ProgressPatchSchema,
+  ProgressSchema,
+};
 
 export async function getProfile(id: string): Promise<Profile | null> {
   const raw = await store.getProfile(id);
@@ -82,7 +70,10 @@ function mergeProfile(
   return parseProfile(merged as Record<string, unknown>);
 }
 
-async function saveProfileAndReturn(id: string, profile: Profile): Promise<Profile> {
+async function saveProfileAndReturn(
+  id: string,
+  profile: Profile,
+): Promise<Profile> {
   await store.setProfile(id, profile);
   return profile;
 }

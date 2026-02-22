@@ -35,7 +35,7 @@ async function main(): Promise<void> {
   const missingInScope = inCode.filter((r) => !allowed.has(routeKey(r)));
   if (missingInScope.length > 0) {
     console.error(
-      "Routes in code not in scope doc. Add to shared/prompt/boundary.md first.",
+      "Routes in code not in scope doc. Add to boundary.md first.",
     );
     for (const r of missingInScope) {
       console.error(`  ${r.method} ${r.path}`);

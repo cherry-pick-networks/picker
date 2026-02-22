@@ -44,7 +44,11 @@ async function parseRequest(
   const raw = await c.req.json().catch(() => null);
   const parsed = parseBody(raw);
   if (!parsed || !parsed.path.trim()) return badRequest();
-  return { path: parsed.path.trim(), oldText: parsed.oldText, newText: parsed.newText };
+  return {
+    path: parsed.path.trim(),
+    oldText: parsed.oldText,
+    newText: parsed.newText,
+  };
 }
 
 export async function postAstApply(c: Context): Promise<Response> {

@@ -4,8 +4,7 @@ import { readScript } from "../store/scripts.ts";
 export const DEFAULT_GOAL_ACCURACY = "85%";
 export const DEFAULT_VOCABULARY = "Fry Sight Words + attached list";
 
-export const DEFAULT_TEMPLATE =
-  "# Role: English Test Creator\n" +
+export const DEFAULT_TEMPLATE = "# Role: English Test Creator\n" +
   "# Target Student: {{student_name}}\n" +
   "# Goal: {{goal_accuracy}} Accuracy.\n\n" +
   "## Request context\n- Concept IDs: {{concept_ids}}\n" +
@@ -16,7 +15,10 @@ export async function loadTemplate(relativePath: string): Promise<string> {
   return result.ok ? result.content : "";
 }
 
-const TEMPLATE_PATHS: Record<string, { templatePath: string; formatPath: string }> = {
+const TEMPLATE_PATHS: Record<
+  string,
+  { templatePath: string; formatPath: string }
+> = {
   mid_skills: {
     templatePath: "docs/contract/contract-pedagogy-prompt.md",
     formatPath: "docs/contract/contract-pedagogy-format.md",

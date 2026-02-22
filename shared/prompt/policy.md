@@ -10,13 +10,13 @@
 ## Current layout
 
 See `.cursor/rules/global-agent-policy.mdc` and
-`.cursor/rules/global-directory-boundary.mdc` for the current list of files
-and which § each applies. Rule definitions: store.md Part B (§A–§R).
+`.cursor/rules/global-directory-boundary.mdc` for the current list of files and
+which § each applies. Rule definitions: store.md Part B (§A–§R).
 
 ## Naming
 
-- Name mdc files per **§D. Document and directory format** and **§E.
-  Document and directory naming** (prefix[-infix]-suffix; approved axes only).
+- Name mdc files per **§D. Document and directory format** and **§E. Document
+  and directory naming** (prefix[-infix]-suffix; approved axes only).
 - Use §E segment names as the approved vocabulary at each tier (files,
   subfolders, modules, symbols).
 

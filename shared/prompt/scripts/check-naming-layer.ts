@@ -7,52 +7,12 @@
  */
 // deno-lint-ignore-file function-length/function-length
 
-const LAYERS = ["presentation", "application", "domain", "infrastructure"] as const;
-
-const LAYER_INFIX: Record<string, Set<string>> = {
-  presentation: new Set([
-    "router", "facade", "interceptor", "filter", "guard", "client",
-    "validator", "payload", "session", "document",
-  ]),
-  application: new Set([
-    "service", "facade", "agent", "worker", "guard", "validator",
-    "payload", "session", "document", "record", "read", "write",
-    "batch", "parse", "search", "validate", "migration", "recovery",
-  ]),
-  domain: new Set([
-    "entity", "repository", "service", "record", "document", "validate",
-  ]),
-  infrastructure: new Set([
-    "adapter", "client", "repository", "agent", "worker", "blob",
-    "cache", "session", "record", "json", "sql", "redis", "stream",
-    "document", "bootstrap", "shutdown", "read", "write", "batch",
-    "migration", "recovery", "parse", "upload",
-  ]),
-};
-
-const LAYER_SUFFIX: Record<string, Set<string>> = {
-  presentation: new Set([
-    "endpoint", "response", "config", "format", "middleware",
-    "exception", "trace", "boundary", "validation",
-  ]),
-  application: new Set([
-    "pipeline", "config", "event", "store", "metrics", "trace",
-    "boundary", "constraint", "validation", "compliance",
-  ]),
-  domain: new Set([
-    "schema", "event", "boundary", "constraint", "contract",
-    "principle", "types",
-  ]),
-  infrastructure: new Set([
-    "store", "storage", "config", "mapping", "pipeline", "metrics",
-    "trace", "log", "boundary", "isolation",
-  ]),
-};
-
-const SKIP_DIRS = new Set([
-  ".git", ".cursor", "node_modules", "dist", "build", "coverage",
-  "vendor", ".cache", "tests", "data",
-]);
+import {
+  LAYER_INFIX,
+  LAYER_SUFFIX,
+  LAYERS,
+  SKIP_DIRS,
+} from "./check-naming-layer-config.ts";
 
 async function walkDirs(
   root: string,

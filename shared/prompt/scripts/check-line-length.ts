@@ -1,16 +1,27 @@
 /**
- * Line-length check: fail if any TypeScript source line exceeds 80 characters
- * (store.md §P). Run from repo root: deno run --allow-read shared/prompt/scripts/check-line-length.ts
+ * Line-length check: fail if any TS source line exceeds 80 chars (store.md §P).
+ * Run: deno run --allow-read shared/prompt/scripts/check-line-length.ts
  * Or: deno task line-length-check
  */
+// deno-lint-ignore-file function-length/function-length
 
 const MAX_LINE_LENGTH = 80;
 const SKIP_DIRS = new Set([
-  ".cache", ".git", ".cursor", "node_modules", "dist", "build",
-  "coverage", "vendor",
+  ".cache",
+  ".git",
+  ".cursor",
+  "node_modules",
+  "dist",
+  "build",
+  "coverage",
+  "vendor",
 ]);
 
-async function walkTsFiles(root: string, dir: string, out: string[]): Promise<void> {
+async function walkTsFiles(
+  root: string,
+  dir: string,
+  out: string[],
+): Promise<void> {
   for await (const e of Deno.readDir(dir)) {
     const full = `${dir}/${e.name}`;
     const rel = full.slice(root.length + 1);
@@ -40,7 +51,9 @@ async function main(): Promise<void> {
     }
   }
   if (violations.length > 0) {
-    console.error(`Line length check failed (store.md §P: max ${MAX_LINE_LENGTH} chars):`);
+    console.error(
+      `Line length check failed (store.md §P: max ${MAX_LINE_LENGTH} chars):`,
+    );
     for (const v of violations) {
       console.error(`  ${v.file}:${v.line}: ${v.length} chars`);
     }

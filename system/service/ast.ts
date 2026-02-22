@@ -32,7 +32,9 @@ async function doWrite(
   content: string,
 ): Promise<ApplyResult> {
   const write = await writeScript(path, content);
-  return write.ok ? { ok: true } : { ok: false, status: write.status, body: write.body };
+  return write.ok
+    ? { ok: true }
+    : { ok: false, status: write.status, body: write.body };
 }
 
 async function readAfterGov(

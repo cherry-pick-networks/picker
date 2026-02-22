@@ -1,14 +1,14 @@
 import type { Context } from "hono";
 import {
-  getItem as svcGetItem,
-  createItem,
-  updateItem,
-  getWorksheet as svcGetWorksheet,
-  generateWorksheet,
   buildWorksheetPrompt,
+  createItem,
   CreateItemRequestSchema,
+  generateWorksheet,
   GenerateWorksheetRequestSchema,
+  getItem as svcGetItem,
+  getWorksheet as svcGetWorksheet,
   ItemPatchSchema,
+  updateItem,
 } from "../service/content.ts";
 
 export async function getItem(c: Context) {
@@ -44,9 +44,7 @@ export async function patchItem(c: Context) {
   const r = await parsePatchBody(c);
   if ("err" in r) return r.err;
   const item = await updateItem(id, r.data);
-  return item == null
-    ? c.json({ error: "Not found" }, 404)
-    : c.json(item);
+  return item == null ? c.json({ error: "Not found" }, 404) : c.json(item);
 }
 
 export async function getWorksheet(c: Context) {

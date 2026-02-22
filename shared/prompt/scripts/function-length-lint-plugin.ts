@@ -16,16 +16,15 @@ function checkBody(
   body: Deno.lint.Expression | Deno.lint.BlockStatement | null | undefined,
 ): void {
   if (!body) return;
-  if (body.type !== "BlockStatement") return; // expression body ok (counts as 1)
+  if (body.type !== "BlockStatement") return;
+  // expression body ok (counts as 1)
   const block = body as Deno.lint.BlockStatement;
   const n = statementCount(block);
 
   if (n >= MIN_STATEMENTS && n <= MAX_STATEMENTS) return;
-  context.report({
-    node: block,
-    message:
-      `Function body must have ${MIN_STATEMENTS}–${MAX_STATEMENTS} statements (got ${n}).`,
-  });
+  const msg = `Function body must have ${MIN_STATEMENTS}–${MAX_STATEMENTS} ` +
+    `statements (got ${n}).`;
+  context.report({ node: block, message: msg });
 }
 
 const plugin: Deno.lint.Plugin = {

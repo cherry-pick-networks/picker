@@ -2,7 +2,7 @@
  * Type-check policy: fail if type checking is disabled or bypassed.
  * Checks: (A) no --no-check in deno.json tasks, (B) no @ts-ignore or
  * @ts-expect-error in source, (D) no skipLibCheck/strict disabled in config.
- * Run from repo root: deno run --allow-read shared/prompt/scripts/check-type-policy.ts
+ * Run: deno run --allow-read shared/prompt/scripts/check-type-policy.ts
  * Or: deno task type-check-policy
  */
 // deno-lint-ignore-file function-length/function-length

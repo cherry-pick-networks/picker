@@ -102,16 +102,16 @@ tool-specific configs.
   the default for non-trivial code.
 - **Verify output**: For research or non-code output, ask to verify claims and
   summarize (e.g. table of what was verified).
-- **Phase-gated feature cycle (recommended when implementing features)**: For one small feature unit
-  (entry file + direct imports), follow four phases: (1) Requirement — AI
-  outputs only a short requirement/constraint summary; gate: stop generation,
-  ask user approval, do not proceed to phase 2 until explicit approval. (2)
-  Interface design — AI proposes only `interface`/`type` for that tree, no
-  implementation or JSX; gate: stop, ask approval of the design, do not write
-  implementation until approved. (3) Implementation — code per §P (file ≤100
-  lines, function 2–4 statements). (4) Test and commit — add or update tests,
-  then commit per §B. One cycle = one entry file + its direct imports; see
-  shared/prompt/documentation/strategy.md for scope-discovery and prompt
+- **Phase-gated feature cycle (recommended when implementing features)**: For
+  one small feature unit (entry file + direct imports), follow four phases: (1)
+  Requirement — AI outputs only a short requirement/constraint summary; gate:
+  stop generation, ask user approval, do not proceed to phase 2 until explicit
+  approval. (2) Interface design — AI proposes only `interface`/`type` for that
+  tree, no implementation or JSX; gate: stop, ask approval of the design, do not
+  write implementation until approved. (3) Implementation — code per §P (file
+  ≤100 lines, function 2–4 statements). (4) Test and commit — add or update
+  tests, then commit per §B. One cycle = one entry file + its direct imports;
+  see shared/prompt/documentation/strategy.md for scope-discovery and prompt
   template. Optionally: after phase 2 approval, writing a failing test before
   phase 3 is allowed (TDD); state this in the same workflow.
 
@@ -170,11 +170,12 @@ tool-specific configs.
 - **Branching experiments**: When trying a different approach from a point in
   time, fork the conversation or record the branch point in the handoff doc.
 - **Session start (first message)**: When starting a new agent or chat session,
-  the first user message should be a single short sentence in English that states
-  the session goal (one task or one question). This improves auto-generated
-  chat titles (e.g. in Cursor). Prefer under 15 words or about 40 characters.
-  Example: "Add scope validation to POST /content/worksheets API". Full procedure
-  and examples: `shared/prompt/documentation/guide.md` (Session start).
+  the first user message should be a single short sentence in English that
+  states the session goal (one task or one question). This improves
+  auto-generated chat titles (e.g. in Cursor). Prefer under 15 words or about 40
+  characters. Example: "Add scope validation to POST /content/worksheets API".
+  Full procedure and examples: `shared/prompt/documentation/guide.md` (Session
+  start).
 
 ---
 
@@ -223,11 +224,11 @@ tool-specific configs.
 - **External tips**: Use external guides (e.g. claude-code-tips) as reference
   only; write only the chosen practices here.
 - **Human-readable docs**: Project summary and rules for people are in
-  `shared/prompt/` (2nd layer: overview.md) and
-  `shared/prompt/documentation/` (3rd layer: guide, strategy; allowed names
-  reference, usage, strategy, guide, runbook). Root README Documentation section lists only domain
-  entry points (e.g. shared/README.md); do not add deep links to docs there. Do
-  not duplicate rule text in root README.
+  `shared/prompt/` (2nd layer: overview.md) and `shared/prompt/documentation/`
+  (3rd layer: guide, strategy; allowed names reference, usage, strategy, guide,
+  runbook). Root README Documentation section lists only domain entry points
+  (e.g. shared/README.md); do not add deep links to docs there. Do not duplicate
+  rule text in root README.
 - **AI-facing docs**: When writing or editing .md under shared/prompt/ (except
   store.md and documentation/), follow §R.
 
@@ -278,9 +279,9 @@ one hyphen; no underscores; suffix singular (except types); descriptive,
 pronounceable, searchable. Axis rule: each segment uses exactly one axis from
 its allowed set (see §E); no axis pollution; one word must not appear in two
 axes. The same §E sets are the approved names for that tier and below (files,
-subfolders, modules, symbols). New rule files: pick one prefix from Scope/Layer/Context; one suffix from
-Artifact/Policy/Meta; add infix from Actor/Action/Entity only when the rule
-applies to a specific focus.
+subfolders, modules, symbols). New rule files: pick one prefix from
+Scope/Layer/Context; one suffix from Artifact/Policy/Meta; add infix from
+Actor/Action/Entity only when the rule applies to a specific focus.
 
 Document files under shared/prompt/: use [suffix].md only. Prefix and infix are
 implied by the path (shared = prefix, prompt = infix). Suffix must be from §E
@@ -314,8 +315,8 @@ Suffix (Artifact); never Infix (use interceptor, filter). policy: only Suffix
 Suffix (use store, storage). config: only this spelling; never configuration.
 education: only this spelling; never edu. type (TS/classification): use types in
 Suffix Meta; never type. core: forbidden in Context; use shared, base, or domain
-(layer). context (API): use provider in Infix Entity; do not use context
-as segment. record: only Entity; stored units of data (e.g. extracted record,
+(layer). context (API): use provider in Infix Entity; do not use context as
+segment. record: only Entity; stored units of data (e.g. extracted record,
 identity record); one record per file or index entry.
 
 Prefix — one axis only: [ Scope | Layer | Context ]. Rule: prefix must denote
@@ -337,8 +338,8 @@ interceptor, filter), policy (use validator, guard). Actor (architectural role
 or agent): router, service, repository, entity, interceptor, filter, adapter,
 facade, client, agent, worker, guard, validator. Entity (data or medium kind):
 payload, stream, blob, cache, session, document, record, json, sql, redis,
-prompt, provider. Action (lifecycle or operation): bootstrap, shutdown, runtime, build,
-migration, recovery, read, write, batch, parse, upload, search, validate.
+prompt, provider. Action (lifecycle or operation): bootstrap, shutdown, runtime,
+build, migration, recovery, read, write, batch, parse, upload, search, validate.
 
 Suffix — one axis only: [ Artifact | Policy | Meta ]. Rule: suffix denotes form
 of the deliverable; context meaning belongs in Prefix, not Suffix. Forbidden in
@@ -348,29 +349,28 @@ response, middleware, format, exception, config, pipeline, metrics, trace.
 Policy (principle, constraint, or policy): boundary, constraint, contract,
 principle, safety, validation, compliance, isolation. Meta (documentation, test,
 or classification): test, documentation, naming, style, log, types, language,
-profile, assessment, reference, plan, handoff, strategy, usage, tips,
-overview, goal.
+profile, assessment, reference, plan, handoff, strategy, usage, tips, overview,
+goal.
 
 Examples: payment-infra-redis-config (Context + Layer + Entity + Artifact);
 security-application-guard-policy (Context + Layer + Actor + Policy);
 global-config (Scope + Artifact).
 
-Layer-specific allowed Infix and Suffix (when tier 1 is Layer): When the
-first tier is one of presentation, application, domain, infrastructure,
-tier 2 and tier 3 names must use only that layer's allowed sets below.
-Presentation — Infix: router, facade, interceptor, filter, guard, client,
-validator, payload, session, document. Suffix: endpoint, response, config,
-format, middleware, exception, trace, boundary, validation. Application —
-Infix: service, facade, agent, worker, guard, validator, payload, session,
-document, record, read, write, batch, parse, search, validate, migration,
-recovery. Suffix: pipeline, config, event, store, metrics, trace, boundary,
-constraint, validation, compliance. Domain — Infix: entity, repository,
-service, record, document, validate. Suffix: schema, event, boundary,
-constraint, contract, principle, types. Infrastructure — Infix: adapter,
-client, repository, agent, worker, blob, cache, session, record, json, sql,
-redis, stream, document, bootstrap, shutdown, read, write, batch, migration,
-recovery, parse, upload. Suffix: store, storage, config, mapping, pipeline,
-metrics, trace, log, boundary, isolation.
+Layer-specific allowed Infix and Suffix (when tier 1 is Layer): When the first
+tier is one of presentation, application, domain, infrastructure, tier 2 and
+tier 3 names must use only that layer's allowed sets below. Presentation —
+Infix: router, facade, interceptor, filter, guard, client, validator, payload,
+session, document. Suffix: endpoint, response, config, format, middleware,
+exception, trace, boundary, validation. Application — Infix: service, facade,
+agent, worker, guard, validator, payload, session, document, record, read,
+write, batch, parse, search, validate, migration, recovery. Suffix: pipeline,
+config, event, store, metrics, trace, boundary, constraint, validation,
+compliance. Domain — Infix: entity, repository, service, record, document,
+validate. Suffix: schema, event, boundary, constraint, contract, principle,
+types. Infrastructure — Infix: adapter, client, repository, agent, worker, blob,
+cache, session, record, json, sql, redis, stream, document, bootstrap, shutdown,
+read, write, batch, migration, recovery, parse, upload. Suffix: store, storage,
+config, mapping, pipeline, metrics, trace, log, boundary, isolation.
 
 ### §F. Directory structure and exceptions
 
@@ -386,15 +386,14 @@ prefix/infix/ prefix/infix/suffix/ Order fixed: prefix then infix then suffix;
 no fourth tier.
 
 Rule content — naming: Each tier name must use only approved values for that
-axis (prefix / infix / suffix); see §E. When prefix is a Layer value, infix
-and suffix are restricted to that layer's allowed sets in §E. That same §E
+axis (prefix / infix / suffix); see §E. When prefix is a Layer value, infix and
+suffix are restricted to that layer's allowed sets in §E. That same §E
 vocabulary applies to names within that tier (files, subfolders, modules,
 symbols). Lowercase; one hyphen between words; no underscores or spaces.
 
 Exceptions: Maintain an explicit exception list; same list for docs and tooling.
 Typical entries: .git, .cursor, node_modules, dist, build, coverage, vendor,
-.cache, tests (confirm per project). Update list and any validator
-together.
+.cache, tests (confirm per project). Update list and any validator together.
 
 Document exceptions: Maintain a separate explicit list for .md files exempt from
 segment naming. Fixed names: README.md, CHANGELOG.md and similar
@@ -417,11 +416,11 @@ Validation (optional): Script: walk directories from root; skip exception list;
 assert remaining paths match prefix/(infix/)(suffix/) and tier names in allowed
 sets; exit 1 on failure. For layer-prefixed paths, run
 `deno task naming-layer-check` (shared/prompt/scripts/check-naming-layer.ts).
-Run in pre-commit or CI. Document names: optionally
-walk the document tree (e.g. shared/prompt/), skip document exceptions, assert
-each remaining .md matches [suffix].md and suffix is in §E allowed sets (for
-shared/prompt/documentation/, use the documentation allowed list only:
-reference, usage, strategy, guide, runbook); run in pre-commit or CI.
+Run in pre-commit or CI. Document names: optionally walk the document tree (e.g.
+shared/prompt/), skip document exceptions, assert each remaining .md matches
+[suffix].md and suffix is in §E allowed sets (for shared/prompt/documentation/,
+use the documentation allowed list only: reference, usage, strategy, guide,
+runbook); run in pre-commit or CI.
 
 Agent / tool behavior: When creating directories, use only the three allowed
 forms for non-excepted paths; use only approved axis values per §E.
@@ -531,12 +530,12 @@ comparison.
 
 Line length: keep lines to 80 characters or fewer (strict); exceptions only
 where documented (e.g. long URLs in comments). File length: keep files to 100
-lines or fewer; split when longer. Scope: TypeScript source (e.g. `**/*.ts`); exclude node_modules, vendor,
-generated output.
+lines or fewer; split when longer. Scope: TypeScript source (e.g. `**/*.ts`);
+exclude node_modules, vendor, generated output.
 
 Function body: block body 2–4 statements (enforced); expression body allowed
-(counts as 1). Exceptions: single return with await or 2+ level method chaining. Validation: `deno lint`
-(plugin function-length/function-length in
+(counts as 1). Exceptions: single return with await or 2+ level method chaining.
+Validation: `deno lint` (plugin function-length/function-length in
 shared/prompt/scripts/function-length-lint-plugin.ts). To ignore per function:
 `// deno-lint-ignore function-length/function-length` on the line above.
 Guidance (not enforced): keep indentation depth to 1–2 levels.
@@ -546,43 +545,38 @@ Guidance (not enforced): keep indentation depth to 1–2 levels.
 When it applies: only when implementing a new feature (adding or changing code
 for a feature). Refactor-only, docs-only, or urgent bugfix work are explicit
 exceptions; §Q does not apply. Non-code tasks may use requirement summary and
-approval only; design phase is "not applicable" then.
-Four phases: (1) Requirement — present only a short requirement/constraint
-summary; do not write code or types. (2) After explicit user approval —
-propose only interfaces/types for the tree; do not write implementation or
-JSX. (3) After explicit user approval — implement per approved design. (4)
-Add or update tests, then commit per §B.
-CRITICAL RULE (AI output control): At phase 1 completion: stop generating
-further text; ask the user "Do you approve this requirement summary?" (or
-equivalent); do not proceed to the next phase until the user gives explicit
+approval only; design phase is "not applicable" then. Four phases: (1)
+Requirement — present only a short requirement/constraint summary; do not write
+code or types. (2) After explicit user approval — propose only interfaces/types
+for the tree; do not write implementation or JSX. (3) After explicit user
+approval — implement per approved design. (4) Add or update tests, then commit
+per §B. CRITICAL RULE (AI output control): At phase 1 completion: stop
+generating further text; ask the user "Do you approve this requirement summary?"
+(or equivalent); do not proceed to the next phase until the user gives explicit
 confirmation (e.g. Yes, Approved, Go ahead). At phase 2 completion: stop
 generating; ask "Do you approve this design (interfaces/types)?" (or
-equivalent); do not write implementation (logic or JSX) until explicit
-approval.
+equivalent); do not write implementation (logic or JSX) until explicit approval.
 Approval definition: the user has approved when they indicate in chat that the
-next phase may proceed (e.g. "Approve", "OK", "Proceed to next phase", "Go ahead",
-"Approved"). One-line definition; agent must not advance phase without
+next phase may proceed (e.g. "Approve", "OK", "Proceed to next phase", "Go
+ahead", "Approved"). One-line definition; agent must not advance phase without
 such a response.
 
 ### §R. AI document writing principles
 
 Scope: documents under shared/prompt/ that are consumed by AI; that is, all .md
 files there except store.md and except files under shared/prompt/documentation/.
-store.md is the single source for rules and follows §I and Part B format; §R does
-not apply to it. Files under documentation/ are for people and tips; §R does
-not apply there.
-Language: Use English only in those AI-facing docs (§C).
+store.md is the single source for rules and follows §I and Part B format; §R
+does not apply to it. Files under documentation/ are for people and tips; §R
+does not apply there. Language: Use English only in those AI-facing docs (§C).
 Phrasing: Prefer positive phrasing ("Do X" over "Do not do Y"); see §I.
-Rule-like content: When stating a rule or constraint, use one sentence per
-rule; state scope concretely (files, symbols, or patterns); make violations
-detectable where possible; otherwise keep as guidance only.
-Structure: One idea per block; no blank line between continuations of the same
-rule; wrap lines at punctuation or phrase boundaries; do not split a noun
-phrase or parenthetical mid-phrase (§I rule file format).
-Single source: Keep authoritative rule text only in this file (store.md);
-other AI-facing docs reference store sections and do not duplicate rule text.
-Naming: Use [suffix].md only under shared/prompt/; suffix from §E allowed sets;
-see §D and §F.
-Scannability: Use clear headings and one concept per bullet or block; state
-when a rule applies (scope, exceptions); include short fixed examples where
-they help agents parse intent.
+Rule-like content: When stating a rule or constraint, use one sentence per rule;
+state scope concretely (files, symbols, or patterns); make violations detectable
+where possible; otherwise keep as guidance only. Structure: One idea per block;
+no blank line between continuations of the same rule; wrap lines at punctuation
+or phrase boundaries; do not split a noun phrase or parenthetical mid-phrase (§I
+rule file format). Single source: Keep authoritative rule text only in this file
+(store.md); other AI-facing docs reference store sections and do not duplicate
+rule text. Naming: Use [suffix].md only under shared/prompt/; suffix from §E
+allowed sets; see §D and §F. Scannability: Use clear headings and one concept
+per bullet or block; state when a rule applies (scope, exceptions); include
+short fixed examples where they help agents parse intent.

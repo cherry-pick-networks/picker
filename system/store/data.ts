@@ -1,13 +1,11 @@
 /**
- * File-based UUID v7 storage under shared/record/. See shared/prompt/boundary.md.
+ * File-based UUID v7 storage under shared/record/. See boundary.md.
  */
 
 const DATA_DIR = new URL("../../shared/record/", import.meta.url).pathname;
 const RECORD_STORE = `${DATA_DIR}store/`;
-const EXTRACTED_INDEX_PATH =
-  `${DATA_DIR}reference/extracted-data-index.json`;
-const IDENTITY_INDEX_PATH =
-  `${DATA_DIR}reference/identity-index.json`;
+const EXTRACTED_INDEX_PATH = `${DATA_DIR}reference/extracted-data-index.json`;
+const IDENTITY_INDEX_PATH = `${DATA_DIR}reference/identity-index.json`;
 
 export interface ExtractedIndexEntry {
   type: string;

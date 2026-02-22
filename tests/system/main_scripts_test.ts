@@ -33,7 +33,7 @@ Deno.test("GET /scripts/nonexistent returns 404", async () => {
   });
 });
 
-Deno.test("POST /scripts/post-test.txt returns 201 and file is readable", async () => {
+Deno.test("POST /scripts/post-test.txt -> 201, file readable", async () => {
   await withTempScriptsStore(async () => {
     const res = await handler(
       new Request("http://localhost/scripts/post-test.txt", {
@@ -50,7 +50,7 @@ Deno.test("POST /scripts/post-test.txt returns 201 and file is readable", async 
   });
 });
 
-Deno.test("POST /scripts/subdir.txt returns 201 and content is readable", async () => {
+Deno.test("POST /scripts/subdir.txt -> 201, content readable", async () => {
   await withTempScriptsStore(async () => {
     const res = await handler(
       new Request("http://localhost/scripts/subdir.txt", {

@@ -1,9 +1,9 @@
 import type { Context } from "hono";
 import {
-  readExtractedIndex,
-  readIdentityIndex,
   readExtractedFile,
+  readExtractedIndex,
   readIdentityFile,
+  readIdentityIndex,
 } from "../store/data.ts";
 
 export async function getExtractedIndex(c: Context) {

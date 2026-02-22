@@ -4,23 +4,14 @@
  */
 
 import { verifyGovernance } from "../validator/index.ts";
+import type { ListResult, ReadResult, WriteResult } from "./scripts-types.ts";
+
+export type { ListResult, ReadResult, WriteResult } from "./scripts-types.ts";
 
 // deno-lint-ignore function-length/function-length
 function getScriptsBase(): string {
   return Deno.env.get("SCRIPTS_BASE") ?? "shared/runtime/store";
 }
-
-export type ListResult =
-  | { ok: true; entries: string[] }
-  | { ok: false; status: number; body: string };
-
-export type ReadResult =
-  | { ok: true; content: string }
-  | { ok: false; status: number; body: string };
-
-export type WriteResult =
-  | { ok: true; status: 201 }
-  | { ok: false; status: number; body: string };
 
 async function listDir(path: string): Promise<string[]> {
   const names: string[] = [];
@@ -31,9 +22,7 @@ async function listDir(path: string): Promise<string[]> {
   return names.sort();
 }
 
-/**
- * List entries in shared/runtime/store/. Governance-verified.
- */
+/** List entries in shared/runtime/store/. Governance-verified. */
 export async function listScripts(): Promise<ListResult> {
   const result = verifyGovernance("read", "");
   if (!result.allowed) {
@@ -52,7 +41,7 @@ export async function listScripts(): Promise<ListResult> {
 }
 
 /**
- * Read one file under shared/runtime/store/ by relative path. Governance-verified.
+ * Read one file under shared/runtime/store/ by path. Governance-verified.
  */
 export async function readScript(relativePath: string): Promise<ReadResult> {
   const result = verifyGovernance("read", relativePath);
@@ -76,8 +65,8 @@ export async function readScript(relativePath: string): Promise<ReadResult> {
 }
 
 /**
- * Write one file under shared/runtime/store/ by relative path. Governance-verified.
- * Creates parent directories under shared/runtime/store/ if needed.
+ * Write one file under shared/runtime/store/. Governance-verified.
+ * Creates parent dirs under shared/runtime/store/ if needed.
  */
 export async function writeScript(
   relativePath: string,

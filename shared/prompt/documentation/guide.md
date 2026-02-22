@@ -38,8 +38,8 @@ Simplify (Tip 40 → §11).
 - **Where**: `shared/prompt/handoff.md` (linked from README).
 - **Fields**: Goal, progress, what was tried, what failed, next steps. New
   sessions attach only this file. When handoff is the main context, the agent
-  outputs work plan → execution steps → recommended direction for the first
-  Next steps item, then proceeds (see handoff.md "Session start (for AI)").
+  outputs work plan → execution steps → recommended direction for the first Next
+  steps item, then proceeds (see handoff.md "Session start (for AI)").
 - **Next steps format**: Bullet list; one item = one logical unit (one commit or
   one scoped task); one sentence per item. If no required follow-up, add at
   least one optional or deferred item. For scope or dependency changes, note
@@ -54,10 +54,10 @@ When implementing a **new feature** (not refactor/docs/urgent fix), use the
 four-phase cycle: requirement summary → interface design → implementation →
 test/commit. Between phase 1 and 2, and between 2 and 3, the agent stops and
 asks for your approval; do not proceed until you reply (e.g. "Approve", "OK",
-"Proceed to next phase").
-**Phase flags** (strategy.md): Start your prompt with `[Phase 1]`, `[Phase 2]`,
-or `[Phase 3]` so the agent knows which step to run. Example: "[Phase 1] Add
-validation for POST /content/worksheets. Entry: system/routes/content.ts."
+"Proceed to next phase"). **Phase flags** (strategy.md): Start your prompt with
+`[Phase 1]`, `[Phase 2]`, or `[Phase 3]` so the agent knows which step to run.
+Example: "[Phase 1] Add validation for POST /content/worksheets. Entry:
+system/routes/content.ts."
 
 ---
 
@@ -69,13 +69,17 @@ validation for POST /content/worksheets. Entry: system/routes/content.ts."
 - **Format**: One sentence; under 15 words or ~40 characters; state one task or
   one question. Add context in a second message if needed.
 - **Templates**:
-  - Task: `[scope/target] + [what to do]` — e.g. `Add routes missing from boundary.md to scope-check`
-  - Analysis: `[symptom/error] + find cause` — e.g. `Find why type-check-policy fails`
-  - Refactor: `[target] + [direction]` — e.g. `Split content service functions over 80 lines`
-- **Procedure**: Open new chat → state goal in one sentence → send;
-  optionally rename the tab later in chat history if the auto-title is not ideal.
-- **Snippet**: Use the `agent-start` snippet (`.vscode/cursor-session.code-snippets`)
-  to paste the template and fill in the bracketed part.
+  - Task: `[scope/target] + [what to do]` — e.g.
+    `Add routes missing from boundary.md to scope-check`
+  - Analysis: `[symptom/error] + find cause` — e.g.
+    `Find why type-check-policy fails`
+  - Refactor: `[target] + [direction]` — e.g.
+    `Split content service functions over 80 lines`
+- **Procedure**: Open new chat → state goal in one sentence → send; optionally
+  rename the tab later in chat history if the auto-title is not ideal.
+- **Snippet**: Use the `agent-start` snippet
+  (`.vscode/cursor-session.code-snippets`) to paste the template and fill in the
+  bracketed part.
 
 ---
 
@@ -317,5 +321,5 @@ for workflows and updates.
 ---
 
 When the team decides to adopt any of these, add the chosen practice to this
-guide or to `shared/prompt/store.md` and, if needed, remove or shorten the
-entry above.
+guide or to `shared/prompt/store.md` and, if needed, remove or shorten the entry
+above.

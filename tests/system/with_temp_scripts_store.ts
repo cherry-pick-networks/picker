@@ -1,5 +1,5 @@
 /**
- * Runs fn with SCRIPTS_BASE set to a temp dir. Cleans up env and dir in finally.
+ * Runs fn with SCRIPTS_BASE set to a temp dir. Cleans up in finally.
  * Use so tests do not write into shared/runtime/store/.
  */
 export async function withTempScriptsStore(

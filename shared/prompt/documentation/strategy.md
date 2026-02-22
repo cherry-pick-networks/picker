@@ -71,15 +71,15 @@
 # 4-layer naming reference
 
 When the first directory tier is a Layer (presentation, application, domain,
-infrastructure), tier 2 and tier 3 must use only that layer's allowed Infix
-and Suffix. Canonical source: store.md §E. Below is a quick reference.
+infrastructure), tier 2 and tier 3 must use only that layer's allowed Infix and
+Suffix. Canonical source: store.md §E. Below is a quick reference.
 
-| Layer | Allowed Infix | Allowed Suffix |
-| ----- | ------------- | -------------- |
-| presentation | router, facade, interceptor, filter, guard, client, validator, payload, session, document | endpoint, response, config, format, middleware, exception, trace, boundary, validation |
-| application | service, facade, agent, worker, guard, validator, payload, session, document, record, read, write, batch, parse, search, validate, migration, recovery | pipeline, config, event, store, metrics, trace, boundary, constraint, validation, compliance |
-| domain | entity, repository, service, record, document, validate | schema, event, boundary, constraint, contract, principle, types |
-| infrastructure | adapter, client, repository, agent, worker, blob, cache, session, record, json, sql, redis, stream, document, bootstrap, shutdown, read, write, batch, migration, recovery, parse, upload | store, storage, config, mapping, pipeline, metrics, trace, log, boundary, isolation |
+| Layer          | Allowed Infix                                                                                                                                                                             | Allowed Suffix                                                                               |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| presentation   | router, facade, interceptor, filter, guard, client, validator, payload, session, document                                                                                                 | endpoint, response, config, format, middleware, exception, trace, boundary, validation       |
+| application    | service, facade, agent, worker, guard, validator, payload, session, document, record, read, write, batch, parse, search, validate, migration, recovery                                    | pipeline, config, event, store, metrics, trace, boundary, constraint, validation, compliance |
+| domain         | entity, repository, service, record, document, validate                                                                                                                                   | schema, event, boundary, constraint, contract, principle, types                              |
+| infrastructure | adapter, client, repository, agent, worker, blob, cache, session, record, json, sql, redis, stream, document, bootstrap, shutdown, read, write, batch, migration, recovery, parse, upload | store, storage, config, mapping, pipeline, metrics, trace, log, boundary, isolation          |
 
 ---
 
@@ -136,8 +136,8 @@ imports (relative imports only; npm/jsr are skipped). Use this list as the
 pasting into the prompt.
 
 Task: `deno task scope-discovery -- <entry-file>` (e.g.
-`deno task scope-discovery -- system/router/home.ts`). Add `--oneline`
-for one-line output.
+`deno task scope-discovery -- system/router/home.ts`). Add `--oneline` for
+one-line output.
 
 ## Phase flags (explicit prompt flags)
 
@@ -148,8 +148,8 @@ prompt so the agent knows the current phase:
   requirement/constraint summary, then asks for approval and waits.
 - **`[Phase 2]`** — After phase 1 is approved. AI proposes only
   `interface`/`type` for the tree, then asks for approval and waits.
-- **`[Phase 3]`** — After phase 2 is approved. AI implements logic and view
-  per the approved design.
+- **`[Phase 3]`** — After phase 2 is approved. AI implements logic and view per
+  the approved design.
 
 ## Prompt template
 

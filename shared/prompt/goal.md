@@ -10,9 +10,9 @@ linked specs.
 
 PICKER's final implementation goal is to implement the **self-evolving AI
 education architect** as a single, fully working system within the scope and
-governance defined in the spec: AST-based self-edit of shared/runtime/store/, Thompson
-Sampling MAB for logic selection, and Governance verification before any change
-is applied.
+governance defined in the spec: AST-based self-edit of shared/runtime/store/,
+Thompson Sampling MAB for logic selection, and Governance verification before
+any change is applied.
 
 ---
 
@@ -28,8 +28,8 @@ beyond it.
 
 - **Modules, API, infrastructure**: This repo's `shared/prompt/boundary.md`.
 - **Product scope, governance**: the spec.
-- Add only modules, routes, or infrastructure listed in boundary.md or
-  specified in the spec for the current phase.
+- Add only modules, routes, or infrastructure listed in boundary.md or specified
+  in the spec for the current phase.
 
 ---
 

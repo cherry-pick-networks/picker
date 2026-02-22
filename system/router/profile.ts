@@ -1,14 +1,14 @@
 import type { Context } from "hono";
 import { z } from "zod";
 import {
-  getProfile as svcGetProfile,
   createProfile,
-  updateProfile,
+  getProfile as svcGetProfile,
   getProgress as svcGetProgress,
-  updateProgress,
   ProfileCreateSchema,
   ProfilePatchSchema,
   ProgressPatchSchema,
+  updateProfile,
+  updateProgress,
 } from "../service/profile.ts";
 
 export async function getProfile(c: Context) {
@@ -47,7 +47,7 @@ export async function patchProfile(c: Context) {
   );
   if (!parsed.success) return c.json({ error: parsed.error.flatten() }, 400);
   return patchProfileApply(c, id, parsed.data).catch(() =>
-    c.json({ error: "Invalid profile" }, 400),
+    c.json({ error: "Invalid profile" }, 400)
   );
 }
 
@@ -74,6 +74,6 @@ export async function patchProgress(c: Context) {
   );
   if (!parsed.success) return c.json({ error: parsed.error.flatten() }, 400);
   return patchProgressApply(c, id, parsed.data).catch(() =>
-    c.json({ error: "Invalid progress" }, 400),
+    c.json({ error: "Invalid progress" }, 400)
   );
 }
