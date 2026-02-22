@@ -41,3 +41,23 @@ export function resolveTemplatePaths(
   };
   return TEMPLATE_PATHS[qt] ?? fallback;
 }
+
+async function loadMidTemplateAndFormat(
+  qt: string,
+): Promise<{ template: string; formatBlock: string }> {
+  const { templatePath, formatPath } = resolveTemplatePaths(qt);
+  const template = (await loadTemplate(templatePath)) || DEFAULT_TEMPLATE;
+  const formatBlock = await loadTemplate(formatPath);
+  return { template, formatBlock };
+}
+
+export async function loadTemplateAndFormat(
+  qt: string,
+): Promise<{ template: string; formatBlock: string }> {
+  if (qt === "elem") {
+    const t = (await loadTemplate("docs/contract/contract-edu-prompt.md")) ||
+      DEFAULT_TEMPLATE;
+    return { template: t, formatBlock: "" };
+  }
+  return await loadMidTemplateAndFormat(qt);
+}

@@ -39,6 +39,9 @@ export const GenerateWorksheetRequestSchema = z.object({
   question_type: z.string().optional(),
   week: z.number().optional(),
   elem_slot_index: z.number().optional(),
+  session_id: z.string().optional(),
+  date_iso: z.string().optional(),
+  sheet_label: z.string().optional(),
 });
 export type GenerateWorksheetRequest = z.infer<
   typeof GenerateWorksheetRequestSchema

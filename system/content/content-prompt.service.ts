@@ -12,10 +12,8 @@ export type { WorksheetContext };
 import { getProfile } from "#system/actor/profile.service.ts";
 import {
   DEFAULT_GOAL_ACCURACY,
-  DEFAULT_TEMPLATE,
   DEFAULT_VOCABULARY,
-  loadTemplate,
-  resolveTemplatePaths,
+  loadTemplateAndFormat,
 } from "./content-prompt-load.service.ts";
 
 export function contextFromProfile(profile: {
@@ -35,6 +33,8 @@ export function contextFromProfile(profile: {
     goal_accuracy: goalStr,
     structural_notes: (wg.structural_notes as string) ?? "",
     vocabulary_policy: (wg.vocabulary_policy as string) ?? DEFAULT_VOCABULARY,
+    distractor_policy: (wg.distractor_policy as string) ??
+      DEFAULT_WORKSHEET_CONTEXT.distractor_policy,
   };
 }
 
@@ -57,6 +57,7 @@ export function substitutePrompt(
     .replace("{{item_count}}", String(request.item_count ?? 5))
     .replace("{{concept_ids}}", (request.concept_ids ?? []).join(", "))
     .replace("{{vocabulary_policy}}", ctx.vocabulary_policy)
+    .replace("{{distractor_policy}}", ctx.distractor_policy)
     .replace("{{output_format}}", formatBlock)
     .replace("{{main_theme}}", mainTheme)
     .replace("{{action_plan}}", actionPlan);
@@ -69,31 +70,6 @@ async function getContextForRequest(
   if (!request.student_id) return DEFAULT_WORKSHEET_CONTEXT;
   const profile = await getProfile(request.student_id);
   return profile ? contextFromProfile(profile) : DEFAULT_WORKSHEET_CONTEXT;
-}
-
-async function loadElemTemplate(): Promise<{
-  template: string;
-  formatBlock: string;
-}> {
-  const p = "docs/contract/contract-edu-prompt.md";
-  const template = (await loadTemplate(p)) || DEFAULT_TEMPLATE;
-  return { template, formatBlock: "" };
-}
-
-async function loadMidTemplate(
-  qt: string,
-): Promise<{ template: string; formatBlock: string }> {
-  const { templatePath, formatPath } = resolveTemplatePaths(qt);
-  const template = (await loadTemplate(templatePath)) || DEFAULT_TEMPLATE;
-  const formatBlock = await loadTemplate(formatPath);
-  return { template, formatBlock };
-}
-
-async function loadTemplateAndFormat(
-  qt: string,
-): Promise<{ template: string; formatBlock: string }> {
-  if (qt === "elem") return await loadElemTemplate();
-  return await loadMidTemplate(qt);
 }
 
 export async function buildWorksheetPrompt(
