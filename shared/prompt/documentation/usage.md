@@ -36,7 +36,9 @@ Simplify (Tip 40 → §11).
   long-running task.
 - **Where**: `shared/prompt/handoff.md` (linked from README).
 - **Fields**: Goal, progress, what was tried, what failed, next steps. New
-  sessions attach only this file.
+  sessions attach only this file. When handoff is the main context, the agent
+  outputs work plan → execution steps → recommended direction for the first
+  Next steps item, then proceeds (see handoff.md "Session start (for AI)").
 - **Next steps format**: Bullet list; one item = one logical unit (one commit or
   one scoped task); one sentence per item. If no required follow-up, add at
   least one optional or deferred item. For scope or dependency changes, note
