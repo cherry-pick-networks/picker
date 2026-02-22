@@ -4,6 +4,8 @@
  * Rule ID: function-length/function-length.
  * Ignore: // function-length-ignore above; or
  * // function-length-ignore-file at top of file.
+ * Single-statement body is permitted when that statement is try/catch, switch,
+ * or block-bodied if (complex statement exemption).
  */
 // function-length-ignore-file
 const MIN_STATEMENTS = 2;
@@ -13,6 +15,16 @@ const IGNORE_PATTERN =
 
 function statementCount(block: Deno.lint.BlockStatement): number {
   return block.body?.length ?? 0;
+}
+
+function isComplexStatement(node: Deno.lint.Node): boolean {
+  if (node.type === "TryStatement") return true;
+  if (node.type === "SwitchStatement") return true;
+  if (node.type === "IfStatement") {
+    const n = node as Deno.lint.Node & { consequent?: Deno.lint.Node };
+    return n.consequent?.type === "BlockStatement";
+  }
+  return false;
 }
 
 function hasIgnoreComment(
@@ -45,6 +57,14 @@ function checkBody(
   const block = body as Deno.lint.BlockStatement;
   const n = statementCount(block);
   if (n >= MIN_STATEMENTS && n <= MAX_STATEMENTS) return;
+  if (
+    n < MIN_STATEMENTS &&
+    n === 1 &&
+    block.body?.[0] &&
+    isComplexStatement(block.body[0])
+  ) {
+    return;
+  }
   if (hasIgnoreComment(context, parent)) return;
   const msg =
     `Function body must have ${MIN_STATEMENTS}–${MAX_STATEMENTS} statements ` +

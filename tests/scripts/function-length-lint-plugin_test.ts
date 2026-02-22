@@ -65,7 +65,7 @@ function get() {
   assertEquals(d[0].message, MSG_OK(1));
 });
 
-Deno.test("function-length: try/catch counts as 1 statement", () => {
+Deno.test("function-length: single try/catch exempt (complex statement)", () => {
   const code = `
 function withTry() {
   try {
@@ -76,8 +76,7 @@ function withTry() {
 }
 `;
   const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
-  assertEquals(d.length, 1);
-  assertEquals(d[0].message, MSG_OK(1));
+  assertEquals(d.length, 0);
 });
 
 Deno.test("function-length: 2 statements with try/catch ok", () => {
@@ -85,6 +84,34 @@ Deno.test("function-length: 2 statements with try/catch ok", () => {
 function two() {
   const x = 1;
   try { return x; } catch { return 0; }
+}
+`;
+  const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+  assertEquals(d.length, 0);
+});
+
+Deno.test("function-length: single switch exempt (complex statement)", () => {
+  const code = `
+function withSwitch(x: number) {
+  switch (x) {
+    case 1:
+      return "a";
+    default:
+      return "b";
+  }
+}
+`;
+  const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+  assertEquals(d.length, 0);
+});
+
+Deno.test("function-length: single block-bodied if exempt (complex statement)", () => {
+  const code = `
+function onlyIf(x: boolean) {
+  if (x) {
+    doA();
+    doB();
+  }
 }
 `;
   const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);

@@ -546,8 +546,10 @@ lines over all physical lines); split when longer. Scope: TypeScript source
 (e.g. `**/*.ts`); exclude node_modules, vendor, generated output.
 
 Function body: block body 2–4 statements (AST direct statements in block
-body only); expression body allowed (counts as 1). Line length in body is
-not enforced by this rule; use the formatter and line-length check instead.
+body only); expression body allowed (counts as 1). A single statement is
+allowed when it is a try/catch, switch, or block-bodied if (complex
+statement exemption). Line length in body is not enforced by this rule;
+use the formatter and line-length check instead.
 Validation: line-length and file-length by
 shared/prompt/scripts/check-line-length.ts; function body by `deno lint`
 (plugin function-length/function-length in
