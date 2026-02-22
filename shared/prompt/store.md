@@ -227,7 +227,7 @@ tool-specific configs.
   entry points (e.g. shared/README.md); do not add deep links to docs there. Do
   not duplicate rule text in root README.
 - **AI-facing docs**: When writing or editing .md under shared/prompt/ (except
-  documentation/), follow §R.
+  store.md and documentation/), follow §R.
 
 ---
 
@@ -542,8 +542,10 @@ such a response.
 ### §R. AI document writing principles
 
 Scope: documents under shared/prompt/ that are consumed by AI; that is, all .md
-files there except under shared/prompt/documentation/. Files under
-documentation/ are for people and tips; §R does not apply there.
+files there except store.md and except files under shared/prompt/documentation/.
+store.md is the single source for rules and follows §I and Part B format; §R does
+not apply to it. Files under documentation/ are for people and tips; §R does
+not apply there.
 Language: Use English only in those AI-facing docs (§C).
 Phrasing: Prefer positive phrasing ("Do X" over "Do not do Y"); see §I.
 Rule-like content: When stating a rule or constraint, use one sentence per

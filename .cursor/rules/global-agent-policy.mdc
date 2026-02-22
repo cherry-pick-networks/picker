@@ -21,5 +21,5 @@ Read that file and follow:
 - **§O. Answer format (options with pros and cons)**
 - **§P. Format limits (code)**
 - **§Q. Phase-gated feature implementation** (feature implementation only; see store.md)
-- **§R. AI document writing principles** (when editing shared/prompt/*.md except documentation/; see store.md)
+- **§R. AI document writing principles** (when editing shared/prompt/*.md except store.md and documentation/; see store.md)
 Do not duplicate the rule text here.

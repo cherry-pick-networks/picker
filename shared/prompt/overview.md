@@ -2,7 +2,8 @@
 
 One-page summary for onboarding and daily use.\
 **Single source of truth for AI and tooling**: `shared/prompt/store.md`.\
-When writing or editing AI-facing docs in this folder, follow store.md §R.
+When writing or editing AI-facing docs in this folder (except store.md), follow
+store.md §R.
 
 ---
 
