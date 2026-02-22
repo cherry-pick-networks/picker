@@ -76,6 +76,8 @@ tool-specific configs.
   (runs in CI)
 - `deno task naming-layer-check` — verify layer-prefixed paths use allowed
   infix/suffix per §E (optional; run in pre-commit or CI)
+- `deno task pre-push` — run before push; same as CI (lint, fmt, line-length,
+  test, scope-check, boundary-check, dependency-check, type-check-policy, audit)
 - `deno task scope-discovery -- <entry-file>` — list direct imports for AI
   session scope (see shared/prompt/documentation/strategy.md)
 - `gh pr create --draft` — create draft PR (review before marking ready)
@@ -130,6 +132,11 @@ tool-specific configs.
   one worktree per branch/dir.
 - **PR review**: Use `gh pr view` and `gh pr diff`; review file-by-file or
   step-by-step as needed.
+- **Before push or PR**: Run `deno task pre-push` so CI passes. Code must satisfy
+  §P (function body 2–4 statements; async only when body uses await).
+- **Pre-commit hook (optional)**: To run `deno lint` and `deno fmt --check` on
+  commit, set `git config core.hooksPath .githooks` and
+  `chmod +x .githooks/pre-commit`.
 - **CI failure**: Use `gh run view`, logs, and (if needed) `gh` GraphQL/API to
   find root cause, flakiness, or breaking commit.
 - **Dangerous commands**: Audit approved commands periodically (e.g. patterns

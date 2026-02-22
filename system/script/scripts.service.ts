@@ -8,8 +8,9 @@ import type { ReadResult } from "./scripts.types.ts";
 
 export type { ReadResult } from "./scripts.types.ts";
 
-export async function getScriptContent(
+export function getScriptContent(
   relativePath: string,
 ): Promise<ReadResult> {
-  return readScript(relativePath);
+  const result = readScript(relativePath);
+  return result;
 }

@@ -21,7 +21,8 @@
     "naming-layer-check": "deno run --allow-read shared/prompt/scripts/check-naming-layer.ts",
     "line-length-check": "deno run --allow-read shared/prompt/scripts/check-line-length.ts",
     "boundary-check": "deno run --allow-read shared/prompt/scripts/check-domain-boundary.ts",
-    "dependency-check": "deno run --allow-read shared/prompt/scripts/check-domain-deps.ts"
+    "dependency-check": "deno run --allow-read shared/prompt/scripts/check-domain-deps.ts",
+    "pre-push": "deno lint && deno fmt --check && deno task line-length-check && deno task test && deno task scope-check && deno task boundary-check && deno task dependency-check && deno task type-check-policy && deno audit"
   },
   "lint": {
     "plugins": [

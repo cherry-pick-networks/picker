@@ -47,8 +47,11 @@ Current scope and implementation state: [boundary.md](boundary.md).
   lint exclude so function-length applies to scripts. Split
   `system/service/content.ts` (271 lines) into content-schema, content-parse,
   content-prompt, content-prompt-load, and content.ts (all โÿค100 lines). Fixed
-  function-length violations across codebase (ignores or refactors). Lint,
-  type-check-policy, scope-check, naming-layer-check pass. Remaining ยงP: files
+  function-length violations across codebase (ignores or refactors). Scripts:
+  use `// function-length-ignore` above individual functions when the body is
+  naturally one statement (e.g. async generator) or many (e.g. main); no
+  file-level exclude. Lint, type-check-policy, scope-check, naming-layer-check
+  pass. Remaining ยงP: files
   still >100 lines (routes 135, profile 132, scripts 103, migrate-old-to-data
   205, check-naming-layer 106); optional 80-char line pass.
 
