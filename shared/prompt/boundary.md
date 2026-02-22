@@ -12,21 +12,21 @@ Use that document for AI direction and scope decisions.
 
 ## Modules
 
-| Module                    | Role                                                                                                                                                |
-| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **main.ts**               | Server entry: Hono app; routes registered from system/routes.ts (imports system/app/config).                                                        |
-| **client.ts**             | Client entry (loaded on every page).                                                                                                                |
-| **system/routes.ts**      | Route list (ROUTES) and registerRoutes(app); scope-check reads this.                                                                                |
-| **system/app/config/**    | Route registration (home, rest, ast, scripts). Imports domain endpoints only.                                                                       |
-| **system/actor/**         | Profile, progress: endpoint, service, store, schema.                                                                                                |
-| **system/content/**       | Items, worksheets, prompt: endpoint, service, store, schema.                                                                                        |
-| **system/source/**        | Source collection: endpoint, service, store.                                                                                                        |
-| **system/script/**        | Scripts store, AST apply, Governance: endpoint, service, store, validation.                                                                         |
-| **system/record/**        | Record store (extracted/identity): endpoint, store.                                                                                                 |
-| **system/kv/**            | Generic Deno KV: endpoint, store.                                                                                                                   |
+| Module                    | Role                                                                                                                                                              |
+| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **main.ts**               | Server entry: Hono app; routes registered from system/routes.ts (imports system/app/config).                                                                      |
+| **client.ts**             | Client entry (loaded on every page).                                                                                                                              |
+| **system/routes.ts**      | Route list (ROUTES) and registerRoutes(app); scope-check reads this.                                                                                              |
+| **system/app/config/**    | Route registration (home, rest, ast, scripts). Imports domain endpoints only.                                                                                     |
+| **system/actor/**         | Profile, progress: endpoint, service, store, schema.                                                                                                              |
+| **system/content/**       | Items, worksheets, prompt: endpoint, service, store, schema.                                                                                                      |
+| **system/source/**        | Source collection: endpoint, service, store.                                                                                                                      |
+| **system/script/**        | Scripts store, AST apply, Governance: endpoint, service, store, validation.                                                                                       |
+| **system/record/**        | Record store (extracted/identity): endpoint, store.                                                                                                               |
+| **system/kv/**            | Generic Deno KV: endpoint, store.                                                                                                                                 |
 | **system/audit/**         | Log artifact storage (e.g. e2e-runs.json in same dir as audit.log.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added. |
-| **shared/runtime/store/** | Target path for AST-based self-edit; read and write only via Governance-verified flow.                                                              |
-| **shared/infra/**         | Shared infrastructure. KV client (`getKv()`) only; no business logic.                                                                               |
+| **shared/runtime/store/** | Target path for AST-based self-edit; read and write only via Governance-verified flow.                                                                            |
+| **shared/infra/**         | Shared infrastructure. KV client (`getKv()`) only; no business logic.                                                                                             |
 
 ---
 
@@ -82,10 +82,10 @@ Use that document for AI direction and scope decisions.
 
 - **Deno KV** — built-in storage only; no external DB, message broker, or queue.
   KV instance: `shared/infra/kv.client.ts` (`getKv()`). Domain stores and
-  system/kv import from there. Key prefixes: `kv` (generic), `profile` (actor profile, key
-  `["profile", id]`), `progress` (progress state, key `["progress", id]`),
-  `content` (items key `["content", "item", id]`; worksheets key
-  `["content", "worksheet", id]`), `source` (source records key
+  system/kv import from there. Key prefixes: `kv` (generic), `profile` (actor
+  profile, key `["profile", id]`), `progress` (progress state, key
+  `["progress", id]`), `content` (items key `["content", "item", id]`;
+  worksheets key `["content", "worksheet", id]`), `source` (source records key
   `["source", id]`).
 - **File-based data** — under `shared/record/`: suffix `store` (payload) or
   `reference` (index). Store: `shared/record/store/*.json`. Indexes:

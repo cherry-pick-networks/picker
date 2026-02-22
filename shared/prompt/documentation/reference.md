@@ -14,16 +14,16 @@ with store.md §E/§F and modular monolith.
 
 ### Allowed infix (domains)
 
-| Infix   | Responsibility                         |
-| ------- | -------------------------------------- |
-| actor   | Profile, progress (identity and state) |
-| content | Items, worksheets, prompt building     |
-| source  | Source collection and read             |
-| script  | Scripts store, AST apply, Governance   |
-| record  | Record store (extracted/identity data) |
+| Infix   | Responsibility                                           |
+| ------- | -------------------------------------------------------- |
+| actor   | Profile, progress (identity and state)                   |
+| content | Items, worksheets, prompt building                       |
+| source  | Source collection and read                               |
+| script  | Scripts store, AST apply, Governance                     |
+| record  | Record store (extracted/identity data)                   |
 | kv      | Generic Deno KV HTTP API; KV instance from shared/infra. |
-| audit   | Change/run log artifacts               |
-| app     | Route registration and app wiring      |
+| audit   | Change/run log artifacts                                 |
+| app     | Route registration and app wiring                        |
 
 ### Allowed suffix (artifacts)
 
@@ -55,20 +55,20 @@ system/
 
 ### Migration mapping (3-layer → flat, completed)
 
-| Old path (3-layer)              | New path (flat)                     |
-| ------------------------------- | ----------------------------------- |
-| system/actor/endpoint/profile.ts | system/actor/profile.endpoint.ts    |
-| system/actor/service/profile.ts | system/actor/profile.service.ts     |
-| system/actor/store/profile.ts   | system/actor/profile.store.ts      |
+| Old path (3-layer)                 | New path (flat)                    |
+| ---------------------------------- | ---------------------------------- |
+| system/actor/endpoint/profile.ts   | system/actor/profile.endpoint.ts   |
+| system/actor/service/profile.ts    | system/actor/profile.service.ts    |
+| system/actor/store/profile.ts      | system/actor/profile.store.ts      |
 | system/content/endpoint/content.ts | system/content/content.endpoint.ts |
-| system/content/service/*.ts     | system/content/*.service.ts         |
-| system/content/schema/*.ts      | system/content/*.schema.ts           |
-| system/source/endpoint|service|store/*.ts | system/source/*.endpoint|service|store.ts |
-| system/script/endpoint|service|store|validation/*.ts | system/script/*.endpoint|service|store|validation.ts |
-| system/record/endpoint|store/data.ts | system/record/data.endpoint.ts, data.store.ts |
-| system/kv/endpoint|store/kv.ts | system/kv/kv.endpoint.ts, kv.store.ts |
-| system/audit/log/log.ts        | system/audit/audit.log.ts           |
-| system/app/config/*.ts         | system/app/*.config.ts              |
+| system/content/service/*.ts        | system/content/*.service.ts        |
+| system/content/schema/*.ts         | system/content/*.schema.ts         |
+| system/source/endpoint             | service                            |
+| system/script/endpoint             | service                            |
+| system/record/endpoint             | store/data.ts                      |
+| system/kv/endpoint                 | store/kv.ts                        |
+| system/audit/log/log.ts            | system/audit/audit.log.ts          |
+| system/app/config/*.ts             | system/app/*.config.ts             |
 
 ### Modular monolith rules
 
@@ -77,8 +77,8 @@ system/
   if needed.
 - app/*.config.ts only imports domain endpoints and registers routes; no
   business logic.
-- KV instance: `shared/infra/kv.client.ts` provides `getKv()`. Domain stores
-  and system/kv use it; do not open Kv elsewhere.
+- KV instance: `shared/infra/kv.client.ts` provides `getKv()`. Domain stores and
+  system/kv use it; do not open Kv elsewhere.
 
 ### Domain dependency (acyclic; hierarchy)
 
@@ -121,16 +121,16 @@ introduce a cycle; (2) add the edge to this matrix and to the allowlist in
 Rules are in store.md §T. This section gives examples and exceptions from
 `system/` and shared scripts.
 
-| Symbol kind           | Case              | Example |
-| --------------------- | ----------------- | ------- |
-| Type, interface       | PascalCase        | `Profile`, `Item`, `PatchProfileInput`, `ApplyResult` |
-| Function, method      | camelCase         | `getProfile`, `createItem`, `applyPatch`, `getPatchProfileInput` |
-| Variable, parameter   | camelCase         | `id`, `profile`, `parsed`, `raw` |
-| Zod schema constant  | PascalCase        | `ProfileSchema`, `ItemSchema`, `CreateItemRequestSchema` |
-| Magic-string constant| UPPER_SNAKE_CASE  | §P; e.g. long error messages, headers |
-| Class                 | PascalCase        | — (use when introducing classes) |
-| Enum name             | PascalCase        | — |
-| Enum member           | One style project-wide | UPPER_SNAKE_CASE or PascalCase |
+| Symbol kind           | Case                   | Example                                                          |
+| --------------------- | ---------------------- | ---------------------------------------------------------------- |
+| Type, interface       | PascalCase             | `Profile`, `Item`, `PatchProfileInput`, `ApplyResult`            |
+| Function, method      | camelCase              | `getProfile`, `createItem`, `applyPatch`, `getPatchProfileInput` |
+| Variable, parameter   | camelCase              | `id`, `profile`, `parsed`, `raw`                                 |
+| Zod schema constant   | PascalCase             | `ProfileSchema`, `ItemSchema`, `CreateItemRequestSchema`         |
+| Magic-string constant | UPPER_SNAKE_CASE       | §P; e.g. long error messages, headers                            |
+| Class                 | PascalCase             | — (use when introducing classes)                                 |
+| Enum name             | PascalCase             | —                                                                |
+| Enum member           | One style project-wide | UPPER_SNAKE_CASE or PascalCase                                   |
 
 ### Schema property names (exception)
 
@@ -138,5 +138,5 @@ Rules are in store.md §T. This section gives examples and exceptions from
   `system/actor/profile.schema.ts`).
 - **Exception**: snake_case when the shape is dictated by an external API or
   persistence contract; document in the file (e.g. "API/DB contract"). Example:
-  `system/content/content.schema.ts` uses `item_id`, `created_at`, `worksheet_id`
-  for stored/API payload shape.
+  `system/content/content.schema.ts` uses `item_id`, `created_at`,
+  `worksheet_id` for stored/API payload shape.

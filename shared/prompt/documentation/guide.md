@@ -141,8 +141,8 @@ system/routes/content.ts."
 
 ## GitHub Actions / DevOps (Tip 29)
 
-- Before push: run `deno task pre-push` (same checks as CI) to avoid CI
-  failures (store.md §5, §7).
+- Before push: run `deno task pre-push` (same checks as CI) to avoid CI failures
+  (store.md §5, §7).
 - For CI failures: use `gh run view` and logs to find root cause or flakiness
   (store.md §7). If using Claude with dx plugin, `/dx:gha <GitHub Actions URL>`
   can automate investigation and suggest fixes.

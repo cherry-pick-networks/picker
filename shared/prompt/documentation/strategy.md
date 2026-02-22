@@ -136,8 +136,7 @@ imports (relative imports only; npm/jsr are skipped). Use this list as the
 pasting into the prompt.
 
 Task: `deno task scope-discovery -- <entry-file>` (e.g.
-`deno task scope-discovery -- main.ts`). Add `--oneline` for
-one-line output.
+`deno task scope-discovery -- main.ts`). Add `--oneline` for one-line output.
 
 ## Phase flags (explicit prompt flags)
 

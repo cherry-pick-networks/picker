@@ -132,8 +132,8 @@ tool-specific configs.
   one worktree per branch/dir.
 - **PR review**: Use `gh pr view` and `gh pr diff`; review file-by-file or
   step-by-step as needed.
-- **Before push or PR**: Run `deno task pre-push` so CI passes. Code must satisfy
-  §P (function body 2–4 statements; async only when body uses await).
+- **Before push or PR**: Run `deno task pre-push` so CI passes. Code must
+  satisfy §P (function body 2–4 statements; async only when body uses await).
 - **Pre-commit hook (optional)**: To run `deno lint` and `deno fmt --check` on
   commit, set `git config core.hooksPath .githooks` and
   `chmod +x .githooks/pre-commit`.
@@ -296,16 +296,15 @@ duplicate them.
 
 Scope: TypeScript source files (`**/*.ts`); exclude node_modules, vendor,
 generated output. Type and interface names: PascalCase. Function and method
-names: camelCase. Variable and parameter names: camelCase. Zod schema
-constants (e.g. export const XSchema): PascalCase. Constants for magic strings
-or long literals: UPPER_SNAKE_CASE (see §P). Schema or JSON property names:
-use camelCase for new domains; snake_case allowed only when required by
-external API or persistence contract, and document the exception in the file
-or schema. Class names: PascalCase. Enum type names: PascalCase; enum
-members: use one style project-wide (UPPER_SNAKE_CASE or PascalCase).
-Re-exports of third-party types or functions: keep original names. Examples
-and domain exceptions: shared/prompt/documentation/reference.md (TS symbol
-naming).
+names: camelCase. Variable and parameter names: camelCase. Zod schema constants
+(e.g. export const XSchema): PascalCase. Constants for magic strings or long
+literals: UPPER_SNAKE_CASE (see §P). Schema or JSON property names: use
+camelCase for new domains; snake_case allowed only when required by external API
+or persistence contract, and document the exception in the file or schema. Class
+names: PascalCase. Enum type names: PascalCase; enum members: use one style
+project-wide (UPPER_SNAKE_CASE or PascalCase). Re-exports of third-party types
+or functions: keep original names. Examples and domain exceptions:
+shared/prompt/documentation/reference.md (TS symbol naming).
 
 ### §D. Document and directory format
 
@@ -429,7 +428,8 @@ symbols). Lowercase; one hyphen between words; no underscores or spaces.
 
 Exceptions: Maintain an explicit exception list; same list for docs and tooling.
 Typical entries: .git, .cursor, node_modules, dist, build, coverage, vendor,
-.cache, temp, tests (confirm per project). Update list and any validator together.
+.cache, temp, tests (confirm per project). Update list and any validator
+together.
 
 Document exceptions: Maintain a separate explicit list for .md files exempt from
 segment naming. Fixed names: README.md, CHANGELOG.md and similar
@@ -537,10 +537,10 @@ implement.
 
 Agent and scope: agent must not extend scope arbitrarily; propose scope doc
 changes for human approval, then implement only after scope is updated.
-Cross-domain service calls: must follow the allowed dependency matrix and
-remain acyclic (see shared/prompt/documentation/reference.md, § Domain
-dependency); update the matrix and check-domain-deps allowlist before adding
-a new cross-domain dependency.
+Cross-domain service calls: must follow the allowed dependency matrix and remain
+acyclic (see shared/prompt/documentation/reference.md, § Domain dependency);
+update the matrix and check-domain-deps allowlist before adding a new
+cross-domain dependency.
 
 ### §M. Root README boundary
 
