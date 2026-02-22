@@ -29,6 +29,7 @@ export const ROUTES: { method: string; path: string }[] = [
   { method: "POST", path: "/content/submissions" },
   { method: "GET", path: "/content/submissions/:id" },
   { method: "GET", path: "/content/submissions" },
+  { method: "POST", path: "/content/briefing/build-prompt" },
   { method: "GET", path: "/sources" },
   { method: "GET", path: "/sources/:id" },
   { method: "POST", path: "/sources" },

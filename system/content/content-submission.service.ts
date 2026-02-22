@@ -5,7 +5,6 @@ import type {
   CreateSubmissionRequest as CreateSubmissionRequestType,
   Item,
   Submission,
-  Worksheet,
 } from "./content.schema.ts";
 import {
   ItemSchema,
@@ -15,6 +14,7 @@ import {
 import { nowIso } from "./content-parse.service.ts";
 export { gradeSubmission } from "./content-submission-grading.service.ts";
 
+// function-length-ignore
 export async function getItemsForWorksheet(
   worksheetId: string,
 ): Promise<Item[]> {

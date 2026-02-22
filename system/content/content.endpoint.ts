@@ -17,6 +17,7 @@ export {
   postWorksheetsBuildPrompt,
   postWorksheetsGenerate,
 } from "./content-worksheet.endpoint.ts";
+export { postBriefingBuildPrompt } from "./content-briefing.endpoint.ts";
 
 export async function getItem(c: Context) {
   const id = c.req.param("id");

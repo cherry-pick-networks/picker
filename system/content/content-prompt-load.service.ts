@@ -61,3 +61,16 @@ export async function loadTemplateAndFormat(
   }
   return await loadMidTemplateAndFormat(qt);
 }
+
+const BRIEFING_MAIN_PATH = "contract-briefing-prompt.md";
+const BRIEFING_BLOCK_PATH = "contract-briefing-block.md";
+
+export async function loadBriefingTemplate(): Promise<string> {
+  const result = await getScriptContent(BRIEFING_MAIN_PATH);
+  return result.ok ? result.content : "";
+}
+
+export async function loadBriefingBlockTemplate(): Promise<string> {
+  const result = await getScriptContent(BRIEFING_BLOCK_PATH);
+  return result.ok ? result.content : "";
+}

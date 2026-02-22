@@ -57,6 +57,7 @@ function registerContentWorksheets(app: Hono) {
     "/content/worksheets/build-prompt",
     content.postWorksheetsBuildPrompt,
   );
+  app.post("/content/briefing/build-prompt", content.postBriefingBuildPrompt);
 }
 
 function registerSource(app: Hono) {

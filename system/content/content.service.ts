@@ -8,6 +8,7 @@ import type {
 import { ItemSchema, WorksheetSchema } from "./content.schema.ts";
 import { nowIso, parseItem } from "./content-parse.service.ts";
 export {
+  BuildBriefingRequestSchema,
   CreateItemRequestSchema,
   CreateSubmissionRequestSchema,
   GenerateWorksheetRequestSchema,
@@ -29,6 +30,7 @@ export type {
   Submission,
   Worksheet,
 } from "./content.schema.ts";
+export { buildBriefingPrompt } from "./content-briefing.service.ts";
 export { buildWorksheetPrompt } from "./content-prompt.service.ts";
 export { generateWorksheet } from "./content-worksheet.service.ts";
 export {

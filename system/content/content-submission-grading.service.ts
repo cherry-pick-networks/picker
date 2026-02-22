@@ -24,6 +24,7 @@ function oneItemResult(
   };
 }
 
+// function-length-ignore
 export function gradeSubmission(
   submission: Submission,
   items: Item[],

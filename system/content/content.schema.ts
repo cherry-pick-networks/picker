@@ -94,3 +94,14 @@ export const GradingResultSchema = z.object({
   results: z.array(ItemResultSchema),
 });
 export type GradingResult = z.infer<typeof GradingResultSchema>;
+
+export const BuildBriefingRequestSchema = z.object({
+  worksheet_id: z.string(),
+  student_ids: z.array(z.string()).optional(),
+});
+export type BuildBriefingRequest = z.infer<typeof BuildBriefingRequestSchema>;
+
+export const BuildBriefingResponseSchema = z.object({
+  prompt: z.string(),
+});
+export type BuildBriefingResponse = z.infer<typeof BuildBriefingResponseSchema>;

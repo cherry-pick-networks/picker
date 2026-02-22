@@ -4,6 +4,13 @@
 
 import { z } from "zod";
 
+/**
+ * Profile. preferences may include:
+ * - next_session_plan (optional): { question_type?, item_count?, time_limit_minutes?,
+ *   structural_notes_override?, constraint_notes? } — used by buildWorksheetPrompt
+ *   to merge into the request when student_id is set.
+ * - gimmick, gimmick_notes: used by briefing prompt.
+ */
 export const ProfileSchema = z.object({
   id: z.string(),
   createdAt: z.string(),
