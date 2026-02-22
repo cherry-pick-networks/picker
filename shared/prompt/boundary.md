@@ -1,8 +1,8 @@
 # Scope
 
-Single source of truth for in-scope modules, API surface, and infrastructure. Do
-not add new modules, routes, or infrastructure unless listed here; update this
-file first, then implement.
+Single source of truth for in-scope modules, API surface, and infrastructure.
+Add only modules, routes, and infrastructure listed here; update this file
+first, then implement.
 
 **Final implementation goal**: See `shared/prompt/goal.md` for the one-line
 goal, target phases (MVP vs full spec), scope source, and must/must-not rules.
@@ -64,10 +64,11 @@ Use that document for AI direction and scope decisions.
 
 ## Mutation boundary
 
-- **Allowed mutation path**: `shared/runtime/store/` only. Read and write only
-  through Governance verification (system/validator); no direct write from routes.
-- **Must not**: mutate outside shared/runtime/store/; write directly to
-  data/config/ or credentials.
+- **When mutating**: Use only path `shared/runtime/store/`. Read and write
+  only through Governance verification (system/validator).
+- **Routes**: Do not write directly from routes; use system/validator flow.
+- **Off-limits**: Do not write directly to data/config/ or credentials; use
+  approved mechanisms only.
 
 ---
 

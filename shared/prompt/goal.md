@@ -19,7 +19,8 @@ is applied.
 ## 2. Target phases
 
 Phases (MVP through full spec) and current target are defined in the spec §49.
-Do not implement beyond the chosen phase until the spec is updated.
+Implement only up to the chosen phase; update the spec before implementing
+beyond it.
 
 ---
 
@@ -27,7 +28,7 @@ Do not implement beyond the chosen phase until the spec is updated.
 
 - **Modules, API, infrastructure**: This repo's `shared/prompt/boundary.md`.
 - **Product scope, governance**: the spec.
-- Do not add modules, routes, or infrastructure not listed in boundary.md or
+- Add only modules, routes, or infrastructure listed in boundary.md or
   specified in the spec for the current phase.
 
 ---
@@ -35,21 +36,23 @@ Do not implement beyond the chosen phase until the spec is updated.
 ## 4. In-scope
 
 In-scope modules, agents, data layout, mutation rules, selection, and output
-format are defined in boundary.md and the spec. Do not add items outside that
+format are defined in boundary.md and the spec. Add only items inside that
 scope.
 
 ---
 
-## 5. Must / Must not
+## 5. Must
 
-- Do follow boundary.md and the spec for the current phase.
-- Do run all autonomous mutations and applies through Governance verification.
-- Do not add modules, routes, or infrastructure outside scope.
-- Do not mutate outside shared/runtime/store/ or write directly to
-  data/config/ or credentials.
-- Do not bypass type-check policy (store.md §N).
+- Follow boundary.md and the spec for the current phase.
+- Run all autonomous mutations and applies through Governance verification.
+- Add only modules, routes, and infrastructure listed in scope (boundary.md or
+  spec).
+- Mutate only within shared/runtime/store/; use Governance-verified flow.
+- Write to data/config/ or credentials only via approved mechanisms (see
+  boundary.md).
+- Apply type-check policy (store.md §N).
 
-Concretes are in the spec §44–§48 and store.md.
+Concretes: spec §44–§48 and store.md.
 
 ---
 
