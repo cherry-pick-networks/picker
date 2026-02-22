@@ -39,7 +39,6 @@ async function listScriptsAllowed(): Promise<ListResult> {
   catch (e) { return toListError(e); }
 }
 
-/** List entries in shared/runtime/store/. Governance-verified. */
 export async function listScripts(): Promise<ListResult> {
   const result = verifyGovernance("read", "");
   if (!result.allowed) return { ok: false, status: 403, body: result.reason };
@@ -63,9 +62,6 @@ async function readScriptAllowed(relativePath: string): Promise<ReadResult> {
   return await readFileContent(fullPath);
 }
 
-/**
- * Read one file under shared/runtime/store/ by path. Governance-verified.
- */
 export async function readScript(relativePath: string): Promise<ReadResult> {
   const result = verifyGovernance("read", relativePath);
   if (!result.allowed) return { ok: false, status: 403, body: result.reason };
@@ -97,10 +93,6 @@ async function writeScriptAllowed(
   catch (e) { return toWriteError(e); }
 }
 
-/**
- * Write one file under shared/runtime/store/. Governance-verified.
- * Creates parent dirs under shared/runtime/store/ if needed.
- */
 export async function writeScript(
   relativePath: string,
   content: string,

@@ -1,6 +1,4 @@
-/**
- * File-based UUID v7 storage under shared/record/. See boundary.md.
- */
+/** File-based UUID v7 storage under shared/record/ (store/, reference/). */
 
 const DATA_DIR = new URL("../../shared/record/", import.meta.url).pathname;
 const RECORD_STORE = `${DATA_DIR}store/`;

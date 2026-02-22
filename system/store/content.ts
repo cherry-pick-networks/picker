@@ -1,7 +1,4 @@
-/**
- * Content storage: items and worksheets in Deno KV.
- * Keys: ["content", "item", id], ["content", "worksheet", id].
- */
+/** Content storage in Deno KV. Keys: ["content","item"|"worksheet", id]. */
 
 import { getKv } from "./kv.ts";
 

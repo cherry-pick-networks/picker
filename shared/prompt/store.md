@@ -271,6 +271,16 @@ at each boundary. Do not run git commit unless the user explicitly asks.
 
 Language: English only for code, comments, docstrings, UI/log strings, docs.
 
+### §S. Comment policy (TS)
+
+Scope: TypeScript source files (`**/*.ts`); exclude node_modules, vendor, generated
+output. Keep only comments that help AI understand the file; write them per §R and
+§I (language, positive phrasing, one idea per block, concrete scope). Allow: one
+file-top block per file stating the module role and key structure (e.g. keys or
+paths); one-line inline only for non-obvious reason or constraint. Remove:
+function JSDoc and inline comments that only repeat what the code does. Single
+source: detailed rules stay in this file; comments do not duplicate them.
+
 ### §D. Document and directory format
 
 Pattern: use [prefix]-[suffix].mdc or [prefix]-[infix]-[suffix].mdc; prefix and

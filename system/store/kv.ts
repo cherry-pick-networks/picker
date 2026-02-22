@@ -1,3 +1,4 @@
+/** KV under prefix ["kv"]; logical key part only (e.g. "foo"). */
 let kvPromise: Promise<Deno.Kv> | null = null;
 
 export function getKv(): Promise<Deno.Kv> {
@@ -26,19 +27,11 @@ async function listKvEntries(): Promise<string[]> {
   return collectKeys(kv);
 }
 
-/**
- * List logical keys in KV under the "kv" prefix. Optional prefix filters keys
- * that start with that string. Returns only the key part (e.g. "foo"), not the
- * full path (["kv", "foo"]).
- */
 export async function listKeys(prefix?: string): Promise<string[]> {
   const keys = await listKvEntries();
   return prefix === undefined ? keys : keys.filter((k) => k.startsWith(prefix));
 }
 
-/**
- * Delete one logical key from KV under the "kv" prefix.
- */
 export async function deleteKey(logicalKey: string): Promise<void> {
   const kv = await getKv();
   await kv.delete(["kv", logicalKey]);

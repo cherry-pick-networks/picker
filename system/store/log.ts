@@ -1,7 +1,4 @@
-/**
- * Log artifact storage under system/log/. Written by tests or tooling; not
- * served by API. See shared/prompt/boundary.md (system/log/).
- */
+/** Log artifacts under system/log/; written by tests or tooling, not served. */
 
 const LOG_DIR = new URL("../log/", import.meta.url).pathname;
 const E2E_RUNS_PATH = `${LOG_DIR}e2e-runs.json`;
