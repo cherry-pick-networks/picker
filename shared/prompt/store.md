@@ -82,7 +82,7 @@ tool-specific configs.
 - `realpath <path>` — resolve absolute path when referring to files outside
   current tree
 - **Optional**: Status line `shared/prompt/scripts/context-bar.sh`; setup
-  `shared/prompt/scripts/setup.sh`; see `shared/prompt/documentation/usage.md`
+  `shared/prompt/scripts/setup.sh`; see `shared/prompt/documentation/guide.md`
   for tips-derived options (3rd layer).
 
 ---
@@ -172,7 +172,7 @@ tool-specific configs.
   the session goal (one task or one question). This improves auto-generated
   chat titles (e.g. in Cursor). Prefer under 15 words or about 40 characters.
   Example: "Add scope validation to POST /content/worksheets API". Full procedure
-  and examples: `shared/prompt/documentation/usage.md` (Session start).
+  and examples: `shared/prompt/documentation/guide.md` (Session start).
 
 ---
 
@@ -181,7 +181,7 @@ tool-specific configs.
 - **Inaccessible or private content**: If a URL or resource cannot be fetched
   directly, use "select all → copy → paste" into the chat (or attach the file).
   For blocked or paywalled sites (e.g. Reddit), use a fallback (e.g.
-  reddit-fetch skill or Gemini CLI); see `shared/prompt/documentation/usage.md`
+  reddit-fetch skill or Gemini CLI); see `shared/prompt/documentation/guide.md`
   if used.
 - **Output format**: Prefer Markdown for reports and docs; use a neutral format
   (e.g. paste via Notion) when copying to platforms that do not accept Markdown.
@@ -221,9 +221,9 @@ tool-specific configs.
 - **External tips**: Use external guides (e.g. claude-code-tips) as reference
   only; write only the chosen practices here.
 - **Human-readable docs**: Project summary and rules for people are in
-  `shared/prompt/` (2nd layer: profile.md, principle.md, reference.md) and
-  `shared/prompt/documentation/` (3rd layer: allowed names reference, usage,
-  strategy, guide, runbook). Root README Documentation section lists only domain
+  `shared/prompt/` (2nd layer: profile.md) and
+  `shared/prompt/documentation/` (3rd layer: guide, strategy; allowed names
+  reference, usage, strategy, guide, runbook). Root README Documentation section lists only domain
   entry points (e.g. shared/README.md); do not add deep links to docs there. Do
   not duplicate rule text in root README.
 
