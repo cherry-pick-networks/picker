@@ -5,6 +5,9 @@
       "deno.unstable"
     ]
   },
+  "fmt": {
+    "lineWidth": 80
+  },
   "tasks": {
     "dev": "deno run -A --unstable-kv --watch main.ts",
     "build": "deno run -A npm:vite build",

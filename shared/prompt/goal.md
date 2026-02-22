@@ -49,7 +49,8 @@ scope.
   spec).
 - Mutate only within shared/runtime/store/; use Governance-verified flow.
 - Write to config/ or credentials only via approved mechanisms; file-based
-  record store (shared/record/) only via system/record/store/data.ts (see boundary.md).
+  record store (shared/record/) only via system/record/store/data.ts (see
+  boundary.md).
 - Apply type-check policy (store.md §N).
 
 Concretes: spec §44–§48 and store.md.

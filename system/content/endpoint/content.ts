@@ -24,8 +24,11 @@ async function doPostItem(
   c: Context,
   data: Parameters<typeof createItem>[0],
 ) {
-  try { return c.json(await createItem(data), 201); }
-  catch { return c.json({ error: "Invalid item" }, 400); }
+  try {
+    return c.json(await createItem(data), 201);
+  } catch {
+    return c.json({ error: "Invalid item" }, 400);
+  }
 }
 
 export async function postItem(c: Context) {
@@ -38,7 +41,8 @@ export async function postItem(c: Context) {
 async function parsePatchBody(c: Context) {
   const body = await c.req.json().catch(() => ({}));
   const parsed = ItemPatchSchema.safeParse(body);
-  return parsed.success ? { data: parsed.data }
+  return parsed.success
+    ? { data: parsed.data }
     : { err: c.json({ error: parsed.error.flatten() }, 400) };
 }
 
@@ -71,8 +75,11 @@ async function doPostWorksheetsGenerate(
   c: Context,
   data: Parameters<typeof generateWorksheet>[0],
 ) {
-  try { return c.json(await generateWorksheet(data), 201); }
-  catch { return c.json({ error: "Generate failed" }, 400); }
+  try {
+    return c.json(await generateWorksheet(data), 201);
+  } catch {
+    return c.json({ error: "Generate failed" }, 400);
+  }
 }
 
 export async function postWorksheetsGenerate(c: Context) {
@@ -87,8 +94,11 @@ async function doPostWorksheetsBuildPrompt(
   c: Context,
   data: Parameters<typeof buildWorksheetPrompt>[0],
 ) {
-  try { return c.json(await buildWorksheetPrompt(data)); }
-  catch { return c.json({ error: "Build prompt failed" }, 500); }
+  try {
+    return c.json(await buildWorksheetPrompt(data));
+  } catch {
+    return c.json({ error: "Build prompt failed" }, 500);
+  }
 }
 
 export async function postWorksheetsBuildPrompt(c: Context) {

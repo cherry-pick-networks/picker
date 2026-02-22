@@ -100,7 +100,9 @@ async function main(): Promise<void> {
   const root = Deno.cwd();
   const files = await collectTsFiles(root);
   const { lineLength, fileLength } = await collectViolations(
-    root, files, isFileLengthExempt,
+    root,
+    files,
+    isFileLengthExempt,
   );
   reportResult(lineLength, fileLength);
 }

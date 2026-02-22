@@ -109,11 +109,12 @@ tool-specific configs.
   approval. (2) Interface design — AI proposes only `interface`/`type` for that
   tree, no implementation or JSX; gate: stop, ask approval of the design, do not
   write implementation until approved. (3) Implementation — code per §P (file
-  ≤100 effective lines, function body 2–4 effective lines). (4) Test and commit — add or update
-  tests, then commit per §B. One cycle = one entry file + its direct imports;
-  see shared/prompt/documentation/strategy.md for scope-discovery and prompt
-  template. Optionally: after phase 2 approval, writing a failing test before
-  phase 3 is allowed (TDD); state this in the same workflow.
+  ≤100 effective lines, function body 2–4 effective lines). (4) Test and commit
+  — add or update tests, then commit per §B. One cycle = one entry file + its
+  direct imports; see shared/prompt/documentation/strategy.md for
+  scope-discovery and prompt template. Optionally: after phase 2 approval,
+  writing a failing test before phase 3 is allowed (TDD); state this in the same
+  workflow.
 
 ---
 
@@ -273,13 +274,14 @@ Language: English only for code, comments, docstrings, UI/log strings, docs.
 
 ### §S. Comment policy (TS)
 
-Scope: TypeScript source files (`**/*.ts`); exclude node_modules, vendor, generated
-output. Keep only comments that help AI understand the file; write them per §R and
-§I (language, positive phrasing, one idea per block, concrete scope). Allow: one
-file-top block per file stating the module role and key structure (e.g. keys or
-paths); one-line inline only for non-obvious reason or constraint. Remove:
-function JSDoc and inline comments that only repeat what the code does. Single
-source: detailed rules stay in this file; comments do not duplicate them.
+Scope: TypeScript source files (`**/*.ts`); exclude node_modules, vendor,
+generated output. Keep only comments that help AI understand the file; write
+them per §R and §I (language, positive phrasing, one idea per block, concrete
+scope). Allow: one file-top block per file stating the module role and key
+structure (e.g. keys or paths); one-line inline only for non-obvious reason or
+constraint. Remove: function JSDoc and inline comments that only repeat what the
+code does. Single source: detailed rules stay in this file; comments do not
+duplicate them.
 
 ### §D. Document and directory format
 
@@ -538,31 +540,43 @@ comparison.
 
 ### §P. Format limits (code)
 
-Line length: keep lines to 80 characters or fewer (strict); exceptions only
-where documented (e.g. long URLs in comments). One effective line = 80
-character units per physical line: ceil(length/80); empty line = 0.
-File length: keep files to 100 effective lines or fewer (sum of effective
-lines over all physical lines); split when longer. Scope: TypeScript source
-(e.g. `**/*.ts`); exclude node_modules, vendor, generated output. Exception:
-file-length check is not applied to test files (paths ending with `_test.ts`
-or under a `tests/` directory); line-length check still applies.
+Formatter: use the project formatter (deno fmt, lineWidth 80); prefer Format on
+Save so the machine handles line breaks (Track A) and §P is satisfied. Line
+length: keep lines to 80 characters or fewer (strict); exceptions only where
+documented (e.g. long URLs in comments). One effective line = 80 character units
+per physical line: ceil(length/80); empty line = 0. File length: keep files to
+100 effective lines or fewer (sum of effective lines over all physical lines);
+split when longer. Scope: TypeScript source (e.g. `**/*.ts`); exclude
+node_modules, vendor, generated output. Exception: file-length check is not
+applied to test files (paths ending with `_test.ts` or under a `tests/`
+directory); line-length check still applies.
 
-Function body: block body 2–4 statements (AST direct statements in block
-body only); expression body allowed (counts as 1). A single statement is
-allowed when it is a try/catch, switch, or block-bodied if (complex
-statement exemption). Line length in body is not enforced by this rule;
-use the formatter and line-length check instead.
-Validation: line-length and file-length by
+Function body: block body 2–4 statements (AST direct statements in block body
+only); expression body allowed (counts as 1). A single statement is allowed when
+it is a try/catch, switch, or block-bodied if (complex statement exemption).
+Line length in body is not enforced by this rule; use the formatter and
+line-length check instead. Validation: line-length and file-length by
 shared/prompt/scripts/check-line-length.ts (which applies the test-file
-exception above); function body by `deno lint`
-(plugin function-length/function-length in
+exception above); function body by `deno lint` (plugin
+function-length/function-length in
 shared/prompt/scripts/function-length-lint-plugin.ts, counts statements in
-body). To ignore per function:
-`// function-length-ignore` on the line above; or `// function-length-ignore-file` at top of file.
-Async: when the body only returns a promise from a helper, return the promise
-without `async`/`return await` (avoids an extra microtask); outside try/catch
-do not use `return await`. Guidance (not enforced): keep indentation depth
-to 1–2 levels.
+body). To ignore per function: `// function-length-ignore` on the line above; or
+`// function-length-ignore-file` at top of file. Async: when the body only
+returns a promise from a helper, return the promise without
+`async`/`return await` (avoids an extra microtask); outside try/catch do not use
+`return await`. Guidance (not enforced): keep indentation depth to 1–2 levels.
+
+80-character defense (Track B — architectural extraction): when line length
+would otherwise exceed 80 chars or harm readability, apply these rules. Extract
+types early: when a function parameter or return type is complex (generics,
+nested objects), do not write it inline; extract a named `type` or `interface`
+above the function and reference it in the signature; in phase-gated work
+complete this in Phase 2 (interface design). Extract magic strings: when a
+string literal exceeds 30 characters (error messages, headers, long regex),
+extract it to a constant (UPPER_SNAKE_CASE) at file top or in a dedicated
+constants module. Separate assignment and evaluation: when destructuring the
+result of a complex call would exceed 80 chars, introduce an intermediate
+variable or break the right-hand side across lines for clarity.
 
 ### §Q. Phase-gated feature implementation
 

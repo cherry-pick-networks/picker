@@ -32,8 +32,9 @@ async function collectItemsByConcept(
   conceptId: string,
 ): Promise<Record<string, unknown>[]> {
   const out: Record<string, unknown>[] = [];
-  for await (const entry of kv.list({ prefix: [...ITEM_PREFIX] }))
+  for await (const entry of kv.list({ prefix: [...ITEM_PREFIX] })) {
     maybePushItem(out, entry.value as Record<string, unknown>, conceptId);
+  }
   return out;
 }
 

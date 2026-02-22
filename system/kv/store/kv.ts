@@ -18,8 +18,9 @@ function pushValidKey(keys: string[], entry: Deno.KvEntry<unknown>): void {
 
 async function collectKeys(kv: Deno.Kv): Promise<string[]> {
   const keys: string[] = [];
-  for await (const entry of kv.list({ prefix: ["kv"] }))
+  for await (const entry of kv.list({ prefix: ["kv"] })) {
     pushValidKey(keys, entry);
+  }
   return keys;
 }
 

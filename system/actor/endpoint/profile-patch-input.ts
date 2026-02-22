@@ -1,9 +1,6 @@
 import type { Context } from "hono";
 import type { PatchProfileInput, PatchProgressInput } from "./profile.types.ts";
-import {
-  ProfilePatchSchema,
-  ProgressPatchSchema,
-} from "../service/profile.ts";
+import { ProfilePatchSchema, ProgressPatchSchema } from "../service/profile.ts";
 
 export async function getPatchProfileInput(
   c: Context,

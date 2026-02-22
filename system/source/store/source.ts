@@ -33,8 +33,9 @@ async function collectSources(
   kv: Awaited<ReturnType<typeof getKv>>,
 ): Promise<Record<string, unknown>[]> {
   const out: Record<string, unknown>[] = [];
-  for await (const entry of kv.list({ prefix: [...PREFIX] }))
+  for await (const entry of kv.list({ prefix: [...PREFIX] })) {
     maybePushSource(out, entry.value as Record<string, unknown> | null);
+  }
   return out;
 }
 

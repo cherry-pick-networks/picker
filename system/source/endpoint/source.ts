@@ -23,8 +23,11 @@ async function doPostSource(
   c: Context,
   data: Parameters<typeof createSource>[0],
 ) {
-  try { return c.json(await createSource(data), 201); }
-  catch { return c.json({ error: "Invalid source" }, 400); }
+  try {
+    return c.json(await createSource(data), 201);
+  } catch {
+    return c.json({ error: "Invalid source" }, 400);
+  }
 }
 
 export async function postSource(c: Context) {

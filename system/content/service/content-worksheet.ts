@@ -1,5 +1,8 @@
 import * as contentStore from "../store/content.ts";
-import type { GenerateWorksheetRequest, Worksheet } from "../schema/content-schema.ts";
+import type {
+  GenerateWorksheetRequest,
+  Worksheet,
+} from "../schema/content-schema.ts";
 import { nowIso } from "./content-parse.ts";
 
 async function collectItemIds(
@@ -23,8 +26,7 @@ function buildWorksheetMeta(
   item_ids: string[],
 ): Worksheet {
   const conceptIds = request.concept_ids?.length ? request.concept_ids : [];
-  const title =
-    request.title ?? `Worksheet ${worksheet_id.slice(0, 8)}`;
+  const title = request.title ?? `Worksheet ${worksheet_id.slice(0, 8)}`;
   return {
     worksheet_id,
     title,
@@ -53,8 +55,9 @@ async function saveWorksheet(worksheet: Worksheet): Promise<Worksheet> {
 export async function generateWorksheet(
   request: GenerateWorksheetRequest,
 ): Promise<Worksheet> {
-  const { worksheet_id, conceptIds, perConcept } =
-    initWorksheetRequest(request);
+  const { worksheet_id, conceptIds, perConcept } = initWorksheetRequest(
+    request,
+  );
   const item_ids = await collectItemIds(conceptIds, perConcept);
   const worksheet = buildWorksheetMeta(request, worksheet_id, item_ids);
   return saveWorksheet(worksheet);

@@ -27,8 +27,11 @@ async function doPostProfile(
   c: Context,
   data: Parameters<typeof createProfile>[0],
 ) {
-  try { return c.json(await createProfile(data), 201); }
-  catch { return c.json({ error: "Invalid profile" }, 400); }
+  try {
+    return c.json(await createProfile(data), 201);
+  } catch {
+    return c.json({ error: "Invalid profile" }, 400);
+  }
 }
 
 export async function postProfile(c: Context) {
@@ -55,7 +58,7 @@ async function doPatchProfile(
   data: z.infer<typeof ProfilePatchSchema>,
 ) {
   return await patchProfileApply(c, id, data).catch(() =>
-    c.json({ error: "Invalid profile" }, 400),
+    c.json({ error: "Invalid profile" }, 400)
   );
 }
 
@@ -91,7 +94,7 @@ async function doPatchProgress(
   data: z.infer<typeof ProgressPatchSchema>,
 ) {
   return await patchProgressApply(c, id, data).catch(() =>
-    c.json({ error: "Invalid progress" }, 400),
+    c.json({ error: "Invalid progress" }, 400)
   );
 }
 

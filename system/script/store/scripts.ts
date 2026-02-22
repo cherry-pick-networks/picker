@@ -48,8 +48,9 @@ export function listScripts(): Promise<ListResult> {
 }
 
 function readScriptCatch(e: unknown): ReadResult {
-  if (e instanceof Deno.errors.NotFound)
+  if (e instanceof Deno.errors.NotFound) {
     return { ok: false, status: 404, body: "Not found" };
+  }
   const body = e instanceof Error ? e.message : "read failed";
   return { ok: false, status: 500, body };
 }

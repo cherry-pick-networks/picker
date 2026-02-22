@@ -68,8 +68,8 @@ export function deriveExtractedName(
   if (!obj) return undefined;
   return (
     gradeName(type, obj) ??
-    firstStringKey(obj, ["title", "name", "id"]) ??
-    baseFromPath(relPath)
+      firstStringKey(obj, ["title", "name", "id"]) ??
+      baseFromPath(relPath)
   );
 }
 
