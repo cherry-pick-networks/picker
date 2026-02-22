@@ -92,6 +92,10 @@ async function main(): Promise<void> {
   const identityDir = getIdentityDir();
   await ensureDir(extractedDir);
   await ensureDir(identityDir);
+  const extractedRefDir = getExtractedIndexPath().replace(/\/[^/]+$/, "/");
+  const identityRefDir = getIdentityIndexPath().replace(/\/[^/]+$/, "/");
+  await ensureDir(extractedRefDir);
+  await ensureDir(identityRefDir);
 
   let extractedIndex: ExtractedIndex = {};
   try {

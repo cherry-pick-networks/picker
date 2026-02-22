@@ -3,10 +3,11 @@
  */
 
 const DATA_DIR = new URL("../../data/", import.meta.url).pathname;
-const EXTRACTED_DIR = `${DATA_DIR}extracted/`;
-const IDENTITY_DIR = `${DATA_DIR}identity/`;
-const EXTRACTED_INDEX_PATH = `${DATA_DIR}extracted-data-index.json`;
-const IDENTITY_INDEX_PATH = `${DATA_DIR}identity-index.json`;
+const DOCUMENT_STORE = `${DATA_DIR}document/store/`;
+const EXTRACTED_INDEX_PATH =
+  `${DATA_DIR}document/reference/extracted-data-index.json`;
+const IDENTITY_INDEX_PATH =
+  `${DATA_DIR}document/reference/identity-index.json`;
 
 export interface ExtractedIndexEntry {
   type: string;
@@ -31,11 +32,11 @@ export function getDataDir(): string {
 }
 
 export function getExtractedDir(): string {
-  return EXTRACTED_DIR;
+  return DOCUMENT_STORE;
 }
 
 export function getIdentityDir(): string {
-  return IDENTITY_DIR;
+  return DOCUMENT_STORE;
 }
 
 export function getExtractedIndexPath(): string {
@@ -65,7 +66,7 @@ export async function readIdentityIndex(): Promise<IdentityIndex> {
 }
 
 export async function readExtractedFile(id: string): Promise<unknown | null> {
-  const path = `${EXTRACTED_DIR}${id}.json`;
+  const path = `${DOCUMENT_STORE}${id}.json`;
   try {
     const raw = await Deno.readTextFile(path);
     return JSON.parse(raw) as unknown;
@@ -75,7 +76,7 @@ export async function readExtractedFile(id: string): Promise<unknown | null> {
 }
 
 export async function readIdentityFile(id: string): Promise<unknown | null> {
-  const path = `${IDENTITY_DIR}${id}.json`;
+  const path = `${DOCUMENT_STORE}${id}.json`;
   try {
     const raw = await Deno.readTextFile(path);
     return JSON.parse(raw) as unknown;
