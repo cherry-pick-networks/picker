@@ -14,6 +14,6 @@ Thumbs.db
 *.log
 npm-debug.log*
 
-# Local / backup
-data/
-.old/
+# File-based record store: ignore data, keep structure
+shared/record/store/*.json
+shared/record/reference/*.json
