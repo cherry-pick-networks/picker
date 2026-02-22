@@ -72,6 +72,8 @@ tool-specific configs.
 - `deno task scope-check` — verify API routes are listed in
   shared/prompt/boundary.md (runs in CI)
 - `deno task type-check-policy` — verify no type-check bypass (runs in CI)
+- `deno task dependency-check` — verify acyclic domain deps and allowed matrix
+  (runs in CI)
 - `deno task naming-layer-check` — verify layer-prefixed paths use allowed
   infix/suffix per §E (optional; run in pre-commit or CI)
 - `deno task scope-discovery -- <entry-file>` — list direct imports for AI
@@ -528,6 +530,10 @@ implement.
 
 Agent and scope: agent must not extend scope arbitrarily; propose scope doc
 changes for human approval, then implement only after scope is updated.
+Cross-domain service calls: must follow the allowed dependency matrix and
+remain acyclic (see shared/prompt/documentation/reference.md, § Domain
+dependency); update the matrix and check-domain-deps allowlist before adding
+a new cross-domain dependency.
 
 ### §M. Root README boundary
 

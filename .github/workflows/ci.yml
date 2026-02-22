@@ -43,6 +43,9 @@ jobs:
       - name: Boundary check
         run: deno task boundary-check
 
+      - name: Dependency check
+        run: deno task dependency-check
+
       - name: Type-check policy
         run: deno task type-check-policy
 

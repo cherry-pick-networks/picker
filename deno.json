@@ -20,7 +20,8 @@
     "migrate:old-to-data": "deno run -A shared/prompt/scripts/migrate-old-to-data.ts",
     "naming-layer-check": "deno run --allow-read shared/prompt/scripts/check-naming-layer.ts",
     "line-length-check": "deno run --allow-read shared/prompt/scripts/check-line-length.ts",
-    "boundary-check": "deno run --allow-read shared/prompt/scripts/check-domain-boundary.ts"
+    "boundary-check": "deno run --allow-read shared/prompt/scripts/check-domain-boundary.ts",
+    "dependency-check": "deno run --allow-read shared/prompt/scripts/check-domain-deps.ts"
   },
   "lint": {
     "plugins": [
