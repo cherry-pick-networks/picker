@@ -1,5 +1,5 @@
 /**
- * Run E2E tests and append one run entry to system/audit/log/e2e-runs.json.
+ * Run E2E tests and append one run entry to system/audit/e2e-runs.json.
  * Usage: deno run -A --unstable-kv shared/prompt/scripts/run-e2e-record.ts
  * Or: deno task test:e2e-record
  */

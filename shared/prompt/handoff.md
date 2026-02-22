@@ -46,7 +46,7 @@ Current scope and implementation state: [boundary.md](boundary.md).
 - Rule compliance (store.md ยงP and lint): Removed `shared/prompt/scripts/` from
   lint exclude so function-length applies to scripts. Split
   `system/service/content.ts` (271 lines) into content-schema, content-parse,
-  content-prompt, content-prompt-load, and content.ts (all โค100 lines). Fixed
+  content-prompt, content-prompt-load, and content.ts (all โÿค100 lines). Fixed
   function-length violations across codebase (ignores or refactors). Lint,
   type-check-policy, scope-check, naming-layer-check pass. Remaining ยงP: files
   still >100 lines (routes 135, profile 132, scripts 103, migrate-old-to-data
@@ -82,7 +82,7 @@ restore context.
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store ยง9). -->
 
 - Optional: Split remaining ยงP >100-line files (system/routes.ts,
-  system/service/profile.ts, system/store/scripts.ts,
+  system/actor/profile.service.ts, system/script/scripts.store.ts,
   shared/prompt/scripts/migrate-old-to-data.ts,
   shared/prompt/scripts/check-naming-layer.ts) and run 80-char line check.
 - Deferred: Spec summary (e.g. current phase in goal.md or documentation/guide);

@@ -127,7 +127,7 @@ deno run --allow-read shared/prompt/scripts/scope-discovery.ts <entry-file>
 Example:
 
 ```bash
-deno run --allow-read shared/prompt/scripts/scope-discovery.ts system/router/home.ts
+deno run --allow-read shared/prompt/scripts/scope-discovery.ts main.ts
 ```
 
 Output: the entry path plus one path per line for each file it **directly**
@@ -136,7 +136,7 @@ imports (relative imports only; npm/jsr are skipped). Use this list as the
 pasting into the prompt.
 
 Task: `deno task scope-discovery -- <entry-file>` (e.g.
-`deno task scope-discovery -- system/router/home.ts`). Add `--oneline` for
+`deno task scope-discovery -- main.ts`). Add `--oneline` for
 one-line output.
 
 ## Phase flags (explicit prompt flags)

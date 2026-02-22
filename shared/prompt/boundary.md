@@ -24,7 +24,7 @@ Use that document for AI direction and scope decisions.
 | **system/script/**        | Scripts store, AST apply, Governance: endpoint, service, store, validation.                                                                         |
 | **system/record/**        | Record store (extracted/identity): endpoint, store.                                                                                                 |
 | **system/kv/**            | Generic Deno KV: endpoint, store.                                                                                                                   |
-| **system/audit/log/**     | Log artifact storage (e.g. e2e-runs.json, change audit). Test/tooling writes run history. Not served by API unless an audit read endpoint is added. |
+| **system/audit/**         | Log artifact storage (e.g. e2e-runs.json in same dir as audit.log.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added. |
 | **shared/runtime/store/** | Target path for AST-based self-edit; read and write only via Governance-verified flow.                                                              |
 | **shared/infra/**         | Shared infrastructure. KV client (`getKv()`) only; no business logic.                                                                               |
 

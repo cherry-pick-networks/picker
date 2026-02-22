@@ -1,8 +1,8 @@
 # {{repo_name}}
 
 Deno app: Hono (HTTP), Zod, ts-morph (AST), Deno KV. Entry: `main.ts`; client:
-`client.ts`. File-based routes in `system/router/`; dev uses programmatic routes
-in `main.ts`.
+`client.ts`. Routes from `system/routes.ts` and `system/app/*.config.ts`; dev
+uses `main.ts`.
 
 ## Run
 
