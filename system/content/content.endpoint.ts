@@ -26,16 +26,12 @@ export async function getItem(c: Context) {
   return c.json(item);
 }
 
-// function-length-ignore
 async function doPostItem(
   c: Context,
   data: Parameters<typeof createItem>[0],
 ) {
-  try {
-    return c.json(await createItem(data), 201);
-  } catch {
-    return c.json({ error: "Invalid item" }, 400);
-  }
+  const res = await createItem(data);
+  return res.ok ? c.json(res.data, 201) : c.json({ error: res.error }, 400);
 }
 
 export async function postItem(c: Context) {

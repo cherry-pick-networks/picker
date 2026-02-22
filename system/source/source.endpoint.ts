@@ -18,16 +18,12 @@ export async function getSource(c: Context) {
   return c.json(source);
 }
 
-// function-length-ignore
 async function doPostSource(
   c: Context,
   data: Parameters<typeof createSource>[0],
 ) {
-  try {
-    return c.json(await createSource(data), 201);
-  } catch {
-    return c.json({ error: "Invalid source" }, 400);
-  }
+  const res = await createSource(data);
+  return res.ok ? c.json(res.data, 201) : c.json({ error: res.error }, 400);
 }
 
 export async function postSource(c: Context) {

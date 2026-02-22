@@ -1,5 +1,8 @@
 import { z } from "zod";
+import type { CreateResult } from "#shared/infra/result.types.ts";
 import * as sourceStore from "./source.store.ts";
+
+const ERROR_INVALID_SOURCE = "Invalid source";
 
 export const SourceSchema = z.object({
   source_id: z.string(),
@@ -49,12 +52,16 @@ function buildSourceRaw(body: CreateSourceRequest): Source {
 
 export async function createSource(
   body: CreateSourceRequest,
-): Promise<Source> {
-  const source = buildSourceRaw(body);
-  await sourceStore.setSource(
-    source as unknown as Record<string, unknown>,
-  );
-  return source;
+): Promise<CreateResult<Source>> {
+  try {
+    const source = buildSourceRaw(body);
+    await sourceStore.setSource(
+      source as unknown as Record<string, unknown>,
+    );
+    return { ok: true, data: source };
+  } catch {
+    return { ok: false, error: ERROR_INVALID_SOURCE };
+  }
 }
 
 export async function listSources(): Promise<Source[]> {

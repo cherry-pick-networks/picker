@@ -1,5 +1,6 @@
 /** Submission CRUD and grading. Uses content.store for submission KV. */
 
+import type { CreateResult } from "#shared/infra/result.types.ts";
 import * as contentStore from "./content.store.ts";
 import type {
   CreateSubmissionRequest as CreateSubmissionRequestType,
@@ -13,6 +14,8 @@ import {
 } from "./content.schema.ts";
 import { nowIso } from "./content-parse.service.ts";
 export { gradeSubmission } from "./content-submission-grading.service.ts";
+
+const ERROR_INVALID_SUBMISSION = "Invalid submission";
 
 // function-length-ignore
 export async function getItemsForWorksheet(
@@ -46,12 +49,16 @@ function buildSubmissionRaw(body: CreateSubmissionRequestType): Submission {
 
 export async function createSubmission(
   body: CreateSubmissionRequestType,
-): Promise<Submission> {
-  const sub = buildSubmissionRaw(body);
-  await contentStore.setSubmission(
-    sub as unknown as Record<string, unknown>,
-  );
-  return sub;
+): Promise<CreateResult<Submission>> {
+  try {
+    const sub = buildSubmissionRaw(body);
+    await contentStore.setSubmission(
+      sub as unknown as Record<string, unknown>,
+    );
+    return { ok: true, data: sub };
+  } catch {
+    return { ok: false, error: ERROR_INVALID_SUBMISSION };
+  }
 }
 
 export async function getSubmission(id: string): Promise<Submission | null> {

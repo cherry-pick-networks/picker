@@ -1,4 +1,5 @@
 import { z } from "zod";
+import type { CreateResult } from "#shared/infra/result.types.ts";
 import * as store from "./profile.store.ts";
 import {
   type Profile,
@@ -6,6 +7,8 @@ import {
   ProfilePatchSchema,
   ProfileSchema,
 } from "./profile.schema.ts";
+
+const ERROR_INVALID_PROFILE = "Invalid profile";
 
 export type { Profile, Progress } from "./profile.schema.ts";
 export {
@@ -47,11 +50,15 @@ function parseProfile(raw: Record<string, unknown>): Profile {
 
 export async function createProfile(
   body: z.infer<typeof ProfileCreateSchema>,
-): Promise<Profile> {
-  const raw = buildProfileRaw(body);
-  const profile = parseProfile(raw);
-  await store.setProfile(profile.id, profile);
-  return profile;
+): Promise<CreateResult<Profile>> {
+  try {
+    const raw = buildProfileRaw(body);
+    const profile = parseProfile(raw);
+    await store.setProfile(profile.id, profile);
+    return { ok: true, data: profile };
+  } catch {
+    return { ok: false, error: ERROR_INVALID_PROFILE };
+  }
 }
 
 function mergeProfile(

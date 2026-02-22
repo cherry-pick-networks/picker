@@ -22,16 +22,12 @@ export async function getProfile(c: Context) {
   return c.json(profile);
 }
 
-// function-length-ignore
 async function doPostProfile(
   c: Context,
   data: Parameters<typeof createProfile>[0],
 ) {
-  try {
-    return c.json(await createProfile(data), 201);
-  } catch {
-    return c.json({ error: "Invalid profile" }, 400);
-  }
+  const res = await createProfile(data);
+  return res.ok ? c.json(res.data, 201) : c.json({ error: res.error }, 400);
 }
 
 export async function postProfile(c: Context) {

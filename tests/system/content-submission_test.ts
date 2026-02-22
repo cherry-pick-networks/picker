@@ -134,15 +134,13 @@ Deno.test(
   },
 );
 
-const MISSING_SUBMISSION_ID =
-  "00000000-0000-0000-0000-000000000000";
+const MISSING_SUBMISSION_ID = "00000000-0000-0000-0000-000000000000";
 
 Deno.test(
   "GET /content/submissions/:id for missing id returns 404",
   handlerTestOpts,
   async () => {
-    const url =
-      `http://localhost/content/submissions/${MISSING_SUBMISSION_ID}`;
+    const url = `http://localhost/content/submissions/${MISSING_SUBMISSION_ID}`;
     const res = await handler(new Request(url));
     assertEquals(res.status, 404);
   },

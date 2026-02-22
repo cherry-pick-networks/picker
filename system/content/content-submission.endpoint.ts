@@ -8,16 +8,12 @@ import {
 } from "./content.service.ts";
 import { CreateSubmissionRequestSchema } from "./content.service.ts";
 
-// function-length-ignore
 async function doPostSubmission(
   c: Context,
   data: Parameters<typeof createSubmission>[0],
 ) {
-  try {
-    return c.json(await createSubmission(data), 201);
-  } catch {
-    return c.json({ error: "Invalid submission" }, 400);
-  }
+  const res = await createSubmission(data);
+  return res.ok ? c.json(res.data, 201) : c.json({ error: res.error }, 400);
 }
 
 export async function postSubmission(c: Context) {
@@ -35,6 +31,7 @@ async function submissionWithGrading(
   return { ...submission, grading };
 }
 
+// function-length-ignore
 export async function getSubmission(c: Context) {
   const id = c.req.param("id");
   const sub = await svcGetSubmission(id);
@@ -45,6 +42,7 @@ export async function getSubmission(c: Context) {
   return c.json(withGrading ?? sub);
 }
 
+// function-length-ignore
 export async function getSubmissions(c: Context) {
   const worksheetId = c.req.query("worksheet_id");
   const includeGrading = c.req.query("include") === "grading";

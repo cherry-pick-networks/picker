@@ -13,16 +13,12 @@ export async function getWorksheet(c: Context) {
   return c.json(worksheet);
 }
 
-// function-length-ignore
 async function doPostWorksheetsGenerate(
   c: Context,
   data: Parameters<typeof generateWorksheet>[0],
 ) {
-  try {
-    return c.json(await generateWorksheet(data), 201);
-  } catch {
-    return c.json({ error: "Generate failed" }, 400);
-  }
+  const res = await generateWorksheet(data);
+  return res.ok ? c.json(res.data, 201) : c.json({ error: res.error }, 400);
 }
 
 export async function postWorksheetsGenerate(c: Context) {
@@ -32,16 +28,13 @@ export async function postWorksheetsGenerate(c: Context) {
   return doPostWorksheetsGenerate(c, parsed.data);
 }
 
-// function-length-ignore
 async function doPostWorksheetsBuildPrompt(
   c: Context,
   data: Parameters<typeof buildWorksheetPrompt>[0],
 ) {
-  try {
-    return c.json(await buildWorksheetPrompt(data));
-  } catch {
-    return c.json({ error: "Build prompt failed" }, 500);
-  }
+  const res = await buildWorksheetPrompt(data);
+  const code = res.ok ? 200 : (res.status === 500 ? 500 : 400);
+  return res.ok ? c.json(res.data, 200) : c.json({ error: res.error }, code);
 }
 
 export async function postWorksheetsBuildPrompt(c: Context) {

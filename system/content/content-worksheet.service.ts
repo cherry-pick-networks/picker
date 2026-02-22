@@ -1,6 +1,9 @@
+import type { CreateResult } from "#shared/infra/result.types.ts";
 import * as contentStore from "./content.store.ts";
 import type { GenerateWorksheetRequest, Worksheet } from "./content.schema.ts";
 import { nowIso } from "./content-parse.service.ts";
+
+const ERROR_GENERATE_FAILED = "Generate failed";
 
 async function collectItemIds(
   conceptIds: string[],
@@ -66,11 +69,16 @@ async function saveWorksheet(worksheet: Worksheet): Promise<Worksheet> {
 
 export async function generateWorksheet(
   request: GenerateWorksheetRequest,
-): Promise<Worksheet> {
-  const { worksheet_id, conceptIds, perConcept } = initWorksheetRequest(
-    request,
-  );
-  const item_ids = await collectItemIds(conceptIds, perConcept);
-  const worksheet = buildWorksheetMeta(request, worksheet_id, item_ids);
-  return saveWorksheet(worksheet);
+): Promise<CreateResult<Worksheet>> {
+  try {
+    const { worksheet_id, conceptIds, perConcept } = initWorksheetRequest(
+      request,
+    );
+    const item_ids = await collectItemIds(conceptIds, perConcept);
+    const worksheet = buildWorksheetMeta(request, worksheet_id, item_ids);
+    const saved = await saveWorksheet(worksheet);
+    return { ok: true, data: saved };
+  } catch {
+    return { ok: false, error: ERROR_GENERATE_FAILED };
+  }
 }

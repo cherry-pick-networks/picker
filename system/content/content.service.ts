@@ -1,3 +1,4 @@
+import type { CreateResult } from "#shared/infra/result.types.ts";
 import * as contentStore from "./content.store.ts";
 import type {
   CreateItemRequest as CreateItemRequestType,
@@ -7,6 +8,8 @@ import type {
 } from "./content.schema.ts";
 import { ItemSchema, WorksheetSchema } from "./content.schema.ts";
 import { nowIso, parseItem } from "./content-parse.service.ts";
+
+const ERROR_INVALID_ITEM = "Invalid item";
 export {
   BuildBriefingRequestSchema,
   CreateItemRequestSchema,
@@ -58,10 +61,16 @@ function buildItemRaw(body: CreateItemRequestType): Item {
   });
 }
 
-export async function createItem(body: CreateItemRequestType): Promise<Item> {
-  const item = buildItemRaw(body);
-  await contentStore.setItem(item as unknown as Record<string, unknown>);
-  return item;
+export async function createItem(
+  body: CreateItemRequestType,
+): Promise<CreateResult<Item>> {
+  try {
+    const item = buildItemRaw(body);
+    await contentStore.setItem(item as unknown as Record<string, unknown>);
+    return { ok: true, data: item };
+  } catch {
+    return { ok: false, error: ERROR_INVALID_ITEM };
+  }
 }
 
 async function mergeAndSaveItem(

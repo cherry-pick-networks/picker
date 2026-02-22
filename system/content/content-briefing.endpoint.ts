@@ -1,7 +1,7 @@
 import type { Context } from "hono";
 import {
-  BuildBriefingRequestSchema,
   buildBriefingPrompt,
+  BuildBriefingRequestSchema,
 } from "./content.service.ts";
 
 // function-length-ignore
