@@ -57,7 +57,9 @@ async function get() {
 Deno.test("function-length: 1 statement (chain) reports", () => {
   const code = `
 function get() {
-  return fetch("/api").then((r) => r.json()).catch(() => null);
+  return fetch("/api")
+    .then((r) => r.json())
+    .catch(() => null);
 }
 `;
   const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
@@ -65,8 +67,10 @@ function get() {
   assertEquals(d[0].message, MSG_OK(1));
 });
 
-Deno.test("function-length: single try/catch exempt (complex statement)", () => {
-  const code = `
+Deno.test(
+  "function-length: single try/catch exempt (complex statement)",
+  () => {
+    const code = `
 function withTry() {
   try {
     return doSomething();
@@ -75,9 +79,10 @@ function withTry() {
   }
 }
 `;
-  const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
-  assertEquals(d.length, 0);
-});
+    const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+    assertEquals(d.length, 0);
+  },
+);
 
 Deno.test("function-length: 2 statements with try/catch ok", () => {
   const code = `
@@ -105,8 +110,10 @@ function withSwitch(x: number) {
   assertEquals(d.length, 0);
 });
 
-Deno.test("function-length: single block-bodied if exempt (complex statement)", () => {
-  const code = `
+Deno.test(
+  "function-length: single block-bodied if exempt (complex statement)",
+  () => {
+    const code = `
 function onlyIf(x: boolean) {
   if (x) {
     doA();
@@ -114,6 +121,7 @@ function onlyIf(x: boolean) {
   }
 }
 `;
-  const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
-  assertEquals(d.length, 0);
-});
+    const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+    assertEquals(d.length, 0);
+  },
+);

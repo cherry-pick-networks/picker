@@ -2,6 +2,13 @@ import type {
   GenerateWorksheetRequest,
   WorksheetPromptResponse,
 } from "./content-schema.ts";
+import {
+  DEFAULT_QUESTION_TYPE,
+  DEFAULT_WORKSHEET_CONTEXT,
+  type WorksheetContext,
+} from "./content-prompt.types.ts";
+
+export type { WorksheetContext };
 import { getProfile } from "./profile.ts";
 import {
   DEFAULT_GOAL_ACCURACY,
@@ -10,15 +17,6 @@ import {
   loadTemplate,
   resolveTemplatePaths,
 } from "./content-prompt-load.ts";
-
-const DEFAULT_QUESTION_TYPE = "CSAT Type 40 (Summary Completion)";
-
-export type WorksheetContext = {
-  student_name: string;
-  goal_accuracy: string;
-  structural_notes: string;
-  vocabulary_policy: string;
-};
 
 export function contextFromProfile(profile: {
   id: string;
@@ -68,15 +66,9 @@ export function substitutePrompt(
 async function getContextForRequest(
   request: GenerateWorksheetRequest,
 ): Promise<WorksheetContext> {
-  const defaultCtx: WorksheetContext = {
-    student_name: "Unknown",
-    goal_accuracy: DEFAULT_GOAL_ACCURACY,
-    structural_notes: "",
-    vocabulary_policy: DEFAULT_VOCABULARY,
-  };
-  if (!request.student_id) return defaultCtx;
+  if (!request.student_id) return DEFAULT_WORKSHEET_CONTEXT;
   const profile = await getProfile(request.student_id);
-  return profile ? contextFromProfile(profile) : defaultCtx;
+  return profile ? contextFromProfile(profile) : DEFAULT_WORKSHEET_CONTEXT;
 }
 
 async function loadElemTemplate(): Promise<{

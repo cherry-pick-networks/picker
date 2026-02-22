@@ -1,6 +1,10 @@
 import type { Context } from "hono";
 import { z } from "zod";
 import {
+  getPatchProfileInput,
+  getPatchProgressInput,
+} from "./profile-patch-input.ts";
+import {
   createProfile,
   getProfile as svcGetProfile,
   getProgress as svcGetProgress,
@@ -19,7 +23,10 @@ export async function getProfile(c: Context) {
 }
 
 // function-length-ignore
-async function doPostProfile(c: Context, data: Parameters<typeof createProfile>[0]) {
+async function doPostProfile(
+  c: Context,
+  data: Parameters<typeof createProfile>[0],
+) {
   try { return c.json(await createProfile(data), 201); }
   catch { return c.json({ error: "Invalid profile" }, 400); }
 }
@@ -48,21 +55,16 @@ async function doPatchProfile(
   data: z.infer<typeof ProfilePatchSchema>,
 ) {
   return await patchProfileApply(c, id, data).catch(() =>
-    c.json({ error: "Invalid profile" }, 400));
-}
-
-async function getPatchProfileInput(c: Context): Promise<
-  { id: string; parsed: z.SafeParseReturnType<unknown, z.infer<typeof ProfilePatchSchema>> }
-  | Response
-> {
-  const [id, body] = [c.req.param("id"), await c.req.json().catch(() => ({}))];
-  const parsed = ProfilePatchSchema.safeParse(body);
-  return !parsed.success ? c.json({ error: parsed.error.flatten() }, 400) : { id, parsed };
+    c.json({ error: "Invalid profile" }, 400),
+  );
 }
 
 export async function patchProfile(c: Context) {
   const input = await getPatchProfileInput(c);
   if (input instanceof Response) return input;
+  if (!input.parsed.success) {
+    return c.json({ error: input.parsed.error.flatten() }, 400);
+  }
   return doPatchProfile(c, input.id, input.parsed.data);
 }
 
@@ -89,20 +91,15 @@ async function doPatchProgress(
   data: z.infer<typeof ProgressPatchSchema>,
 ) {
   return await patchProgressApply(c, id, data).catch(() =>
-    c.json({ error: "Invalid progress" }, 400));
-}
-
-async function getPatchProgressInput(c: Context): Promise<
-  { id: string; parsed: z.SafeParseReturnType<unknown, z.infer<typeof ProgressPatchSchema>> }
-  | Response
-> {
-  const [id, body] = [c.req.param("id"), await c.req.json().catch(() => ({}))];
-  const parsed = ProgressPatchSchema.safeParse(body);
-  return !parsed.success ? c.json({ error: parsed.error.flatten() }, 400) : { id, parsed };
+    c.json({ error: "Invalid progress" }, 400),
+  );
 }
 
 export async function patchProgress(c: Context) {
   const input = await getPatchProgressInput(c);
   if (input instanceof Response) return input;
+  if (!input.parsed.success) {
+    return c.json({ error: input.parsed.error.flatten() }, 400);
+  }
   return doPatchProgress(c, input.id, input.parsed.data);
 }

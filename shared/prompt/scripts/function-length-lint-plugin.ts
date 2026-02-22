@@ -8,10 +8,12 @@
  * or block-bodied if (complex statement exemption).
  */
 // function-length-ignore-file
-const MIN_STATEMENTS = 2;
-const MAX_STATEMENTS = 4;
-const IGNORE_PATTERN =
-  /function-length-ignore|function-length\/function-length/;
+import {
+  FILE_IGNORE_PATTERN,
+  IGNORE_PATTERN,
+  MAX_STATEMENTS,
+  MIN_STATEMENTS,
+} from "./function-length-lint-constants.ts";
 
 function statementCount(block: Deno.lint.BlockStatement): number {
   return block.body?.length ?? 0;
@@ -36,11 +38,7 @@ function hasIgnoreComment(
     return true;
   }
   const head = context.sourceCode.getText().slice(0, 400);
-  const fileIgnore = new RegExp(
-    "function-length-ignore-file|" +
-      "deno-lint-ignore-file\\s+function-length|function-length-ignore",
-  );
-  return fileIgnore.test(head);
+  return FILE_IGNORE_PATTERN.test(head);
 }
 
 function checkBody(

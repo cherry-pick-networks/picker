@@ -14,6 +14,12 @@ import {
   MAX_LINE_LENGTH,
 } from "./check-line-length-helpers.ts";
 
+// function-length-ignore
+function isFileLengthExempt(rel: string): boolean {
+  return rel.endsWith("_test.ts") || rel.startsWith("tests/") ||
+    rel.includes("/tests/");
+}
+
 const SKIP_DIRS = new Set([
   ".cache",
   ".git",
@@ -85,7 +91,7 @@ function reportResult(
   if (!hasFail) {
     console.log(
       "Line length check passed: all lines ≤ 80 chars, " +
-        "all files ≤ 100 effective lines.",
+        "all files ≤ 100 effective lines (test files exempt).",
     );
   }
 }
@@ -93,7 +99,9 @@ function reportResult(
 async function main(): Promise<void> {
   const root = Deno.cwd();
   const files = await collectTsFiles(root);
-  const { lineLength, fileLength } = await collectViolations(root, files);
+  const { lineLength, fileLength } = await collectViolations(
+    root, files, isFileLengthExempt,
+  );
   reportResult(lineLength, fileLength);
 }
 

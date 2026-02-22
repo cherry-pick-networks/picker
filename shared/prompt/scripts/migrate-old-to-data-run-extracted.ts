@@ -13,17 +13,7 @@ import {
   isMeaninglessFilename,
   walkFiles,
 } from "./migrate-old-to-data-helpers.ts";
-
-async function readAndParse(abs: string): Promise<{ raw: string; parsed: unknown }> {
-  const raw = await Deno.readTextFile(abs);
-  let parsed: unknown;
-  try {
-    parsed = JSON.parse(raw);
-  } catch {
-    parsed = null;
-  }
-  return { raw, parsed };
-}
+import { readAndParse } from "./migrate-old-to-data-parse.ts";
 
 function buildEntry(
   rel: string,
@@ -91,7 +81,9 @@ async function runOneSub(
     return;
   }
   const files = await walkFiles(base, `${sub}/`, ".json");
-  for (const rel of files) await processOneFile(rel, oldDir, extractedDir, extractedIndex, now);
+  for (const rel of files) {
+    await processOneFile(rel, oldDir, extractedDir, extractedIndex, now);
+  }
 }
 
 export async function runExtractedMigration(

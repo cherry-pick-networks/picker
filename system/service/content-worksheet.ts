@@ -23,9 +23,11 @@ function buildWorksheetMeta(
   item_ids: string[],
 ): Worksheet {
   const conceptIds = request.concept_ids?.length ? request.concept_ids : [];
+  const title =
+    request.title ?? `Worksheet ${worksheet_id.slice(0, 8)}`;
   return {
     worksheet_id,
-    title: request.title ?? `Worksheet ${worksheet_id.slice(0, 8)}`,
+    title,
     item_ids,
     generated_at: nowIso(),
     metadata: { concept_ids: conceptIds },
@@ -51,7 +53,8 @@ async function saveWorksheet(worksheet: Worksheet): Promise<Worksheet> {
 export async function generateWorksheet(
   request: GenerateWorksheetRequest,
 ): Promise<Worksheet> {
-  const { worksheet_id, conceptIds, perConcept } = initWorksheetRequest(request);
+  const { worksheet_id, conceptIds, perConcept } =
+    initWorksheetRequest(request);
   const item_ids = await collectItemIds(conceptIds, perConcept);
   const worksheet = buildWorksheetMeta(request, worksheet_id, item_ids);
   return saveWorksheet(worksheet);

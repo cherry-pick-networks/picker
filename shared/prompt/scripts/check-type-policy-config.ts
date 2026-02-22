@@ -5,7 +5,9 @@
 
 import { DENO_JSON, DENO_JSONC, TSCONFIG } from "./check-type-policy-lib.ts";
 
-async function readDenoJsonContent(root: string): Promise<{ path: string; content: string } | null> {
+async function readDenoJsonContent(
+  root: string,
+): Promise<{ path: string; content: string } | null> {
   const path = `${root}/${DENO_JSON}`;
   try {
     const content = await Deno.readTextFile(path);
@@ -57,14 +59,16 @@ function checkOneOpts(
   }
 }
 
+type CompilerOptionsData = { compilerOptions?: Record<string, unknown> };
+
 async function readOneConfig(
   root: string,
   configFile: string,
-): Promise<{ path: string; data: { compilerOptions?: Record<string, unknown> } } | null> {
+): Promise<{ path: string; data: CompilerOptionsData } | null> {
   const path = `${root}/${configFile}`;
   try {
     const content = await Deno.readTextFile(path);
-    const data = JSON.parse(content) as { compilerOptions?: Record<string, unknown> };
+    const data = JSON.parse(content) as CompilerOptionsData;
     return { path, data };
   } catch {
     return null;

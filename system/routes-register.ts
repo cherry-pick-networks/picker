@@ -46,7 +46,10 @@ function registerWorksheetsGetPost(app: Hono) {
 
 function registerContentWorksheets(app: Hono) {
   registerWorksheetsGetPost(app);
-  app.post("/content/worksheets/build-prompt", content.postWorksheetsBuildPrompt);
+  app.post(
+    "/content/worksheets/build-prompt",
+    content.postWorksheetsBuildPrompt,
+  );
 }
 
 function registerSource(app: Hono) {

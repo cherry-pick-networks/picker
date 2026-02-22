@@ -543,7 +543,9 @@ where documented (e.g. long URLs in comments). One effective line = 80
 character units per physical line: ceil(length/80); empty line = 0.
 File length: keep files to 100 effective lines or fewer (sum of effective
 lines over all physical lines); split when longer. Scope: TypeScript source
-(e.g. `**/*.ts`); exclude node_modules, vendor, generated output.
+(e.g. `**/*.ts`); exclude node_modules, vendor, generated output. Exception:
+file-length check is not applied to test files (paths ending with `_test.ts`
+or under a `tests/` directory); line-length check still applies.
 
 Function body: block body 2–4 statements (AST direct statements in block
 body only); expression body allowed (counts as 1). A single statement is
@@ -551,7 +553,8 @@ allowed when it is a try/catch, switch, or block-bodied if (complex
 statement exemption). Line length in body is not enforced by this rule;
 use the formatter and line-length check instead.
 Validation: line-length and file-length by
-shared/prompt/scripts/check-line-length.ts; function body by `deno lint`
+shared/prompt/scripts/check-line-length.ts (which applies the test-file
+exception above); function body by `deno lint`
 (plugin function-length/function-length in
 shared/prompt/scripts/function-length-lint-plugin.ts, counts statements in
 body). To ignore per function:

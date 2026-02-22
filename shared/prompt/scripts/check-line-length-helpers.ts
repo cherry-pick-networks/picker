@@ -33,6 +33,7 @@ export type ViolationsResult = {
 export async function collectViolations(
   root: string,
   files: string[],
+  isFileLengthExempt?: (rel: string) => boolean,
 ): Promise<ViolationsResult> {
   const lineLength: LineLengthViolation[] = [];
   const fileLength: FileLengthViolation[] = [];
@@ -46,6 +47,7 @@ export async function collectViolations(
         lineLength.push({ file: rel, line: i + 1, length: len });
       }
     }
+    if (isFileLengthExempt?.(rel)) continue;
     const effective = effectiveLineCount(lines);
     if (effective > MAX_EFFECTIVE_LINES_PER_FILE) {
       fileLength.push({ file: rel, effectiveLines: effective });

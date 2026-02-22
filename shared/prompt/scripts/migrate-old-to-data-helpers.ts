@@ -33,7 +33,10 @@ function toRecord(obj: unknown): Record<string, unknown> | null {
   return ok ? (obj as Record<string, unknown>) : null;
 }
 
-function gradeName(type: string, obj: Record<string, unknown>): string | undefined {
+function gradeName(
+  type: string,
+  obj: Record<string, unknown>,
+): string | undefined {
   const g = obj.grade;
   if (typeof g !== "number") return undefined;
   if (type === "plans") return `plan-grade-${g}`;
