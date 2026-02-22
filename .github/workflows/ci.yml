@@ -40,6 +40,9 @@ jobs:
       - name: Scope check
         run: deno task scope-check
 
+      - name: Boundary check
+        run: deno task boundary-check
+
       - name: Type-check policy
         run: deno task type-check-policy
 
