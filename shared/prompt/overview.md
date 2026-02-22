@@ -21,8 +21,10 @@ store.md §R.
 - **Max depth**: 3 tiers from root (prefix → infix → suffix). Root is not
   counted.
 - **Allowed forms**: `prefix/`, `prefix/infix/`, `prefix/infix/suffix/`
-- **Naming**: Use only approved segment names per axis; see store.md §E. Rules
-  summary below references store.md §D–§F.
+- **Naming**: Use only approved segment names per axis; see store.md §E. When
+  the first tier is a Layer (presentation, application, domain, infrastructure),
+  use that layer's allowed Infix/Suffix only; see store.md §E. Rules summary
+  below references store.md §D–§F.
 - **This file**: `shared/prompt/overview.md` (shared = Scope, prompt = Entity,
   overview = Meta)
 - **Exceptions**: .git, .cursor, node_modules, dist, build, coverage, vendor,

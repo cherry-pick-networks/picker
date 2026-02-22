@@ -300,8 +300,11 @@ Directory tier names use prefix (level 1), infix (level 2), and suffix (level 3)
 from the allowed sets below. The same allowed values for each axis are the
 approved names for that tier and its subtree: use them for tier names and,
 within that tier, for file names, subfolder names, module/namespace names, and
-public symbol names. Mandatory scope: directory and rule/document naming per
-§D and §F; other uses apply from new or renamed items (see §J).
+public symbol names. When the first tier is a Layer (presentation, application,
+domain, infrastructure), tier 2 and tier 3 names must use only that layer's
+allowed Infix and Suffix sets defined below. Mandatory scope: directory and
+rule/document naming per §D and §F; other uses apply from new or renamed items
+(see §J).
 
 Clean dictionary (one word per concept — overlap resolution): middleware: only
 Suffix (Artifact); never Infix (use interceptor, filter). policy: only Suffix
@@ -350,6 +353,23 @@ Examples: payment-infra-redis-config (Context + Layer + Entity + Artifact);
 security-application-guard-policy (Context + Layer + Actor + Policy);
 global-config (Scope + Artifact).
 
+Layer-specific allowed Infix and Suffix (when tier 1 is Layer): When the
+first tier is one of presentation, application, domain, infrastructure,
+tier 2 and tier 3 names must use only that layer's allowed sets below.
+Presentation — Infix: router, facade, interceptor, filter, guard, client,
+validator, payload, session, document. Suffix: endpoint, response, config,
+format, middleware, exception, trace, boundary, validation. Application —
+Infix: service, facade, agent, worker, guard, validator, payload, session,
+document, record, read, write, batch, parse, search, validate, migration,
+recovery. Suffix: pipeline, config, event, store, metrics, trace, boundary,
+constraint, validation, compliance. Domain — Infix: entity, repository,
+service, record, document, validate. Suffix: schema, event, boundary,
+constraint, contract, principle, types. Infrastructure — Infix: adapter,
+client, repository, agent, worker, blob, cache, session, record, json, sql,
+redis, stream, document, bootstrap, shutdown, read, write, batch, migration,
+recovery, parse, upload. Suffix: store, storage, config, mapping, pipeline,
+metrics, trace, log, boundary, isolation.
+
 ### §F. Directory structure and exceptions
 
 Purpose: Apply a single rule to all directory creation except exceptions; keep
@@ -364,9 +384,10 @@ prefix/infix/ prefix/infix/suffix/ Order fixed: prefix then infix then suffix;
 no fourth tier.
 
 Rule content — naming: Each tier name must use only approved values for that
-axis (prefix / infix / suffix); see §E. That same §E vocabulary applies to
-names within that tier (files, subfolders, modules, symbols). Lowercase; one
-hyphen between words; no underscores or spaces.
+axis (prefix / infix / suffix); see §E. When prefix is a Layer value, infix
+and suffix are restricted to that layer's allowed sets in §E. That same §E
+vocabulary applies to names within that tier (files, subfolders, modules,
+symbols). Lowercase; one hyphen between words; no underscores or spaces.
 
 Exceptions: Maintain an explicit exception list; same list for docs and tooling.
 Typical entries: .git, .cursor, node_modules, dist, build, coverage, vendor,
