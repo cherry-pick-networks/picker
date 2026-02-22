@@ -52,26 +52,26 @@ Simplify (Tip 40 → §11).
 When implementing a **new feature** (not refactor/docs/urgent fix), use the
 four-phase cycle: requirement summary → interface design → implementation →
 test/commit. Between phase 1 and 2, and between 2 and 3, the agent stops and
-asks for your approval; do not proceed until you reply (e.g. "승인해줘", "OK",
-"다음 단계로 진행해줘").
+asks for your approval; do not proceed until you reply (e.g. "Approve", "OK",
+"Proceed to next phase").
 **Phase flags** (strategy.md): Start your prompt with `[Phase 1]`, `[Phase 2]`,
-or `[Phase 3]` so the agent knows which step to run. Example: "[Phase 1] POST
-/content/worksheets 검증 로직 추가해줘. entry는 system/routes/content.ts."
+or `[Phase 3]` so the agent knows which step to run. Example: "[Phase 1] Add
+validation for POST /content/worksheets. Entry: system/routes/content.ts."
 
 ---
 
 ## Session start (first message)
 
 - **When**: Starting a new agent or chat session in Cursor (store.md §9).
-- **Goal**: First message in Korean, one short sentence stating the session goal,
-  so auto-generated chat titles are Korean and brief.
+- **Goal**: First message: one short sentence stating the session goal (store.md
+  §9 allows Korean for Cursor chat titles).
 - **Format**: One sentence; under 15 words or ~40 characters; state one task or
   one question. Add context in a second message if needed.
 - **Templates**:
-  - Task: `[대상/범위] + [할 일] + 해줘` — e.g. `boundary.md에 없는 라우트 scope-check에 넣어줘`
-  - Analysis: `[현상/에러] + 원인 찾아줘` — e.g. `type-check-policy 실패 이유 찾아줘`
-  - Refactor: `[대상] + [방향] + 해줘` — e.g. `content 서비스 함수 80줄 넘는 거 쪼개줘`
-- **Procedure**: Open new chat → state goal in one Korean sentence → send;
+  - Task: `[scope/target] + [what to do]` — e.g. `Add routes missing from boundary.md to scope-check`
+  - Analysis: `[symptom/error] + find cause` — e.g. `Find why type-check-policy fails`
+  - Refactor: `[target] + [direction]` — e.g. `Split content service functions over 80 lines`
+- **Procedure**: Open new chat → state goal in one sentence → send;
   optionally rename the tab later in chat history if the auto-title is not ideal.
 - **Snippet**: Use the `agent-start` snippet (`.vscode/cursor-session.code-snippets`)
   to paste the template and fill in the bracketed part.

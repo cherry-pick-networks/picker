@@ -1,6 +1,6 @@
 ---
 description: |
-  Implementation plan (기획안) for directory structure rule.
+  Implementation plan for directory structure rule.
   All directory creation (except listed exceptions) must follow
   prefix / infix / suffix form; max 3 directory levels (root not counted).
 alwaysApply: false

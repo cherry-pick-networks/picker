@@ -11,7 +11,7 @@ New sessions should attach only this file (and optionally
 When this file is the main context for a new chat:
 
 1. Treat the first bullet under **Next steps** as the current task.
-2. Output a work plan (작업 기획서) for that task first.
+2. Output a work plan for that task first.
 3. Describe how you will execute it (steps, order).
 4. End with your recommended direction.
 5. Then proceed or ask for confirmation.
@@ -56,7 +56,7 @@ Current scope and implementation state: [boundary.md](boundary.md).
 When a session stops in the middle of a **feature implementation** (store.md
 §Q): record the **current phase** and where the next session should start.
 Example: "Status: Phase 2 (Design) approved. Next session starts from Phase 3
-(Implementation)." Then in a new session you can say "Phase 3부터 진행" and
+(Implementation)." Then in a new session you can say "Start from Phase 3" and
 the agent can restore context. See strategy.md for phase flags [Phase 1/2/3].
 
 ---

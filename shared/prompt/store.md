@@ -168,7 +168,7 @@ tool-specific configs.
 - **Branching experiments**: When trying a different approach from a point in
   time, fork the conversation or record the branch point in the handoff doc.
 - **Session start (first message)**: When starting a new agent or chat session,
-  the first user message should be a single short sentence in Korean that states
+  the first user message should be a single short sentence in English that states
   the session goal (one task or one question). This improves auto-generated
   chat titles (e.g. in Cursor). Prefer under 15 words or about 40 characters.
   Example: "Add scope validation to POST /content/worksheets API". Full procedure
