@@ -1,6 +1,6 @@
 /**
- * Migrate .old (knowledge, identity) to data/ with UUID v7 filenames and
- * index JSONs. Usage: deno run -A shared/prompt/scripts/migrate-old-to-data.ts
+ * Migrate .old (knowledge, identity) to shared/record/ with UUID v7 filenames
+ * and index JSONs. Usage: deno run -A shared/prompt/scripts/migrate-old-to-data.ts
  */
 
 import { generate as uuidV7 } from "@std/uuid/v7";

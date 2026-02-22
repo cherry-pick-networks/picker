@@ -48,8 +48,8 @@ scope.
 - Add only modules, routes, and infrastructure listed in scope (boundary.md or
   spec).
 - Mutate only within shared/runtime/store/; use Governance-verified flow.
-- Write to data/config/ or credentials only via approved mechanisms (see
-  boundary.md).
+- Write to config/ or credentials only via approved mechanisms; file-based
+  record store (shared/record/) only via system/store/data.ts (see boundary.md).
 - Apply type-check policy (store.md §N).
 
 Concretes: spec §44–§48 and store.md.

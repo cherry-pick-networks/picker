@@ -18,7 +18,7 @@ Use that document for AI direction and scope decisions.
 | **client.ts**            | Client entry (loaded on every page).                                                       |
 | **system/routes.ts**     | Route list (ROUTES) and registerRoutes(app); scope-check reads this.                      |
 | **system/router/**       | Hono handlers: home, kv, profile, content, source, ast, ast-demo, scripts (GET/POST /scripts, GET /scripts/*). |
-| **system/store/**        | Storage access (e.g. Deno KV via `getKv()`). Profile/progress KV under prefixes `profile`, `progress`. Content items/worksheets under `content` (item, worksheet). Source records under `source`. File-based UUID v7 storage under `data/` in 2-tier layout (record/store, record/reference) via system/store/data.ts. |
+| **system/store/**        | Storage access (e.g. Deno KV via `getKv()`). Profile/progress KV under prefixes `profile`, `progress`. Content items/worksheets under `content` (item, worksheet). Source records under `source`. File-based UUID v7 storage under `shared/record/` (record/store, record/reference) via system/store/data.ts. |
 | **system/service/**      | Shared business logic (e.g. `add`, profile/progress, content, source collect/read). AST read/patch for shared/runtime/store/; apply via Governance and scripts write. |
 | **system/validator/**       | Governance verification; must pass before any apply (e.g. shared/runtime/store mutation). |
 | **system/log/**             | Log artifact storage (e.g. test run history JSON, change audit log). Test/tooling writes run history; routes or services append change audit entries (who, when, what) for in-scope mutations. Not served by API unless an audit read endpoint is added. |
@@ -67,8 +67,9 @@ Use that document for AI direction and scope decisions.
 - **When mutating**: Use only path `shared/runtime/store/`. Read and write
   only through Governance verification (system/validator).
 - **Routes**: Do not write directly from routes; use system/validator flow.
-- **Off-limits**: Do not write directly to data/config/ or credentials; use
-  approved mechanisms only.
+- **Off-limits**: Do not write directly to config/ or credentials; use approved
+  mechanisms only. File-based record store (shared/record/) is written only via
+  system/store/data.ts.
 
 ---
 
@@ -79,6 +80,6 @@ Use that document for AI direction and scope decisions.
   `progress` (progress state, key `["progress", id]`),
   `content` (items key `["content", "item", id]`; worksheets key `["content", "worksheet", id]`),
   `source` (source records key `["source", id]`).
-- **File-based data** — 2-tier layout under `data/`: infix `record`, suffix `store` (payload) or `reference` (index). Single store: `data/record/store/*.json`. Indexes: `data/record/reference/extracted-data-index.json`, `data/record/reference/identity-index.json`. Populated by migration from `.old`; read/write via system/store/data.ts.
+- **File-based data** — under `shared/record/`: suffix `store` (payload) or `reference` (index). Store: `shared/record/store/*.json`. Indexes: `shared/record/reference/extracted-data-index.json`, `shared/record/reference/identity-index.json`. Populated by migration from `.old`; read/write via system/store/data.ts.
 - **Worksheet prompt templates** — read-only from `shared/runtime/store/` (e.g. docs/contract/); Governance-verified read.
 - **Change audit log** — stored under `system/log/` (e.g. JSON file(s)); one entry per mutation (profile, progress, content, scripts/store) with actor, timestamp, and change summary; written by routes or services on mutation; retention and format defined by implementation.
