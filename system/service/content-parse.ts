@@ -1,9 +1,9 @@
 import type { Item, Worksheet } from "./content-schema.ts";
 import { ItemSchema, WorksheetSchema } from "./content-schema.ts";
 
-// deno-lint-ignore function-length/function-length
 export function nowIso(): string {
-  return new Date().toISOString();
+  const s = new Date().toISOString();
+  return s;
 }
 
 export function parseItem(raw: unknown): Item {

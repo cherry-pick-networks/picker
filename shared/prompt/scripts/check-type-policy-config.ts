@@ -2,31 +2,27 @@
  * Type-check policy: deno.json tasks and compiler options.
  * Used by check-type-policy.ts.
  */
-// deno-lint-ignore-file function-length/function-length
 
 import { DENO_JSON, DENO_JSONC, TSCONFIG } from "./check-type-policy-lib.ts";
 
-export async function checkDenoJsonTasks(root: string): Promise<string[]> {
-  const errors: string[] = [];
-  let content: string;
-  let path = `${root}/${DENO_JSON}`;
+async function readDenoJsonContent(root: string): Promise<{ path: string; content: string } | null> {
+  const path = `${root}/${DENO_JSON}`;
   try {
-    content = await Deno.readTextFile(path);
+    const content = await Deno.readTextFile(path);
+    return { path, content };
   } catch {
+    const pathC = `${root}/${DENO_JSONC}`;
     try {
-      path = `${root}/${DENO_JSONC}`;
-      content = await Deno.readTextFile(path);
+      const content = await Deno.readTextFile(pathC);
+      return { path: pathC, content };
     } catch {
-      return errors; // no config
+      return null;
     }
   }
-  let data: { tasks?: Record<string, string> };
-  try {
-    data = JSON.parse(content) as { tasks?: Record<string, string> };
-  } catch {
-    errors.push(`${path}: invalid JSON`);
-    return errors;
-  }
+}
+
+function validateTasks(data: { tasks?: Record<string, string> }): string[] {
+  const errors: string[] = [];
   const tasks = data.tasks ?? {};
   for (const [name, script] of Object.entries(tasks)) {
     if (typeof script === "string" && script.includes("--no-check")) {
@@ -36,33 +32,50 @@ export async function checkDenoJsonTasks(root: string): Promise<string[]> {
   return errors;
 }
 
+export async function checkDenoJsonTasks(root: string): Promise<string[]> {
+  const file = await readDenoJsonContent(root);
+  if (!file) return [];
+  try {
+    const data = JSON.parse(file.content) as { tasks?: Record<string, string> };
+    return validateTasks(data);
+  } catch {
+    return [`${file.path}: invalid JSON`];
+  }
+}
+
+function checkOneOpts(
+  path: string,
+  opts: Record<string, unknown> | undefined,
+  errors: string[],
+): void {
+  if (!opts || typeof opts !== "object") return;
+  if (opts.skipLibCheck === true) {
+    errors.push(`${path}: compilerOptions.skipLibCheck must not be true`);
+  }
+  if (opts.strict === false) {
+    errors.push(`${path}: compilerOptions.strict must not be false`);
+  }
+}
+
+async function readOneConfig(
+  root: string,
+  configFile: string,
+): Promise<{ path: string; data: { compilerOptions?: Record<string, unknown> } } | null> {
+  const path = `${root}/${configFile}`;
+  try {
+    const content = await Deno.readTextFile(path);
+    const data = JSON.parse(content) as { compilerOptions?: Record<string, unknown> };
+    return { path, data };
+  } catch {
+    return null;
+  }
+}
+
 export async function checkCompilerOptions(root: string): Promise<string[]> {
   const errors: string[] = [];
-  const check = (path: string, opts: Record<string, unknown> | undefined) => {
-    if (!opts || typeof opts !== "object") return;
-    if (opts.skipLibCheck === true) {
-      errors.push(`${path}: compilerOptions.skipLibCheck must not be true`);
-    }
-    if (opts.strict === false) {
-      errors.push(`${path}: compilerOptions.strict must not be false`);
-    }
-  };
   for (const configFile of [DENO_JSON, DENO_JSONC, TSCONFIG]) {
-    const path = `${root}/${configFile}`;
-    let content: string;
-    try {
-      content = await Deno.readTextFile(path);
-    } catch {
-      continue;
-    }
-    try {
-      const data = JSON.parse(content) as {
-        compilerOptions?: Record<string, unknown>;
-      };
-      check(path, data.compilerOptions);
-    } catch {
-      // ignore parse errors; other tooling will report
-    }
+    const one = await readOneConfig(root, configFile);
+    if (one) checkOneOpts(one.path, one.data.compilerOptions, errors);
   }
   return errors;
 }

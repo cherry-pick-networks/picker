@@ -27,17 +27,24 @@ export interface E2ERunsFile {
   runs: E2ERunEntry[];
 }
 
-// deno-lint-ignore function-length/function-length
 export function getLogDir(): string {
-  return LOG_DIR;
+  const out = LOG_DIR;
+  return out;
 }
 
-// deno-lint-ignore function-length/function-length
 export function getE2eRunsPath(): string {
-  return E2E_RUNS_PATH;
+  const out = E2E_RUNS_PATH;
+  return out;
 }
 
-// deno-lint-ignore function-length/function-length
+function parseE2eRunsRaw(raw: string): E2ERunsFile {
+  const data = JSON.parse(raw) as E2ERunsFile;
+  if (!data.runs || !Array.isArray(data.runs)) {
+    return { schemaVersion: data.schemaVersion ?? 1, runs: [] };
+  }
+  return data;
+}
+
 export async function readE2eRuns(): Promise<E2ERunsFile> {
   let raw: string;
   try {
@@ -45,11 +52,7 @@ export async function readE2eRuns(): Promise<E2ERunsFile> {
   } catch {
     return { schemaVersion: 1, runs: [] };
   }
-  const data = JSON.parse(raw) as E2ERunsFile;
-  if (!data.runs || !Array.isArray(data.runs)) {
-    return { schemaVersion: data.schemaVersion ?? 1, runs: [] };
-  }
-  return data;
+  return parseE2eRunsRaw(raw);
 }
 
 export async function appendE2eRun(entry: E2ERunEntry): Promise<void> {

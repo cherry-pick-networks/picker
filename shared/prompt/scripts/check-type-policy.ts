@@ -5,31 +5,34 @@
  * Run: deno run --allow-read shared/prompt/scripts/check-type-policy.ts
  * Or: deno task type-check-policy
  */
-// deno-lint-ignore-file function-length/function-length
-
 import {
   checkCompilerOptions,
   checkDenoJsonTasks,
 } from "./check-type-policy-config.ts";
 import { checkSourceFile, walkSourceFiles } from "./check-type-policy-lib.ts";
 
-async function main(): Promise<void> {
-  const root = Deno.cwd();
-  const allErrors: string[] = [];
-
-  const taskErrors = await checkDenoJsonTasks(root);
-  allErrors.push(...taskErrors);
-
-  const optErrors = await checkCompilerOptions(root);
-  allErrors.push(...optErrors);
-
+async function collectSourceErrors(root: string): Promise<string[]> {
   const sourceFiles = await walkSourceFiles(root, root);
+  const errors: string[] = [];
   for (const rel of sourceFiles) {
     const content = await Deno.readTextFile(`${root}/${rel}`);
-    const fileErrors = checkSourceFile(rel, content);
-    allErrors.push(...fileErrors);
+    errors.push(...checkSourceFile(rel, content));
   }
+  return errors;
+}
 
+async function runChecks(): Promise<string[]> {
+  const root = Deno.cwd();
+  const [taskErrors, optErrors, sourceErrors] = await Promise.all([
+    checkDenoJsonTasks(root),
+    checkCompilerOptions(root),
+    collectSourceErrors(root),
+  ]);
+  return [...taskErrors, ...optErrors, ...sourceErrors];
+}
+
+async function main(): Promise<void> {
+  const allErrors = await runChecks();
   if (allErrors.length > 0) {
     console.error(
       "Type-check policy violation(s). See §N in shared/prompt/store.md.",
@@ -37,7 +40,6 @@ async function main(): Promise<void> {
     for (const e of allErrors) console.error("  " + e);
     Deno.exit(1);
   }
-
   console.log("Type-check policy passed: no bypass or disable detected.");
 }
 

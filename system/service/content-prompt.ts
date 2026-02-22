@@ -1,4 +1,3 @@
-// deno-lint-ignore-file function-length/function-length
 import type {
   GenerateWorksheetRequest,
   WorksheetPromptResponse,
@@ -49,7 +48,7 @@ export function substitutePrompt(
   mainTheme = "",
   actionPlan = "",
 ): string {
-  return template
+  const out = template
     .replace("{{student_name}}", ctx.student_name || "Unknown")
     .replace("{{goal_accuracy}}", ctx.goal_accuracy)
     .replace("{{structural_notes}}", ctx.structural_notes)
@@ -63,34 +62,55 @@ export function substitutePrompt(
     .replace("{{output_format}}", formatBlock)
     .replace("{{main_theme}}", mainTheme)
     .replace("{{action_plan}}", actionPlan);
+  return out;
 }
 
-export async function buildWorksheetPrompt(
+async function getContextForRequest(
   request: GenerateWorksheetRequest,
-): Promise<WorksheetPromptResponse> {
-  let ctx: WorksheetContext = {
+): Promise<WorksheetContext> {
+  const defaultCtx: WorksheetContext = {
     student_name: "Unknown",
     goal_accuracy: DEFAULT_GOAL_ACCURACY,
     structural_notes: "",
     vocabulary_policy: DEFAULT_VOCABULARY,
   };
-  if (request.student_id) {
-    const profile = await getProfile(request.student_id);
-    if (profile) ctx = contextFromProfile(profile);
-  }
+  if (!request.student_id) return defaultCtx;
+  const profile = await getProfile(request.student_id);
+  return profile ? contextFromProfile(profile) : defaultCtx;
+}
+
+async function loadElemTemplate(): Promise<{
+  template: string;
+  formatBlock: string;
+}> {
+  const p = "docs/contract/contract-edu-prompt.md";
+  const template = (await loadTemplate(p)) || DEFAULT_TEMPLATE;
+  return { template, formatBlock: "" };
+}
+
+async function loadMidTemplate(
+  qt: string,
+): Promise<{ template: string; formatBlock: string }> {
+  const { templatePath, formatPath } = resolveTemplatePaths(qt);
+  const template = (await loadTemplate(templatePath)) || DEFAULT_TEMPLATE;
+  const formatBlock = await loadTemplate(formatPath);
+  return { template, formatBlock };
+}
+
+async function loadTemplateAndFormat(
+  qt: string,
+): Promise<{ template: string; formatBlock: string }> {
+  if (qt === "elem") return await loadElemTemplate();
+  return await loadMidTemplate(qt);
+}
+
+export async function buildWorksheetPrompt(
+  request: GenerateWorksheetRequest,
+): Promise<WorksheetPromptResponse> {
+  const ctx = await getContextForRequest(request);
   const qt = (request.question_type ?? "").trim().toLowerCase();
-  let template = DEFAULT_TEMPLATE;
-  let formatBlock = "";
-  if (qt === "elem") {
-    const p = "docs/contract/contract-edu-prompt.md";
-    const elemTemplate = await loadTemplate(p);
-    template = elemTemplate || DEFAULT_TEMPLATE;
-  } else {
-    const { templatePath, formatPath } = resolveTemplatePaths(qt);
-    const loaded = await loadTemplate(templatePath);
-    if (loaded) template = loaded;
-    formatBlock = await loadTemplate(formatPath);
-  }
-  const prompt = substitutePrompt(template, ctx, request, formatBlock, "", "");
-  return { prompt };
+  const { template, formatBlock } = await loadTemplateAndFormat(qt);
+  return {
+    prompt: substitutePrompt(template, ctx, request, formatBlock, "", ""),
+  };
 }

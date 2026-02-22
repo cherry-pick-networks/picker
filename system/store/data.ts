@@ -25,45 +25,45 @@ export interface IdentityIndexEntry {
 export type ExtractedIndex = Record<string, ExtractedIndexEntry>;
 export type IdentityIndex = Record<string, IdentityIndexEntry>;
 
-// deno-lint-ignore function-length/function-length
 export function getDataDir(): string {
-  return DATA_DIR;
+  const out = DATA_DIR;
+  return out;
 }
 
-// deno-lint-ignore function-length/function-length
 export function getExtractedDir(): string {
-  return RECORD_STORE;
+  const out = RECORD_STORE;
+  return out;
 }
 
-// deno-lint-ignore function-length/function-length
 export function getIdentityDir(): string {
-  return RECORD_STORE;
+  const out = RECORD_STORE;
+  return out;
 }
 
-// deno-lint-ignore function-length/function-length
 export function getExtractedIndexPath(): string {
-  return EXTRACTED_INDEX_PATH;
+  const out = EXTRACTED_INDEX_PATH;
+  return out;
 }
 
-// deno-lint-ignore function-length/function-length
 export function getIdentityIndexPath(): string {
-  return IDENTITY_INDEX_PATH;
+  const out = IDENTITY_INDEX_PATH;
+  return out;
 }
 
-// deno-lint-ignore function-length/function-length
 export async function readExtractedIndex(): Promise<ExtractedIndex> {
+  const path = EXTRACTED_INDEX_PATH;
   try {
-    const raw = await Deno.readTextFile(EXTRACTED_INDEX_PATH);
+    const raw = await Deno.readTextFile(path);
     return JSON.parse(raw) as ExtractedIndex;
   } catch {
     return {};
   }
 }
 
-// deno-lint-ignore function-length/function-length
 export async function readIdentityIndex(): Promise<IdentityIndex> {
+  const path = IDENTITY_INDEX_PATH;
   try {
-    const raw = await Deno.readTextFile(IDENTITY_INDEX_PATH);
+    const raw = await Deno.readTextFile(path);
     return JSON.parse(raw) as IdentityIndex;
   } catch {
     return {};

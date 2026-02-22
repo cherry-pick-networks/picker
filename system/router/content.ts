@@ -10,6 +10,7 @@ import {
   ItemPatchSchema,
   updateItem,
 } from "../service/content.ts";
+import type { ItemPatch } from "../service/content-schema.ts";
 
 export async function getItem(c: Context) {
   const id = c.req.param("id");
@@ -38,13 +39,21 @@ async function parsePatchBody(c: Context) {
     : { err: c.json({ error: parsed.error.flatten() }, 400) };
 }
 
-// deno-lint-ignore function-length/function-length
+async function patchItemResponse(
+  c: Context,
+  id: string,
+  data: ItemPatch,
+) {
+  const item = await updateItem(id, data);
+  if (item == null) return c.json({ error: "Not found" }, 404);
+  return c.json(item);
+}
+
 export async function patchItem(c: Context) {
   const id = c.req.param("id");
   const r = await parsePatchBody(c);
   if ("err" in r) return r.err;
-  const item = await updateItem(id, r.data);
-  return item == null ? c.json({ error: "Not found" }, 404) : c.json(item);
+  return patchItemResponse(c, id, r.data);
 }
 
 export async function getWorksheet(c: Context) {

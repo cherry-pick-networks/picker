@@ -5,14 +5,25 @@
  *   deno run --allow-read shared/prompt/scripts/check-naming-layer.ts
  * Or: deno task naming-layer-check
  */
-// deno-lint-ignore-file function-length/function-length
-
 import {
   LAYER_INFIX,
   LAYER_SUFFIX,
   LAYERS,
   SKIP_DIRS,
 } from "./check-naming-layer-config.ts";
+
+async function walkOneDir(
+  root: string,
+  dir: string,
+  prefix: string,
+  out: string[],
+  e: Deno.DirEntry,
+): Promise<void> {
+  if (!e.isDirectory || SKIP_DIRS.has(e.name)) return;
+  const rel = prefix ? `${prefix}/${e.name}` : e.name;
+  out.push(rel);
+  await walkDirs(root, `${dir}/${e.name}`, rel, out);
+}
 
 async function walkDirs(
   root: string,
@@ -27,32 +38,45 @@ async function walkDirs(
   } catch {
     return;
   }
-  for (const e of entries) {
-    if (!e.isDirectory) continue;
-    if (SKIP_DIRS.has(e.name)) continue;
-    const rel = prefix ? `${prefix}/${e.name}` : e.name;
-    out.push(rel);
-    await walkDirs(root, `${dir}/${e.name}`, rel, out);
+  for (const e of entries) await walkOneDir(root, dir, prefix, out, e);
+}
+
+function pushInfixSuffixErrors(
+  rel: string,
+  layer: string,
+  parts: string[],
+  errors: string[],
+): void {
+  if (parts.length >= 2 && !LAYER_INFIX[layer]?.has(parts[1])) {
+    errors.push(`${rel}: infix "${parts[1]}" not in ${layer} allowed set`);
+  }
+  if (parts.length >= 3 && !LAYER_SUFFIX[layer]?.has(parts[2])) {
+    errors.push(`${rel}: suffix "${parts[2]}" not in ${layer} allowed set`);
   }
 }
 
-async function main(): Promise<void> {
+function validateOnePath(rel: string, errors: string[]): void {
+  const parts = rel.split("/").filter(Boolean);
+  if (parts.length === 0) return;
+  if (!LAYERS.includes(parts[0] as (typeof LAYERS)[number])) return;
+  pushInfixSuffixErrors(rel, parts[0], parts, errors);
+}
+
+function collectPathErrors(allDirs: string[]): string[] {
+  const errors: string[] = [];
+  for (const rel of allDirs) validateOnePath(rel, errors);
+  return errors;
+}
+
+async function runCheck(): Promise<{ errors: string[] }> {
   const root = Deno.cwd();
   const allDirs: string[] = [];
   await walkDirs(root, "", "", allDirs);
-  const errors: string[] = [];
-  for (const rel of allDirs) {
-    const parts = rel.split("/").filter(Boolean);
-    if (parts.length === 0) continue;
-    const layer = parts[0];
-    if (!LAYERS.includes(layer as (typeof LAYERS)[number])) continue;
-    if (parts.length >= 2 && !LAYER_INFIX[layer]?.has(parts[1])) {
-      errors.push(`${rel}: infix "${parts[1]}" not in ${layer} allowed set`);
-    }
-    if (parts.length >= 3 && !LAYER_SUFFIX[layer]?.has(parts[2])) {
-      errors.push(`${rel}: suffix "${parts[2]}" not in ${layer} allowed set`);
-    }
-  }
+  return { errors: collectPathErrors(allDirs) };
+}
+
+async function main(): Promise<void> {
+  const { errors } = await runCheck();
   if (errors.length > 0) {
     console.error("Layer naming check failed (store.md §E):");
     for (const e of errors) console.error("  ", e);

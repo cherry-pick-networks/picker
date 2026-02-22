@@ -8,9 +8,9 @@ import type { ListResult, ReadResult, WriteResult } from "./scripts-types.ts";
 
 export type { ListResult, ReadResult, WriteResult } from "./scripts-types.ts";
 
-// deno-lint-ignore function-length/function-length
 function getScriptsBase(): string {
-  return Deno.env.get("SCRIPTS_BASE") ?? "shared/runtime/store";
+  const base = Deno.env.get("SCRIPTS_BASE") ?? "shared/runtime/store";
+  return base;
 }
 
 async function listDir(path: string): Promise<string[]> {

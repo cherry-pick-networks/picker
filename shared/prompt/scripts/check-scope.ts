@@ -4,45 +4,54 @@
  *   deno run --allow-read shared/prompt/scripts/check-scope.ts
  * Or: deno task scope-check
  */
-// deno-lint-ignore-file function-length/function-length
-
 import { parseScopeApiTable, routeKey } from "./check-scope-lib.ts";
 import { ROUTES } from "../../../system/routes.ts";
 
 const SCOPE_PATH = "shared/prompt/boundary.md";
 
-async function main(): Promise<void> {
-  const root = Deno.cwd();
-  const scopePath = `${root}/${SCOPE_PATH}`;
+async function loadAllowedRoutes(scopePath: string): Promise<Set<string>> {
+  const scopeContent = await Deno.readTextFile(scopePath);
+  const routes = parseScopeApiTable(scopeContent).map(routeKey);
+  return new Set(routes);
+}
 
-  let scopeContent: string;
-  try {
-    scopeContent = await Deno.readTextFile(scopePath);
-  } catch (e) {
-    console.error(`Cannot read scope file: ${scopePath}`, e);
-    Deno.exit(1);
-  }
+async function runScopeCheck(scopePath: string): Promise<{
+  allowed: Set<string>;
+  missing: typeof ROUTES;
+}> {
+  const allowed = await loadAllowedRoutes(scopePath);
+  const missing = ROUTES.filter((r) => !allowed.has(routeKey(r)));
+  return { allowed, missing };
+}
 
-  const allowed = new Set(parseScopeApiTable(scopeContent).map(routeKey));
-  if (allowed.size === 0) {
+function reportIfFailed(result: {
+  allowed: Set<string>;
+  missing: typeof ROUTES;
+}): void {
+  if (result.allowed.size === 0) {
     console.error(
       "No API routes found in scope document. Check the file format.",
     );
     Deno.exit(1);
   }
-
-  const inCode = ROUTES;
-  const missingInScope = inCode.filter((r) => !allowed.has(routeKey(r)));
-  if (missingInScope.length > 0) {
+  if (result.missing.length > 0) {
     console.error(
       "Routes in code not in scope doc. Add to boundary.md first.",
     );
-    for (const r of missingInScope) {
-      console.error(`  ${r.method} ${r.path}`);
-    }
+    for (const r of result.missing) console.error(`  ${r.method} ${r.path}`);
     Deno.exit(1);
   }
+}
 
+async function main(): Promise<void> {
+  const scopePath = `${Deno.cwd()}/${SCOPE_PATH}`;
+  try {
+    const result = await runScopeCheck(scopePath);
+    reportIfFailed(result);
+  } catch (e) {
+    console.error(`Cannot read scope file: ${scopePath}`, e);
+    Deno.exit(1);
+  }
   console.log(
     "Scope check passed: all routes are listed in the scope document.",
   );

@@ -1,4 +1,3 @@
-// deno-lint-ignore-file function-length/function-length
 import { readScript } from "../store/scripts.ts";
 
 export const DEFAULT_GOAL_ACCURACY = "85%";
@@ -36,10 +35,9 @@ const TEMPLATE_PATHS: Record<
 export function resolveTemplatePaths(
   qt: string,
 ): { templatePath: string; formatPath: string } {
-  return (
-    TEMPLATE_PATHS[qt] ?? {
-      templatePath: "docs/contract/contract-prompt.md",
-      formatPath: "docs/contract/contract-assessment-format.md",
-    }
-  );
+  const fallback = {
+    templatePath: "docs/contract/contract-prompt.md",
+    formatPath: "docs/contract/contract-assessment-format.md",
+  };
+  return TEMPLATE_PATHS[qt] ?? fallback;
 }
