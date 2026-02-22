@@ -17,3 +17,7 @@ npm-debug.log*
 # File-based record store: ignore data, keep structure
 shared/record/store/*.json
 shared/record/reference/*.json
+
+# Temp: ignore contents, keep directory (temp/.gitkeep staged)
+temp/*
+!temp/.gitkeep

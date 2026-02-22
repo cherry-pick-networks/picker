@@ -29,6 +29,7 @@ const SKIP_DIRS = new Set([
   "build",
   "coverage",
   "vendor",
+  "temp",
 ]);
 
 async function walkTsFiles(

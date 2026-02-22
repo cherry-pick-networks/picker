@@ -21,6 +21,7 @@ export const SKIP_DIRS = new Set([
   "coverage",
   "vendor",
   ".cache",
+  "temp",
   "tests",
   "data",
 ]);

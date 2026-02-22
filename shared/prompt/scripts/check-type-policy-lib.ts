@@ -16,6 +16,7 @@ export const SKIP_DIRS = new Set([
   "build",
   "coverage",
   "vendor",
+  "temp",
 ]);
 
 export const SOURCE_EXTS = [".ts", ".tsx", ".mts", ".js", ".jsx", ".mjs"];
