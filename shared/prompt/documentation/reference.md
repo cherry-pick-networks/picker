@@ -75,6 +75,15 @@ system/
 | system/audit/log/log.ts            | system/audit/audit.log.ts          |
 | system/app/config/*.ts             | system/app/*.config.ts             |
 
+### Data file locations (TOML)
+
+| Path | Purpose |
+| ---- | ------- |
+| `shared/record/reference/extracted-data-index.toml` | Extracted-data index (UUID → entry) |
+| `shared/record/reference/identity-index.toml` | Identity index (UUID → entry) |
+| `shared/record/store/<uuid>.toml` | Single record (UUID v7) |
+| `system/audit/e2e-runs.toml` | E2E run log (schemaVersion + runs[]) |
+
 ### Modular monolith rules
 
 - Within a domain: endpoint → service → store/schema only.

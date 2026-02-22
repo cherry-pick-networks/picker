@@ -37,9 +37,11 @@ tool-specific configs.
   .cache, temp, tests (confirm per repo)
 - Do not add a fourth tier. Do not use forbidden segments (e.g. core in Context;
   cache as Suffix).
-- **Data and document format**: Data files use TOML (`.toml`); documents use
-  Markdown with optional YAML front matter (`.md`, `.mdc`). See
-  `shared/prompt/plan-data-document-format.md` for paths and migration.
+- **Data and document format**: Data files use TOML (`.toml`), UTF-8; parse with
+  `@std/toml`. File names follow §E; record files are `{uuid}.toml`. Documents
+  use Markdown (`.md`) or Cursor rules (`.mdc`) with optional YAML front matter;
+  parse with `@std/front-matter`. Data file paths: see
+  `shared/prompt/boundary.md`.
 
 ---
 
