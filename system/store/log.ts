@@ -37,29 +37,40 @@ export function getE2eRunsPath(): string {
   return out;
 }
 
-function parseE2eRunsRaw(raw: string): E2ERunsFile {
-  const data = JSON.parse(raw) as E2ERunsFile;
+function normalizeRuns(data: E2ERunsFile): E2ERunsFile {
   if (!data.runs || !Array.isArray(data.runs)) {
     return { schemaVersion: data.schemaVersion ?? 1, runs: [] };
   }
   return data;
 }
 
+function parseE2eRunsRaw(raw: string): E2ERunsFile {
+  const data = JSON.parse(raw) as E2ERunsFile;
+  return normalizeRuns(data);
+}
+
+const readE2eRunsFile = (): Promise<string | null> =>
+  Deno.readTextFile(E2E_RUNS_PATH).then((s) => s).catch(() => null);
+
+async function readE2eRunsRaw(): Promise<string | null> {
+  const raw = await readE2eRunsFile();
+  return raw;
+}
+
 export async function readE2eRuns(): Promise<E2ERunsFile> {
-  let raw: string;
-  try {
-    raw = await Deno.readTextFile(E2E_RUNS_PATH);
-  } catch {
-    return { schemaVersion: 1, runs: [] };
+  const raw = await readE2eRunsRaw();
+  return raw !== null ? parseE2eRunsRaw(raw) : { schemaVersion: 1, runs: [] };
+}
+
+function trimRunsToMax(data: E2ERunsFile): void {
+  if (data.runs.length > MAX_RUNS) {
+    data.runs = data.runs.slice(-MAX_RUNS);
   }
-  return parseE2eRunsRaw(raw);
 }
 
 export async function appendE2eRun(entry: E2ERunEntry): Promise<void> {
   const data = await readE2eRuns();
   data.runs.push(entry);
-  if (data.runs.length > MAX_RUNS) {
-    data.runs = data.runs.slice(-MAX_RUNS);
-  }
+  trimRunsToMax(data);
   await Deno.writeTextFile(E2E_RUNS_PATH, JSON.stringify(data, null, 2));
 }

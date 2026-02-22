@@ -10,12 +10,14 @@ function toLogicalKey(keyParts: string[]): string | null {
   return keyParts.slice(1).join("/");
 }
 
+function pushValidKey(keys: string[], entry: Deno.KvEntry<unknown>): void {
+  const key = toLogicalKey(entry.key as string[]);
+  if (key !== null) keys.push(key);
+}
+
 async function collectKeys(kv: Deno.Kv): Promise<string[]> {
   const keys: string[] = [];
-  for await (const entry of kv.list({ prefix: ["kv"] })) {
-    const key = toLogicalKey(entry.key as string[]);
-    if (key !== null) keys.push(key);
-  }
+  for await (const entry of kv.list({ prefix: ["kv"] })) pushValidKey(keys, entry);
   return keys;
 }
 

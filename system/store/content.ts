@@ -21,16 +21,30 @@ export async function setItem(value: Record<string, unknown>): Promise<void> {
   await kv.set([...ITEM_PREFIX, id], value);
 }
 
+function maybePushItem(
+  out: Record<string, unknown>[],
+  v: Record<string, unknown>,
+  conceptId: string,
+): void {
+  if (v?.concept_id !== conceptId) return;
+  out.push(v);
+}
+
+async function collectItemsByConcept(
+  kv: Awaited<ReturnType<typeof getKv>>,
+  conceptId: string,
+): Promise<Record<string, unknown>[]> {
+  const out: Record<string, unknown>[] = [];
+  for await (const entry of kv.list({ prefix: [...ITEM_PREFIX] }))
+    maybePushItem(out, entry.value as Record<string, unknown>, conceptId);
+  return out;
+}
+
 export async function listItemsByConcept(
   conceptId: string,
 ): Promise<Record<string, unknown>[]> {
   const kv = await getKv();
-  const out: Record<string, unknown>[] = [];
-  for await (const entry of kv.list({ prefix: [...ITEM_PREFIX] })) {
-    const v = entry.value as Record<string, unknown>;
-    if (v?.concept_id === conceptId) out.push(v);
-  }
-  return out;
+  return collectItemsByConcept(kv, conceptId);
 }
 
 export async function getWorksheet(id: string): Promise<unknown | null> {

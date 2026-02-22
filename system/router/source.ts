@@ -18,14 +18,17 @@ export async function getSource(c: Context) {
   return c.json(source);
 }
 
+async function doPostSource(
+  c: Context,
+  data: Parameters<typeof createSource>[0],
+) {
+  try { return c.json(await createSource(data), 201); }
+  catch { return c.json({ error: "Invalid source" }, 400); }
+}
+
 export async function postSource(c: Context) {
   const body = await c.req.json().catch(() => ({}));
   const parsed = CreateSourceRequestSchema.safeParse(body);
   if (!parsed.success) return c.json({ error: parsed.error.flatten() }, 400);
-  try {
-    const source = await createSource(parsed.data);
-    return c.json(source, 201);
-  } catch {
-    return c.json({ error: "Invalid source" }, 400);
-  }
+  return doPostSource(c, parsed.data);
 }

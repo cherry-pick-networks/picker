@@ -21,12 +21,24 @@ export async function setSource(
   await kv.set([...PREFIX, id], value);
 }
 
+function maybePushSource(
+  out: Record<string, unknown>[],
+  v: Record<string, unknown> | null,
+): void {
+  if (v == null) return;
+  out.push(v);
+}
+
+async function collectSources(
+  kv: Awaited<ReturnType<typeof getKv>>,
+): Promise<Record<string, unknown>[]> {
+  const out: Record<string, unknown>[] = [];
+  for await (const entry of kv.list({ prefix: [...PREFIX] }))
+    maybePushSource(out, entry.value as Record<string, unknown> | null);
+  return out;
+}
+
 export async function listSources(): Promise<Record<string, unknown>[]> {
   const kv = await getKv();
-  const out: Record<string, unknown>[] = [];
-  for await (const entry of kv.list({ prefix: [...PREFIX] })) {
-    const v = entry.value as Record<string, unknown>;
-    if (v != null) out.push(v);
-  }
-  return out;
+  return collectSources(kv);
 }

@@ -1,34 +1,36 @@
 import type { Context } from "hono";
 import { listScripts, readScript, writeScript } from "../store/scripts.ts";
 
+function toScriptErrorResponse(
+  status: number,
+  body: string,
+): Response {
+  return new Response(JSON.stringify({ error: body }), {
+    status,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
 export async function getScriptsList(c: Context) {
   const result = await listScripts();
-  if (!result.ok) {
-    return new Response(JSON.stringify({ error: result.body }), {
-      status: result.status,
-      headers: { "Content-Type": "application/json" },
-    });
-  }
+  if (!result.ok) return toScriptErrorResponse(result.status, result.body);
   return c.json({ entries: result.entries });
 }
 
-function scriptPathFromUrl(url: string): string {
-  const pathname = new URL(url).pathname;
-  return pathname.replace(/^\/scripts\/?/, "") ?? "";
+const scriptPathFromUrl = (url: string): string =>
+  new URL(url).pathname.replace(/^\/scripts\/?/, "") ?? "";
+
+function toScriptContentResponse(content: string): Response {
+  return new Response(content, {
+    headers: { "Content-Type": "text/plain; charset=utf-8" },
+  });
 }
 
 export async function getScriptPath(c: Context) {
   const path = scriptPathFromUrl(c.req.url);
   const result = await readScript(path);
-  if (!result.ok) {
-    return new Response(JSON.stringify({ error: result.body }), {
-      status: result.status,
-      headers: { "Content-Type": "application/json" },
-    });
-  }
-  return new Response(result.content, {
-    headers: { "Content-Type": "text/plain; charset=utf-8" },
-  });
+  if (!result.ok) return toScriptErrorResponse(result.status, result.body);
+  return toScriptContentResponse(result.content);
 }
 
 export function postScriptPath(c: Context) {
@@ -43,11 +45,6 @@ async function postScriptPathResponse(
 ): Promise<Response> {
   const content = await c.req.text();
   const result = await writeScript(path, content);
-  if (!result.ok) {
-    return new Response(JSON.stringify({ error: result.body }), {
-      status: result.status,
-      headers: { "Content-Type": "application/json" },
-    });
-  }
+  if (!result.ok) return toScriptErrorResponse(result.status, result.body);
   return c.body(null, 201);
 }

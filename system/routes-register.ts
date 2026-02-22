@@ -39,13 +39,14 @@ function registerContentItems(app: Hono) {
   app.patch("/content/items/:id", content.patchItem);
 }
 
-function registerContentWorksheets(app: Hono) {
+function registerWorksheetsGetPost(app: Hono) {
   app.get("/content/worksheets/:id", content.getWorksheet);
   app.post("/content/worksheets/generate", content.postWorksheetsGenerate);
-  app.post(
-    "/content/worksheets/build-prompt",
-    content.postWorksheetsBuildPrompt,
-  );
+}
+
+function registerContentWorksheets(app: Hono) {
+  registerWorksheetsGetPost(app);
+  app.post("/content/worksheets/build-prompt", content.postWorksheetsBuildPrompt);
 }
 
 function registerSource(app: Hono) {

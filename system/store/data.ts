@@ -50,42 +50,32 @@ export function getIdentityIndexPath(): string {
   return out;
 }
 
+const readOne = (path: string): Promise<string | null> =>
+  Deno.readTextFile(path).then((s) => s).catch(() => null);
+
+async function readTextOrNull(path: string): Promise<string | null> {
+  const raw = await readOne(path);
+  return raw;
+}
+
 export async function readExtractedIndex(): Promise<ExtractedIndex> {
-  const path = EXTRACTED_INDEX_PATH;
-  try {
-    const raw = await Deno.readTextFile(path);
-    return JSON.parse(raw) as ExtractedIndex;
-  } catch {
-    return {};
-  }
+  const raw = await readTextOrNull(EXTRACTED_INDEX_PATH);
+  return raw !== null ? (JSON.parse(raw) as ExtractedIndex) : {};
 }
 
 export async function readIdentityIndex(): Promise<IdentityIndex> {
-  const path = IDENTITY_INDEX_PATH;
-  try {
-    const raw = await Deno.readTextFile(path);
-    return JSON.parse(raw) as IdentityIndex;
-  } catch {
-    return {};
-  }
+  const raw = await readTextOrNull(IDENTITY_INDEX_PATH);
+  return raw !== null ? (JSON.parse(raw) as IdentityIndex) : {};
 }
 
+const recordPath = (id: string): string => `${RECORD_STORE}${id}.json`;
+
 export async function readExtractedFile(id: string): Promise<unknown | null> {
-  const path = `${RECORD_STORE}${id}.json`;
-  try {
-    const raw = await Deno.readTextFile(path);
-    return JSON.parse(raw) as unknown;
-  } catch {
-    return null;
-  }
+  const raw = await readTextOrNull(recordPath(id));
+  return raw !== null ? (JSON.parse(raw) as unknown) : null;
 }
 
 export async function readIdentityFile(id: string): Promise<unknown | null> {
-  const path = `${RECORD_STORE}${id}.json`;
-  try {
-    const raw = await Deno.readTextFile(path);
-    return JSON.parse(raw) as unknown;
-  } catch {
-    return null;
-  }
+  const raw = await readTextOrNull(recordPath(id));
+  return raw !== null ? (JSON.parse(raw) as unknown) : null;
 }
