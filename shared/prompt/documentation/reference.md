@@ -39,6 +39,8 @@ with store.md §E/§F and modular monolith.
 | store      | Persistence (KV, file)                | Artifact |
 | schema     | Zod schemas and domain types          | Artifact |
 | types      | Type-only definitions                 | Meta     |
+| transfer   | Request/response or DTO types         | Artifact |
+| client     | Client wrapper (e.g. KV, API)          | Artifact |
 | validation | Policy/verification (e.g. Governance) | Policy   |
 | log        | Log artifact storage                  | Meta     |
 | config     | Wiring (e.g. route registration)      | Artifact |
@@ -47,7 +49,7 @@ with store.md §E/§F and modular monolith.
 
 ```
 system/
-  actor/     *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts, *.dto.ts
+  actor/     *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts, *.transfer.ts
   content/   *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts
   source/    *.endpoint.ts, *.service.ts, *.store.ts
   script/    *.endpoint.ts, *.service.ts, *.store.ts, *.types.ts, *.validation.ts

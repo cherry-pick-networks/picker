@@ -86,8 +86,11 @@ tool-specific configs.
   (runs in CI)
 - `deno task naming-layer-check` — verify layer-prefixed paths use allowed
   infix/suffix per §E (optional; run in pre-commit or CI)
+- `deno task ts-filename-check` — verify system/ and shared/infra TS files use
+  [name].[suffix].ts per §E and reference.md (optional; run in pre-commit or CI)
 - `deno task pre-push` — run before push; same as CI (lint, fmt, line-length,
-  test, scope-check, boundary-check, dependency-check, type-check-policy, audit)
+  ts-filename-check, test, scope-check, boundary-check, dependency-check,
+  type-check-policy, audit)
 - `deno task scope-discovery -- <entry-file>` — list direct imports for AI
   session scope (see shared/prompt/documentation/strategy.md)
 - `gh pr create --draft` — create draft PR (review before marking ready)
@@ -390,7 +393,8 @@ Suffix — one axis only: [ Artifact | Policy | Meta ]. Rule: suffix denotes for
 of the deliverable; context meaning belongs in Prefix, not Suffix. Forbidden in
 Suffix: cache (use store, storage), configuration (use config). Artifact
 (concrete deliverable shape): schema, mapping, store, storage, event, endpoint,
-response, middleware, format, exception, config, pipeline, metrics, trace.
+response, middleware, format, exception, config, pipeline, metrics, trace,
+transfer, client.
 Policy (principle, constraint, or policy): boundary, constraint, contract,
 principle, safety, validation, compliance, isolation. Meta (documentation, test,
 or classification): test, documentation, naming, style, log, types, language,
