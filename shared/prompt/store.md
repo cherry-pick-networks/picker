@@ -72,6 +72,8 @@ tool-specific configs.
 - `deno task scope-check` — verify API routes are listed in
   shared/prompt/boundary.md (runs in CI)
 - `deno task type-check-policy` — verify no type-check bypass (runs in CI)
+- `deno task naming-layer-check` — verify layer-prefixed paths use allowed
+  infix/suffix per §E (optional; run in pre-commit or CI)
 - `deno task scope-discovery -- <entry-file>` — list direct imports for AI
   session scope (see shared/prompt/documentation/strategy.md)
 - `gh pr create --draft` — create draft PR (review before marking ready)
@@ -391,7 +393,7 @@ symbols). Lowercase; one hyphen between words; no underscores or spaces.
 
 Exceptions: Maintain an explicit exception list; same list for docs and tooling.
 Typical entries: .git, .cursor, node_modules, dist, build, coverage, vendor,
-.cache, tests, data (confirm per project). Update list and any validator
+.cache, tests (confirm per project). Update list and any validator
 together.
 
 Document exceptions: Maintain a separate explicit list for .md files exempt from
@@ -413,7 +415,9 @@ order, no fourth tier, naming reference, exception list.
 
 Validation (optional): Script: walk directories from root; skip exception list;
 assert remaining paths match prefix/(infix/)(suffix/) and tier names in allowed
-sets; exit 1 on failure. Run in pre-commit or CI. Document names: optionally
+sets; exit 1 on failure. For layer-prefixed paths, run
+`deno task naming-layer-check` (shared/prompt/scripts/check-naming-layer.ts).
+Run in pre-commit or CI. Document names: optionally
 walk the document tree (e.g. shared/prompt/), skip document exceptions, assert
 each remaining .md matches [suffix].md and suffix is in §E allowed sets (for
 shared/prompt/documentation/, use the documentation allowed list only:
