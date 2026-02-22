@@ -26,6 +26,10 @@ use Issues only for bugs and concrete feature requests.
   - `deno task scope-check` — verify API routes are listed in the scope document
   - `deno task type-check-policy` — verify no type-check bypass (no --no-check,
     @ts-ignore, @ts-expect-error)
+  - `deno task line-length-check` — verify line and file length (store.md §P)
+- **Pre-commit hook (optional)**: To run lint, format check, and line-length
+  check on each commit: `git config core.hooksPath .githooks` and
+  `chmod +x .githooks/pre-commit`.
 - **Pre-push hook (optional)**: To run `deno task scope-check` automatically
   before every push, install the hook from the repo root:
   `cp shared/prompt/scripts/git-hooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push`
@@ -39,10 +43,12 @@ use Issues only for bugs and concrete feature requests.
 3. **Type-check policy**: `deno task type-check-policy` must pass. Do not
    disable or bypass type checking (no `--no-check`, `@ts-ignore`, or
    `@ts-expect-error`); fix type errors in code or types.
-4. **Commit messages**: Use the format `<type>[(scope)]: <description>`
+4. **Format and line length (store.md §P)**: `deno fmt --check` and
+   `deno task line-length-check` must pass.
+5. **Commit messages**: Use the format `<type>[(scope)]: <description>`
    (imperative, lowercase). Types: `feat`, `fix`, `docs`, `chore`, `refactor`,
    `perf`, `test`, `ci`, `build`.
-5. **Language**: Code, comments, and docs are in English.
+6. **Language**: Code, comments, and docs are in English.
 
 Detailed conventions (directory structure, dependencies, workflow) are in the
 shared docs: start from [shared/README.md](shared/README.md) and see

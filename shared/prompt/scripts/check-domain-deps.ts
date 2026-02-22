@@ -33,6 +33,7 @@ const DOMAINS = [
 const ALLOWED_EDGES: [string, string][] = [
   ["content", "actor"],
   ["content", "script"],
+  ["audit", "record"],
 ];
 
 // function-length-ignore

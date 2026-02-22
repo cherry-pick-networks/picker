@@ -142,9 +142,9 @@ tool-specific configs.
   step-by-step as needed.
 - **Before push or PR**: Run `deno task pre-push` so CI passes. Code must
   satisfy §P (function body 2–4 statements; async only when body uses await).
-- **Pre-commit hook (optional)**: To run `deno lint` and `deno fmt --check` on
-  commit, set `git config core.hooksPath .githooks` and
-  `chmod +x .githooks/pre-commit`.
+- **Pre-commit hook (optional)**: To run `deno lint`, `deno fmt --check`, and
+  `deno task line-length-check` on commit, set
+  `git config core.hooksPath .githooks` and `chmod +x .githooks/pre-commit`.
 - **CI failure**: Use `gh run view`, logs, and (if needed) `gh` GraphQL/API to
   find root cause, flakiness, or breaking commit.
 - **Dangerous commands**: Audit approved commands periodically (e.g. patterns
@@ -593,7 +593,8 @@ it is a try/catch, switch, or block-bodied if (complex statement exemption).
 Line length in body is not enforced by this rule; use the formatter and
 line-length check instead. Validation: line-length and file-length by
 shared/prompt/scripts/check-line-length.ts (which applies the test-file
-exception above); function body by `deno lint` (plugin
+exception above); pre-commit and CI run this check. Function body by
+`deno lint` (plugin
 function-length/function-length in
 shared/prompt/scripts/function-length-lint-plugin.ts, counts statements in
 body). To ignore per function: `// function-length-ignore` on the line above; or

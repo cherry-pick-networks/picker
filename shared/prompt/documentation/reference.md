@@ -113,7 +113,7 @@ imports are forbidden (see Modular monolith rules above).
 | script     | no    | no      | no     | —      | no     | no | no    |
 | record     | no    | no      | no     | no     | —      | no | no    |
 | kv         | no    | no      | no     | no     | no     | —  | no    |
-| audit      | no    | no      | no     | no     | no     | no | —     |
+| audit      | no    | no      | no     | no     | yes    | no | —     |
 
 When adding a new cross-domain service dependency: (1) ensure it does not
 introduce a cycle; (2) add the edge to this matrix and to the allowlist in
