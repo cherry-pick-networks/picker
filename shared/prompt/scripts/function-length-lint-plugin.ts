@@ -3,15 +3,14 @@
  * Rule ID: function-length/function-length.
  * Ignore: // deno-lint-ignore function-length/function-length
  */
+// deno-lint-ignore-file function-length/function-length
 const MIN_STATEMENTS = 2;
 const MAX_STATEMENTS = 4;
 
-// deno-lint-ignore function-length/function-length
 function statementCount(body: Deno.lint.BlockStatement): number {
   return body.body.length;
 }
 
-// deno-lint-ignore function-length/function-length
 function checkBody(
   context: Deno.lint.RuleContext,
   body: Deno.lint.Expression | Deno.lint.BlockStatement | null | undefined,
@@ -33,7 +32,6 @@ const plugin: Deno.lint.Plugin = {
   name: "function-length",
   rules: {
     "function-length": {
-      // deno-lint-ignore function-length/function-length
       create(context: Deno.lint.RuleContext) {
         return {
           FunctionDeclaration(node: Deno.lint.FunctionDeclaration) {

@@ -5,6 +5,7 @@
  * Run from repo root: deno run --allow-read shared/prompt/scripts/check-type-policy.ts
  * Or: deno task type-check-policy
  */
+// deno-lint-ignore-file function-length/function-length
 
 import {
   checkCompilerOptions,

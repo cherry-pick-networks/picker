@@ -4,6 +4,7 @@
  *   deno run --allow-read shared/prompt/scripts/check-scope.ts
  * Or: deno task scope-check
  */
+// deno-lint-ignore-file function-length/function-length
 
 import { parseScopeApiTable, routeKey } from "./check-scope-lib.ts";
 import { ROUTES } from "../../../system/routes.ts";

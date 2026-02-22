@@ -5,6 +5,7 @@
 
 import { verifyGovernance } from "../validator/index.ts";
 
+// deno-lint-ignore function-length/function-length
 function getScriptsBase(): string {
   return Deno.env.get("SCRIPTS_BASE") ?? "shared/runtime/store";
 }

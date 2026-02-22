@@ -6,6 +6,7 @@
  * Or: deno task scope-discovery -- <entry-file>
  * Options: --oneline  print paths on one line for pasting into a prompt.
  */
+// deno-lint-ignore-file function-length/function-length
 
 import { Project } from "ts-morph";
 

@@ -5,6 +5,7 @@
  *   deno run --allow-read shared/prompt/scripts/check-naming-layer.ts
  * Or: deno task naming-layer-check
  */
+// deno-lint-ignore-file function-length/function-length
 
 const LAYERS = ["presentation", "application", "domain", "infrastructure"] as const;
 

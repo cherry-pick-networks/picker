@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
-    "lib": ["deno.window", "deno.unstable"]
+    "lib": [
+      "deno.window",
+      "deno.unstable"
+    ]
   },
   "tasks": {
     "dev": "deno run -A --unstable-kv --watch main.ts",
@@ -22,8 +25,7 @@
       "node_modules",
       "**/*.test.ts",
       "**/*.spec.ts",
-      "**/*_test.ts",
-      "shared/prompt/scripts/"
+      "**/*_test.ts"
     ]
   },
   "imports": {

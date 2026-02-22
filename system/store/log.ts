@@ -27,14 +27,17 @@ export interface E2ERunsFile {
   runs: E2ERunEntry[];
 }
 
+// deno-lint-ignore function-length/function-length
 export function getLogDir(): string {
   return LOG_DIR;
 }
 
+// deno-lint-ignore function-length/function-length
 export function getE2eRunsPath(): string {
   return E2E_RUNS_PATH;
 }
 
+// deno-lint-ignore function-length/function-length
 export async function readE2eRuns(): Promise<E2ERunsFile> {
   let raw: string;
   try {

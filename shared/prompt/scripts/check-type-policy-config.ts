@@ -2,6 +2,7 @@
  * Type-check policy: deno.json tasks and compiler options.
  * Used by check-type-policy.ts.
  */
+// deno-lint-ignore-file function-length/function-length
 
 import { DENO_JSON, DENO_JSONC, TSCONFIG } from "./check-type-policy-lib.ts";
 

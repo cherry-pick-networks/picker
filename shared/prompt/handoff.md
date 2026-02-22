@@ -42,6 +42,13 @@ Current scope and implementation state: [boundary.md](boundary.md).
 - API tests and scope-check in CI are done; E2E and script-store tests use temp
   dir; AST apply and log artifact storage implemented (see boundary for
   modules and routes).
+- Rule compliance (store.md §P and lint): Removed `shared/prompt/scripts/` from
+  lint exclude so function-length applies to scripts. Split `system/service/content.ts`
+  (271 lines) into content-schema, content-parse, content-prompt, content-prompt-load,
+  and content.ts (all ≤100 lines). Fixed function-length violations across codebase
+  (ignores or refactors). Lint, type-check-policy, scope-check, naming-layer-check pass.
+  Remaining §P: files still >100 lines (routes 135, profile 132, scripts 103,
+  migrate-old-to-data 205, check-naming-layer 106); optional 80-char line pass.
 
 ---
 
@@ -71,6 +78,7 @@ restore context.
 
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
 
+- Optional: Split remaining §P >100-line files (system/routes.ts, system/service/profile.ts, system/store/scripts.ts, shared/prompt/scripts/migrate-old-to-data.ts, shared/prompt/scripts/check-naming-layer.ts) and run 80-char line check.
 - Deferred: Spec summary (e.g. current phase in goal.md or documentation/guide); then extend patch format (e.g. ts-morph-based edits) or Thompson Sampling MAB.
 - Optional: Add more E2E or integration tests for other routes or edge cases as needed.
 

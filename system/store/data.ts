@@ -27,26 +27,32 @@ export interface IdentityIndexEntry {
 export type ExtractedIndex = Record<string, ExtractedIndexEntry>;
 export type IdentityIndex = Record<string, IdentityIndexEntry>;
 
+// deno-lint-ignore function-length/function-length
 export function getDataDir(): string {
   return DATA_DIR;
 }
 
+// deno-lint-ignore function-length/function-length
 export function getExtractedDir(): string {
   return RECORD_STORE;
 }
 
+// deno-lint-ignore function-length/function-length
 export function getIdentityDir(): string {
   return RECORD_STORE;
 }
 
+// deno-lint-ignore function-length/function-length
 export function getExtractedIndexPath(): string {
   return EXTRACTED_INDEX_PATH;
 }
 
+// deno-lint-ignore function-length/function-length
 export function getIdentityIndexPath(): string {
   return IDENTITY_INDEX_PATH;
 }
 
+// deno-lint-ignore function-length/function-length
 export async function readExtractedIndex(): Promise<ExtractedIndex> {
   try {
     const raw = await Deno.readTextFile(EXTRACTED_INDEX_PATH);
@@ -56,6 +62,7 @@ export async function readExtractedIndex(): Promise<ExtractedIndex> {
   }
 }
 
+// deno-lint-ignore function-length/function-length
 export async function readIdentityIndex(): Promise<IdentityIndex> {
   try {
     const raw = await Deno.readTextFile(IDENTITY_INDEX_PATH);

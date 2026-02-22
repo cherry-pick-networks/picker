@@ -48,13 +48,16 @@ export const ROUTES: { method: string; path: string }[] = [
 ];
 
 function registerRest(app: Hono) {
-  registerHomeAndKv(app);
-  registerProfile(app);
-  registerProgress(app);
-  registerContent(app);
-  registerSource(app);
-  registerData(app);
-  registerKvMutate(app);
+  const rest = [
+    registerHomeAndKv,
+    registerProfile,
+    registerProgress,
+    registerContent,
+    registerSource,
+    registerData,
+    registerKvMutate,
+  ];
+  for (const fn of rest) fn(app);
 }
 
 export function registerRoutes(app: Hono) {
@@ -85,15 +88,20 @@ function registerProgress(app: Hono) {
 }
 
 function registerContent(app: Hono) {
+  registerContentItems(app);
+  registerContentWorksheets(app);
+}
+
+function registerContentItems(app: Hono) {
   app.get("/content/items/:id", content.getItem);
   app.post("/content/items", content.postItem);
   app.patch("/content/items/:id", content.patchItem);
+}
+
+function registerContentWorksheets(app: Hono) {
   app.get("/content/worksheets/:id", content.getWorksheet);
   app.post("/content/worksheets/generate", content.postWorksheetsGenerate);
-  app.post(
-    "/content/worksheets/build-prompt",
-    content.postWorksheetsBuildPrompt,
-  );
+  app.post("/content/worksheets/build-prompt", content.postWorksheetsBuildPrompt);
 }
 
 function registerSource(app: Hono) {

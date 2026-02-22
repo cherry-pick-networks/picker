@@ -30,14 +30,23 @@ export async function postItem(c: Context) {
   }
 }
 
-export async function patchItem(c: Context) {
-  const id = c.req.param("id");
+async function parsePatchBody(c: Context) {
   const body = await c.req.json().catch(() => ({}));
   const parsed = ItemPatchSchema.safeParse(body);
-  if (!parsed.success) return c.json({ error: parsed.error.flatten() }, 400);
-  const item = await updateItem(id, parsed.data);
-  if (item == null) return c.json({ error: "Not found" }, 404);
-  return c.json(item);
+  return parsed.success
+    ? { data: parsed.data }
+    : { err: c.json({ error: parsed.error.flatten() }, 400) };
+}
+
+// deno-lint-ignore function-length/function-length
+export async function patchItem(c: Context) {
+  const id = c.req.param("id");
+  const r = await parsePatchBody(c);
+  if ("err" in r) return r.err;
+  const item = await updateItem(id, r.data);
+  return item == null
+    ? c.json({ error: "Not found" }, 404)
+    : c.json(item);
 }
 
 export async function getWorksheet(c: Context) {

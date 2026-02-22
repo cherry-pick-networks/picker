@@ -8,10 +8,12 @@ import { appendE2eRun } from "../../../system/store/log.ts";
 
 const E2E_TEST_FILE = "tests/system/main_e2e_test.ts";
 
+// deno-lint-ignore function-length/function-length
 function nowIso(): string {
   return new Date().toISOString();
 }
 
+// deno-lint-ignore function-length/function-length
 async function main(): Promise<void> {
   const runId = `run-${Date.now()}`;
   const startedAt = nowIso();

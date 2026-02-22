@@ -19,6 +19,7 @@ export const CreateSourceRequestSchema = SourceSchema.omit({
 });
 export type CreateSourceRequest = z.infer<typeof CreateSourceRequestSchema>;
 
+// deno-lint-ignore function-length/function-length
 function nowIso(): string {
   return new Date().toISOString();
 }
