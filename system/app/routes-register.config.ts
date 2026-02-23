@@ -4,6 +4,7 @@
  */
 
 import type { Hono } from "hono";
+import * as concept from "#system/concept/concept.endpoint.ts";
 import * as content from "#system/content/content.endpoint.ts";
 import * as data from "#system/record/data.endpoint.ts";
 import * as home from "./home.config.ts";
@@ -60,6 +61,13 @@ function registerContentWorksheets(app: Hono) {
   app.post("/content/briefing/build-prompt", content.postBriefingBuildPrompt);
 }
 
+function registerConcept(app: Hono) {
+  app.get("/concepts/schemes", concept.getSchemes);
+  app.get("/concepts/schemes/:schemeId/concepts", concept.getSchemeConcepts);
+  app.get("/concepts/schemes/:schemeId", concept.getScheme);
+  app.get("/concepts/:id", concept.getConcept);
+}
+
 function registerSource(app: Hono) {
   app.get("/sources", source.getSources);
   app.get("/sources/:id", source.getSource);
@@ -83,6 +91,7 @@ const REST_HANDLERS = [
   registerProfile,
   registerProgress,
   registerContent,
+  registerConcept,
   registerSource,
   registerData,
   registerKvMutate,

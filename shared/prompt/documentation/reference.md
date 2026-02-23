@@ -22,6 +22,7 @@ with store.md §E/§F and modular monolith.
 | Infix   | Responsibility                                           |
 | ------- | -------------------------------------------------------- |
 | actor   | Profile, progress (identity and state)                   |
+| concept | Concept schemes and concepts (ontology, SKOS-style)     |
 | content | Items, worksheets, prompt building                       |
 | source  | Source collection and read                               |
 | script  | Scripts store, AST apply, Governance                     |
@@ -51,6 +52,7 @@ with store.md §E/§F and modular monolith.
 ```
 system/
   actor/     *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts, *.transfer.ts
+  concept/  *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts
   content/   *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts
   source/    *.endpoint.ts, *.service.ts, *.store.ts
   script/    *.endpoint.ts, *.service.ts, *.store.ts, *.types.ts, *.validation.ts

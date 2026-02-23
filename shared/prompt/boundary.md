@@ -25,6 +25,7 @@ Use that document for AI direction and scope decisions.
 | **system/app/config/**    | Route registration (home, rest, ast, scripts). Imports domain endpoints only.                                                                                     |
 | **system/actor/**         | Profile, progress: endpoint, service, store from shared/infra pg, schema.                                                                                         |
 | **system/content/**       | Items, worksheets, prompt, knowledge graph (nodes/edges): endpoint, service, store, schema.                                                                      |
+| **system/concept/**       | Concept schemes and concepts (ontology): endpoint, service, store, schema.                                                                                         |
 | **system/source/**        | Source collection: endpoint, service, store.                                                                                                                      |
 | **system/script/**        | Scripts store, AST apply, Governance: endpoint, service, store, validation.                                                                                       |
 | **system/record/**        | Record store (extracted/identity): endpoint, store.                                                                                                               |
@@ -66,6 +67,10 @@ Use that document for AI direction and scope decisions.
 | GET    | `/content/submissions/:id`         | Read submission by id. Query `include=grading` optional: attach grading result (total, correct, score, results). Responds 200 or 404.                                          |
 | GET    | `/content/submissions`             | List submissions. Query `worksheet_id` optional; `include=grading` optional. Responds 200 with `{ submissions: Submission[] }`.                                                |
 | POST   | `/content/briefing/build-prompt`   | Build briefing prompt from worksheet submissions, grading, and profiles. Body: worksheet_id, student_ids optional. Responds 200 with { prompt } or 404 if worksheet not found. |
+| GET    | `/concepts/schemes`                | List concept schemes. Responds `{ "schemes": ConceptScheme[] }`.                                                                                                  |
+| GET    | `/concepts/schemes/:schemeId`     | Read concept scheme by id. Responds scheme or 404.                                                                                                                |
+| GET    | `/concepts/schemes/:schemeId/concepts` | List concepts in a scheme. Responds `{ "concepts": Concept[] }` or 404 if scheme not found.                                                                   |
+| GET    | `/concepts/:id`                   | Read concept by id. Responds concept or 404.                                                                                                                     |
 | GET    | `/sources`                         | List or query sources (optional query params). Responds `{ "sources": Source[] }`.                                                                                             |
 | GET    | `/sources/:id`                     | Read source by id. Responds source object or 404.                                                                                                                              |
 | POST   | `/sources`                         | Collect and store a source. Body: source fields (id optional). Responds 201 with source.                                                                                       |
