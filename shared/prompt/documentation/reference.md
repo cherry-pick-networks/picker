@@ -282,3 +282,95 @@ Before adding modules or API: update shared/prompt/boundary.md (§K). New
 files under system/: allowed infix/suffix only (this reference). Design
 context: facet taxonomy, DDC, ltree, edu:requires (prior architecture
 discussion).
+
+---
+
+## Scope repository: worksheet archiving removal
+
+Goal: remove worksheet persistence entirely. Worksheet generation remains
+response-only (no DB write). Submission carries the worksheet snapshot
+(item_ids and optional display metadata) so grading and briefing do not
+depend on a stored worksheet. Implement scopes in order; update
+boundary.md when changing API or infrastructure (§K).
+
+### Scope 1 — Submission schema and create flow
+
+**Boundary**: system/content schema and submission create only. No new
+routes; no removal yet.
+
+- **Schema** (content.schema.ts): Add to Submission and
+  CreateSubmissionRequest: `item_ids: z.array(z.string())` (required),
+  optional `title`, `sheet_label`. Keep `worksheet_id` as optional
+  correlation id for grouping.
+- **Create flow** (content-submission.service): buildSubmissionRaw and
+  createSubmission persist `item_ids` (and optional title/sheet_label)
+  in submission payload.
+- **Verify**: POST /content/submissions with item_ids returns 201; payload
+  contains item_ids; GET submission returns same.
+
+### Scope 2 — Grading and briefing from submission
+
+**Boundary**: content domain only. Grading and briefing must not call
+worksheet store.
+
+- **Grading**: Replace “get items by worksheet_id” with “get items by
+  submission.item_ids”. Add getItemsByItemIds(item_ids) (store or
+  service helper); submission endpoint and grading path use
+  submission.item_ids to load items. Remove or refactor getItemsForWorksheet
+  so it is no longer used for grading.
+- **Briefing**: buildBriefingContext(worksheetId): drop getWorksheet call;
+  use listSubmissions(worksheetId), take first submission’s item_ids (and
+  title/sheet_label) to load items and build sessionId/dateIso/sheetLabel.
+  If no submissions for worksheet_id, return null.
+- **Verify**: GET submission?include=grading works using submission.item_ids;
+  buildBriefingPrompt(worksheet_id) works when submissions exist with that
+  worksheet_id and item_ids.
+
+### Scope 3 — Remove worksheet persistence and GET route
+
+**Boundary**: boundary.md API and Infrastructure; system/content store and
+endpoints.
+
+- **Generate**: content-worksheet.service: remove saveWorksheet call;
+  generateWorksheet returns buildWorksheetMeta result without persisting.
+- **Store**: content.store: remove getWorksheet, setWorksheet, and
+  SQL_WORKSHEET_GET / SQL_WORKSHEET_UPSERT.
+- **Service**: content.service: remove getWorksheet export and implementation.
+- **Endpoint**: content-worksheet.endpoint: remove getWorksheet handler.
+  Keep postWorksheetsGenerate and postWorksheetsBuildPrompt.
+- **Routes**: Remove GET /content/worksheets/:id from app config and
+  system/routes.ts.
+- **Boundary**: boundary.md: remove GET /content/worksheets/:id row; update
+  POST /content/worksheets/generate description (e.g. “Responds 201 with
+  worksheet; not persisted”).
+- **Verify**: POST /content/worksheets/generate does not insert into
+  content_worksheet; GET /content/worksheets/:id no longer registered.
+
+### Scope 4 — DB migration and doc/tests
+
+**Boundary**: shared/infra/schema, boundary Infrastructure list, tests and
+reference text.
+
+- **Migration**: New file under shared/infra/schema/ (e.g.
+  02_content_drop_worksheet.sql) per §J: DROP TABLE IF EXISTS
+  content_worksheet.
+- **DDL cleanup**: In 02_content.sql remove content_worksheet table
+  creation. In 02_content_add_payload.sql remove content_worksheet
+  ALTERs.
+- **Boundary**: Infrastructure table list: remove content_worksheet.
+- **Docs**: reference.md / system README: state that worksheets are
+  generated only (not stored); submission carries item_ids.
+- **Tests**: content-submission_test: submissions include item_ids.
+  content-briefing_test: “missing worksheet” expressed as no submissions
+  for worksheet_id. Remove any assertion that worksheet is persisted after
+  generate.
+- **Verify**: Migration runs; content_worksheet absent; tests pass.
+
+### Scope repository summary (worksheet archiving removal)
+
+| Scope | Boundary touch       | Deliverable                                      |
+| ----- | -------------------- | ------------------------------------------------ |
+| 1     | Content schema       | Submission item_ids (required), create flow      |
+| 2     | Content service      | Grading/briefing use submission.item_ids only   |
+| 3     | API, store, routes   | No worksheet persistence; GET route removed     |
+| 4     | Infra, docs, tests   | DROP table migration; boundary/docs; test fixes  |
