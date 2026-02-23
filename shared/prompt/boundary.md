@@ -24,7 +24,7 @@ Use that document for AI direction and scope decisions.
 | **system/routes.ts**      | Route list (ROUTES) and registerRoutes(app); scope-check reads this.                                                                                              |
 | **system/app/config/**    | Route registration (home, rest, ast, scripts). Imports domain endpoints only.                                                                                     |
 | **system/actor/**         | Profile, progress: endpoint, service, store from shared/infra pg, schema.                                                                                         |
-| **system/content/**       | Items, worksheets, prompt: endpoint, service, store, schema.                                                                                                      |
+| **system/content/**       | Items, worksheets, prompt, knowledge graph (nodes/edges): endpoint, service, store, schema.                                                                      |
 | **system/source/**        | Source collection: endpoint, service, store.                                                                                                                      |
 | **system/script/**        | Scripts store, AST apply, Governance: endpoint, service, store, validation.                                                                                       |
 | **system/record/**        | Record store (extracted/identity): endpoint, store.                                                                                                               |
@@ -93,8 +93,9 @@ Use that document for AI direction and scope decisions.
   external message broker or queue. Client: `shared/infra/pg.client.ts`
   (`getPg()`). Optional transaction wrapper: `withTx(fn)`. DDL under
   `shared/infra/schema/` (e.g. `00_init.sql`, `01_actor.sql`, `02_content.sql`,
-  `03_source.sql`, `04_kv.sql`). Tables: actor_profile, actor_progress,
-  content_item, content_worksheet, content_submission, source, kv. Actor
+  `03_source.sql`, `04_kv.sql`, `05_knowledge.sql`). Tables: actor_profile,
+  actor_progress, content_item, content_worksheet, content_submission, source,
+  kv, knowledge_node, knowledge_edge. Actor
   profile and progress use PostgreSQL (system/actor from shared/infra pg).
   Content items, worksheets, and submissions use PostgreSQL
   (system/content/content.store.ts from getPg()).

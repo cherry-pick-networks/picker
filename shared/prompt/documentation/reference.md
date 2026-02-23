@@ -185,3 +185,88 @@ Rules are in store.md §T. This section gives examples and exceptions from
   persistence contract; document in the file (e.g. "API/DB contract"). Example:
   `system/content/content.schema.ts` uses `item_id`, `created_at`,
   `worksheet_id` for stored/API payload shape.
+
+---
+
+## Scope repository: ontology and knowledge graph
+
+Reference for later implementation. Facet taxonomy (SKOS-style) and knowledge
+map (prerequisite graph) on picker-dev (PostgreSQL + Deno). Use any scope when
+it fits; update boundary.md (and this reference if adding a new domain) before
+implementing that scope. Design rationale: prior architecture discussion (facet
+axes, DDC resolution, ltree + edge hybrid).
+
+**Prerequisites**: PostgreSQL (e.g. picker_dev) reachable; Deno with Hono, Zod;
+DB admin for extensions/tables (e.g. `CREATE EXTENSION ltree`).
+
+### Scope 1 — Infrastructure: ontology schema and seed
+
+**Boundary**: Infrastructure in boundary.md (shared/infra, DDL, seed). No new
+modules or API routes.
+
+- **DDL** (shared/infra/schema/): ltree extension → concept_scheme → concept →
+  concept_relation → optional knowledge_node / knowledge_edge. concept_scheme:
+  id, pref_label, created_at. concept: id, scheme_id, pref_label, notation,
+  source, created_at; optional path ltree. concept_relation: source_id,
+  target_id, relation_type (broader, narrower, related, exactMatch). Optional
+  knowledge_node (path ltree, label, node_type, concept_id), knowledge_edge
+  (source_id, target_id, relation_type e.g. requires). New file e.g.
+  `05_ontology.sql`; per §J.
+- **Seed**: Versioned path (e.g. shared/infra/seed/); TOML or SQL; idempotent;
+  one-line run (e.g. deno task seed:ontology). DDC top-level or exactMatch
+  only; finer granularity via concept.source and relations.
+- **Boundary**: Add ontology tables and seed location/task to Infrastructure.
+- **Verify**: List tables; SELECT concept_scheme/concept; if ltree, path query;
+  re-run seed; no duplicate keys.
+
+### Scope 2 — Concept module and API
+
+**Boundary**: New module + API surface in boundary.md; reference.md: add infix
+**concept** and target layout for system/concept/ if new domain.
+
+- **Module** (system/concept/): concept.store.ts (pg), concept.schema.ts (Zod,
+  ID prefixes subj-, type-, cog-, ctx-), concept.service.ts, concept.endpoint.ts;
+  register via system/app/config.
+- **API**: e.g. GET /concepts/schemes, GET /concepts/schemes/:schemeId/concepts,
+  GET /concepts/:id. No new routes without boundary update (§K).
+- **Boundary + reference**: Module row for system/concept/; API rows; add
+  concept to allowed infix and target layout in this file.
+- **Verify**: GET known scheme/concept id → 200; invalid id → 404/400.
+
+### Scope 3 — Content integration (concept tagging)
+
+**Boundary**: Extends system/content; validation may use system/concept. No new
+module.
+
+- **Tagging**: content_item/worksheet fields subjectIds, contentTypeId,
+  cognitiveLevelId, contextIds; Zod with prefix checks; validate IDs against
+  concept store or allowlist.
+- **Validation**: On create/update, reject unknown concept IDs (LLM hallucination
+  mitigation).
+- **Boundary**: Update API surface description if request shape changes.
+- **Verify**: Valid concept IDs → success; invalid id → 400.
+
+### Scope 4 — LLM ingestion (optional)
+
+**Boundary**: Script or internal endpoint; document in boundary if it adds a
+route or script path.
+
+- **Pipeline**: Input text → LLM → JSON (concept IDs, optional requires edges)
+  → Zod validate → insert/update via concept store/service.
+- **Safety**: Validate all IDs and relation types against DB; reject unknown;
+  log or quarantine low-confidence output.
+- **Verify**: Sample run; invalid LLM output rejected.
+
+### Scope repository summary
+
+| Scope | Boundary touch       | Deliverable                                   |
+| ----- | -------------------- | --------------------------------------------- |
+| 1     | Infrastructure       | DDL, seed, boundary Infrastructure             |
+| 2     | Modules + API        | system/concept/, routes, boundary + reference |
+| 3     | Content (existing)   | Tagging schema, validation, boundary API desc |
+| 4     | Optional             | Script or internal endpoint; boundary if route |
+
+Before adding modules or API: update shared/prompt/boundary.md (§K). New
+files under system/: allowed infix/suffix only (this reference). Design
+context: facet taxonomy, DDC, ltree, edu:requires (prior architecture
+discussion).
