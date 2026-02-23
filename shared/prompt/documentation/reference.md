@@ -267,6 +267,8 @@ modules or API routes.
 - **Boundary + reference**: Module row for system/concept/; API rows; add
   concept to allowed infix and target layout in this file.
 - **Verify**: GET known scheme/concept id → 200; invalid id → 404/400.
+- Scope 2 API includes GET schemes/:id/tree and GET concepts/:id/dependencies;
+  optional: scope-discovery and acyclic check (see Integration).
 
 ### Scope 3 — Content integration (concept tagging)
 
