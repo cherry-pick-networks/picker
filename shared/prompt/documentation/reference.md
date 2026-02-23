@@ -70,6 +70,26 @@ Under `tests/`, every `.ts` file must be `[name]_test.ts` (Deno convention). The
 `with_temp_scripts_store.ts`) are listed in PATH_EXCEPTIONS. Validated by
 `deno task ts-filename-check`.
 
+### Schema (DDL) file naming
+
+DDL files under `shared/infra/schema/` use a fixed pattern so execution order
+is clear and names align with store.md §E (lowercase, hyphens, no underscores).
+
+- **Pattern**: `NN_<name>.sql`
+  - **NN**: Two-digit number (00–99) for execution order. Preserved when adding
+    migrations for the same domain (e.g. `02_content.sql`,
+    `02_content-add-payload.sql`).
+  - **&lt;name&gt;**: Lowercase letters, digits, and hyphens only. Same rule as
+    the TS filename *name* part: `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. No underscores.
+- **Examples**: `00_init.sql`, `01_actor.sql`, `02_content.sql`,
+  `02_content-add-payload.sql`, `06_task-queue.sql`, `05_ontology.sql`.
+- **Vocabulary**: Prefer names that match project axes (e.g. actor, content,
+  source, kv, knowledge, task-queue, ontology). New domains: align with
+  boundary.md and this reference (allowed infix/suffix).
+- **Migration**: When renaming or adding DDL files, follow the migration
+  boundary (store.md §J): plan first, then apply renames and reference
+  updates in one logical change.
+
 ### Migration mapping (3-layer → flat, completed)
 
 | Old path (3-layer)                 | New path (flat)                    |
@@ -352,10 +372,10 @@ endpoints.
 reference text.
 
 - **Migration**: New file under shared/infra/schema/ (e.g.
-  02_content_drop_worksheet.sql) per §J: DROP TABLE IF EXISTS
+  02_content-drop-worksheet.sql) per §J: DROP TABLE IF EXISTS
   content_worksheet.
 - **DDL cleanup**: In 02_content.sql remove content_worksheet table
-  creation. In 02_content_add_payload.sql remove content_worksheet
+  creation. In 02_content-add-payload.sql remove content_worksheet
   ALTERs.
 - **Boundary**: Infrastructure table list: remove content_worksheet.
 - **Docs**: reference.md / system README: state that worksheets are

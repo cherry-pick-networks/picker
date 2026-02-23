@@ -99,7 +99,8 @@ Use that document for AI direction and scope decisions.
   external message broker or queue. Client: `shared/infra/pg.client.ts`
   (`getPg()`). Optional transaction wrapper: `withTx(fn)`. DDL under
   `shared/infra/schema/` (e.g. `00_init.sql`, `01_actor.sql`, `02_content.sql`,
-  `03_source.sql`, `04_kv.sql`, `05_knowledge.sql`, `06_task_queue.sql`).
+  `02_content-add-payload.sql`, `03_source.sql`, `04_kv.sql`, `05_knowledge.sql`,
+  `06_task-queue.sql`).
   Tables: actor_profile, actor_progress, content_item, content_worksheet,
   content_submission, source, kv, knowledge_node, knowledge_edge, task_queue. Actor
   profile and progress use PostgreSQL (system/actor from shared/infra pg).

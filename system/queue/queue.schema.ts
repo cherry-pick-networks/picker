@@ -1,6 +1,6 @@
 /**
  * Task queue schemas. Enqueue input (kind, payload); full row for store/API.
- * Table: task_queue (shared/infra/schema/06_task_queue.sql).
+ * Table: task_queue (shared/infra/schema/06_task-queue.sql).
  */
 
 import { z } from "zod";

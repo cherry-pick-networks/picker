@@ -1,5 +1,5 @@
 /**
- * Queue store tests. PG with 06_task_queue applied; skip if no DATABASE_URL.
+ * Queue store tests. PG with 06_task-queue applied; skip if no DATABASE_URL.
  * Covers enqueue -> dequeue -> complete/fail.
  */
 

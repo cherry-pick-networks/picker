@@ -88,9 +88,11 @@ tool-specific configs.
   infix/suffix per §E (optional; run in pre-commit or CI)
 - `deno task ts-filename-check` — verify system/, shared/infra, and tests/ TS
   filenames per §E and reference.md (optional; run in pre-commit or CI)
+- `deno task sql-filename-check` — verify shared/infra/schema/*.sql per
+  reference.md (Schema DDL file naming) (optional; run in pre-commit or CI)
 - `deno task pre-push` — run before push; same as CI (lint, fmt, line-length,
-  ts-filename-check, test, scope-check, boundary-check, dependency-check,
-  type-check-policy, audit)
+  ts-filename-check, sql-filename-check, test, scope-check, boundary-check,
+  dependency-check, type-check-policy, audit)
 - `deno task scope-discovery -- <entry-file>` — list direct imports for AI
   session scope (see shared/prompt/documentation/strategy.md)
 - `gh pr create --draft` — create draft PR (review before marking ready)
@@ -355,7 +357,7 @@ public symbol names. When the first tier is a Layer (presentation, application,
 domain, infrastructure), tier 2 and tier 3 names must use only that layer's
 allowed Infix and Suffix sets defined below. Mandatory scope: directory and
 rule/document naming per §D and §F; other uses apply from new or renamed items
-(see §J).
+(see §J). Schema SQL files under shared/infra/schema/ follow reference.md (Schema DDL file naming).
 
 Clean dictionary (one word per concept — overlap resolution): middleware: only
 Suffix (Artifact); never Infix (use interceptor, filter). policy: only Suffix
