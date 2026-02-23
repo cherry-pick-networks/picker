@@ -28,11 +28,11 @@ Use that document for AI direction and scope decisions.
 | **system/source/**        | Source collection: endpoint, service, store.                                                                                                                      |
 | **system/script/**        | Scripts store, AST apply, Governance: endpoint, service, store, validation.                                                                                       |
 | **system/record/**        | Record store (extracted/identity): endpoint, store.                                                                                                               |
-| **system/kv/**            | Generic Deno KV: endpoint, store.                                                                                                                                 |
+| **system/kv/**            | Generic key-value: endpoint, store (PostgreSQL table kv).                                                                                                         |
 | **system/queue/**         | Task queue: store, schema (Postgres task_queue, FOR UPDATE SKIP LOCKED).                                                                                          |
 | **system/audit/**         | Log artifact storage (e.g. e2e-runs.toml in same dir as audit.log.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added. |
 | **shared/runtime/store/** | Target path for AST-based self-edit; read and write only via Governance-verified flow.                                                                            |
-| **shared/infra/**         | Shared infrastructure. PostgreSQL single client (`getPg()`), KV client (`getKv()`); notify/subscribe (LISTEN/NOTIFY) in pg.notify.ts, pg.listen.ts; no business logic. |
+| **shared/infra/**         | Shared infrastructure. PostgreSQL single client (`getPg()`); notify/subscribe (LISTEN/NOTIFY) in pg.notify.ts, pg.listen.ts; no business logic. |
 
 ---
 
@@ -41,10 +41,10 @@ Use that document for AI direction and scope decisions.
 | Method | Path                               | Purpose                                                                                                                                                                        |
 | ------ | ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | GET    | `/`                                | Health check; responds `{ "ok": true }`.                                                                                                                                       |
-| GET    | `/kv`                              | List keys in Deno KV; optional query `prefix` to filter. Responds `{ "keys": string[] }`.                                                                                      |
-| GET    | `/kv/:key`                         | Read value by key from Deno KV; responds value or `null`.                                                                                                                      |
-| DELETE | `/kv/:key`                         | Delete one key from Deno KV; responds 204 No Content.                                                                                                                          |
-| POST   | `/kv`                              | Write key-value to Deno KV. Body: `{ "key": string, "value": unknown }`. Responds `{ "key": string }` or 400 with validation error.                                            |
+| GET    | `/kv`                              | List keys; optional query `prefix` to filter. Responds `{ "keys": string[] }`.                                                                                                  |
+| GET    | `/kv/:key`                         | Read value by key; responds value or `null`.                                                                                                                                   |
+| DELETE | `/kv/:key`                         | Delete one key; responds 204 No Content.                                                                                                                                      |
+| POST   | `/kv`                              | Write key-value. Body: `{ "key": string, "value": unknown }`. Responds `{ "key": string }` or 400 with validation error.                                                       |
 | GET    | `/ast`                             | AST demo (ts-morph, in-memory sample). Responds `{ "variableDeclarations": number }`.                                                                                          |
 | GET    | `/ast-demo`                        | AST demo page (HTML). Fetches GET /ast and displays variableDeclarations.                                                                                                      |
 | GET    | `/scripts`                         | List entries in shared/runtime/store/ (Governance-verified). Responds `{ "entries": string[] }`.                                                                               |
@@ -105,10 +105,6 @@ Use that document for AI direction and scope decisions.
   profile and progress use PostgreSQL (system/actor from shared/infra pg).
   Content items, worksheets, and submissions use PostgreSQL
   (system/content/content.store.ts from getPg()).
-- **Deno KV** — built-in key-value storage (retained for compatibility). KV
-  instance: `shared/infra/kv.client.ts` (`getKv()`). Domain stores and system/kv
-  import from there. Key prefixes: `kv` (generic), `source` (source records key
-  `["source", id]`; source domain also has PostgreSQL table).
 - **File-based data** — under `shared/record/`: suffix `store` (payload) or
   `reference` (index). Store: `shared/record/store/*.toml`. Indexes:
   `shared/record/reference/extracted-data-index.toml`,

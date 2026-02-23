@@ -26,7 +26,7 @@ with store.md §E/§F and modular monolith.
 | source  | Source collection and read                               |
 | script  | Scripts store, AST apply, Governance                     |
 | record  | Record store (extracted/identity data)                   |
-| kv      | Generic Deno KV HTTP API; KV instance from shared/infra. |
+| kv      | Generic key-value HTTP API (PostgreSQL table kv).        |
 | queue   | Task queue (Postgres table, FOR UPDATE SKIP LOCKED)      |
 | audit   | Change/run log artifacts                                 |
 | app     | Route registration and app wiring                        |
@@ -37,11 +37,11 @@ with store.md §E/§F and modular monolith.
 | ---------- | ------------------------------------- | -------- |
 | endpoint   | HTTP entry (Hono routes)              | Artifact |
 | service    | Application service (use cases)       | —        |
-| store      | Persistence (KV, file)                | Artifact |
+| store      | Persistence (PostgreSQL, file)        | Artifact |
 | schema     | Zod schemas and domain types          | Artifact |
 | types      | Type-only definitions                 | Meta     |
 | transfer   | Request/response or DTO types         | Artifact |
-| client     | Client wrapper (e.g. KV, API)         | Artifact |
+| client     | Client wrapper (e.g. API)             | Artifact |
 | validation | Policy/verification (e.g. Governance) | Policy   |
 | log        | Log artifact storage                  | Meta     |
 | config     | Wiring (e.g. route registration)      | Artifact |
@@ -115,9 +115,6 @@ Under `tests/`, every `.ts` file must be `[name]_test.ts` (Deno convention). The
   if needed.
 - app/*.config.ts only imports domain endpoints and registers routes; no
   business logic.
-- KV instance: `shared/infra/kv.client.ts` provides `getKv()`. Domain stores and
-  system/kv use it; do not open Kv elsewhere.
-
 ### Domain dependency (acyclic; hierarchy)
 
 Cross-domain service calls must not form a cycle. Upper domains (orchestration)

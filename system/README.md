@@ -15,7 +15,7 @@ stores. Entry for HTTP is `routes.ts`; domain modules use flat
 | [source/](source/)     | Source collection: endpoint, service, store.                          |
 | [script/](script/)     | Scripts store, AST, Governance: endpoint, service, store, validation. |
 | [record/](record/)     | Record store (extracted/identity): endpoint, store.                   |
-| [kv/](kv/)             | Generic Deno KV: endpoint, store.                                     |
+| [kv/](kv/)             | Generic key-value: endpoint, store (PostgreSQL).                       |
 | [audit/](audit/)       | Log artifacts (e.g. e2e-runs).                                        |
 
 ## Cross-domain rules
@@ -23,8 +23,6 @@ stores. Entry for HTTP is `routes.ts`; domain modules use flat
 - Cross-domain: use the other domain’s **service** (or types/schema), not its
   store.
 - Dependencies must stay **acyclic** and match the allowed matrix in reference.
-- KV: use `getKv()` from `shared/infra`; do not open Kv elsewhere.
-
 ## Quick links
 
 - **Structure and suffix**:
