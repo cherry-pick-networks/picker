@@ -26,6 +26,7 @@ const DOMAINS = [
   "script",
   "record",
   "kv",
+  "queue",
   "audit",
 ];
 

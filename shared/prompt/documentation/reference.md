@@ -27,6 +27,7 @@ with store.md §E/§F and modular monolith.
 | script  | Scripts store, AST apply, Governance                     |
 | record  | Record store (extracted/identity data)                   |
 | kv      | Generic Deno KV HTTP API; KV instance from shared/infra. |
+| queue   | Task queue (Postgres table, FOR UPDATE SKIP LOCKED)      |
 | audit   | Change/run log artifacts                                 |
 | app     | Route registration and app wiring                        |
 
@@ -55,6 +56,7 @@ system/
   script/    *.endpoint.ts, *.service.ts, *.store.ts, *.types.ts, *.validation.ts
   record/    *.endpoint.ts, *.store.ts
   kv/        *.endpoint.ts, *.store.ts
+  queue/     *.store.ts, *.schema.ts
   audit/     *.log.ts
   app/       *.config.ts
   routes.ts  (entry; imports app/routes-register.config.ts)
@@ -114,9 +116,9 @@ other unless the matrix below allows it.
 
 - **Upper (orchestration)**: content (items, worksheets, prompt building). May
   call support domains via their service only.
-- **Support**: actor, script, source, record, kv, audit. Do not import content;
-  do not depend on each other unless listed in the matrix. app only imports
-  endpoints and is outside this hierarchy.
+- **Support**: actor, script, source, record, kv, queue, audit. Do not import
+  content; do not depend on each other unless listed in the matrix. app only
+  imports endpoints and is outside this hierarchy.
 
 **Allowed dependency matrix**
 
@@ -124,15 +126,16 @@ Rows = source domain (importer). Columns = target domain (imported). Only
 service (and types/schema where needed) may be imported cross-domain; store
 imports are forbidden (see Modular monolith rules above).
 
-| From \\ To | actor | content | source | script | record | kv | audit |
-| ---------- | ----- | ------- | ------ | ------ | ------ | -- | ----- |
-| actor      | —     | no      | no     | no     | no     | no | no    |
-| content    | yes   | —       | no     | yes    | no     | no | no    |
-| source     | no    | no      | —      | no     | no     | no | no    |
-| script     | no    | no      | no     | —      | no     | no | no    |
-| record     | no    | no      | no     | no     | —      | no | no    |
-| kv         | no    | no      | no     | no     | no     | —  | no    |
-| audit      | no    | no      | no     | no     | yes    | no | —     |
+| From \\ To | actor | content | source | script | record | kv | queue | audit |
+| ---------- | ----- | ------- | ------ | ------ | ------ | -- | ----- | ----- |
+| actor      | —     | no      | no     | no     | no     | no | no    | no    |
+| content    | yes   | —       | no     | yes    | no     | no | no    | no    |
+| source     | no    | no      | —      | no     | no     | no | no    | no    |
+| script     | no    | no      | no     | —      | no     | no | no    | no    |
+| record     | no    | no      | no     | no     | —      | no | no    | no    |
+| kv         | no    | no      | no     | no     | no     | —  | no    | no    |
+| queue      | no    | no      | no     | no     | no     | no | —     | no    |
+| audit      | no    | no      | no     | no     | yes    | no | no    | —     |
 
 When adding a new cross-domain service dependency: (1) ensure it does not
 introduce a cycle; (2) add the edge to this matrix and to the allowlist in

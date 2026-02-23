@@ -29,6 +29,7 @@ Use that document for AI direction and scope decisions.
 | **system/script/**        | Scripts store, AST apply, Governance: endpoint, service, store, validation.                                                                                       |
 | **system/record/**        | Record store (extracted/identity): endpoint, store.                                                                                                               |
 | **system/kv/**            | Generic Deno KV: endpoint, store.                                                                                                                                 |
+| **system/queue/**         | Task queue: store, schema (Postgres task_queue, FOR UPDATE SKIP LOCKED).                                                                                          |
 | **system/audit/**         | Log artifact storage (e.g. e2e-runs.toml in same dir as audit.log.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added. |
 | **shared/runtime/store/** | Target path for AST-based self-edit; read and write only via Governance-verified flow.                                                                            |
 | **shared/infra/**         | Shared infrastructure. PostgreSQL single client (`getPg()`), KV client (`getKv()`); no business logic.                                                            |
@@ -93,9 +94,9 @@ Use that document for AI direction and scope decisions.
   external message broker or queue. Client: `shared/infra/pg.client.ts`
   (`getPg()`). Optional transaction wrapper: `withTx(fn)`. DDL under
   `shared/infra/schema/` (e.g. `00_init.sql`, `01_actor.sql`, `02_content.sql`,
-  `03_source.sql`, `04_kv.sql`, `05_knowledge.sql`). Tables: actor_profile,
-  actor_progress, content_item, content_worksheet, content_submission, source,
-  kv, knowledge_node, knowledge_edge. Actor
+  `03_source.sql`, `04_kv.sql`, `05_knowledge.sql`, `06_task_queue.sql`).
+  Tables: actor_profile, actor_progress, content_item, content_worksheet,
+  content_submission, source, kv, knowledge_node, knowledge_edge, task_queue. Actor
   profile and progress use PostgreSQL (system/actor from shared/infra pg).
   Content items, worksheets, and submissions use PostgreSQL
   (system/content/content.store.ts from getPg()).
