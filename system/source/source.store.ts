@@ -1,45 +1,38 @@
 /**
- * Source storage in Deno KV. Keys: ["source", id].
+ * Source storage in PostgreSQL. Table: source (source_id, payload, updated_at).
  */
 
-import { getKv } from "#shared/infra/kv.client.ts";
+import { getPg } from "#shared/infra/pg.client.ts";
 
-const PREFIX = ["source"] as const;
+const SQL_GET =
+  "SELECT payload FROM source WHERE source_id = $1";
+const SQL_UPSERT =
+  "INSERT INTO source (source_id, payload, updated_at) VALUES ($1, $2, $3) " +
+  "ON CONFLICT (source_id) DO UPDATE SET payload = EXCLUDED.payload, " +
+  "updated_at = EXCLUDED.updated_at";
+const SQL_LIST = "SELECT source_id, payload, updated_at FROM source ORDER BY source_id";
 
 export async function getSource(id: string): Promise<unknown | null> {
-  const kv = await getKv();
-  const e = await kv.get([...PREFIX, id]);
-  return e.value ?? null;
+  const sql = await getPg();
+  const { rows } = await sql.queryObject<{ payload: unknown }>(SQL_GET, [id]);
+  if (rows.length === 0) return null;
+  return rows[0].payload ?? null;
 }
 
 export async function setSource(
   value: Record<string, unknown>,
 ): Promise<void> {
-  const kv = await getKv();
   const id = value.source_id as string;
   if (!id) throw new Error("source_id required");
-  await kv.set([...PREFIX, id], value);
-}
-
-function maybePushSource(
-  out: Record<string, unknown>[],
-  v: Record<string, unknown> | null,
-): void {
-  if (v == null) return;
-  out.push(v);
-}
-
-async function collectSources(
-  kv: Awaited<ReturnType<typeof getKv>>,
-): Promise<Record<string, unknown>[]> {
-  const out: Record<string, unknown>[] = [];
-  for await (const entry of kv.list({ prefix: [...PREFIX] })) {
-    maybePushSource(out, entry.value as Record<string, unknown> | null);
-  }
-  return out;
+  const sql = await getPg();
+  const updatedAt = new Date().toISOString();
+  await sql.queryObject(SQL_UPSERT, [id, JSON.stringify(value), updatedAt]);
 }
 
 export async function listSources(): Promise<Record<string, unknown>[]> {
-  const kv = await getKv();
-  return collectSources(kv);
+  const sql = await getPg();
+  const { rows } = await sql.queryObject<{ payload: unknown }>(SQL_LIST);
+  return rows
+    .map((r) => r.payload as Record<string, unknown> | null)
+    .filter((v): v is Record<string, unknown> => v != null);
 }

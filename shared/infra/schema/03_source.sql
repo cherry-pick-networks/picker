@@ -1,9 +1,7 @@
--- Source domain: collected sources.
+-- Source domain: collected sources (payload = full document).
 
 CREATE TABLE IF NOT EXISTS source (
   source_id TEXT PRIMARY KEY,
-  url TEXT,
-  type TEXT,
-  collected_at TEXT,
-  metadata JSONB
+  payload JSONB,
+  updated_at TIMESTAMPTZ
 );
