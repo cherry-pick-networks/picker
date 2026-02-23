@@ -1,9 +1,9 @@
 /**
  * Concept scheme and concept store. PostgreSQL via shared/infra pg client.
- * Tables: concept_scheme, concept (see shared/infra/schema/05_ontology.sql).
+ * Tables: concept_scheme, concept, concept_relation (see shared/infra/schema/).
  */
 
-import { getPg } from "#shared/infra/pg.client.ts";
+import { getPg, withTx } from "#shared/infra/pg.client.ts";
 
 const SQL_LIST_SCHEMES =
   "SELECT id, pref_label, created_at FROM concept_scheme ORDER BY id";
@@ -15,6 +15,16 @@ const SQL_LIST_CONCEPTS_BY_SCHEME =
 const SQL_GET_CONCEPT =
   "SELECT id, scheme_id, pref_label, notation, source, path::text, created_at " +
   "FROM concept WHERE id = $1";
+const SQL_UPSERT_CONCEPT =
+  "INSERT INTO concept (id, scheme_id, pref_label, notation, source) " +
+  "VALUES ($1, $2, $3, $4, $5) " +
+  "ON CONFLICT (id) DO UPDATE SET " +
+  "pref_label = EXCLUDED.pref_label, " +
+  "notation = COALESCE(EXCLUDED.notation, concept.notation), " +
+  "source = COALESCE(EXCLUDED.source, concept.source)";
+const SQL_INSERT_RELATION =
+  "INSERT INTO concept_relation (source_id, target_id, relation_type) " +
+  "VALUES ($1, $2, $3) ON CONFLICT (source_id, target_id, relation_type) DO NOTHING";
 
 export type ConceptSchemeRow = {
   id: string;
@@ -76,4 +86,66 @@ export async function getExistingConceptIds(
     [ids],
   );
   return new Set(rows.map((r) => r.id));
+}
+
+export type ConceptUpsertRow = {
+  id: string;
+  scheme_id: string;
+  pref_label: string;
+  notation?: string | null;
+  source?: string | null;
+};
+
+export async function upsertConceptRow(row: ConceptUpsertRow): Promise<void> {
+  const sql = await getPg();
+  await sql.queryObject(SQL_UPSERT_CONCEPT, [
+    row.id,
+    row.scheme_id,
+    row.pref_label,
+    row.notation ?? null,
+    row.source ?? null,
+  ]);
+}
+
+export type ConceptRelationRow = {
+  source_id: string;
+  target_id: string;
+  relation_type: string;
+};
+
+export async function insertConceptRelationIfNotExists(
+  row: ConceptRelationRow,
+): Promise<void> {
+  const sql = await getPg();
+  await sql.queryObject(SQL_INSERT_RELATION, [
+    row.source_id,
+    row.target_id,
+    row.relation_type,
+  ]);
+}
+
+/** Upsert concepts and insert relations in one transaction (e.g. LLM ingestion). */
+// function-length-ignore
+export async function upsertConceptsAndRelations(
+  concepts: ConceptUpsertRow[],
+  relations: ConceptRelationRow[],
+): Promise<void> {
+  await withTx(async (sql) => {
+    for (const row of concepts) {
+      await sql.queryObject(SQL_UPSERT_CONCEPT, [
+        row.id,
+        row.scheme_id,
+        row.pref_label,
+        row.notation ?? null,
+        row.source ?? null,
+      ]);
+    }
+    for (const row of relations) {
+      await sql.queryObject(SQL_INSERT_RELATION, [
+        row.source_id,
+        row.target_id,
+        row.relation_type,
+      ]);
+    }
+  });
 }

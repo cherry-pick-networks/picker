@@ -104,9 +104,9 @@ Use that document for AI direction and scope decisions.
   external message broker or queue. Client: `shared/infra/pg.client.ts`
   (`getPg()`). Optional transaction wrapper: `withTx(fn)`. DDL under
   `shared/infra/schema/` (e.g. `00_init.sql`, `01_actor.sql`, `02_content.sql`,
-  `02_content-add-payload.sql`, `02_content-concept-tagging.sql`,
+  `02_content-add-payload.sql`,   `02_content-concept-tagging.sql`,
   `03_source.sql`, `04_kv.sql`, `05_knowledge.sql`, `05_ontology.sql`,
-  `06_task-queue.sql`).
+  `05_ontology-add-requires.sql`, `06_task-queue.sql`).
   Tables: actor_profile, actor_progress, content_item, content_worksheet,
   content_submission, source, kv, knowledge_node, knowledge_edge,
   concept_scheme, concept, concept_relation, task_queue. Actor
@@ -116,6 +116,12 @@ Use that document for AI direction and scope decisions.
 - **Ontology seed** — versioned under `shared/infra/seed/` (TOML or SQL);
   idempotent; run with `deno task seed:ontology`. DDC top-level or exactMatch
   only; finer granularity via concept.source and concept_relation.
+- **Concept ingestion (LLM, Scope 4)** — script
+  `shared/infra/seed/run-concept-ingest.ts`; run with
+  `deno task ingest:concepts`. Input: stdin or `--file <path>`. Env:
+  `OPENAI_API_KEY` or `CONCEPT_INGEST_API_KEY`; optional
+  `CONCEPT_INGEST_API_URL`. Pipeline: text → LLM → JSON → Zod validate →
+  concept store upsert. Rejects unknown scheme_id or concept IDs in relations.
 - **File-based data** — under `shared/record/`: suffix `store` (payload) or
   `reference` (index). Store: `shared/record/store/*.toml`. Indexes:
   `shared/record/reference/extracted-data-index.toml`,

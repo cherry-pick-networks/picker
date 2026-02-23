@@ -17,6 +17,7 @@
     "scope-check": "deno run --allow-read shared/prompt/scripts/check-scope.ts",
     "scope-discovery": "deno run --allow-read shared/prompt/scripts/scope-discovery.ts",
     "seed:ontology": "deno run -A shared/infra/seed/run-ontology.ts",
+    "ingest:concepts": "deno run -A shared/infra/seed/run-concept-ingest.ts",
     "type-check-policy": "deno run --allow-read shared/prompt/scripts/check-type-policy.ts",
     "migrate:old-to-data": "deno run -A shared/prompt/scripts/migrate-old-to-data.ts",
     "naming-layer-check": "deno run --allow-read shared/prompt/scripts/check-naming-layer.ts",
