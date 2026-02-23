@@ -16,6 +16,7 @@
     "test:e2e-record": "deno run -A shared/prompt/scripts/run-e2e-record.ts",
     "scope-check": "deno run --allow-read shared/prompt/scripts/check-scope.ts",
     "scope-discovery": "deno run --allow-read shared/prompt/scripts/scope-discovery.ts",
+    "ontology-acyclic-check": "deno run -A shared/prompt/scripts/check-ontology-acyclic.ts",
     "seed:ontology": "deno run -A shared/infra/seed/run-ontology.ts",
     "ingest:concepts": "deno run -A shared/infra/seed/run-concept-ingest.ts",
     "type-check-policy": "deno run --allow-read shared/prompt/scripts/check-type-policy.ts",

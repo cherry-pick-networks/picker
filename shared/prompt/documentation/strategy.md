@@ -142,6 +142,8 @@ pasting into the prompt.
 
 Task: `deno task scope-discovery -- <entry-file>` (e.g.
 `deno task scope-discovery -- main.ts`). Add `--oneline` for one-line output.
+Optional: use `--ontology-scheme=<id>` to include concept-tree-based in-scope
+hints (run with `-A` and ensure `deno task seed:ontology` has been applied).
 
 ## Phase flags (explicit prompt flags)
 

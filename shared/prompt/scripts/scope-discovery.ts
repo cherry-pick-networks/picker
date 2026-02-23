@@ -4,7 +4,10 @@
  * Run from repo root:
  *   deno run --allow-read shared/prompt/scripts/scope-discovery.ts <entry-file>
  * Or: deno task scope-discovery -- <entry-file>
- * Options: --oneline  print paths on one line for pasting into a prompt.
+ * Options:
+ *   --oneline              print paths on one line for pasting into a prompt.
+ *   --ontology-scheme=ID    append concept-tree notations as in-scope hints
+ *                           (requires -A and seed:ontology applied).
  */
 // function-length-ignore-file
 import { Project } from "ts-morph";
@@ -62,11 +65,35 @@ function getRelativeImports(entryPath: string, content: string): string[] {
   return out;
 }
 
+function parseOntologySchemeArg(): string | null {
+  const arg = Deno.args.find((a) => a.startsWith("--ontology-scheme="));
+  if (!arg) return null;
+  const value = arg.slice("--ontology-scheme=".length).trim();
+  return value.length > 0 ? value : null;
+}
+
+async function fetchOntologyNotations(schemeId: string): Promise<string[]> {
+  const mod = await import("#system/concept/concept.service.ts");
+  const tree = await mod.getTree(schemeId);
+  if (tree == null) return [];
+  return tree.concepts
+    .map((c) => c.notation ?? c.id)
+    .filter((n): n is string => n != null && n.length > 0);
+}
+
 async function main(): Promise<void> {
-  const args = Deno.args.filter((a) => a !== "--oneline" && a !== "--");
+  const ontologyScheme = parseOntologySchemeArg();
+  const args = Deno.args.filter(
+    (a) =>
+      a !== "--oneline" &&
+      a !== "--" &&
+      !a.startsWith("--ontology-scheme="),
+  );
   const oneline = Deno.args.includes("--oneline");
   if (args.length === 0) {
-    console.error("Usage: scope-discovery.ts <entry-file> [--oneline]");
+    console.error(
+      "Usage: scope-discovery.ts <entry-file> [--oneline] [--ontology-scheme=ID]",
+    );
     Deno.exit(1);
   }
   const entryArg = args[0]!;
@@ -87,6 +114,28 @@ async function main(): Promise<void> {
   } else {
     console.log(entryRel);
     for (const d of deps) console.log(d);
+  }
+  if (ontologyScheme != null) {
+    try {
+      const notations = await fetchOntologyNotations(ontologyScheme);
+      if (notations.length > 0) {
+        if (!oneline) {
+          console.log(
+            `# ontology (--ontology-scheme=${ontologyScheme}, notation):`,
+          );
+        }
+        if (oneline) {
+          console.log(notations.join(" "));
+        } else {
+          for (const n of notations) console.log(n);
+        }
+      }
+    } catch (e) {
+      console.error(
+        "Ontology fetch failed (ensure seed:ontology and -A):",
+        e,
+      );
+    }
   }
 }
 

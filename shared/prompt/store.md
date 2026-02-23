@@ -94,7 +94,11 @@ tool-specific configs.
   ts-filename-check, sql-filename-check, test, scope-check, boundary-check,
   dependency-check, type-check-policy, audit)
 - `deno task scope-discovery -- <entry-file>` — list direct imports for AI
-  session scope (see shared/prompt/documentation/strategy.md)
+  session scope (see shared/prompt/documentation/strategy.md). Optional:
+  `--ontology-scheme=<id>` for concept-tree hints (run with `-A`; requires
+  seed:ontology applied).
+- `deno task ontology-acyclic-check` — verify concept_relation is a DAG
+  (optional; exit 1 on cycle).
 - `gh pr create --draft` — create draft PR (review before marking ready)
 - `gh pr view`, `gh pr diff` — inspect PR for review
 - `gh run view` — inspect CI run (e.g. after failure)

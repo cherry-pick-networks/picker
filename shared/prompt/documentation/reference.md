@@ -270,6 +270,8 @@ modules or API routes.
 - **Verify**: GET known scheme/concept id → 200; invalid id → 404/400.
 - Scope 2 API includes GET schemes/:id/tree and GET concepts/:id/dependencies;
   optional: scope-discovery and acyclic check (see Integration).
+- Ontology acyclic check: concept_relation must form a DAG; run
+  `deno task ontology-acyclic-check` (optional; failure exits 1).
 
 ### Scope 3 — Content integration (concept tagging)
 
