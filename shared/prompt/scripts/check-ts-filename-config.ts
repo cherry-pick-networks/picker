@@ -48,6 +48,7 @@ export const ALLOWED_SUFFIX = new Set([
   "validation",
   "log",
   "config",
+  "helpers",
 ]);
 
 /** Paths that are exempt from [name].[suffix].ts rule (exact relative path). */
