@@ -33,6 +33,8 @@ export const ROUTES: { method: string; path: string }[] = [
   { method: "GET", path: "/concepts/schemes" },
   { method: "GET", path: "/concepts/schemes/:schemeId" },
   { method: "GET", path: "/concepts/schemes/:schemeId/concepts" },
+  { method: "GET", path: "/concepts/schemes/:id/tree" },
+  { method: "GET", path: "/concepts/:id/dependencies" },
   { method: "GET", path: "/concepts/:id" },
   { method: "GET", path: "/sources" },
   { method: "GET", path: "/sources/:id" },

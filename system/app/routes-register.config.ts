@@ -64,7 +64,9 @@ function registerContentWorksheets(app: Hono) {
 function registerConcept(app: Hono) {
   app.get("/concepts/schemes", concept.getSchemes);
   app.get("/concepts/schemes/:schemeId/concepts", concept.getSchemeConcepts);
+  app.get("/concepts/schemes/:id/tree", concept.getSchemeTree);
   app.get("/concepts/schemes/:schemeId", concept.getScheme);
+  app.get("/concepts/:id/dependencies", concept.getConceptDependencies);
   app.get("/concepts/:id", concept.getConcept);
 }
 

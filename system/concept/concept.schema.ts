@@ -37,6 +37,15 @@ export const ConceptSchema = z.object({
 });
 export type Concept = z.infer<typeof ConceptSchema>;
 
+/** Single relation from concept_relation (e.g. depends-on, broader). */
+export const ConceptRelationSchema = z.object({
+  sourceId: z.string(),
+  targetId: z.string(),
+  relationType: z.string(),
+});
+export type ConceptRelation = z.infer<typeof ConceptRelationSchema>;
+
+// function-length-ignore
 function rowToScheme(row: {
   id: string;
   pref_label: string;
@@ -49,6 +58,7 @@ function rowToScheme(row: {
   };
 }
 
+// function-length-ignore
 function rowToConcept(row: {
   id: string;
   scheme_id: string;
@@ -69,6 +79,7 @@ function rowToConcept(row: {
   };
 }
 
+// function-length-ignore
 export function schemeRowToScheme(row: {
   id: string;
   pref_label: string;
@@ -77,6 +88,7 @@ export function schemeRowToScheme(row: {
   return ConceptSchemeSchema.parse(rowToScheme(row));
 }
 
+// function-length-ignore
 export function conceptRowToConcept(row: {
   id: string;
   scheme_id: string;
