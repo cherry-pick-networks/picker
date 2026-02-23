@@ -1,0 +1,65 @@
+# Picker architecture concept scheme: system modules as hierarchy (ltree path).
+# Idempotent seed: run via deno task seed:ontology. §E naming; English only.
+
+[scheme]
+id = "picker-architecture"
+pref_label = "Picker architecture (system modules)"
+
+[[concepts]]
+id = "system"
+pref_label = "System layer"
+notation = "system"
+path = "system"
+source = "picker"
+
+[[concepts]]
+id = "system.actor"
+pref_label = "Actor domain (profile, progress)"
+notation = "system.actor"
+path = "system.actor"
+source = "picker"
+
+[[concepts]]
+id = "system.actor.store"
+pref_label = "Actor store (profile, progress persistence)"
+notation = "system.actor.store"
+path = "system.actor.store"
+source = "picker"
+
+[[concepts]]
+id = "system.concept"
+pref_label = "Concept domain (ontology, SKOS)"
+notation = "system.concept"
+path = "system.concept"
+source = "picker"
+
+[[concepts]]
+id = "system.concept.service"
+pref_label = "Concept service (schemes, concepts, tree)"
+notation = "system.concept.service"
+path = "system.concept.service"
+source = "picker"
+
+[[concepts]]
+id = "system.content"
+pref_label = "Content domain (items, worksheets)"
+notation = "system.content"
+path = "system.content"
+source = "picker"
+
+[[concepts]]
+id = "system.content.service"
+pref_label = "Content service (items, worksheets, prompt)"
+notation = "system.content.service"
+path = "system.content.service"
+source = "picker"
+
+[[relations]]
+source_id = "system.content.service"
+target_id = "system.concept.service"
+relation_type = "depends-on"
+
+[[relations]]
+source_id = "system.content.service"
+target_id = "system.actor.store"
+relation_type = "depends-on"

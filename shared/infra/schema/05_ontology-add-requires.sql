@@ -4,5 +4,5 @@
 ALTER TABLE concept_relation DROP CONSTRAINT IF EXISTS concept_relation_type_check;
 ALTER TABLE concept_relation ADD CONSTRAINT concept_relation_type_check
   CHECK (relation_type IN (
-    'broader', 'narrower', 'related', 'exactMatch', 'requires'
+    'broader', 'narrower', 'related', 'exactMatch', 'requires', 'depends-on'
   ));

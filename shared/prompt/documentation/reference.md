@@ -113,6 +113,7 @@ is clear and names align with store.md §E (lowercase, hyphens, no underscores).
 
 | Path                                                | Purpose                              |
 | --------------------------------------------------- | ------------------------------------ |
+| `shared/infra/seed/ontology-architecture.toml`     | Ontology seed: picker-architecture scheme (concepts, path ltree, relations). Run: deno task seed:ontology. |
 | `shared/record/reference/extracted-data-index.toml` | Extracted-data index (UUID → entry)  |
 | `shared/record/reference/identity-index.toml`       | Identity index (UUID → entry)        |
 | `shared/record/store/<uuid>.toml`                   | Single record (UUID v7)              |

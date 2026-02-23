@@ -22,6 +22,8 @@ CREATE TABLE IF NOT EXISTS concept (
 CREATE INDEX IF NOT EXISTS concept_scheme_id_idx ON concept (scheme_id);
 CREATE INDEX IF NOT EXISTS concept_path_idx ON concept USING GIST (path);
 
+-- relation_type: SKOS (broader, narrower, related, exactMatch); dependency
+-- types (e.g. depends-on, requires) may be added in migrations.
 CREATE TABLE IF NOT EXISTS concept_relation (
   source_id TEXT NOT NULL REFERENCES concept (id) ON DELETE CASCADE,
   target_id TEXT NOT NULL REFERENCES concept (id) ON DELETE CASCADE,
