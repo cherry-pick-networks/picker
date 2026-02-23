@@ -31,7 +31,7 @@ Use that document for AI direction and scope decisions.
 | **system/kv/**            | Generic Deno KV: endpoint, store.                                                                                                                                 |
 | **system/audit/**         | Log artifact storage (e.g. e2e-runs.toml in same dir as audit.log.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added. |
 | **shared/runtime/store/** | Target path for AST-based self-edit; read and write only via Governance-verified flow.                                                                            |
-| **shared/infra/**         | Shared infrastructure. KV client (`getKv()`) only; no business logic.                                                                                             |
+| **shared/infra/**         | Shared infrastructure. PostgreSQL single client (`getPg()`), KV client (`getKv()`); no business logic.                                                            |
 
 ---
 
@@ -89,7 +89,13 @@ Use that document for AI direction and scope decisions.
 
 ## Infrastructure
 
-- **Deno KV** — built-in storage only; no external DB, message broker, or queue.
+- **PostgreSQL (single client)** — primary SQL store. Single client only; no
+  external message broker or queue. Client: `shared/infra/pg.client.ts`
+  (`getPg()`). Optional transaction wrapper: `withTx(fn)`. DDL under
+  `shared/infra/schema/` (e.g. `00_init.sql`, `01_actor.sql`, `02_content.sql`,
+  `03_source.sql`, `04_kv.sql`). Tables: actor_profile, actor_progress,
+  content_item, content_worksheet, content_submission, source, kv.
+- **Deno KV** — built-in key-value storage (retained for compatibility).
   KV instance: `shared/infra/kv.client.ts` (`getKv()`). Domain stores and
   system/kv import from there. Key prefixes: `kv` (generic), `profile` (actor
   profile, key `["profile", id]`), `progress` (progress state, key
