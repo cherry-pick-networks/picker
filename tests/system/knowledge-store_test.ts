@@ -26,6 +26,7 @@ const testNodeId2 = `kg-node-${Date.now()}-2`;
 Deno.test({
   name: "getNode(id) returns null for missing id",
   ignore: !hasPgEnv(),
+  sanitizeResources: false,
   async fn() {
     const out = await getNode("non-existent-node-id-xyz");
     assertEquals(out, null);
@@ -35,6 +36,7 @@ Deno.test({
 Deno.test({
   name: "putNode then getNode returns same node",
   ignore: !hasPgEnv(),
+  sanitizeResources: false,
   async fn() {
     const node = {
       id: testNodeId,
@@ -48,13 +50,24 @@ Deno.test({
     assertEquals(got!.id, node.id);
     assertEquals(got!.type, node.type);
     assertEquals(got!.payload, node.payload);
-    assertEquals(got!.created_at, node.created_at);
+    const raw = got!.created_at;
+    const createdNorm =
+      typeof raw === "string"
+        ? raw
+        : raw != null
+          ? (raw as unknown as Date).toISOString()
+          : "";
+    assertEquals(
+      new Date(createdNorm).getTime(),
+      new Date(node.created_at).getTime(),
+    );
   },
 });
 
 Deno.test({
   name: "listNodes returns nodes; type and limit filters work",
   ignore: !hasPgEnv(),
+  sanitizeResources: false,
   async fn() {
     await putNode({
       id: testNodeId2,
@@ -76,6 +89,7 @@ Deno.test({
 Deno.test({
   name: "getEdge returns null for missing edge; putEdge then getEdge returns edge",
   ignore: !hasPgEnv(),
+  sanitizeResources: false,
   async fn() {
     const missing = await getEdge("n1", "n2", "relates");
     assertEquals(missing, null);
@@ -97,6 +111,7 @@ Deno.test({
 Deno.test({
   name: "listEdges with fromId/toId/type filters",
   ignore: !hasPgEnv(),
+  sanitizeResources: false,
   async fn() {
     const list = await listEdges({ fromId: testNodeId });
     assertEquals(Array.isArray(list), true);

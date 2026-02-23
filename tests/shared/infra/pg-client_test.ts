@@ -3,7 +3,7 @@
  */
 
 import { assertEquals } from "@std/assert";
-import { getPg } from "#shared/infra/pg.client.ts";
+import { closePg, getPg } from "#shared/infra/pg.client.ts";
 
 function hasPgEnv(): boolean {
   return (
@@ -20,5 +20,6 @@ Deno.test({
     const result = await sql.queryArray("SELECT 1 AS n");
     assertEquals(result.rows.length, 1);
     assertEquals((result.rows[0] as [number])[0], 1);
+    await closePg();
   },
 });

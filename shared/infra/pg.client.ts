@@ -34,6 +34,15 @@ export function getPg(): Promise<Sql> {
   return pgPromise;
 }
 
+/** Close the shared client and reset. For test teardown only. */
+export async function closePg(): Promise<void> {
+  if (pgPromise) {
+    const client = await pgPromise;
+    await client.end();
+    pgPromise = null;
+  }
+}
+
 export async function withTx<T>(fn: WithTxFn<T>): Promise<T> {
   const sql = await getPg();
   await sql.queryArray("BEGIN");

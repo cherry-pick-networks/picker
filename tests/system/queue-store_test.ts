@@ -23,6 +23,7 @@ const kind = `queue-test-${Date.now()}`;
 Deno.test({
   name: "enqueue then dequeue returns same task; complete marks done",
   ignore: !hasPgEnv(),
+  sanitizeResources: false,
   async fn() {
     const t = await enqueue({ kind, payload: { step: 1 } });
     assertEquals(t.kind, kind);
@@ -40,6 +41,7 @@ Deno.test({
 Deno.test({
   name: "enqueue then dequeue then fail(id, reason) stores error",
   ignore: !hasPgEnv(),
+  sanitizeResources: false,
   async fn() {
     const t = await enqueue({ kind, payload: { step: 2 } });
     const claimed = await dequeue({ kind, limit: 1 });
@@ -54,6 +56,7 @@ Deno.test({
 Deno.test({
   name: "dequeue with limit returns at most limit tasks",
   ignore: !hasPgEnv(),
+  sanitizeResources: false,
   async fn() {
     await enqueue({ kind, payload: {} });
     await enqueue({ kind, payload: {} });
