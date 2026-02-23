@@ -58,10 +58,10 @@ Use that document for AI direction and scope decisions.
 | GET    | `/progress/:id`                    | Read progress state by id. Responds progress object or 404.                                                                                                                    |
 | PATCH  | `/progress/:id`                    | Update progress state by id. Body: partial progress. Responds 200 or 404.                                                                                                      |
 | GET    | `/content/items/:id`               | Read content item by id. Responds item object or 404.                                                                                                                          |
-| POST   | `/content/items`                   | Create content item. Body: item fields (id optional). Responds 201 with item.                                                                                                  |
-| PATCH  | `/content/items/:id`               | Update content item by id. Body: partial item. Responds 200 or 404.                                                                                                            |
+| POST   | `/content/items`                   | Create content item. Body: item fields (id optional); subjectIds, contentTypeId, cognitiveLevelId, contextIds (concept IDs, validated). Responds 201 or 400 on unknown concept ID. |
+| PATCH  | `/content/items/:id`               | Update content item by id. Body: partial item (tagging fields validated). Responds 200, 400 on unknown concept ID, or 404.                                                       |
 | GET    | `/content/worksheets/:id`          | Read worksheet meta by id. Responds worksheet object or 404.                                                                                                                   |
-| POST   | `/content/worksheets/generate`     | Create worksheet (meta + item_ids from concepts). Body: title, concept_ids, item_count, etc. Responds 201 with worksheet.                                                      |
+| POST   | `/content/worksheets/generate`     | Create worksheet (meta + item_ids from concepts). Body: title, concept_ids, subjectIds, contentTypeId, cognitiveLevelId, contextIds, item_count, etc. Unknown concept ID → 400.  |
 | POST   | `/content/worksheets/build-prompt` | Build worksheet prompt string from request and profile/context. Body: GenerateWorksheetRequest. Responds 200 with { prompt }. No LLM call.                                     |
 | POST   | `/content/submissions`             | Create submission. Body: worksheet_id, student_id, answers (item_id → option index); submission_id optional. Responds 201 with Submission.                                     |
 | GET    | `/content/submissions/:id`         | Read submission by id. Query `include=grading` optional: attach grading result (total, correct, score, results). Responds 200 or 404.                                          |
@@ -104,8 +104,9 @@ Use that document for AI direction and scope decisions.
   external message broker or queue. Client: `shared/infra/pg.client.ts`
   (`getPg()`). Optional transaction wrapper: `withTx(fn)`. DDL under
   `shared/infra/schema/` (e.g. `00_init.sql`, `01_actor.sql`, `02_content.sql`,
-  `02_content-add-payload.sql`, `03_source.sql`, `04_kv.sql`, `05_knowledge.sql`,
-  `05_ontology.sql`, `06_task-queue.sql`).
+  `02_content-add-payload.sql`, `02_content-concept-tagging.sql`,
+  `03_source.sql`, `04_kv.sql`, `05_knowledge.sql`, `05_ontology.sql`,
+  `06_task-queue.sql`).
   Tables: actor_profile, actor_progress, content_item, content_worksheet,
   content_submission, source, kv, knowledge_node, knowledge_edge,
   concept_scheme, concept, concept_relation, task_queue. Actor

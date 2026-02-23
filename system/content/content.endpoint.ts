@@ -54,9 +54,10 @@ async function patchItemResponse(
   id: string,
   data: ItemPatch,
 ) {
-  const item = await updateItem(id, data);
-  if (item == null) return c.json({ error: "Not found" }, 404);
-  return c.json(item);
+  const result = await updateItem(id, data);
+  if (result == null) return c.json({ error: "Not found" }, 404);
+  if (!result.ok) return c.json({ error: result.error }, 400);
+  return c.json(result.data);
 }
 
 export async function patchItem(c: Context) {

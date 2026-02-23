@@ -33,3 +33,12 @@ export async function getConcept(id: string): Promise<Concept | null> {
   const row = await store.getConceptRow(id);
   return row == null ? null : conceptRowToConcept(row);
 }
+
+/** Returns IDs that are not present in the concept table (hallucination mitigation). */
+export async function validateConceptIds(
+  ids: string[],
+): Promise<{ invalid: string[] }> {
+  const existing = await store.getExistingConceptIds(ids);
+  const invalid = ids.filter((id) => !existing.has(id));
+  return { invalid };
+}

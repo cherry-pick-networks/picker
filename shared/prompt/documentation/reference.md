@@ -147,9 +147,9 @@ other unless the matrix below allows it.
 
 - **Upper (orchestration)**: content (items, worksheets, prompt building). May
   call support domains via their service only.
-- **Support**: actor, script, source, record, kv, queue, audit. Do not import
-  content; do not depend on each other unless listed in the matrix. app only
-  imports endpoints and is outside this hierarchy.
+- **Support**: actor, concept, script, source, record, kv, queue, audit. Do not
+  import content; do not depend on each other unless listed in the matrix. app
+  only imports endpoints and is outside this hierarchy.
 
 **Allowed dependency matrix**
 
@@ -157,16 +157,17 @@ Rows = source domain (importer). Columns = target domain (imported). Only
 service (and types/schema where needed) may be imported cross-domain; store
 imports are forbidden (see Modular monolith rules above).
 
-| From \\ To | actor | content | source | script | record | kv | queue | audit |
-| ---------- | ----- | ------- | ------ | ------ | ------ | -- | ----- | ----- |
-| actor      | —     | no      | no     | no     | no     | no | no    | no    |
-| content    | yes   | —       | no     | yes    | no     | no | no    | no    |
-| source     | no    | no      | —      | no     | no     | no | no    | no    |
-| script     | no    | no      | no     | —      | no     | no | no    | no    |
-| record     | no    | no      | no     | no     | —      | no | no    | no    |
-| kv         | no    | no      | no     | no     | no     | —  | no    | no    |
-| queue      | no    | no      | no     | no     | no     | no | —     | no    |
-| audit      | no    | no      | no     | no     | yes    | no | no    | —     |
+| From \\ To | actor | concept | content | source | script | record | kv | queue | audit |
+| ---------- | ----- | ------- | ------- | ------ | ------ | ------ | -- | ----- | ----- |
+| actor      | —     | no      | no      | no     | no     | no     | no | no    | no    |
+| concept    | no    | —       | no      | no     | no     | no     | no | no    | no    |
+| content    | yes   | yes     | —       | no     | yes    | no     | no | no    | no    |
+| source     | no    | no      | no      | —      | no     | no     | no | no    | no    |
+| script     | no    | no      | no      | no     | —      | no     | no | no    | no    |
+| record     | no    | no      | no      | no     | no     | —      | no | no    | no    |
+| kv         | no    | no      | no      | no     | no     | no     | —  | no    | no    |
+| queue      | no    | no      | no      | no     | no     | no     | no | —     | no    |
+| audit      | no    | no      | no      | no     | no     | yes    | no | no    | —     |
 
 When adding a new cross-domain service dependency: (1) ensure it does not
 introduce a cycle; (2) add the edge to this matrix and to the allowlist in

@@ -1,9 +1,24 @@
 import type { CreateResult } from "#shared/infra/result.types.ts";
+import { validateConceptIds } from "#system/concept/concept.service.ts";
 import * as contentStore from "./content.store.ts";
 import type { GenerateWorksheetRequest, Worksheet } from "./content.schema.ts";
 import { nowIso } from "./content-parse.service.ts";
 
 const ERROR_GENERATE_FAILED = "Generate failed";
+const ERROR_UNKNOWN_CONCEPT_ID = "Unknown concept ID";
+
+function collectConceptIdsFromRequest(
+  request: GenerateWorksheetRequest,
+): string[] {
+  const ids = [
+    ...(request.concept_ids ?? []),
+    ...(request.subjectIds ?? []),
+    ...(request.contextIds ?? []),
+  ];
+  if (request.contentTypeId) ids.push(request.contentTypeId);
+  if (request.cognitiveLevelId) ids.push(request.cognitiveLevelId);
+  return ids.filter(Boolean);
+}
 
 async function collectItemIds(
   conceptIds: string[],
@@ -46,6 +61,10 @@ function buildWorksheetMeta(
     worksheet_id,
     title,
     item_ids,
+    subjectIds: request.subjectIds ?? [],
+    contentTypeId: request.contentTypeId,
+    cognitiveLevelId: request.cognitiveLevelId,
+    contextIds: request.contextIds ?? [],
     generated_at,
     metadata,
   };
@@ -70,6 +89,12 @@ async function saveWorksheet(worksheet: Worksheet): Promise<Worksheet> {
 export async function generateWorksheet(
   request: GenerateWorksheetRequest,
 ): Promise<CreateResult<Worksheet>> {
+  const ids = collectConceptIdsFromRequest(request);
+  const { invalid } = await validateConceptIds(ids);
+  if (invalid.length > 0) {
+    const msg = `${ERROR_UNKNOWN_CONCEPT_ID}: ${invalid.join(", ")}`;
+    return { ok: false, error: msg };
+  }
   try {
     const { worksheet_id, conceptIds, perConcept } = initWorksheetRequest(
       request,

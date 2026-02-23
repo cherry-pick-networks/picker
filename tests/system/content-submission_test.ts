@@ -17,11 +17,15 @@ Deno.test("gradeSubmission: two items, one correct", () => {
   const items: Item[] = [
     {
       item_id: "item1",
+      subjectIds: [],
+      contextIds: [],
       options: ["A", "B", "C"],
       correct: 0,
     },
     {
       item_id: "item2",
+      subjectIds: [],
+      contextIds: [],
       options: ["X", "Y", "Z"],
       correct: 2,
     },

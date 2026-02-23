@@ -1,8 +1,18 @@
+import {
+  CognitiveLevelIdSchema,
+  ContentTypeIdSchema,
+  ContextIdSchema,
+  SubjectIdSchema,
+} from "#system/concept/concept.schema.ts";
 import { z } from "zod";
 
 export const ItemSchema = z.object({
   item_id: z.string(),
   concept_id: z.string().optional(),
+  subjectIds: z.array(SubjectIdSchema).optional().default([]),
+  contentTypeId: ContentTypeIdSchema.optional(),
+  cognitiveLevelId: CognitiveLevelIdSchema.optional(),
+  contextIds: z.array(ContextIdSchema).optional().default([]),
   stem: z.string().optional(),
   difficulty: z.string().optional(),
   created_at: z.string().optional(),
@@ -17,6 +27,10 @@ export const WorksheetSchema = z.object({
   worksheet_id: z.string(),
   title: z.string().optional(),
   item_ids: z.array(z.string()).default([]),
+  subjectIds: z.array(SubjectIdSchema).optional().default([]),
+  contentTypeId: ContentTypeIdSchema.optional(),
+  cognitiveLevelId: CognitiveLevelIdSchema.optional(),
+  contextIds: z.array(ContextIdSchema).optional().default([]),
   generated_at: z.string().optional(),
   metadata: z.record(z.string(), z.unknown()).optional(),
 });
@@ -34,6 +48,10 @@ export type CreateItemRequest = z.infer<typeof CreateItemRequestSchema>;
 export const GenerateWorksheetRequestSchema = z.object({
   title: z.string().optional(),
   concept_ids: z.array(z.string()).default([]),
+  subjectIds: z.array(SubjectIdSchema).optional().default([]),
+  contentTypeId: ContentTypeIdSchema.optional(),
+  cognitiveLevelId: CognitiveLevelIdSchema.optional(),
+  contextIds: z.array(ContextIdSchema).optional().default([]),
   item_count: z.number().optional(),
   student_id: z.string().optional(),
   question_type: z.string().optional(),

@@ -1,4 +1,5 @@
 import type { CreateResult } from "#shared/infra/result.types.ts";
+import { validateConceptIds } from "#system/concept/concept.service.ts";
 import * as contentStore from "./content.store.ts";
 import type {
   CreateItemRequest as CreateItemRequestType,
@@ -10,6 +11,25 @@ import { ItemSchema, WorksheetSchema } from "./content.schema.ts";
 import { nowIso, parseItem } from "./content-parse.service.ts";
 
 const ERROR_INVALID_ITEM = "Invalid item";
+const ERROR_UNKNOWN_CONCEPT_ID = "Unknown concept ID";
+
+// function-length-ignore
+function collectConceptIdsFromItemBody(body: {
+  concept_id?: string;
+  subjectIds?: string[];
+  contentTypeId?: string;
+  cognitiveLevelId?: string;
+  contextIds?: string[];
+}): string[] {
+  const ids: string[] = [
+    ...(body.subjectIds ?? []),
+    ...(body.contextIds ?? []),
+  ];
+  if (body.contentTypeId) ids.push(body.contentTypeId);
+  if (body.cognitiveLevelId) ids.push(body.cognitiveLevelId);
+  if (body.concept_id) ids.push(body.concept_id);
+  return ids.filter(Boolean);
+}
 export {
   BuildBriefingRequestSchema,
   CreateItemRequestSchema,
@@ -64,6 +84,12 @@ function buildItemRaw(body: CreateItemRequestType): Item {
 export async function createItem(
   body: CreateItemRequestType,
 ): Promise<CreateResult<Item>> {
+  const ids = collectConceptIdsFromItemBody(body);
+  const { invalid } = await validateConceptIds(ids);
+  if (invalid.length > 0) {
+    const msg = `${ERROR_UNKNOWN_CONCEPT_ID}: ${invalid.join(", ")}`;
+    return { ok: false, error: msg };
+  }
   try {
     const item = buildItemRaw(body);
     await contentStore.setItem(item as unknown as Record<string, unknown>);
@@ -84,13 +110,26 @@ async function mergeAndSaveItem(
   return item;
 }
 
+// function-length-ignore
 export async function updateItem(
   id: string,
   body: ItemPatch,
-): Promise<Item | null> {
+): Promise<CreateResult<Item> | null> {
   const existing = await getItem(id);
   if (existing == null) return null;
-  return mergeAndSaveItem(id, existing, body);
+  const merged = { ...existing, ...body, item_id: id };
+  const ids = collectConceptIdsFromItemBody(merged);
+  const { invalid } = await validateConceptIds(ids);
+  if (invalid.length > 0) {
+    const msg = `${ERROR_UNKNOWN_CONCEPT_ID}: ${invalid.join(", ")}`;
+    return { ok: false, error: msg };
+  }
+  try {
+    const item = await mergeAndSaveItem(id, existing, body);
+    return { ok: true, data: item };
+  } catch {
+    return { ok: false, error: ERROR_INVALID_ITEM };
+  }
 }
 
 export async function getWorksheet(id: string): Promise<Worksheet | null> {

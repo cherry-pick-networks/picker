@@ -64,3 +64,16 @@ export async function getConceptRow(id: string): Promise<ConceptRow | null> {
   const { rows } = await sql.queryObject<ConceptRow>(SQL_GET_CONCEPT, [id]);
   return rows.length === 0 ? null : rows[0];
 }
+
+/** Returns the set of concept IDs that exist in the concept table. */
+export async function getExistingConceptIds(
+  ids: string[],
+): Promise<Set<string>> {
+  if (ids.length === 0) return new Set();
+  const sql = await getPg();
+  const { rows } = await sql.queryObject<{ id: string }>(
+    "SELECT id FROM concept WHERE id = ANY($1::text[])",
+    [ids],
+  );
+  return new Set(rows.map((r) => r.id));
+}

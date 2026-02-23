@@ -5,6 +5,20 @@
 
 import { z } from "zod";
 
+/** Prefix for subject facet. */
+export const SubjectIdSchema = z.string().regex(/^subj-/);
+/** Prefix for content type facet. */
+export const ContentTypeIdSchema = z.string().regex(/^type-/);
+/** Prefix for cognitive level facet. */
+export const CognitiveLevelIdSchema = z.string().regex(/^cog-/);
+/** Prefix for context facet. */
+export const ContextIdSchema = z.string().regex(/^ctx-/);
+
+/** Any concept ID with allowed prefix (for allowlist validation). */
+export const ConceptIdPrefixSchema = z
+  .string()
+  .regex(/^(subj-|type-|cog-|ctx-)/);
+
 export const ConceptSchemeSchema = z.object({
   id: z.string(),
   prefLabel: z.string(),
