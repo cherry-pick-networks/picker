@@ -671,3 +671,92 @@ rule text. Naming: Use [suffix].md only under shared/prompt/; suffix from §E
 allowed sets; see §D and §F. Scannability: Use clear headings and one concept
 per bullet or block; state when a rule applies (scope, exceptions); include
 short fixed examples where they help agents parse intent.
+
+### §U. SQL style
+
+Scope: SQL and DDL (e.g. shared/infra/schema/*.sql, and when suggesting
+schema or DML). File naming for DDL files: shared/prompt/documentation/reference.md
+(Schema DDL file naming). The rules below are Celko-derived; adopt as mandatory
+or recommended per team agreement; checkable and review-friendly.
+
+**1. Names and identifiers**
+
+- Use only letters, digits, and underscore in names; impose a length limit (e.g. 30) and state it.
+- Do not use quoted identifiers (double-quoted); improves portability and compatibility.
+- Case: reserved words UPPERCASE; schema objects (tables, views) lowercase snake_case in this project; columns and variables lowercase snake_case.
+- Do not use tbl_, vw_, or other table/view prefixes.
+- Use standard suffixes where they apply: _id, _date, _nbr, _name, _code, _status; align with team vocabulary.
+- Table and view names: plural or set nouns (e.g. actor_profile, concept_scheme).
+- Aliases: derive from base table or role; do not use meaningless a, b, c.
+- Relationship tables: name with domain terms (e.g. enrollments, concept_relation).
+- Avoid ambiguous names: bare id, date, amount; use qualified names (e.g. user_id, created_at).
+- Use the same attribute name for the same meaning across the schema; keep a naming policy or data dictionary.
+- Do not expose physical locators (IDENTITY/ROWID/GUID) as logical keys.
+- Avoid CamelCase in SQL; define exceptions only when necessary.
+
+**2. Typography and spacing**
+
+- One space between tokens.
+- Commas at end of line; one space after comma.
+- Use full reserved words (no AS omission; INT → INTEGER, etc.).
+- Prefer standard reserved words and standard syntax; minimize non-standard extensions.
+- Use vertical alignment for clauses/keywords where it improves readability.
+- Indent with a fixed width (e.g. 3 spaces or team-agreed).
+- Group related statements; use blank lines to separate logical steps.
+
+**3. DDL**
+
+- DEFAULT: place after type, before NOT NULL in column definition.
+- DEFAULT value type must match column type.
+- Prefer standard data types; avoid non-standard types; maintain an allowed-list if needed.
+- PRIMARY KEY: declare at top of CREATE TABLE (first column or first in list).
+- Column order: logical grouping and logical sequence.
+- Reference constraints and ON DELETE/ON UPDATE: indent for readability.
+- Give every constraint a name (CONSTRAINT name) for CHECK, UNIQUE, FK, etc.
+- CHECK: one purpose per CHECK where possible; name conveys meaning.
+- Every table must have a key; prefer natural or surrogate key; do not expose physical locators.
+- Do not split attributes across table/column/row.
+- Do not apply OO or EAV patterns in the RDBMS schema.
+
+**4. DML and coding choices**
+
+- OUTER JOIN: use standard ANSI (LEFT JOIN … ON, RIGHT JOIN … ON); no comma-style joins.
+- Dates/times: ISO format and standard temporal syntax.
+- Prefer standard, portable functions.
+- Avoid unnecessary parentheses.
+- Use CASE (or equivalent) for complex conditions.
+- Range conditions: prefer BETWEEN unless performance requires exception; document exception.
+- Equality lists: use IN().
+- Comment procedures and complex queries (purpose, clause-level where helpful).
+- Avoid optimizer hints unless justified; document reason and review.
+- Prefer declarative referential integrity (DRI) over triggers.
+- Prefer joins or non-correlated subqueries over correlated subqueries.
+- Prefer OR/CASE over UNION chains on the same base table where equivalent.
+
+**5. VIEW**
+
+- View names: same rules as tables (plural/set noun); no vw_ prefix.
+- CREATE VIEW: list column names explicitly.
+- Create views only when purpose is clear.
+- Do not create views unnecessarily.
+- Do not use “one view per table” by default.
+
+**6. Stored procedures and scripts**
+
+- Use structured control (IF, LOOP, etc.); limit cyclomatic complexity (e.g. ≤10).
+- Prefer subqueries, derived tables, or views over temporary tables.
+- Prefer set-based operations over cursors.
+- In IF branches: consolidate identical DML into one statement (e.g. CASE) where possible.
+- Procedure parameters: prefer scalars; use table parameters or similar for structured input.
+- Avoid dynamic SQL; if used, prevent SQL injection.
+
+**7. Measurement and encoding (schema design)**
+
+- Numeric types: clarify range and unit; use CHECK where appropriate.
+- Use existing standard encodings (e.g. ISO) where applicable.
+- Allow room for code extension in design.
+- Consider explicit “missing” codes instead of NULL where it fits policy.
+
+**Priority (rules to adopt first)**
+
+Names: length and character set (1.1.2), no quoted identifiers (1.1.3), no prefixes (1.2.3), standard suffixes (1.2.4), no ambiguous names (1.3.1), no physical locator as logical key (1.3.3). Format: case (2.1.2–2.1.4), full reserved words (2.4), indentation (2.8). DDL: constraint names (3.7), key and natural/surrogate principle (3.13). DML: standard JOIN (6.1.1), no hints unless justified (6.4), DRI over triggers (6.5), avoid correlated subqueries (6.9). VIEW: same naming as tables (7.1), explicit column names (7.1.1). Procedures: prefer set over cursor (8.4.2), dynamic SQL and injection prevention (8.6).
