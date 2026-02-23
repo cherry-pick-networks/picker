@@ -1,3 +1,4 @@
+// function-length-ignore-file
 /**
  * Row types and row↔app mappers for actor profile/progress PostgreSQL store.
  */

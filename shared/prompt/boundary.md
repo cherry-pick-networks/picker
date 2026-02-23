@@ -23,7 +23,7 @@ Use that document for AI direction and scope decisions.
 | **client.ts**             | Client entry (loaded on every page).                                                                                                                              |
 | **system/routes.ts**      | Route list (ROUTES) and registerRoutes(app); scope-check reads this.                                                                                              |
 | **system/app/config/**    | Route registration (home, rest, ast, scripts). Imports domain endpoints only.                                                                                     |
-| **system/actor/**         | Profile, progress: endpoint, service, store, schema.                                                                                                              |
+| **system/actor/**         | Profile, progress: endpoint, service, store from shared/infra pg, schema.                                                                                         |
 | **system/content/**       | Items, worksheets, prompt: endpoint, service, store, schema.                                                                                                      |
 | **system/source/**        | Source collection: endpoint, service, store.                                                                                                                      |
 | **system/script/**        | Scripts store, AST apply, Governance: endpoint, service, store, validation.                                                                                       |
@@ -94,14 +94,13 @@ Use that document for AI direction and scope decisions.
   (`getPg()`). Optional transaction wrapper: `withTx(fn)`. DDL under
   `shared/infra/schema/` (e.g. `00_init.sql`, `01_actor.sql`, `02_content.sql`,
   `03_source.sql`, `04_kv.sql`). Tables: actor_profile, actor_progress,
-  content_item, content_worksheet, content_submission, source, kv.
-- **Deno KV** — built-in key-value storage (retained for compatibility).
-  KV instance: `shared/infra/kv.client.ts` (`getKv()`). Domain stores and
-  system/kv import from there. Key prefixes: `kv` (generic), `profile` (actor
-  profile, key `["profile", id]`), `progress` (progress state, key
-  `["progress", id]`), `content` (items key `["content", "item", id]`;
-  worksheets key `["content", "worksheet", id]`; submissions key
-  `["content", "submission", id]`), `source` (source records key
+  content_item, content_worksheet, content_submission, source, kv. Actor profile
+  and progress use PostgreSQL (system/actor/store from shared/infra pg).
+- **Deno KV** — built-in key-value storage (retained for compatibility). KV
+  instance: `shared/infra/kv.client.ts` (`getKv()`). Domain stores and system/kv
+  import from there. Key prefixes: `kv` (generic), `content` (items key
+  `["content", "item", id]`; worksheets key `["content", "worksheet", id]`;
+  submissions key `["content", "submission", id]`), `source` (source records key
   `["source", id]`).
 - **File-based data** — under `shared/record/`: suffix `store` (payload) or
   `reference` (index). Store: `shared/record/store/*.toml`. Indexes:

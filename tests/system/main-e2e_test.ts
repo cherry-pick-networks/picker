@@ -187,6 +187,80 @@ Deno.test("E2E POST /scripts over real HTTP", handlerTestOpts, async () => {
   });
 });
 
+function hasPgEnv(): boolean {
+  return (
+    Deno.env.get("DATABASE_URL") !== undefined ||
+    Deno.env.get("PGHOST") !== undefined
+  );
+}
+
+Deno.test({
+  name: "E2E GET /profile/:id and PATCH /profile/:id over real HTTP",
+  ignore: !hasPgEnv(),
+  ...handlerTestOpts,
+  async fn() {
+    await withServer(async (base) => {
+      const id = `e2e-profile-${Date.now()}`;
+      const getMissing = await fetch(`${base}/profile/${id}`);
+      assertEquals(getMissing.status, 404);
+
+      const postRes = await fetch(`${base}/profile`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, grade: "1" }),
+      });
+      assertEquals(postRes.status, 201);
+      const created = await postRes.json();
+      assert(created.id === id, "profile id");
+      assertEquals(created.grade, "1");
+
+      const getRes = await fetch(`${base}/profile/${id}`);
+      assertEquals(getRes.status, 200);
+      const got = await getRes.json();
+      assertEquals(got.id, id);
+      assertEquals(got.grade, "1");
+
+      const patchRes = await fetch(`${base}/profile/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ grade: "2" }),
+      });
+      assertEquals(patchRes.status, 200);
+      const patched = await patchRes.json();
+      assertEquals(patched.grade, "2");
+    });
+  },
+});
+
+Deno.test({
+  name: "E2E GET /progress/:id and PATCH /progress/:id over real HTTP",
+  ignore: !hasPgEnv(),
+  ...handlerTestOpts,
+  async fn() {
+    await withServer(async (base) => {
+      const id = `e2e-progress-${Date.now()}`;
+      const getMissing = await fetch(`${base}/progress/${id}`);
+      assertEquals(getMissing.status, 404);
+
+      const patchRes = await fetch(`${base}/progress/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ state: "started", currentStep: "step1" }),
+      });
+      assertEquals(patchRes.status, 200);
+      const patched = await patchRes.json();
+      assertEquals(patched.state, "started");
+      assertEquals(patched.currentStep, "step1");
+
+      const getRes = await fetch(`${base}/progress/${id}`);
+      assertEquals(getRes.status, 200);
+      const got = await getRes.json();
+      assertEquals(got.state, "started");
+      assertEquals(got.currentStep, "step1");
+    });
+  },
+});
+
 Deno.test(
   "E2E load: 20 concurrent GET / complete within 5s",
   handlerTestOpts,
