@@ -17,13 +17,12 @@ const SQL_SELECT_PROFILE =
   "SELECT id, created_at, updated_at, grade, preferences, goals " +
   "FROM actor_profile WHERE id = $1";
 const SQL_UPSERT_PROFILE =
-  "INSERT INTO actor_profile (id, created_at, updated_at, grade, preferences, " +
-  "goals) VALUES ($1, $2, $3, $4, $5, $6) " +
+  "INSERT INTO actor_profile (id, created_at, updated_at, " +
+  "grade, preferences, goals) VALUES ($1, $2, $3, $4, $5, $6) " +
   "ON CONFLICT (id) DO UPDATE " +
   "SET updated_at = EXCLUDED.updated_at, grade = EXCLUDED.grade, " +
   "preferences = EXCLUDED.preferences, goals = EXCLUDED.goals";
-const SQL_SELECT_PROGRESS =
-  "SELECT id, updated_at, state, current_step " +
+const SQL_SELECT_PROGRESS = "SELECT id, updated_at, state, current_step " +
   "FROM actor_progress WHERE id = $1";
 const SQL_UPSERT_PROGRESS =
   "INSERT INTO actor_progress (id, updated_at, state, current_step) " +
