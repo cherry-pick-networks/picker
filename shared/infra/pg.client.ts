@@ -18,6 +18,12 @@ function connectionConfig(): string | Record<string, unknown> {
   };
 }
 
+/** Same config as getPg(); for dedicated connections (e.g. LISTEN). */
+export function getPgConnectionConfig(): string | Record<string, unknown> {
+  const config = connectionConfig();
+  return config;
+}
+
 let pgPromise: Promise<Sql> | null = null;
 
 export function getPg(): Promise<Sql> {

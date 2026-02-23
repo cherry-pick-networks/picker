@@ -32,7 +32,7 @@ Use that document for AI direction and scope decisions.
 | **system/queue/**         | Task queue: store, schema (Postgres task_queue, FOR UPDATE SKIP LOCKED).                                                                                          |
 | **system/audit/**         | Log artifact storage (e.g. e2e-runs.toml in same dir as audit.log.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added. |
 | **shared/runtime/store/** | Target path for AST-based self-edit; read and write only via Governance-verified flow.                                                                            |
-| **shared/infra/**         | Shared infrastructure. PostgreSQL single client (`getPg()`), KV client (`getKv()`); no business logic.                                                            |
+| **shared/infra/**         | Shared infrastructure. PostgreSQL single client (`getPg()`), KV client (`getKv()`); notify/subscribe (LISTEN/NOTIFY) in pg.notify.ts, pg.listen.ts; no business logic. |
 
 ---
 
@@ -90,6 +90,11 @@ Use that document for AI direction and scope decisions.
 
 ## Infrastructure
 
+- **Real-time notifications (Pub/Sub)** — LISTEN/NOTIFY. notify via
+  `shared/infra/pg.notify.ts` (uses `getPg()`); subscribe via
+  `shared/infra/pg.listen.ts` (dedicated long-lived connection, reconnection
+  policy documented). Channel naming and reconnection: see
+  shared/infra/pg.listen.ts and shared/prompt/documentation/reference.md.
 - **PostgreSQL (single client)** — primary SQL store. Single client only; no
   external message broker or queue. Client: `shared/infra/pg.client.ts`
   (`getPg()`). Optional transaction wrapper: `withTx(fn)`. DDL under

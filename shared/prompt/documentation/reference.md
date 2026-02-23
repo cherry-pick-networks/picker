@@ -96,6 +96,18 @@ Under `tests/`, every `.ts` file must be `[name]_test.ts` (Deno convention). The
 | `shared/record/store/<uuid>.toml`                   | Single record (UUID v7)              |
 | `system/audit/e2e-runs.toml`                        | E2E run log (schemaVersion + runs[]) |
 
+### LISTEN/NOTIFY (real-time notifications)
+
+- **Channels**: Use `prefix:topic`; reserved prefix `picker`. Examples:
+  `picker:event`, `picker:queue`. Document new channels here when added.
+- **Reconnection**: Dedicated LISTEN connection (shared/infra/pg.listen.ts).
+  On disconnect: exponential backoff from 500 ms, cap 30 s; then reconnect and
+  re-issue LISTEN for all subscribed channels. No UNLISTEN on unsubscribe;
+  connection stays open until process exit.
+- **Delivery**: `notify(channel, payload)` uses getPg(). subscribe() keeps a
+  long-lived connection and LISTENs; delivery to onMessage depends on driver
+  support for async notifications (@db/postgres does not expose them yet).
+
 ### Modular monolith rules
 
 - Within a domain: endpoint → service → store/schema only.
