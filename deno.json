@@ -53,6 +53,9 @@
     "zod": "jsr:@zod/zod@^4",
     "ts-morph": "jsr:@ts-morph/ts-morph@^27",
     "vite": "npm:vite@^6",
-    "@db/postgres": "jsr:@db/postgres@^0.19"
+    "@db/postgres": "jsr:@db/postgres@^0.19",
+    "phonemize": "npm:phonemize@^1.1",
+    "wink-nlp": "npm:wink-nlp@^2",
+    "compromise": "npm:compromise@^14"
   }
 }
