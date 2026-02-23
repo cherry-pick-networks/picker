@@ -23,6 +23,7 @@
     "line-length-check": "deno run --allow-read shared/prompt/scripts/check-line-length.ts",
     "boundary-check": "deno run --allow-read shared/prompt/scripts/check-domain-boundary.ts",
     "dependency-check": "deno run --allow-read shared/prompt/scripts/check-domain-deps.ts",
+    "ontology-acyclic-check": "deno run -A shared/prompt/scripts/check-ontology-acyclic.ts",
     "audit": "deno audit",
     "pre-push": "deno lint && deno fmt --check && deno task line-length-check && deno task ts-filename-check && deno task test && deno task scope-check && deno task boundary-check && deno task dependency-check && deno task type-check-policy && deno audit"
   },
@@ -53,6 +54,9 @@
     "zod": "jsr:@zod/zod@^4",
     "ts-morph": "jsr:@ts-morph/ts-morph@^27",
     "vite": "npm:vite@^6",
-    "@db/postgres": "jsr:@db/postgres@^0.19"
+    "@db/postgres": "jsr:@db/postgres@^0.19",
+    "wink-nlp": "npm:wink-nlp@^2",
+    "compromise": "npm:compromise@^14",
+    "@hans00/phonemize": "npm:phonemize@^1"
   }
 }
