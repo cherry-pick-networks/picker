@@ -1,0 +1,12 @@
+---
+description: |
+  Dependency addition and library validation. Apply when adding or changing
+  dependencies (deno.json, imports) or evaluating a new library.
+alwaysApply: false
+---
+
+This rule is defined in `shared/prompt/store.md`.
+Read that file and follow:
+- **§G. Dependency constraint**
+- **§H. Validation policy (libraries)**
+Do not duplicate the rule text here.

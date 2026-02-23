@@ -1,0 +1,10 @@
+---
+description: |
+  Rule/document rename and split. Apply when migrating .mdc or .md
+  (renaming, splitting, or moving) to comply with §D/§E.
+alwaysApply: false
+---
+
+This rule is defined in `shared/prompt/store.md`.
+Read that file and follow **§J. Migration boundary**.
+Do not duplicate the rule text here.

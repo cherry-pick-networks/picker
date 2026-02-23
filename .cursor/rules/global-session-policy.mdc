@@ -1,0 +1,17 @@
+---
+description: |
+  Session-wide conventions. Apply in every session.
+  Commit format, session boundary, language, agent principles (essence),
+  type-check policy, answer format.
+alwaysApply: true
+---
+
+This rule is defined in `shared/prompt/store.md`.
+Read that file and follow:
+- **§A. Commit message format**
+- **§B. Commit and session boundary**
+- **§C. Language**
+- **§I. Agent principles**
+- **§N. Type-check policy**
+- **§O. Answer format (options with pros and cons)**
+Do not duplicate the rule text here.

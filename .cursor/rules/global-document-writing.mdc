@@ -1,0 +1,12 @@
+---
+description: |
+  AI-facing document writing. Apply when editing .md under shared/prompt/
+  except store.md and except files under shared/prompt/documentation/.
+globs: ["shared/prompt/**/*.md"]
+alwaysApply: false
+---
+
+This rule is defined in `shared/prompt/store.md`.
+Read that file and follow **§R. AI document writing principles**.
+When editing store.md or files under shared/prompt/documentation/, §R does not apply.
+Do not duplicate the rule text here.

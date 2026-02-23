@@ -1,0 +1,10 @@
+---
+description: |
+  Phase-gated feature implementation (requirement → design → implementation → test).
+  Apply when implementing a new feature; refactor-, docs-, or urgent-fix-only are exceptions.
+alwaysApply: false
+---
+
+This rule is defined in `shared/prompt/store.md`.
+Read that file and follow **§Q. Phase-gated feature implementation**.
+Do not duplicate the rule text here.

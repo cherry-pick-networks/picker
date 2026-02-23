@@ -1,0 +1,12 @@
+---
+description: |
+  Document and directory naming (segment format, allowed axes).
+  Apply when creating or renaming .mdc, .md under shared/prompt/, or directories.
+alwaysApply: false
+---
+
+This rule is defined in `shared/prompt/store.md`.
+Read that file and follow:
+- **§D. Document and directory format**
+- **§E. Document and directory naming**
+Do not duplicate the rule text here.

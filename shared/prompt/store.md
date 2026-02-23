@@ -238,8 +238,9 @@ tool-specific configs.
 - **Single source**: Add or change rules and habits only in this file
   (`shared/prompt/store.md`). Do not duplicate in Cursor Rules or other tool
   configs; reference this file instead.
-- **.cursor/rules**: mdc files are for **when** to apply (e.g. always vs
-  on-request); keep one file per apply timing. Rule text stays here only; mdc
+- **.cursor/rules**: mdc files define **when** to apply (alwaysApply, globs, or
+  on-request). Split by situation so only relevant rules load (e.g. session-wide
+  vs TypeScript vs SQL vs document naming). Rule text stays here only; mdc
   names follow §D and §E.
 - **Review**: Review this file periodically (e.g. quarterly); add repeated
   instructions as they appear; remove or update outdated lines. Use recent
@@ -263,9 +264,9 @@ tool-specific configs.
 
 Cursor Rules (`.cursor/rules/*.mdc`) reference these sections only; they do not
 duplicate the text below. The role of each mdc is to define **when** to apply
-(e.g. alwaysApply). Rule content lives only in this file; mdc bodies list which
-§ to follow. Keep the number of mdc files aligned with apply timings (e.g. one
-always-applied bundle, one on-request).
+(alwaysApply, globs, or on-request). Rule content lives only in this file; mdc
+bodies list which § to follow. Use one or more mdc files per situation (e.g. one
+always-applied session policy, plus file-type or context-specific rules).
 
 ### §A. Commit message format
 
