@@ -100,12 +100,16 @@ Use that document for AI direction and scope decisions.
   (`getPg()`). Optional transaction wrapper: `withTx(fn)`. DDL under
   `shared/infra/schema/` (e.g. `00_init.sql`, `01_actor.sql`, `02_content.sql`,
   `02_content-add-payload.sql`, `03_source.sql`, `04_kv.sql`, `05_knowledge.sql`,
-  `06_task-queue.sql`).
+  `05_ontology.sql`, `06_task-queue.sql`).
   Tables: actor_profile, actor_progress, content_item, content_worksheet,
-  content_submission, source, kv, knowledge_node, knowledge_edge, task_queue. Actor
+  content_submission, source, kv, knowledge_node, knowledge_edge,
+  concept_scheme, concept, concept_relation, task_queue. Actor
   profile and progress use PostgreSQL (system/actor from shared/infra pg).
   Content items, worksheets, and submissions use PostgreSQL
   (system/content/content.store.ts from getPg()).
+- **Ontology seed** — versioned under `shared/infra/seed/` (TOML or SQL);
+  idempotent; run with `deno task seed:ontology`. DDC top-level or exactMatch
+  only; finer granularity via concept.source and concept_relation.
 - **File-based data** — under `shared/record/`: suffix `store` (payload) or
   `reference` (index). Store: `shared/record/store/*.toml`. Indexes:
   `shared/record/reference/extracted-data-index.toml`,
