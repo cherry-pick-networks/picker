@@ -24,6 +24,7 @@ Use that document for AI direction and scope decisions.
 | **system/routes.ts**      | Route list (ROUTES) and registerRoutes(app); scope-check reads this.                                                                                              |
 | **system/app/config/**    | Route registration (home, rest, ast, scripts). Imports domain endpoints only.                                                                                     |
 | **system/actor/**         | Profile, progress: endpoint, service, store from shared/infra pg, schema.                                                                                         |
+| **system/concept/**       | Concept schemes and concepts (ontology): service, store, schema.                                                                                                  |
 | **system/content/**       | Items, worksheets, prompt: endpoint, service, store, schema.                                                                                                      |
 | **system/source/**        | Source collection: endpoint, service, store.                                                                                                                      |
 | **system/script/**        | Scripts store, AST apply, Governance: endpoint, service, store, validation.                                                                                       |
@@ -93,7 +94,7 @@ Use that document for AI direction and scope decisions.
   external message broker or queue. Client: `shared/infra/pg.client.ts`
   (`getPg()`). Optional transaction wrapper: `withTx(fn)`. DDL under
   `shared/infra/schema/` (e.g. `00_init.sql`, `01_actor.sql`, `02_content.sql`,
-  `03_source.sql`, `04_kv.sql`). Tables: actor_profile, actor_progress,
+  `03_source.sql`, `04_kv.sql`, `05_ontology.sql`). Tables: actor_profile, actor_progress,
   content_item, content_worksheet, content_submission, source, kv. Actor profile
   and progress use PostgreSQL (system/actor/store from shared/infra pg).
 - **Deno KV** — built-in key-value storage (retained for compatibility). KV
@@ -113,3 +114,9 @@ Use that document for AI direction and scope decisions.
   one entry per mutation (profile, progress, content, scripts/store) with actor,
   timestamp, and change summary; written by routes or services on mutation;
   retention and format defined by implementation.
+- **Ontology CSAT Data (Scope 1)** — Seeds:
+  `shared/infra/seed/csat-ontology.toml` (defines core schemes: csat-subject,
+  csat-type, csat-cognitive, csat-context). Validation: facet IDs (subjectIds,
+  contextIds, etc.) must strictly belong to their designated concept_scheme.
+  Bulk ID checks capped at 500. Graph constraints: DAG checks strictly enforced
+  for `requires` relation_type only.

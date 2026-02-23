@@ -1,0 +1,43 @@
+# CSAT (Korean CSAT) ontology seed. Core schemes: csat-subject, csat-type,
+# csat-cognitive, csat-context. Defines ltree path for hierarchy integrity.
+# Idempotent; load via deno task seed:ontology (or equivalent).
+
+[[concept_scheme]]
+id = "csat-subject"
+pref_label = "CSAT Subjects"
+
+[[concept]]
+id = "subj-kor"
+scheme_id = "csat-subject"
+pref_label = "Korean"
+path = "csat.subj.kor"
+
+[[concept_scheme]]
+id = "csat-type"
+pref_label = "CSAT Question Type"
+
+[[concept]]
+id = "type-multi"
+scheme_id = "csat-type"
+pref_label = "Multiple choice"
+path = "csat.type.multi"
+
+[[concept_scheme]]
+id = "csat-cognitive"
+pref_label = "CSAT Cognitive Level"
+
+[[concept]]
+id = "cog-remember"
+scheme_id = "csat-cognitive"
+pref_label = "Remember"
+path = "csat.cog.remember"
+
+[[concept_scheme]]
+id = "csat-context"
+pref_label = "CSAT Context"
+
+[[concept]]
+id = "ctx-passage"
+scheme_id = "csat-context"
+pref_label = "Passage-based"
+path = "csat.ctx.passage"

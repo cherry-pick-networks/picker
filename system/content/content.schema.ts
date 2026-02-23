@@ -42,6 +42,7 @@ export const GenerateWorksheetRequestSchema = z.object({
   session_id: z.string().optional(),
   date_iso: z.string().optional(),
   sheet_label: z.string().optional(),
+  subjectWeights: z.record(z.string(), z.number()).optional(),
 });
 export type GenerateWorksheetRequest = z.infer<
   typeof GenerateWorksheetRequestSchema

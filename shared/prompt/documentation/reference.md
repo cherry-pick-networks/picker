@@ -22,6 +22,7 @@ with store.md §E/§F and modular monolith.
 | Infix   | Responsibility                                           |
 | ------- | -------------------------------------------------------- |
 | actor   | Profile, progress (identity and state)                   |
+| concept | Concept schemes and concepts (ontology, facet validation)|
 | content | Items, worksheets, prompt building                       |
 | source  | Source collection and read                               |
 | script  | Scripts store, AST apply, Governance                     |
@@ -50,6 +51,7 @@ with store.md §E/§F and modular monolith.
 ```
 system/
   actor/     *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts, *.transfer.ts
+  concept/   *.service.ts, *.store.ts, *.schema.ts
   content/   *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts
   source/    *.endpoint.ts, *.service.ts, *.store.ts
   script/    *.endpoint.ts, *.service.ts, *.store.ts, *.types.ts, *.validation.ts
@@ -114,7 +116,7 @@ other unless the matrix below allows it.
 
 - **Upper (orchestration)**: content (items, worksheets, prompt building). May
   call support domains via their service only.
-- **Support**: actor, script, source, record, kv, audit. Do not import content;
+- **Support**: actor, concept, script, source, record, kv, audit. Do not import content;
   do not depend on each other unless listed in the matrix. app only imports
   endpoints and is outside this hierarchy.
 
@@ -124,15 +126,16 @@ Rows = source domain (importer). Columns = target domain (imported). Only
 service (and types/schema where needed) may be imported cross-domain; store
 imports are forbidden (see Modular monolith rules above).
 
-| From \\ To | actor | content | source | script | record | kv | audit |
-| ---------- | ----- | ------- | ------ | ------ | ------ | -- | ----- |
-| actor      | —     | no      | no     | no     | no     | no | no    |
-| content    | yes   | —       | no     | yes    | no     | no | no    |
-| source     | no    | no      | —      | no     | no     | no | no    |
-| script     | no    | no      | no     | —      | no     | no | no    |
-| record     | no    | no      | no     | no     | —      | no | no    |
-| kv         | no    | no      | no     | no     | no     | —  | no    |
-| audit      | no    | no      | no     | no     | yes    | no | —     |
+| From \\ To | actor | concept | content | source | script | record | kv | audit |
+| ---------- | ----- | ------- | ------- | ------ | ------ | ------ | -- | ----- |
+| actor      | —     | no      | no      | no     | no     | no     | no | no    |
+| concept    | no    | —       | no      | no     | no     | no     | no | no    |
+| content    | yes   | yes     | —       | no     | yes    | no     | no | no    |
+| source     | no    | no      | no      | —      | no     | no     | no | no    |
+| script     | no    | no      | no      | no     | —      | no     | no | no    |
+| record     | no    | no      | no      | no     | no     | —      | no | no    |
+| kv         | no    | no      | no      | no     | no     | no     | —  | no    |
+| audit      | no    | no      | no      | no     | yes    | no     | no | —     |
 
 When adding a new cross-domain service dependency: (1) ensure it does not
 introduce a cycle; (2) add the edge to this matrix and to the allowlist in
@@ -158,6 +161,27 @@ prompt building:
 Only `distractor_policy` is currently substituted into the worksheet prompt
 (`{{distractor_policy}}`). `gimmick` and `gimmick_notes` are stored for future
 use (e.g. Scope B/C).
+
+---
+
+## Official dependency list (§G)
+
+The project maintains this list as the single source of truth for allowed
+dependencies; deno.json imports must match. Prefer JSR when both JSR and npm
+exist. New entries require human approval and must satisfy §H (validation
+policy). Update this table first, then add or change deno.json imports.
+
+| Category        | Library        | Registry            | Role and rationale (§H, §I) |
+| --------------- | -------------- | ------------------- | --------------------------- |
+| Core / validation | @zod/zod       | JSR                 | Official Zod release on JSR; faster module resolution without npm bridge, Deno-native. |
+| Infra (DB)      | @db/postgres   | JSR                 | Native Postgres client for Deno; replaces npm:postgres to remove external ecosystem deps and maximize security. |
+| HTTP            | @hono/hono     | JSR                 | Web framework; JSR-native. |
+| AST             | @ts-morph/ts-morph | JSR             | TypeScript AST and refactor; JSR. |
+| Build           | vite           | npm                 | Bundler/dev server; no JSR equivalent. |
+| Std             | @std/assert, @std/front-matter, @std/toml, @std/uuid | JSR | Deno standard library. |
+| Offline NLP     | wink-nlp       | npm                 | No JSR release; loaded via Deno 2.x npm compatibility layer. |
+| Morphology      | compromise     | npm                 | No JSR native version; kept for lightweight POS tagging. |
+| Phonetic        | @hans00/phonemize (npm: phonemize) | npm             | Standalone phoneme converter; no JSR package; use npm:phonemize. |
 
 ---
 
