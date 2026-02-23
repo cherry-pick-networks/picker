@@ -94,14 +94,14 @@ Use that document for AI direction and scope decisions.
   (`getPg()`). Optional transaction wrapper: `withTx(fn)`. DDL under
   `shared/infra/schema/` (e.g. `00_init.sql`, `01_actor.sql`, `02_content.sql`,
   `03_source.sql`, `04_kv.sql`). Tables: actor_profile, actor_progress,
-  content_item, content_worksheet, content_submission, source, kv. Actor profile
-  and progress use PostgreSQL (system/actor/store from shared/infra pg).
+  content_item, content_worksheet, content_submission, source, kv. Actor
+  profile and progress use PostgreSQL (system/actor from shared/infra pg).
+  Content items, worksheets, and submissions use PostgreSQL
+  (system/content/content.store.ts from getPg()).
 - **Deno KV** — built-in key-value storage (retained for compatibility). KV
   instance: `shared/infra/kv.client.ts` (`getKv()`). Domain stores and system/kv
-  import from there. Key prefixes: `kv` (generic), `content` (items key
-  `["content", "item", id]`; worksheets key `["content", "worksheet", id]`;
-  submissions key `["content", "submission", id]`), `source` (source records key
-  `["source", id]`).
+  import from there. Key prefixes: `kv` (generic), `source` (source records key
+  `["source", id]`; source domain also has PostgreSQL table).
 - **File-based data** — under `shared/record/`: suffix `store` (payload) or
   `reference` (index). Store: `shared/record/store/*.toml`. Indexes:
   `shared/record/reference/extracted-data-index.toml`,
