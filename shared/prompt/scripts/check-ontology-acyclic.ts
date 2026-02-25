@@ -1,4 +1,5 @@
-// function-length-ignore-file — CI/utility script; cycle detection needs longer bodies.
+// function-length-ignore-file — CI/utility script; cycle detection
+// needs longer bodies.
 /**
  * Ontology DAG check: fail if concept_relation has a cycle when restricted to
  * relation_type = 'requires'. Run from repo root (Postgres required):
