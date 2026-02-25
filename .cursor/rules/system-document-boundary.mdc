@@ -1,8 +1,9 @@
 ---
 description: |
-  Todo document boundary. In-todo modules, API surface, and infrastructure
-  are defined in one place; update that doc before adding new ones.
-alwaysApply: true
+  Todo document boundary. Update todo doc before adding modules, API, or
+  infrastructure. Apply when editing todo or entry/system code.
+globs: ["shared/prompt/todo.md", "main.ts", "**/routes*.ts", "system/**/*.ts"]
+alwaysApply: false
 ---
 
 This rule is defined in `shared/prompt/store.md`.
