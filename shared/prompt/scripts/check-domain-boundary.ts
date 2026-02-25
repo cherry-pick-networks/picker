@@ -8,13 +8,14 @@
 const SYSTEM_DIR = "system";
 const DOMAINS = [
   "actor",
+  "app",
+  "concept",
   "content",
   "source",
   "script",
   "record",
   "kv",
   "audit",
-  "app",
 ];
 
 const IMPORT_RE = /from\s+["']([^"']+)["']/g;

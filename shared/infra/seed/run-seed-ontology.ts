@@ -1,11 +1,14 @@
+// function-length-ignore-file — Seed runner; loops over schemes/concepts.
 /**
- * Run ontology seed SQL. Requires db:schema applied first. Usage:
- * deno run -A shared/infra/seed/run-seed-ontology.ts
+ * Run ontology seed SQL and CSAT TOML. Requires db:schema applied first.
+ * Usage: deno run -A shared/infra/seed/run-seed-ontology.ts
  */
 
+import { parse } from "@std/toml";
 import { getPg } from "../pg.client.ts";
 
-const SEED_FILE = new URL("./ontology/seed.sql", import.meta.url);
+const SEED_SQL = new URL("./ontology/seed.sql", import.meta.url);
+const SEED_CSAT = new URL("./csat-ontology.toml", import.meta.url);
 
 function stripLeadingComments(block: string): string {
   const noComments = block.replace(/^\s*(--[^\n]*\n)*/m, "");
@@ -17,12 +20,49 @@ function splitStatements(sql: string): string[] {
   return parts.filter((s) => s.length > 0 && /^\s*INSERT\s/i.test(s));
 }
 
+interface CsatScheme {
+  id: string;
+  name: string;
+}
+
+interface CsatConcept {
+  scheme_id: string;
+  code: string;
+  pref_label: string;
+  path: string;
+}
+
+async function runCsatSeed(pg: Awaited<ReturnType<typeof getPg>>): Promise<void> {
+  const raw = await Deno.readTextFile(SEED_CSAT);
+  const data = parse(raw) as {
+    concept_scheme?: CsatScheme[];
+    concept?: CsatConcept[];
+  };
+  const schemes = data.concept_scheme ?? [];
+  const concepts = data.concept ?? [];
+  for (const s of schemes) {
+    await pg.queryArray(
+      `INSERT INTO concept_scheme (scheme_id, name)
+       VALUES ($1, $2) ON CONFLICT (scheme_id) DO NOTHING`,
+      [s.id, s.name],
+    );
+  }
+  for (const c of concepts) {
+    await pg.queryArray(
+      `INSERT INTO concept (scheme_id, code, pref_label, path)
+       VALUES ($1, $2, $3, $4::ltree) ON CONFLICT (scheme_id, code) DO NOTHING`,
+      [c.scheme_id, c.code, c.pref_label, c.path],
+    );
+  }
+}
+
 async function runSeed(): Promise<void> {
   const pg = await getPg();
-  const sql = await Deno.readTextFile(SEED_FILE);
+  const sql = await Deno.readTextFile(SEED_SQL);
   for (const stmt of splitStatements(sql)) {
     await pg.queryArray(stmt + ";");
   }
+  await runCsatSeed(pg);
   await pg.end();
 }
 
