@@ -54,6 +54,21 @@ Detailed conventions (directory structure, dependencies, workflow) are in the
 shared docs: start from [shared/README.md](shared/README.md) and see
 [shared/prompt/store.md](shared/prompt/store.md) for the single source of truth.
 
+## Branching and PR
+
+- **One scope per branch**: Create a branch for a single scope (path prefix such
+  as `shared/prompt`, `system/actor`, `.github`, or a single purpose such as
+  `format-docs`). Name the branch `<type>/<scope>` (e.g.
+  `chore/branch-protection`, `fix/format-docs`).
+- **One PR per branch**: Open one pull request per branch. CI must pass before
+  merge (see Maintainers below).
+- **Scope and boundary**: If you add modules, API routes, or infrastructure,
+  update [shared/prompt/boundary.md](shared/prompt/boundary.md) first, then
+  implement (store.md §K, §L). When one scope depends on another, merge the
+  dependency PR first.
+
+Full rule: store.md §U.
+
 ## Maintainers: branch protection
 
 To require CI (lint, line-length, ts-filename-check, tests, etc.) to pass before

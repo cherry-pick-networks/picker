@@ -16,6 +16,7 @@
     "test:e2e-record": "deno run -A --unstable-kv shared/prompt/scripts/run-e2e-record.ts",
     "scope-check": "deno run --allow-read shared/prompt/scripts/check-scope.ts",
     "scope-discovery": "deno run --allow-read shared/prompt/scripts/scope-discovery.ts",
+    "scope-of-paths": "deno run --allow-read --allow-run shared/prompt/scripts/scope-of-paths.ts",
     "type-check-policy": "deno run --allow-read shared/prompt/scripts/check-type-policy.ts",
     "migrate:old-to-data": "deno run -A shared/prompt/scripts/migrate-old-to-data.ts",
     "naming-layer-check": "deno run --allow-read shared/prompt/scripts/check-naming-layer.ts",
