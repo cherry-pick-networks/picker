@@ -22,13 +22,14 @@ with store.md §E/§F and modular monolith.
 | Infix   | Responsibility                                                         |
 | ------- | ---------------------------------------------------------------------- |
 | actor   | Profile, progress (identity and state)                                 |
-| content | Items, worksheets, prompt building                                     |
-| source  | Source collection and read                                             |
-| script  | Scripts store, AST apply, Governance                                   |
-| record  | Record store (extracted/identity data)                                 |
-| kv      | Generic key-value HTTP API; Postgres-backed, client from shared/infra. |
-| audit   | Change/run log artifacts                                               |
 | app     | Route registration and app wiring                                      |
+| audit   | Change/run log artifacts                                               |
+| concept | Concept scheme, concept, concept_relation (ontology)                   |
+| content | Items, worksheets, prompt building                                     |
+| kv      | Generic key-value HTTP API; Postgres-backed, client from shared/infra. |
+| record  | Record store (extracted/identity data)                                 |
+| script  | Scripts store, AST apply, Governance                                   |
+| source  | Source collection and read                                             |
 
 ### Allowed suffix (artifacts)
 
@@ -50,13 +51,14 @@ with store.md §E/§F and modular monolith.
 ```
 system/
   actor/     *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts, *.transfer.ts
-  content/   *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts
-  source/    *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, source-extract.service.ts, source-llm.client.ts
-  script/    *.endpoint.ts, *.service.ts, *.store.ts, *.types.ts, *.validation.ts
-  record/    *.endpoint.ts, *.store.ts
-  kv/        *.endpoint.ts, *.store.ts
-  audit/     *.log.ts
   app/       *.config.ts
+  audit/     *.log.ts
+  concept/   *.service.ts, *.store.ts
+  content/   *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts
+  kv/        *.endpoint.ts, *.store.ts
+  record/    *.endpoint.ts, *.store.ts
+  script/    *.endpoint.ts, *.service.ts, *.store.ts, *.types.ts, *.validation.ts
+  source/    *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, source-extract.service.ts, source-llm.client.ts
   routes.ts  (entry; imports app/routes-register.config.ts)
 ```
 
