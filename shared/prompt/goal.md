@@ -5,8 +5,8 @@ description: Final implementation goal for PICKER; todo, phase, and alignment.
 
 # Final implementation goal (for AI)
 
-Single source for PICKER end-state. Use this document to decide todo, phase,
-and whether a change aligns with the target. Details live in the spec (Law) and
+Single source for PICKER end-state. Use this document to decide todo, phase, and
+whether a change aligns with the target. Details live in the spec (Law) and
 linked specs.
 
 ---
@@ -33,16 +33,15 @@ beyond it.
 
 - **Modules, API, infrastructure**: This repo's `shared/prompt/todo.md`.
 - **Product todo, governance**: the spec.
-- Add only modules, routes, or infrastructure listed in todo.md or specified
-  in the spec for the current phase.
+- Add only modules, routes, or infrastructure listed in todo.md or specified in
+  the spec for the current phase.
 
 ---
 
 ## 4. In-todo
 
 In-todo modules, agents, data layout, mutation rules, selection, and output
-format are defined in todo.md and the spec. Add only items inside that
-todo.
+format are defined in todo.md and the spec. Add only items inside that todo.
 
 ---
 
@@ -50,8 +49,7 @@ todo.
 
 - Follow todo.md and the spec for the current phase.
 - Run all autonomous mutations and applies through Governance verification.
-- Add only modules, routes, and infrastructure listed in todo (todo.md or
-  spec).
+- Add only modules, routes, and infrastructure listed in todo (todo.md or spec).
 - Mutate only within shared/runtime/store/; use Governance-verified flow.
 - Write to config/ or credentials only via approved mechanisms; file-based
   record store (shared/record/) only via system/record/store/data.ts (see

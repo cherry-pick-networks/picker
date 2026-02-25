@@ -16,14 +16,18 @@ function parseSource(raw: unknown): sourceSchema.Source {
   return parsed.data;
 }
 
-export async function getSource(id: string): Promise<sourceSchema.Source | null> {
+export async function getSource(
+  id: string,
+): Promise<sourceSchema.Source | null> {
   const raw = await sourceStore.getSource(id);
   if (raw == null) return null;
   const parsed = SourceSchema.safeParse(raw);
   return parsed.success ? parsed.data : null;
 }
 
-function buildSourceRaw(body: sourceSchema.CreateSourceRequest): sourceSchema.Source {
+function buildSourceRaw(
+  body: sourceSchema.CreateSourceRequest,
+): sourceSchema.Source {
   const id = body.source_id ?? crypto.randomUUID();
   const collected_at = body.collected_at ?? nowIso();
   return parseSource({
