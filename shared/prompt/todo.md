@@ -106,3 +106,6 @@ Use that document for AI direction and todo decisions.
   one entry per mutation (profile, progress, content, scripts/store) with actor,
   timestamp, and change summary; written by routes or services on mutation;
   retention and format defined by implementation.
+- **Ontology (Todo 1)** — DDL: `shared/infra/schema/06_ontology.sql`
+  (concept_scheme, concept, concept_relation). Seed path:
+  `shared/infra/seed/ontology/`. Seed task: `deno task seed:ontology`.
