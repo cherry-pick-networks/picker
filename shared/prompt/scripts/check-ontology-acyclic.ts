@@ -11,25 +11,20 @@ const SQL_REQUIRES_EDGES =
 
 type Edge = { source_id: string; target_id: string };
 
-function buildAdj(edges: Edge[]): Map<string, string[]> {
+function getGraph(
+  edges: Edge[],
+): { adj: Map<string, string[]>; nodes: Set<string> } {
   const adj = new Map<string, string[]>();
-  for (const e of edges) {
-    const list = adj.get(e.source_id) ?? [];
-    list.push(e.target_id);
-    adj.set(e.source_id, list);
-  }
-  return adj;
-}
-
-function getNodes(edges: Edge[]): Set<string> {
   const nodes = new Set<string>();
   for (const e of edges) {
     nodes.add(e.source_id);
     nodes.add(e.target_id);
+    const list = adj.get(e.source_id) ?? [];
+    list.push(e.target_id);
+    adj.set(e.source_id, list);
   }
-  return nodes;
+  return { adj, nodes };
 }
-
 type DfsState = {
   adj: Map<string, string[]>;
   visited: Set<string>;
@@ -67,8 +62,7 @@ function dfsStep(u: string, s: DfsState): string[] | null {
 }
 
 function initState(edges: Edge[]): DfsState & { nodes: Set<string> } {
-  const adj = buildAdj(edges);
-  const nodes = getNodes(edges);
+  const { adj, nodes } = getGraph(edges);
   return {
     adj,
     nodes,
@@ -98,10 +92,9 @@ async function fetchCycle(): Promise<string[] | null> {
 }
 
 function reportCycle(cycle: string[]): void {
-  console.error(
-    "Ontology acyclic check failed: cycle in concept_relation (requires):",
-  );
-  console.error(cycle.join(" -> "));
+  const msg =
+    "Ontology acyclic check failed: cycle in concept_relation (requires): ";
+  console.error(msg + cycle.join(" -> "));
 }
 
 async function runCheck(): Promise<void> {
@@ -110,9 +103,7 @@ async function runCheck(): Promise<void> {
     reportCycle(cycle);
     Deno.exit(1);
   }
-  console.log(
-    "Ontology acyclic check passed (requires relation_type is a DAG).",
-  );
+  console.log("Ontology acyclic check passed (requires relation_type is DAG).");
 }
 
 runCheck().catch((e) => {
