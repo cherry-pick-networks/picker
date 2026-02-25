@@ -1,0 +1,14 @@
+---
+description: |
+  Core behavior every session: language, agent principles, answer format.
+  Handoff/session boundary see store.md §B.
+alwaysApply: true
+---
+
+This rule is defined in `shared/prompt/store.md`.
+Read that file and follow:
+- **§C. Language**
+- **§I. Agent principles**
+- **§O. Answer format (options with pros and cons)**
+For handoff or long sessions, also follow **§B. Commit and session boundary**.
+Do not duplicate the rule text here.

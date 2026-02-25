@@ -1,0 +1,11 @@
+---
+description: |
+  Migration and root README boundary. Apply via @ when migrating (§J) or
+  editing root README (§M). Not applied by default.
+alwaysApply: false
+---
+
+This rule is defined in `shared/prompt/store.md`.
+When relevant, read that file and follow **§J. Migration boundary** or
+**§M. Root README boundary**. Use this rule by @ mention when needed.
+Do not duplicate the rule text here.
