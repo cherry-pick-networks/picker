@@ -72,6 +72,12 @@ are listed in PATH_EXCEPTIONS. Validated by `deno task ts-filename-check`.
 DDL files under `shared/infra/schema/` use a fixed pattern so execution order
 is clear and names align with store.md §E (lowercase, hyphens, no underscores).
 
+**Rationale.** store.md §E and §F define naming for directories, documents,
+and TypeScript files only; `deno task ts-filename-check` validates `.ts` files
+only. DDL files had no explicit rule, so this section defines one: keep
+two-digit execution order (NN) and use the same name shape as §E (lowercase,
+one hyphen between words, no underscores) for the `<name>` part.
+
 - **Pattern**: `NN_<name>.sql`
   - **NN**: Two-digit number (00–99) for execution order. Preserved when adding
     migrations for the same domain (e.g. `02_source.sql`,
@@ -85,6 +91,28 @@ is clear and names align with store.md §E (lowercase, hyphens, no underscores).
 - **Migration**: When renaming or adding DDL files, follow the migration
   boundary (store.md §J): plan first, then apply renames and reference
   updates in one logical change.
+
+**Application (example renames).** When aligning existing filenames to this
+rule, change only the name part: underscores → hyphens. Numeric prefix stays.
+
+| Current (if present)           | Proposed (name per §E)        |
+| ------------------------------ | ---------------------------- |
+| `00_init.sql`                  | `00_init.sql` (unchanged)    |
+| `01_actor.sql`                 | `01_actor.sql` (unchanged)   |
+| `02_content.sql`               | `02_content.sql` (unchanged) |
+| `02_content_add_payload.sql`   | `02_content-add-payload.sql` |
+| `03_source.sql`                | `03_source.sql` (unchanged)  |
+| `04_kv.sql`                    | `04_kv.sql` (unchanged)      |
+| `05_knowledge.sql`             | `05_knowledge.sql` (unchanged) |
+| `06_task_queue.sql`            | `06_task-queue.sql`          |
+
+New DDL (e.g. ontology): use `NN_<name>.sql` with an available number and
+§E-compliant name; adjust numbering if needed (see boundary.md and §J).
+
+**Validation (optional).** Script `shared/prompt/scripts/check-sql-filename.ts`
+checks that every `shared/infra/schema/*.sql` file matches `NN_<name>.sql` with
+name satisfying `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. Run: `deno task sql-filename-check`
+(pre-commit or CI; see store.md §5).
 
 ### Migration mapping (3-layer → flat, completed)
 
