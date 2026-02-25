@@ -31,8 +31,8 @@ tool-specific configs.
     Context
   - **Infix**: Actor, Action, or Entity (e.g. prompt, document, service)
   - **Suffix**: Artifact, Policy, or Meta (e.g. store, config, test)
-- **This file**: `shared/prompt/store.md` (shared = Todo, prompt = Entity;
-  store as artifact naming in filename)
+- **This file**: `shared/prompt/store.md` (shared = Todo, prompt = Entity; store
+  as artifact naming in filename)
 - **Exceptions**: .git, .cursor, node_modules, dist, build, coverage, vendor,
   .cache, temp, tests (confirm per repo)
 - Do not add a fourth tier. Do not use forbidden segments (e.g. core in Context;
@@ -40,15 +40,14 @@ tool-specific configs.
 - **Data and document format**: Data files use TOML (`.toml`), UTF-8; parse with
   `@std/toml`. File names follow §E; record files are `{uuid}.toml`. Documents
   use Markdown (`.md`) or Cursor rules (`.mdc`) with optional YAML front matter;
-  parse with `@std/front-matter`. Data file paths: see
-  `shared/prompt/todo.md`.
+  parse with `@std/front-matter`. Data file paths: see `shared/prompt/todo.md`.
 
 ---
 
 ## 3. Run, build, test
 
-- **Dev server**: `deno task dev` (runs `deno run -A --watch main.ts`).
-  Postgres connection required (e.g. env `DATABASE_URL`).
+- **Dev server**: `deno task dev` (runs `deno run -A --watch main.ts`). Postgres
+  connection required (e.g. env `DATABASE_URL`).
 - **Run once**: `deno run -A main.ts` (Postgres required).
 - **Test**: Add and run tests via `deno test`; keep commands in `deno.json`
   tasks if needed. Tests that use storage require Postgres: run
@@ -68,8 +67,8 @@ tool-specific configs.
 - **Dependencies**: Add only from the project's official list (e.g. deno.json
   imports); update that list first. No new deps without approval and
   stable-library criteria.
-- **Todo**: Do not add modules, API routes, or infrastructure unless they are
-  in the todo document; update the todo doc first, then implement.
+- **Todo**: Do not add modules, API routes, or infrastructure unless they are in
+  the todo document; update the todo doc first, then implement.
 - **Conventions**: Follow existing formatting, naming, and structure; prefer the
   simplest option (KISS); be consistent.
 
@@ -80,8 +79,8 @@ tool-specific configs.
 - `deno task dev` — start dev server with watch
 - `deno run -A main.ts` — run server once (Postgres required)
 - `deno test` — run tests
-- `deno task todo-check` — verify API routes are listed in
-  shared/prompt/todo.md (runs in CI)
+- `deno task todo-check` — verify API routes are listed in shared/prompt/todo.md
+  (runs in CI)
 - `deno task type-check-policy` — verify no type-check bypass (runs in CI)
 - `deno task dependency-check` — verify acyclic domain deps and allowed matrix
   (runs in CI)
@@ -131,10 +130,9 @@ tool-specific configs.
   write implementation until approved. (3) Implementation — code per §P (file
   ≤100 effective lines, function body 2–4 effective lines). (4) Test and commit
   — add or update tests, then commit per §B. One cycle = one entry file + its
-  direct imports; see shared/prompt/documentation/strategy.md for
-  todo-discovery and prompt template. Optionally: after phase 2 approval,
-  writing a failing test before phase 3 is allowed (TDD); state this in the same
-  workflow.
+  direct imports; see shared/prompt/documentation/strategy.md for todo-discovery
+  and prompt template. Optionally: after phase 2 approval, writing a failing
+  test before phase 3 is allowed (TDD); state this in the same workflow.
 
 ---
 
@@ -145,8 +143,8 @@ tool-specific configs.
 - **Branch before editing**: When the session goal involves changing code (not
   only questions, read-only inspection, or docs-only), the agent must perform
   all edits and commits on a branch that is not the default branch. If the
-  working tree is already on a non-default branch, continue on it; otherwise,
-  as the first action, create a new branch from the default branch (e.g.
+  working tree is already on a non-default branch, continue on it; otherwise, as
+  the first action, create a new branch from the default branch (e.g.
   `git checkout -b <name>`) and then make changes. This ensures changes are
   always delivered via PR.
 - **Draft PRs**: Create with `gh pr create --draft`; review; then mark ready.
@@ -194,12 +192,12 @@ tool-specific configs.
   file. Optionally use `/handoff` (e.g. dx plugin) if available.
 - **Next steps (handoff)**: In the handoff doc, the "Next steps" section lists
   zero or more follow-up actions. Each item is one logical unit (one commit or
-  one todo task); one sentence per item so a new session can start without
-  extra context. If there is no required follow-up, add at least one optional or
+  one todo task); one sentence per item so a new session can start without extra
+  context. If there is no required follow-up, add at least one optional or
   deferred item (e.g. "Optional: add E2E for POST /kv") so the next session has
-  a starting point.   Do not add items that require a todo-doc or dependency
-  change without noting it (e.g. "Propose todo update first, then implement
-  X"). Format: bullet list; first bullet may be the recommended next action.
+  a starting point. Do not add items that require a todo-doc or dependency
+  change without noting it (e.g. "Propose todo update first, then implement X").
+  Format: bullet list; first bullet may be the recommended next action.
 - **Branching experiments**: When trying a different approach from a point in
   time, fork the conversation or record the branch point in the handoff doc.
 - **Session start (first message)**: When starting a new agent or chat session,
@@ -345,10 +343,10 @@ Document files under shared/prompt/: use [suffix].md only. Prefix and infix are
 implied by the path (shared = prefix, prompt = infix). Suffix must be from §E
 allowed sets (Artifact, Policy, Meta). Same segment form: lowercase; one hyphen
 between words; no underscores. Exceptions: see §F (e.g. README.md at tree root).
-Todo for document names: the segment naming rule applies to exactly one
-document tree; in this project only .md files under shared/prompt/ are in todo.
-Files outside that tree (e.g. root README.md, CONTRIBUTING.md, CHANGELOG.md) are
-not subject to document-name rules.
+Todo for document names: the segment naming rule applies to exactly one document
+tree; in this project only .md files under shared/prompt/ are in todo. Files
+outside that tree (e.g. root README.md, CONTRIBUTING.md, CHANGELOG.md) are not
+subject to document-name rules.
 
 Directory structure (max 3 levels; segment order): level 1: folder name from
 approved prefix (required); level 2: folder name from approved infix (optional);
@@ -365,7 +363,8 @@ public symbol names. When the first tier is a Layer (presentation, application,
 domain, infrastructure), tier 2 and tier 3 names must use only that layer's
 allowed Infix and Suffix sets defined below. Mandatory todo: directory and
 rule/document naming per §D and §F; other uses apply from new or renamed items
-(see §J). Schema SQL files under shared/infra/schema/ follow reference.md (Schema DDL file naming).
+(see §J). Schema SQL files under shared/infra/schema/ follow reference.md
+(Schema DDL file naming).
 
 Clean dictionary (one word per concept — overlap resolution): middleware: only
 Suffix (Artifact); never Infix (use interceptor, filter). policy: only Suffix
@@ -466,9 +465,9 @@ document base names ([suffix] in [suffix].md) are restricted to: reference,
 usage, strategy, guide, runbook. No other segment names; new docs in this
 directory must use one of these five.
 
-Documentation: Rule text lives only in this file; .cursor/rules/*.mdc state
-todo and when to apply (e.g. always vs on-request). In docs, state: todo, "max
-3 tiers" (prefix/infix/suffix only; root not counted), the three allowed forms,
+Documentation: Rule text lives only in this file; .cursor/rules/*.mdc state todo
+and when to apply (e.g. always vs on-request). In docs, state: todo, "max 3
+tiers" (prefix/infix/suffix only; root not counted), the three allowed forms,
 order, no fourth tier, naming reference, exception list.
 
 Validation (optional): Script: walk directories from root; skip exception list;
@@ -549,8 +548,8 @@ detailed steps in documentation/strategy.md or store §J.
 
 ### §K. Todo document boundary
 
-Todo document: the single source of truth for in-todo modules, API surface,
-and infrastructure is shared/prompt/todo.md; update that doc before adding.
+Todo document: the single source of truth for in-todo modules, API surface, and
+infrastructure is shared/prompt/todo.md; update that doc before adding.
 Todo-bound implementation: do not add new modules, API routes (routers), or
 infrastructure (broker, extra DB, queue, search engine) unless they are listed
 in shared/prompt/todo.md; add them to shared/prompt/todo.md first, then
@@ -558,12 +557,12 @@ implement.
 
 ### §L. Agent and todo
 
-Agent and todo: agent must not extend todo arbitrarily; propose todo doc
-changes for human approval, then implement only after todo is updated.
-Cross-domain service calls: must follow the allowed dependency matrix and remain
-acyclic (see shared/prompt/documentation/reference.md, § Domain dependency);
-update the matrix and check-domain-deps allowlist before adding a new
-cross-domain dependency.
+Agent and todo: agent must not extend todo arbitrarily; propose todo doc changes
+for human approval, then implement only after todo is updated. Cross-domain
+service calls: must follow the allowed dependency matrix and remain acyclic (see
+shared/prompt/documentation/reference.md, § Domain dependency); update the
+matrix and check-domain-deps allowlist before adding a new cross-domain
+dependency.
 
 ### §M. Root README boundary
 
@@ -612,10 +611,22 @@ exception above); pre-commit and CI run this check. Function body by `deno lint`
 (plugin function-length/function-length in
 shared/prompt/scripts/function-length-lint-plugin.ts, counts statements in
 body). To ignore per function: `// function-length-ignore` on the line above; or
-`// function-length-ignore-file` at top of file. Async: when the body only
-returns a promise from a helper, return the promise without
-`async`/`return await` (avoids an extra microtask); outside try/catch do not use
-`return await`. Guidance (not enforced): keep indentation depth to 1–2 levels.
+`// function-length-ignore-file` at top of file. Reserve file-level ignore for
+CI/utility scripts only; document the reason in a comment at the top of the
+file. Async: when the body only returns a promise from a helper, return the
+promise without `async`/`return await` (avoids an extra microtask); outside
+try/catch do not use `return await`. Guidance (not enforced): keep indentation
+depth to 1–2 levels.
+
+AI code-writing workflow (for §P compliance): When generating or writing code
+that must satisfy the function body limit (2–4 statements), use a three-step
+sequence. (1) **Design**: Before writing implementation, list only function
+signatures and roles (no body); ensure the split keeps each body to 2–4
+statements. (2) **Implement**: Implement one function at a time; for each block
+body, write a short comment stating the AST statement count before the code. (3)
+**Self-review**: After writing, check for any function whose block body has 5+
+statements or a single statement that is not the complex-statement exemption
+(try/catch, switch, block-bodied if); fix or extract before committing.
 
 80-character defense (Track B — architectural extraction): when line length
 would otherwise exceed 80 chars or harm readability, apply these rules. Extract
@@ -673,28 +684,36 @@ rule file format). Single source: Keep authoritative rule text only in this file
 (store.md); other AI-facing docs reference store sections and do not duplicate
 rule text. Naming: Use [suffix].md only under shared/prompt/; suffix from §E
 allowed sets; see §D and §F. Scannability: Use clear headings and one concept
-per bullet or block; state when a rule applies (todo, exceptions); include
-short fixed examples where they help agents parse intent.
+per bullet or block; state when a rule applies (todo, exceptions); include short
+fixed examples where they help agents parse intent.
 
 ### §U. SQL style
 
-Scope: SQL and DDL (e.g. shared/infra/schema/*.sql, and when suggesting
-schema or DML). File naming for DDL files: shared/prompt/documentation/reference.md
+Scope: SQL and DDL (e.g. shared/infra/schema/*.sql, and when suggesting schema
+or DML). File naming for DDL files: shared/prompt/documentation/reference.md
 (Schema DDL file naming). The rules below are Celko-derived; adopt as mandatory
 or recommended per team agreement; checkable and review-friendly.
 
 **1. Names and identifiers**
 
-- Use only letters, digits, and underscore in names; impose a length limit (e.g. 30) and state it.
-- Do not use quoted identifiers (double-quoted); improves portability and compatibility.
-- Case: reserved words UPPERCASE; schema objects (tables, views) lowercase snake_case in this project; columns and variables lowercase snake_case.
+- Use only letters, digits, and underscore in names; impose a length limit
+  (e.g. 30) and state it.
+- Do not use quoted identifiers (double-quoted); improves portability and
+  compatibility.
+- Case: reserved words UPPERCASE; schema objects (tables, views) lowercase
+  snake_case in this project; columns and variables lowercase snake_case.
 - Do not use tbl_, vw_, or other table/view prefixes.
-- Use standard suffixes where they apply: _id, _date, _nbr, _name, _code, _status; align with team vocabulary.
-- Table and view names: plural or set nouns (e.g. actor_profile, concept_scheme).
+- Use standard suffixes where they apply: _id, _date, _nbr, _name, _code,
+  _status; align with team vocabulary.
+- Table and view names: plural or set nouns (e.g. actor_profile,
+  concept_scheme).
 - Aliases: derive from base table or role; do not use meaningless a, b, c.
-- Relationship tables: name with domain terms (e.g. enrollments, concept_relation).
-- Avoid ambiguous names: bare id, date, amount; use qualified names (e.g. user_id, created_at).
-- Use the same attribute name for the same meaning across the schema; keep a naming policy or data dictionary.
+- Relationship tables: name with domain terms (e.g. enrollments,
+  concept_relation).
+- Avoid ambiguous names: bare id, date, amount; use qualified names (e.g.
+  user_id, created_at).
+- Use the same attribute name for the same meaning across the schema; keep a
+  naming policy or data dictionary.
 - Do not expose physical locators (IDENTITY/ROWID/GUID) as logical keys.
 - Avoid CamelCase in SQL; define exceptions only when necessary.
 
@@ -703,7 +722,8 @@ or recommended per team agreement; checkable and review-friendly.
 - One space between tokens.
 - Commas at end of line; one space after comma.
 - Use full reserved words (no AS omission; INT → INTEGER, etc.).
-- Prefer standard reserved words and standard syntax; minimize non-standard extensions.
+- Prefer standard reserved words and standard syntax; minimize non-standard
+  extensions.
 - Use vertical alignment for clauses/keywords where it improves readability.
 - Indent with a fixed width (e.g. 3 spaces or team-agreed).
 - Group related statements; use blank lines to separate logical steps.
@@ -712,24 +732,28 @@ or recommended per team agreement; checkable and review-friendly.
 
 - DEFAULT: place after type, before NOT NULL in column definition.
 - DEFAULT value type must match column type.
-- Prefer standard data types; avoid non-standard types; maintain an allowed-list if needed.
+- Prefer standard data types; avoid non-standard types; maintain an allowed-list
+  if needed.
 - PRIMARY KEY: declare at top of CREATE TABLE (first column or first in list).
 - Column order: logical grouping and logical sequence.
 - Reference constraints and ON DELETE/ON UPDATE: indent for readability.
 - Give every constraint a name (CONSTRAINT name) for CHECK, UNIQUE, FK, etc.
 - CHECK: one purpose per CHECK where possible; name conveys meaning.
-- Every table must have a key; prefer natural or surrogate key; do not expose physical locators.
+- Every table must have a key; prefer natural or surrogate key; do not expose
+  physical locators.
 - Do not split attributes across table/column/row.
 - Do not apply OO or EAV patterns in the RDBMS schema.
 
 **4. DML and coding choices**
 
-- OUTER JOIN: use standard ANSI (LEFT JOIN … ON, RIGHT JOIN … ON); no comma-style joins.
+- OUTER JOIN: use standard ANSI (LEFT JOIN … ON, RIGHT JOIN … ON); no
+  comma-style joins.
 - Dates/times: ISO format and standard temporal syntax.
 - Prefer standard, portable functions.
 - Avoid unnecessary parentheses.
 - Use CASE (or equivalent) for complex conditions.
-- Range conditions: prefer BETWEEN unless performance requires exception; document exception.
+- Range conditions: prefer BETWEEN unless performance requires exception;
+  document exception.
 - Equality lists: use IN().
 - Comment procedures and complex queries (purpose, clause-level where helpful).
 - Avoid optimizer hints unless justified; document reason and review.
@@ -747,11 +771,14 @@ or recommended per team agreement; checkable and review-friendly.
 
 **6. Stored procedures and scripts**
 
-- Use structured control (IF, LOOP, etc.); limit cyclomatic complexity (e.g. ≤10).
+- Use structured control (IF, LOOP, etc.); limit cyclomatic complexity (e.g.
+  ≤10).
 - Prefer subqueries, derived tables, or views over temporary tables.
 - Prefer set-based operations over cursors.
-- In IF branches: consolidate identical DML into one statement (e.g. CASE) where possible.
-- Procedure parameters: prefer scalars; use table parameters or similar for structured input.
+- In IF branches: consolidate identical DML into one statement (e.g. CASE) where
+  possible.
+- Procedure parameters: prefer scalars; use table parameters or similar for
+  structured input.
 - Avoid dynamic SQL; if used, prevent SQL injection.
 
 **7. Measurement and encoding (schema design)**
@@ -763,4 +790,11 @@ or recommended per team agreement; checkable and review-friendly.
 
 **Priority (rules to adopt first)**
 
-Names: length and character set (1.1.2), no quoted identifiers (1.1.3), no prefixes (1.2.3), standard suffixes (1.2.4), no ambiguous names (1.3.1), no physical locator as logical key (1.3.3). Format: case (2.1.2–2.1.4), full reserved words (2.4), indentation (2.8). DDL: constraint names (3.7), key and natural/surrogate principle (3.13). DML: standard JOIN (6.1.1), no hints unless justified (6.4), DRI over triggers (6.5), avoid correlated subqueries (6.9). VIEW: same naming as tables (7.1), explicit column names (7.1.1). Procedures: prefer set over cursor (8.4.2), dynamic SQL and injection prevention (8.6).
+Names: length and character set (1.1.2), no quoted identifiers (1.1.3), no
+prefixes (1.2.3), standard suffixes (1.2.4), no ambiguous names (1.3.1), no
+physical locator as logical key (1.3.3). Format: case (2.1.2–2.1.4), full
+reserved words (2.4), indentation (2.8). DDL: constraint names (3.7), key and
+natural/surrogate principle (3.13). DML: standard JOIN (6.1.1), no hints unless
+justified (6.4), DRI over triggers (6.5), avoid correlated subqueries (6.9).
+VIEW: same naming as tables (7.1), explicit column names (7.1.1). Procedures:
+prefer set over cursor (8.4.2), dynamic SQL and injection prevention (8.6).

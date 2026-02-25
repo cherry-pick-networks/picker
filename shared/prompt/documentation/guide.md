@@ -46,10 +46,34 @@ Simplify (Tip 40 → §11).
   outputs work plan → execution steps → recommended direction for the first Next
   steps item, then proceeds (see handoff.md "Session start (for AI)").
 - **Next steps format**: Bullet list; one item = one logical unit (one commit or
-  one todo task); one sentence per item. If no required follow-up, add at
-  least one optional or deferred item. For todo or dependency changes, note
-  "Propose todo update first" (or similar). See store.md §9.
+  one todo task); one sentence per item. If no required follow-up, add at least
+  one optional or deferred item. For todo or dependency changes, note "Propose
+  todo update first" (or similar). See store.md §9.
 - **Optional**: Use `/handoff` (e.g. dx plugin) if available.
+
+---
+
+## §P compliance (AI workflow and plan)
+
+**Goal**: Reduce CI failures from the function-length lint (§P: 2–4 statements
+per block body) by steering AI toward a design-first workflow and small-function
+patterns. See store.md §P and shared/prompt/documentation/reference.md (§P
+pattern guide).
+
+**Three-step workflow for AI** (store.md §P): (1) Design — list function
+signatures and roles only; (2) Implement — one function at a time, with a
+comment stating statement count per body; (3) Self-review — find and fix any 5+
+statement or non-exempt single-statement body.
+
+**Patterns**: Prefer functional style (filter/map/reduce, pipeline) and
+delegation; use the complex-statement exemption (single try/catch, switch, or
+block-bodied if) where it fits. Reserve `// function-length-ignore-file` for
+CI/utility scripts; document the reason at the top of the file.
+
+**Checklist** (when implementing this plan): AI behaviour guidelines in Cursor
+rules; §P pattern guide in reference.md; file-level ignore policy in store.md
+§P; optional refactor or ignore-for-script for specific scripts (e.g.
+check-sql-filename).
 
 ---
 
