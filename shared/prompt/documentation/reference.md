@@ -67,6 +67,25 @@ Under `tests/`, every `.ts` file must be `[name]_test.ts` (Deno convention). The
 `scripts-store_test.ts`. Non-test helpers (e.g. `with_temp_scripts_store.ts`)
 are listed in PATH_EXCEPTIONS. Validated by `deno task ts-filename-check`.
 
+### Schema (DDL) file naming
+
+DDL files under `shared/infra/schema/` use a fixed pattern so execution order
+is clear and names align with store.md §E (lowercase, hyphens, no underscores).
+
+- **Pattern**: `NN_<name>.sql`
+  - **NN**: Two-digit number (00–99) for execution order. Preserved when adding
+    migrations for the same domain (e.g. `02_source.sql`,
+    `02_source-add-column.sql`).
+  - **&lt;name&gt;**: Lowercase letters, digits, and hyphens only. Same rule as
+    the TS filename *name* part: `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. No underscores.
+- **Examples**: `01_actor.sql`, `02_source.sql`, `03_kv.sql`, `04_content.sql`.
+- **Vocabulary**: Prefer names that match project axes (e.g. actor, content,
+  source, kv). New domains: align with boundary.md and this reference (allowed
+  infix/suffix).
+- **Migration**: When renaming or adding DDL files, follow the migration
+  boundary (store.md §J): plan first, then apply renames and reference
+  updates in one logical change.
+
 ### Migration mapping (3-layer → flat, completed)
 
 | Old path (3-layer)                 | New path (flat)                    |
