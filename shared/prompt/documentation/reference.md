@@ -19,17 +19,17 @@ with store.md §E/§F and modular monolith.
 
 ### Allowed infix (domains)
 
-| Infix   | Responsibility                                           |
-| ------- | -------------------------------------------------------- |
-| actor   | Profile, progress (identity and state)                   |
-| concept | Concept schemes and concepts (ontology, facet validation)|
-| content | Items, worksheets, prompt building                       |
-| source  | Source collection and read                               |
-| script  | Scripts store, AST apply, Governance                     |
-| record  | Record store (extracted/identity data)                   |
-| kv      | Generic Deno KV HTTP API; KV instance from shared/infra. |
-| audit   | Change/run log artifacts                                 |
-| app     | Route registration and app wiring                        |
+| Infix   | Responsibility                                            |
+| ------- | --------------------------------------------------------- |
+| actor   | Profile, progress (identity and state)                    |
+| concept | Concept schemes and concepts (ontology, facet validation) |
+| content | Items, worksheets, prompt building                        |
+| source  | Source collection and read                                |
+| script  | Scripts store, AST apply, Governance                      |
+| record  | Record store (extracted/identity data)                    |
+| kv      | Generic Deno KV HTTP API; KV instance from shared/infra.  |
+| audit   | Change/run log artifacts                                  |
+| app     | Route registration and app wiring                         |
 
 ### Allowed suffix (artifacts)
 
@@ -116,9 +116,9 @@ other unless the matrix below allows it.
 
 - **Upper (orchestration)**: content (items, worksheets, prompt building). May
   call support domains via their service only.
-- **Support**: actor, concept, script, source, record, kv, audit. Do not import content;
-  do not depend on each other unless listed in the matrix. app only imports
-  endpoints and is outside this hierarchy.
+- **Support**: actor, concept, script, source, record, kv, audit. Do not import
+  content; do not depend on each other unless listed in the matrix. app only
+  imports endpoints and is outside this hierarchy.
 
 **Allowed dependency matrix**
 
@@ -171,17 +171,17 @@ dependencies; deno.json imports must match. Prefer JSR when both JSR and npm
 exist. New entries require human approval and must satisfy §H (validation
 policy). Update this table first, then add or change deno.json imports.
 
-| Category        | Library        | Registry            | Role and rationale (§H, §I) |
-| --------------- | -------------- | ------------------- | --------------------------- |
-| Core / validation | @zod/zod       | JSR                 | Official Zod release on JSR; faster module resolution without npm bridge, Deno-native. |
-| Infra (DB)      | @db/postgres   | JSR                 | Native Postgres client for Deno; replaces npm:postgres to remove external ecosystem deps and maximize security. |
-| HTTP            | @hono/hono     | JSR                 | Web framework; JSR-native. |
-| AST             | @ts-morph/ts-morph | JSR             | TypeScript AST and refactor; JSR. |
-| Build           | vite           | npm                 | Bundler/dev server; no JSR equivalent. |
-| Std             | @std/assert, @std/front-matter, @std/toml, @std/uuid | JSR | Deno standard library. |
-| Offline NLP     | wink-nlp       | npm                 | No JSR release; loaded via Deno 2.x npm compatibility layer. |
-| Morphology      | compromise     | npm                 | No JSR native version; kept for lightweight POS tagging. |
-| Phonetic        | @hans00/phonemize (npm: phonemize) | npm             | Standalone phoneme converter; no JSR package; use npm:phonemize. |
+| Category          | Library                                              | Registry | Role and rationale (§H, §I)                                                                                     |
+| ----------------- | ---------------------------------------------------- | -------- | --------------------------------------------------------------------------------------------------------------- |
+| Core / validation | @zod/zod                                             | JSR      | Official Zod release on JSR; faster module resolution without npm bridge, Deno-native.                          |
+| Infra (DB)        | @db/postgres                                         | JSR      | Native Postgres client for Deno; replaces npm:postgres to remove external ecosystem deps and maximize security. |
+| HTTP              | @hono/hono                                           | JSR      | Web framework; JSR-native.                                                                                      |
+| AST               | @ts-morph/ts-morph                                   | JSR      | TypeScript AST and refactor; JSR.                                                                               |
+| Build             | vite                                                 | npm      | Bundler/dev server; no JSR equivalent.                                                                          |
+| Std               | @std/assert, @std/front-matter, @std/toml, @std/uuid | JSR      | Deno standard library.                                                                                          |
+| Offline NLP       | wink-nlp                                             | npm      | No JSR release; loaded via Deno 2.x npm compatibility layer.                                                    |
+| Morphology        | compromise                                           | npm      | No JSR native version; kept for lightweight POS tagging.                                                        |
+| Phonetic          | @hans00/phonemize (npm: phonemize)                   | npm      | Standalone phoneme converter; no JSR package; use npm:phonemize.                                                |
 
 ---
 

@@ -4,10 +4,10 @@
 
 import * as store from "./concept.store.ts";
 import {
-  conceptRowToConcept,
-  schemeRowToScheme,
   type Concept,
+  conceptRowToConcept,
   type ConceptScheme,
+  schemeRowToScheme,
 } from "./concept.schema.ts";
 
 const FACET_ID_LIMIT = 500;

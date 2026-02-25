@@ -94,9 +94,10 @@ Use that document for AI direction and scope decisions.
   external message broker or queue. Client: `shared/infra/pg.client.ts`
   (`getPg()`). Optional transaction wrapper: `withTx(fn)`. DDL under
   `shared/infra/schema/` (e.g. `00_init.sql`, `01_actor.sql`, `02_content.sql`,
-  `03_source.sql`, `04_kv.sql`, `05_ontology.sql`). Tables: actor_profile, actor_progress,
-  content_item, content_worksheet, content_submission, source, kv. Actor profile
-  and progress use PostgreSQL (system/actor/store from shared/infra pg).
+  `03_source.sql`, `04_kv.sql`, `05_ontology.sql`). Tables: actor_profile,
+  actor_progress, content_item, content_worksheet, content_submission, source,
+  kv. Actor profile and progress use PostgreSQL (system/actor/store from
+  shared/infra pg).
 - **Deno KV** — built-in key-value storage (retained for compatibility). KV
   instance: `shared/infra/kv.client.ts` (`getKv()`). Domain stores and system/kv
   import from there. Key prefixes: `kv` (generic), `content` (items key

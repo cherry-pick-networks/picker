@@ -16,8 +16,7 @@ const SQL_LIST_CONCEPTS_BY_SCHEME =
 const SQL_GET_CONCEPT =
   "SELECT id, scheme_id, pref_label, notation, source, path::text, " +
   "created_at FROM concept WHERE id = $1";
-const SQL_EXISTING_IDS =
-  "SELECT id FROM concept WHERE id = ANY($1::text[])";
+const SQL_EXISTING_IDS = "SELECT id FROM concept WHERE id = ANY($1::text[])";
 const SQL_IDS_IN_SCHEME =
   "SELECT id FROM concept WHERE id = ANY($1::text[]) AND scheme_id = $2";
 
