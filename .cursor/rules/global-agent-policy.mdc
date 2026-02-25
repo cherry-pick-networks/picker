@@ -1,30 +1,16 @@
 ---
 description: |
-  Project conventions and agent policy. Apply in every session.
-  Commit format, session boundary, language, TS comment/symbol naming,
-  document/dir format and naming, dependency constraint, validation policy,
-  agent principles, migration.
-alwaysApply: true
+  DEPRECATED: Replaced by split rules. Use global-core (always), plus
+  global-code-*, global-docs-*, system-*, global-dependency per context.
+alwaysApply: false
 ---
 
-This rule is defined in `shared/prompt/store.md`.
-Read that file and follow:
-- **§7. Git, PR, CI**
-- **§A. Commit message format**
-- **§B. Commit and session boundary**
-- **§C. Language**
-- **§S. Comment policy (TS)**
-- **§T. TypeScript symbol naming**
-- **§D. Document and directory format**
-- **§E. Document and directory naming**
-- **§G. Dependency constraint**
-- **§H. Validation policy (libraries)**
-- **§I. Agent principles**
-- **§J. Migration boundary**
-- **§N. Type-check policy**
-- **§O. Answer format (options with pros and cons)**
-- **§P. Format limits (code)** — When writing or generating code, follow the §P
-  code-writing workflow in store.md (design → implement → self-review).
-- **§Q. Phase-gated feature implementation** (feature implementation only; see store.md)
-- **§R. AI document writing principles** (when editing shared/prompt/*.md except store.md and documentation/; see store.md)
-Do not duplicate the rule text here.
+This rule is deprecated. Follow instead:
+- **global-core.mdc** — §C, §I, §O (always)
+- **global-code-session.mdc**, **global-code-format.mdc**, **global-code-style.mdc**,
+  **global-code-feature.mdc** — when editing .ts
+- **global-docs-format.mdc**, **global-docs-prompt.mdc** — when editing .md/.mdc
+- **system-document-boundary.mdc**, **system-agent-boundary.mdc**,
+  **system-directory-structure.mdc** — when editing todo or system/
+- **global-dependency.mdc** — when editing deno.json/package.json
+Full section refs (§7, §A, §B, …) are in `shared/prompt/store.md`.

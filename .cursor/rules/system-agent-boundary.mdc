@@ -1,8 +1,9 @@
 ---
 description: |
-  Agent and todo. Do not extend todo arbitrarily; propose todo doc
-  changes for human approval, then implement after todo is updated.
-alwaysApply: true
+  Agent and todo. Propose todo doc changes for approval before implementing.
+  Apply when editing todo or system code.
+globs: ["shared/prompt/todo.md", "system/**/*.ts"]
+alwaysApply: false
 ---
 
 This rule is defined in `shared/prompt/store.md`.

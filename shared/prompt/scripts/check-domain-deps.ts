@@ -21,6 +21,7 @@ const SYSTEM_DIR = "system";
 
 const DOMAINS = [
   "actor",
+  "concept",
   "content",
   "source",
   "script",
@@ -32,6 +33,7 @@ const DOMAINS = [
 /** [from, to] pairs allowed by the dependency matrix. */
 const ALLOWED_EDGES: [string, string][] = [
   ["content", "actor"],
+  ["content", "concept"],
   ["content", "script"],
   ["audit", "record"],
 ];
