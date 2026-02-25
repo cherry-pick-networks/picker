@@ -86,7 +86,7 @@ one hyphen between words, no underscores) for the `<name>` part.
     the TS filename *name* part: `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. No underscores.
 - **Examples**: `01_actor.sql`, `02_source.sql`, `03_kv.sql`, `04_content.sql`.
 - **Vocabulary**: Prefer names that match project axes (e.g. actor, content,
-  source, kv). New domains: align with boundary.md and this reference (allowed
+  source, kv). New domains: align with todo.md and this reference (allowed
   infix/suffix).
 - **Migration**: When renaming or adding DDL files, follow the migration
   boundary (store.md §J): plan first, then apply renames and reference
@@ -107,7 +107,7 @@ rule, change only the name part: underscores → hyphens. Numeric prefix stays.
 | `06_task_queue.sql`            | `06_task-queue.sql`          |
 
 New DDL (e.g. ontology): use `NN_<name>.sql` with an available number and
-§E-compliant name; adjust numbering if needed (see boundary.md and §J).
+§E-compliant name; adjust numbering if needed (see todo.md and §J).
 
 **Validation (optional).** Script `shared/prompt/scripts/check-sql-filename.ts`
 checks that every `shared/infra/schema/*.sql` file matches `NN_<name>.sql` with

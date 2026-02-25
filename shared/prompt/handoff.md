@@ -27,30 +27,30 @@ New sessions should attach only this file (and optionally
 
 ## Current CI and GitHub features
 
-CI (`.github/workflows/ci.yml`): lint, format-check, test, scope-check,
+CI (`.github/workflows/ci.yml`): lint, format-check, test, todo-check,
 type-check-policy, deno audit; Deno cache enabled. Dependabot
-(`.github/dependabot.yml`): weekly Deno updates. Scope and infrastructure:
-[boundary.md](boundary.md).
+(`.github/dependabot.yml`): weekly Deno updates. Todo and infrastructure:
+[todo.md](todo.md).
 
 ---
 
 ## Goal
 
-Add automated tests for in-scope API routes and ensure `deno task scope-check`
-runs in CI so new routes cannot be added without updating the scope document.
+Add automated tests for in-todo API routes and ensure `deno task todo-check`
+runs in CI so new routes cannot be added without updating the todo document.
 
 ---
 
 ## Progress
 
-Current scope and implementation state: [boundary.md](boundary.md).
+Current todo and implementation state: [todo.md](todo.md).
 
-- API tests and scope-check in CI are done; E2E and script-store tests use temp
+- API tests and todo-check in CI are done; E2E and script-store tests use temp
   dir; AST apply and log artifact storage implemented (see boundary for modules
   and routes).
 - S5 done: mutate.service and mutate.endpoint tests (Governance, readScript,
   blocks, mock LLM), E2E POST /script/mutate with withTempScriptsStore; legacy
-  AST tests already removed; MAB·DAG local principle in boundary.md and
+  AST tests already removed; MAB·DAG local principle in todo.md and
   mutate.service comment; pre-push passes.
 - Rule compliance (store.md §P and lint): Removed `shared/prompt/scripts/` from
   lint exclude so function-length applies to scripts. Split
@@ -59,7 +59,7 @@ Current scope and implementation state: [boundary.md](boundary.md).
   function-length violations across codebase (ignores or refactors). Scripts:
   use `// function-length-ignore` above individual functions when the body is
   naturally one statement (e.g. async generator) or many (e.g. main); no
-  file-level exclude. Lint, type-check-policy, scope-check, naming-layer-check
+  file-level exclude. Lint, type-check-policy, todo-check, naming-layer-check
   pass. Remaining §P: files still >100 lines (routes 135, profile 132, scripts
   103, migrate-old-to-data 205, check-naming-layer 106); optional 80-char line
   pass.
@@ -98,8 +98,8 @@ structured replacement data and applies it through existing Governance.
 
 **Keep.** Governance verification for all mutations; scripts store and
 shared/runtime/store/ as the only mutation target; MAB and DAG logic remain
-local (per store §3: run, build, test and existing tooling). Scope and
-conventions (store §1, §2, §4, §5, §7, §8) unchanged: scope doc first, then
+local (per store §3: run, build, test and existing tooling). Todo and
+conventions (store §1, §2, §4, §5, §7, §8) unchanged: todo doc first, then
 implement; English-only; pre-push and CI as-is.
 
 **Remove.** The AST demo and apply surface: delete ast.endpoint.ts,

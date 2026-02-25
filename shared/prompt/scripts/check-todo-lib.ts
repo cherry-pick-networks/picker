@@ -1,6 +1,6 @@
 /**
- * Scope check helpers: parse scope doc, map file paths to routes,
- * extract handler methods, walk router dir. Used by check-scope.ts.
+ * Todo check helpers: parse todo doc, map file paths to routes,
+ * extract handler methods, walk router dir. Used by check-todo.ts.
  */
 // function-length-ignore-file
 
