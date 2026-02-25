@@ -11,62 +11,103 @@ const SQL_REQUIRES_EDGES =
 
 type Edge = { source_id: string; target_id: string };
 
-function findCycle(edges: Edge[]): string[] | null {
+function buildAdj(edges: Edge[]): Map<string, string[]> {
   const adj = new Map<string, string[]>();
   for (const e of edges) {
     const list = adj.get(e.source_id) ?? [];
     list.push(e.target_id);
     adj.set(e.source_id, list);
   }
-  const visited = new Set<string>();
-  const stack = new Set<string>();
-  const path: string[] = [];
-  const pathIndex = new Map<string, number>();
+  return adj;
+}
 
-  function dfs(u: string): string[] | null {
-    visited.add(u);
-    stack.add(u);
-    const idx = path.length;
-    path.push(u);
-    pathIndex.set(u, idx);
-    for (const v of adj.get(u) ?? []) {
-      if (!visited.has(v)) {
-        const cycle = dfs(v);
-        if (cycle != null) return cycle;
-      } else if (stack.has(v)) {
-        const start = pathIndex.get(v) ?? 0;
-        return path.slice(start).concat(v);
-      }
-    }
-    path.pop();
-    pathIndex.delete(u);
-    stack.delete(u);
-    return null;
-  }
-
+function getNodes(edges: Edge[]): Set<string> {
   const nodes = new Set<string>();
   for (const e of edges) {
     nodes.add(e.source_id);
     nodes.add(e.target_id);
   }
-  for (const n of nodes) {
-    if (!visited.has(n)) {
-      const cycle = dfs(n);
+  return nodes;
+}
+
+type DfsState = {
+  adj: Map<string, string[]>;
+  visited: Set<string>;
+  stack: Set<string>;
+  path: string[];
+  pathIndex: Map<string, number>;
+};
+
+function pushStack(u: string, s: DfsState): void {
+  s.visited.add(u);
+  s.stack.add(u);
+  s.path.push(u);
+  s.pathIndex.set(u, s.path.length - 1);
+}
+
+function popStack(u: string, s: DfsState): void {
+  s.path.pop();
+  s.pathIndex.delete(u);
+  s.stack.delete(u);
+}
+
+function dfsStep(u: string, s: DfsState): string[] | null {
+  for (const v of s.adj.get(u) ?? []) {
+    if (!s.visited.has(v)) {
+      pushStack(v, s);
+      const cycle = dfsStep(v, s);
+      if (cycle != null) return cycle;
+    } else if (s.stack.has(v)) {
+      const start = s.pathIndex.get(v) ?? 0;
+      return s.path.slice(start).concat(v);
+    }
+  }
+  popStack(u, s);
+  return null;
+}
+
+function initState(edges: Edge[]): DfsState & { nodes: Set<string> } {
+  const adj = buildAdj(edges);
+  const nodes = getNodes(edges);
+  return {
+    adj,
+    nodes,
+    visited: new Set(),
+    stack: new Set(),
+    path: [],
+    pathIndex: new Map(),
+  };
+}
+
+function findCycle(edges: Edge[]): string[] | null {
+  const s = initState(edges);
+  for (const n of s.nodes) {
+    if (!s.visited.has(n)) {
+      pushStack(n, s);
+      const cycle = dfsStep(n, s);
       if (cycle != null) return cycle;
     }
   }
   return null;
 }
 
-async function main(): Promise<void> {
+async function fetchCycle(): Promise<string[] | null> {
   const sql = await getPg();
   const { rows } = await sql.queryObject<Edge>(SQL_REQUIRES_EDGES);
-  const cycle = findCycle(rows);
+  return findCycle(rows);
+}
+
+function reportCycle(cycle: string[]): void {
+  console.error(
+    "Ontology acyclic check failed: cycle in concept_relation (requires):",
+  );
+  console.error(cycle.join(" -> "));
+}
+
+async function runCheck(): Promise<void> {
+  const cycle = await fetchCycle();
   if (cycle != null) {
-    console.error(
-      "Ontology acyclic check failed: cycle in concept_relation (requires):",
-    );
-    console.error(cycle.join(" -> "));
+    reportCycle(cycle);
     Deno.exit(1);
   }
   console.log(
@@ -74,7 +115,7 @@ async function main(): Promise<void> {
   );
 }
 
-main().catch((e) => {
+runCheck().catch((e) => {
   console.error("Check failed:", e);
   Deno.exit(1);
 });
