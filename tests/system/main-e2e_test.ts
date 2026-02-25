@@ -60,20 +60,6 @@ Deno.test("E2E GET /scripts over real HTTP", handlerTestOpts, async () => {
   });
 });
 
-Deno.test("E2E GET /ast-demo over real HTTP", handlerTestOpts, async () => {
-  await withServer(async (base) => {
-    const res = await fetch(`${base}/ast-demo`);
-    assertEquals(res.status, 200);
-    assertEquals(
-      res.headers.get("Content-Type"),
-      "text/html; charset=utf-8",
-    );
-    const html = await res.text();
-    assert(html.includes("AST demo"), "page title or heading");
-    assert(html.includes("/ast"), "page fetches GET /ast");
-  });
-});
-
 Deno.test("E2E GET / over real HTTP", handlerTestOpts, async () => {
   await withServer(async (base) => {
     const res = await fetch(`${base}/`);
@@ -89,18 +75,6 @@ Deno.test("E2E GET /kv over real HTTP", handlerTestOpts, async () => {
     assertEquals(res.status, 200);
     const body = await res.json();
     assert(Array.isArray(body.keys), "body.keys is array");
-  });
-});
-
-Deno.test("E2E GET /ast over real HTTP", handlerTestOpts, async () => {
-  await withServer(async (base) => {
-    const res = await fetch(`${base}/ast`);
-    assertEquals(res.status, 200);
-    const body = await res.json();
-    assert(
-      typeof body.variableDeclarations === "number",
-      "variableDeclarations",
-    );
   });
 });
 
@@ -121,34 +95,6 @@ Deno.test(
     }, { seedHello: true });
   },
 );
-
-Deno.test("E2E POST /ast/apply over real HTTP", handlerTestOpts, async () => {
-  await withTempScriptsStore(async () => {
-    await withServer(async (base) => {
-      const filename = `e2e-ast-${Date.now()}.txt`;
-      const createRes = await fetch(`${base}/scripts/${filename}`, {
-        method: "POST",
-        body: "original line",
-      });
-      assertEquals(createRes.status, 201);
-
-      const applyRes = await fetch(`${base}/ast/apply`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          path: filename,
-          oldText: "original",
-          newText: "patched",
-        }),
-      });
-      assertEquals(applyRes.status, 200);
-
-      const getRes = await fetch(`${base}/scripts/${filename}`);
-      assertEquals(getRes.status, 200);
-      assertEquals(await getRes.text(), "patched line");
-    });
-  });
-});
 
 Deno.test("E2E DELETE /kv/:key over real HTTP", handlerTestOpts, async () => {
   await withServer(async (base) => {
@@ -186,6 +132,44 @@ Deno.test("E2E POST /scripts over real HTTP", handlerTestOpts, async () => {
     });
   });
 });
+
+Deno.test(
+  "E2E POST /script/mutate then verify file content",
+  handlerTestOpts,
+  async () => {
+    await withTempScriptsStore(async () => {
+      Deno.env.set("MUTATE_LLM_MOCK", "1");
+      try {
+        await withServer(async (base) => {
+          const filename = `e2e-mutate-${Date.now()}.txt`;
+          const initial = "alpha\nbeta\ngamma";
+          const postScript = await fetch(`${base}/scripts/${filename}`, {
+            method: "POST",
+            body: initial,
+          });
+          assertEquals(postScript.status, 201);
+
+          const mutateRes = await fetch(`${base}/script/mutate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ path: filename }),
+          });
+          assertEquals(mutateRes.status, 200);
+          const mutateBody = await mutateRes.json();
+          assertEquals(mutateBody.ok, true);
+          assertEquals(mutateBody.replacements >= 1, true);
+
+          const getRes = await fetch(`${base}/scripts/${filename}`);
+          assertEquals(getRes.status, 200);
+          const after = await getRes.text();
+          assertEquals(after.includes("// mutated"), true);
+        });
+      } finally {
+        Deno.env.delete("MUTATE_LLM_MOCK");
+      }
+    });
+  },
+);
 
 Deno.test(
   "E2E load: 20 concurrent GET / complete within 5s",

@@ -48,6 +48,10 @@ Current scope and implementation state: [boundary.md](boundary.md).
 - API tests and scope-check in CI are done; E2E and script-store tests use temp
   dir; AST apply and log artifact storage implemented (see boundary for modules
   and routes).
+- S5 done: mutate.service and mutate.endpoint tests (Governance, readScript,
+  blocks, mock LLM), E2E POST /script/mutate with withTempScriptsStore; legacy
+  AST tests already removed; MAB·DAG local principle in boundary.md and
+  mutate.service comment; pre-push passes.
 - Rule compliance (store.md §P and lint): Removed `shared/prompt/scripts/` from
   lint exclude so function-length applies to scripts. Split
   `system/service/content.ts` (271 lines) into content-schema, content-parse,
@@ -87,8 +91,8 @@ restore context.
 
 ## Phase 1 requirements summary (S0)
 
-**Goals.** Minimise local CPU and memory usage; remove AST-based editing from the
-server; keep edits atomic (2–4 lines per unit) and drive them via LLM
+**Goals.** Minimise local CPU and memory usage; remove AST-based editing from
+the server; keep edits atomic (2–4 lines per unit) and drive them via LLM
 Structured Output. The server exposes a single mutation endpoint that accepts
 structured replacement data and applies it through existing Governance.
 
@@ -122,33 +126,39 @@ Interface and type names only; no implementation (store.md §Q).
 - Request: `path: string`, `intent?: string`, `options?: MutateOptions`.
   `MutateOptions`: `{ maxBlocks?: number, strategy?: string }`.
 - Response 200: `MutateSuccess` — `{ ok: true, replacements: number }`.
-- Response 4xx/5xx: `MutateError` — `{ ok: false, status: number, body: unknown }`.
+- Response 4xx/5xx: `MutateError` —
+  `{ ok: false, status: number, body: unknown }`.
 - Union: `MutateResponse` = `MutateSuccess | MutateError`.
 
 **LLM structured output**
 
 - Schema name: `MutateOutputSchema` (Zod; implementation in S3a).
 - Shape: `{ original: string, mutated: string }`.
-- Local validation rule: apply replacement only when `snippet === response.original`, then replace once.
+- Local validation rule: apply replacement only when
+  `snippet === response.original`, then replace once.
 
 **Service signature**
 
 - `mutateScript(params: MutateScriptParams): Promise<MutateResult>`.
-- `MutateScriptParams`: `{ path: string, intent?: string, options?: MutateOptions }`.
+- `MutateScriptParams`:
+  `{ path: string, intent?: string, options?: MutateOptions }`.
 - `MutateResult`: `MutateSuccess | MutateError` (same as API response).
 
 **Atomic unit**
 
-- 2–4 effective lines (store.md §P). Extraction: Option A — line-based slice, consecutive 2–4 line blocks. Implementation in Phase 3.
+- 2–4 effective lines (store.md §P). Extraction: Option A — line-based slice,
+  consecutive 2–4 line blocks. Implementation in Phase 3.
 
 **Artifacts (names only)**
 
-- Types: `MutateRequest`, `MutateOptions`, `MutateSuccess`, `MutateError`, `MutateResponse`, `MutateScriptParams`, `MutateResult`.
+- Types: `MutateRequest`, `MutateOptions`, `MutateSuccess`, `MutateError`,
+  `MutateResponse`, `MutateScriptParams`, `MutateResult`.
 - Schema: `MutateOutputSchema`.
 - Service: `mutateScript`.
 - Place types in `system/script/*.types.ts` or `*.schema.ts` per reference.md.
 
-**Gate.** Do not implement (function bodies or Zod definitions) until the user approves this design. After approval, proceed to Phase 3 (S3a–S3e).
+**Gate.** Do not implement (function bodies or Zod definitions) until the user
+approves this design. After approval, proceed to Phase 3 (S3a–S3e).
 
 ---
 
@@ -156,10 +166,7 @@ Interface and type names only; no implementation (store.md §Q).
 
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
 
-- Phase 2 (S2) design documented above. On user approval of this design, proceed
-  to Phase 3 (S3a–S3e): implement types, MutateOutputSchema, mutateScript, and
-  POST /script/mutate endpoint; then S1 (boundary/routes: ensure POST
-  /script/mutate in scope, remove AST routes), scope-check.
+- Mutate flow and tests (S5) are in place; pre-push passes.
 - Optional: Split remaining §P >100-line files (system/routes.ts,
   system/actor/profile.service.ts, system/script/scripts.store.ts,
   shared/prompt/scripts/migrate-old-to-data.ts,
