@@ -85,10 +85,81 @@ restore context.
 
 ---
 
+## Phase 1 requirements summary (S0)
+
+**Goals.** Minimise local CPU and memory usage; remove AST-based editing from the
+server; keep edits atomic (2–4 lines per unit) and drive them via LLM
+Structured Output. The server exposes a single mutation endpoint that accepts
+structured replacement data and applies it through existing Governance.
+
+**Keep.** Governance verification for all mutations; scripts store and
+shared/runtime/store/ as the only mutation target; MAB and DAG logic remain
+local (per store §3: run, build, test and existing tooling). Scope and
+conventions (store §1, §2, §4, §5, §7, §8) unchanged: scope doc first, then
+implement; English-only; pre-push and CI as-is.
+
+**Remove.** The AST demo and apply surface: delete ast.endpoint.ts,
+ast-demo.endpoint.ts, ast-apply.endpoint.ts, ast.service.ts and their route
+registrations (GET /ast, GET /ast-demo, POST /ast/apply).
+
+**Add.** A mutate service, endpoint, and schema; one new route POST
+/script/mutate. Request: path (required), optional intent, optional options.
+Response: 200 with ok true and replacements count, or 4xx/5xx with ok false,
+status, and body. Mutations still go through Governance and touch only
+shared/runtime/store/.
+
+**Gate.** Proceed to Phase 2 (interface design) only after explicit approval of
+this requirements summary.
+
+---
+
+## Phase 2 design (S2) — mutate
+
+Interface and type names only; no implementation (store.md §Q).
+
+**API contract**
+
+- Request: `path: string`, `intent?: string`, `options?: MutateOptions`.
+  `MutateOptions`: `{ maxBlocks?: number, strategy?: string }`.
+- Response 200: `MutateSuccess` — `{ ok: true, replacements: number }`.
+- Response 4xx/5xx: `MutateError` — `{ ok: false, status: number, body: unknown }`.
+- Union: `MutateResponse` = `MutateSuccess | MutateError`.
+
+**LLM structured output**
+
+- Schema name: `MutateOutputSchema` (Zod; implementation in S3a).
+- Shape: `{ original: string, mutated: string }`.
+- Local validation rule: apply replacement only when `snippet === response.original`, then replace once.
+
+**Service signature**
+
+- `mutateScript(params: MutateScriptParams): Promise<MutateResult>`.
+- `MutateScriptParams`: `{ path: string, intent?: string, options?: MutateOptions }`.
+- `MutateResult`: `MutateSuccess | MutateError` (same as API response).
+
+**Atomic unit**
+
+- 2–4 effective lines (store.md §P). Extraction: Option A — line-based slice, consecutive 2–4 line blocks. Implementation in Phase 3.
+
+**Artifacts (names only)**
+
+- Types: `MutateRequest`, `MutateOptions`, `MutateSuccess`, `MutateError`, `MutateResponse`, `MutateScriptParams`, `MutateResult`.
+- Schema: `MutateOutputSchema`.
+- Service: `mutateScript`.
+- Place types in `system/script/*.types.ts` or `*.schema.ts` per reference.md.
+
+**Gate.** Do not implement (function bodies or Zod definitions) until the user approves this design. After approval, proceed to Phase 3 (S3a–S3e).
+
+---
+
 ## Next steps
 
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
 
+- Phase 2 (S2) design documented above. On user approval of this design, proceed
+  to Phase 3 (S3a–S3e): implement types, MutateOutputSchema, mutateScript, and
+  POST /script/mutate endpoint; then S1 (boundary/routes: ensure POST
+  /script/mutate in scope, remove AST routes), scope-check.
 - Optional: Split remaining §P >100-line files (system/routes.ts,
   system/actor/profile.service.ts, system/script/scripts.store.ts,
   shared/prompt/scripts/migrate-old-to-data.ts,

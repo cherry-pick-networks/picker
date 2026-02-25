@@ -33,12 +33,10 @@ export const ROUTES: { method: string; path: string }[] = [
   { method: "GET", path: "/data/identity-index" },
   { method: "GET", path: "/data/extracted/:id" },
   { method: "GET", path: "/data/identity/:id" },
-  { method: "GET", path: "/ast" },
-  { method: "GET", path: "/ast-demo" },
-  { method: "POST", path: "/ast/apply" },
   { method: "GET", path: "/scripts" },
   { method: "GET", path: "/scripts/:path*" },
   { method: "POST", path: "/scripts/:path*" },
+  { method: "POST", path: "/script/mutate" },
 ];
 
 export function registerRoutes(app: Hono): void {
