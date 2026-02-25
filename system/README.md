@@ -15,7 +15,7 @@ stores. Entry for HTTP is `routes.ts`; domain modules use flat
 | [source/](source/)     | Source collection: endpoint, service, store.                          |
 | [script/](script/)     | Scripts store, AST, Governance: endpoint, service, store, validation. |
 | [record/](record/)     | Record store (extracted/identity): endpoint, store.                   |
-| [kv/](kv/)             | Generic key-value API (Postgres-backed): endpoint, store.              |
+| [kv/](kv/)             | Generic key-value API (Postgres-backed): endpoint, store.             |
 | [audit/](audit/)       | Log artifacts (e.g. e2e-runs).                                        |
 
 ## Cross-domain rules

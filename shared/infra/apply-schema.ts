@@ -14,7 +14,12 @@ function splitStatements(sql: string): string[] {
 
 async function applySchema(): Promise<void> {
   const pg = await getPg();
-  const files = ["01_actor.sql", "02_source.sql", "03_kv.sql", "04_content.sql"];
+  const files = [
+    "01_actor.sql",
+    "02_source.sql",
+    "03_kv.sql",
+    "04_content.sql",
+  ];
   for (const name of files) {
     const url = new URL(name, SCHEMA_DIR);
     const sql = await Deno.readTextFile(url);

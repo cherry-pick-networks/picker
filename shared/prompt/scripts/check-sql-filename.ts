@@ -11,8 +11,12 @@ const FILENAME_REGEX = /^(\d{2})_([a-z][a-z0-9]*(-[a-z0-9]+)*)\.sql$/;
 
 function validateFilename(base: string): string | null {
   const m = base.match(FILENAME_REGEX);
-  if (!m) return "must match NN_<name>.sql (NN=00-99, name=lowercase+hyphens only)";
-  return NAME_REGEX.test(m[2]) ? null : "name must match ^[a-z][a-z0-9]*(-[a-z0-9]+)*$";
+  if (!m) {
+    return "must match NN_<name>.sql (NN=00-99, name=lowercase+hyphens only)";
+  }
+  return NAME_REGEX.test(m[2])
+    ? null
+    : "name must match ^[a-z][a-z0-9]*(-[a-z0-9]+)*$";
 }
 
 async function collectSqlErrors(): Promise<[string, string][]> {
@@ -36,7 +40,9 @@ async function collectSqlErrors(): Promise<[string, string][]> {
 
 function reportResult(errors: [string, string][]): void {
   if (errors.length > 0) {
-    console.error("SQL filename check failed (reference.md Schema DDL naming):");
+    console.error(
+      "SQL filename check failed (reference.md Schema DDL naming):",
+    );
     for (const [file, msg] of errors) console.error(`  ${file}: ${msg}`);
     Deno.exit(1);
   }

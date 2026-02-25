@@ -48,16 +48,16 @@ store.md §R.
 
 ## Frequently used commands
 
-| Command                                      | Purpose                                        |
-| -------------------------------------------- | ---------------------------------------------- |
-| `deno task dev`                              | Start dev server with watch                    |
-| `deno run -A main.ts`                          | Run server once (Postgres required)            |
-| `deno test`                                  | Run tests                                      |
-| `gh pr create --draft`                       | Create draft PR                                |
-| `gh pr view`, `gh pr diff`                   | Inspect PR for review                          |
-| `gh run view`                                | Inspect CI run                                 |
-| `git worktree add <path> <branch>`           | Work on another branch in a separate directory |
-| `realpath <path>`                            | Resolve absolute path outside current tree     |
+| Command                            | Purpose                                        |
+| ---------------------------------- | ---------------------------------------------- |
+| `deno task dev`                    | Start dev server with watch                    |
+| `deno run -A main.ts`              | Run server once (Postgres required)            |
+| `deno test`                        | Run tests                                      |
+| `gh pr create --draft`             | Create draft PR                                |
+| `gh pr view`, `gh pr diff`         | Inspect PR for review                          |
+| `gh run view`                      | Inspect CI run                                 |
+| `git worktree add <path> <branch>` | Work on another branch in a separate directory |
+| `realpath <path>`                  | Resolve absolute path outside current tree     |
 
 Optional tooling (status line, setup script, tips): see
 `shared/prompt/documentation/guide.md`.

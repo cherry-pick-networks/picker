@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { Context } from "hono";
-import { listKeys, setKey, getKey, deleteKey } from "./kv.store.ts";
+import { deleteKey, getKey, listKeys, setKey } from "./kv.store.ts";
 
 const KvBodySchema = z.object({ key: z.string(), value: z.unknown() });
 
