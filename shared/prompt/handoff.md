@@ -18,10 +18,12 @@ New sessions should attach only this file (and optionally
 **Steps**:
 
 1. Treat the first bullet under **Next steps** as the current task.
-2. Output a work plan for that task first.
-3. Describe how you will execute it (steps, order).
-4. End with your recommended direction.
-5. Then proceed or ask for confirmation.
+2. If the task involves code changes, ensure you are on a non-default branch
+   (create one if needed) before editing.
+3. Output a work plan for that task first.
+4. Describe how you will execute it (steps, order).
+5. End with your recommended direction.
+6. Then proceed or ask for confirmation.
 
 ---
 

@@ -142,6 +142,13 @@ tool-specific configs.
 
 - Use **Git** and **GitHub CLI (`gh`)** for commits, branches, pull, and PRs.
   Any AI that can run the terminal uses the same commands.
+- **Branch before editing**: When the session goal involves changing code (not
+  only questions, read-only inspection, or docs-only), the agent must perform
+  all edits and commits on a branch that is not the default branch. If the
+  working tree is already on a non-default branch, continue on it; otherwise,
+  as the first action, create a new branch from the default branch (e.g.
+  `git checkout -b <name>`) and then make changes. This ensures changes are
+  always delivered via PR.
 - **Draft PRs**: Create with `gh pr create --draft`; review; then mark ready.
   Prefer draft PRs for agent-generated changes.
 - **Parallel work**: Use `git worktree add` when working on multiple branches;
