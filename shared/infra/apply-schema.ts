@@ -7,9 +7,16 @@ import { getPg } from "./pg.client.ts";
 
 const SCHEMA_DIR = new URL("./schema/", import.meta.url);
 
+function stripLeadingComments(block: string): string {
+  const noComments = block.replace(/^\s*(--[^\n]*\n)*/m, "");
+  return noComments.trim();
+}
+
 function splitStatements(sql: string): string[] {
   const parts = sql.split(";").map((s) => s.trim());
-  return parts.filter((s) => s.length > 0 && /^\s*CREATE\s/i.test(s));
+  return parts
+    .map(stripLeadingComments)
+    .filter((s) => s.length > 0 && /^\s*CREATE\s/i.test(s));
 }
 
 async function applySchema(): Promise<void> {
