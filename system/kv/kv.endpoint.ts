@@ -1,6 +1,6 @@
 import { z } from "zod";
 import type { Context } from "hono";
-import { getKv, listKeys } from "./kv.store.ts";
+import { listKeys, setKey, getKey, deleteKey } from "./kv.store.ts";
 
 const KvBodySchema = z.object({ key: z.string(), value: z.unknown() });
 
@@ -21,21 +21,18 @@ async function setKvAndRespond(
   c: Context,
   data: { key: string; value: unknown },
 ): Promise<Response> {
-  const kv = await getKv();
-  await kv.set(["kv", data.key], data.value);
+  await setKey(data.key, data.value);
   return c.json({ key: data.key });
 }
 
 export async function getKvKey(c: Context) {
   const key = c.req.param("key");
-  const kv = await getKv();
-  const e = await kv.get(["kv", key]);
-  return c.json(e.value ?? null);
+  const value = await getKey(key);
+  return c.json(value ?? null);
 }
 
 export async function deleteKvKey(c: Context) {
   const key = c.req.param("key");
-  const kv = await getKv();
-  await kv.delete(["kv", key]);
+  await deleteKey(key);
   return c.body(null, 204);
 }

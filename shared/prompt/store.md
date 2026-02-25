@@ -16,7 +16,7 @@ tool-specific configs.
 
 - **Name**: picker
 - **Runtime**: Deno
-- **Stack**: Hono (HTTP), Zod (validation), ts-morph (AST), Deno KV (storage)
+- **Stack**: Hono (HTTP), Zod (validation), ts-morph (AST), PostgreSQL (storage)
 - **Entry**: `main.ts` (Hono app, routes from system/routes.ts)
 
 ---
@@ -47,11 +47,12 @@ tool-specific configs.
 
 ## 3. Run, build, test
 
-- **Dev server**: `deno task dev` (runs
-  `deno run --allow-net --unstable-kv --watch main.ts`)
-- **Run once**: `deno run --allow-net --unstable-kv main.ts`
+- **Dev server**: `deno task dev` (runs `deno run -A --watch main.ts`).
+  Postgres connection required (e.g. env `DATABASE_URL`).
+- **Run once**: `deno run -A main.ts` (Postgres required).
 - **Test**: Add and run tests via `deno test`; keep commands in `deno.json`
-  tasks if needed.
+  tasks if needed. Tests that use storage require Postgres: run
+  `deno task db:schema` once when the DB is up.
 - **Lint/format**: Use project lint/format config if present; otherwise
   `deno lint`, `deno fmt`.
 
@@ -77,7 +78,7 @@ tool-specific configs.
 ## 5. Frequently used commands
 
 - `deno task dev` — start dev server with watch
-- `deno run --allow-net --unstable-kv main.ts` — run server once
+- `deno run -A main.ts` — run server once (Postgres required)
 - `deno test` — run tests
 - `deno task scope-check` — verify API routes are listed in
   shared/prompt/boundary.md (runs in CI)

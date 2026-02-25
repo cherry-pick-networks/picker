@@ -1,6 +1,6 @@
 /**
  * Run E2E tests and append one run entry to system/audit/e2e-runs.toml.
- * Usage: deno run -A --unstable-kv shared/prompt/scripts/run-e2e-record.ts
+ * Usage: deno run -A shared/prompt/scripts/run-e2e-record.ts
  * Or: deno task test:e2e-record
  */
 
@@ -22,7 +22,6 @@ async function main(): Promise<void> {
     args: [
       "test",
       "-A",
-      "--unstable-kv",
       E2E_TEST_FILE,
     ],
     stdout: "inherit",
