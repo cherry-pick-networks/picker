@@ -6,7 +6,8 @@ export async function listKeys(prefix?: string): Promise<string[]> {
   const pg = await getPg();
   const r = prefix
     ? await pg.queryObject<{ logical_key: string }>(
-      "SELECT logical_key FROM kv WHERE logical_key LIKE $1 ORDER BY logical_key",
+      "SELECT logical_key FROM kv WHERE logical_key LIKE $1 " +
+        "ORDER BY logical_key",
       [prefix + "%"],
     )
     : await pg.queryObject<{ logical_key: string }>(

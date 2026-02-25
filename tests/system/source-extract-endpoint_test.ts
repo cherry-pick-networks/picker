@@ -1,6 +1,6 @@
 /**
  * POST /sources/:id/extract: 404 when missing, 400 when no body, 200 with mock.
- * Requires Postgres (source table); use SOURCE_EXTRACT_LLM_MOCK to avoid real API.
+ * Requires Postgres; use SOURCE_EXTRACT_LLM_MOCK to avoid real API.
  */
 
 import { assertEquals } from "@std/assert";
