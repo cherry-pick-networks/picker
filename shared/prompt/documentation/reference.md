@@ -162,9 +162,9 @@ other unless the matrix below allows it.
 
 - **Upper (orchestration)**: content (items, worksheets, prompt building). May
   call support domains via their service only.
-- **Support**: actor, concept, script, source, record, kv, audit. Do not
-  import content; do not depend on each other unless listed in the matrix. app
-  only imports endpoints and is outside this hierarchy.
+- **Support**: actor, concept, script, source, record, kv, audit. Do not import
+  content; do not depend on each other unless listed in the matrix. app only
+  imports endpoints and is outside this hierarchy.
 
 **Allowed dependency matrix**
 

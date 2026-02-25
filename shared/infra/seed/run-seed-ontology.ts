@@ -32,7 +32,9 @@ interface CsatConcept {
   path: string;
 }
 
-async function runCsatSeed(pg: Awaited<ReturnType<typeof getPg>>): Promise<void> {
+async function runCsatSeed(
+  pg: Awaited<ReturnType<typeof getPg>>,
+): Promise<void> {
   const raw = await Deno.readTextFile(SEED_CSAT);
   const data = parse(raw) as {
     concept_scheme?: CsatScheme[];

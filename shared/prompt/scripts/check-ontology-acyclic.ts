@@ -25,7 +25,12 @@ function nodeKey(scheme: string, code: string): string {
 }
 
 function findCycle(
-  edges: { from_scheme: string; from_code: string; to_scheme: string; to_code: string }[],
+  edges: {
+    from_scheme: string;
+    from_code: string;
+    to_scheme: string;
+    to_code: string;
+  }[],
 ): string | null {
   const out = new Map<string, string[]>();
   for (const e of edges) {
