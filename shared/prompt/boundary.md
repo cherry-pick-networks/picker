@@ -88,7 +88,9 @@ Use that document for AI direction and scope decisions.
 - **PostgreSQL** — single storage backend. Client: `shared/infra/pg.client.ts`
   (`getPg()`). Domain stores (actor, source, kv, content) and system/kv use it.
   Tables: `actor_profile`, `actor_progress`, `source`, `kv`, `content_item`,
-  `content_worksheet` (see shared/infra schema DDL).
+  `content_worksheet`. DDL under `shared/infra/schema/` (e.g. `01_actor.sql`,
+  `02_source.sql`, `03_kv.sql`, `04_content.sql`; see reference.md Schema DDL
+  file naming).
 - **File-based data** — under `shared/record/`: suffix `store` (payload) or
   `reference` (index). Store: `shared/record/store/*.toml`. Indexes:
   `shared/record/reference/extracted-data-index.toml`,
