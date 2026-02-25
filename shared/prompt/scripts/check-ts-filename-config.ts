@@ -27,6 +27,7 @@ export const ROOT_ALLOWED = new Set([
 /** system/ infix (domain folders) per reference.md. */
 export const SYSTEM_INFIX = new Set([
   "actor",
+  "concept",
   "content",
   "source",
   "script",
