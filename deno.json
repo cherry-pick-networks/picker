@@ -9,7 +9,7 @@
     "lineWidth": 80
   },
   "tasks": {
-    "dev": "deno run -A --watch main.ts",
+    "dev": "./dev",
     "build": "deno run -A npm:vite build",
     "start": "deno run -A main.ts",
     "test": "deno test -A",
