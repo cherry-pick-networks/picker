@@ -51,7 +51,7 @@ with store.md §E/§F and modular monolith.
 system/
   actor/     *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts, *.transfer.ts
   content/   *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts
-  source/    *.endpoint.ts, *.service.ts, *.store.ts
+  source/    *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, source-extract.service.ts, source-llm.client.ts
   script/    *.endpoint.ts, *.service.ts, *.store.ts, *.types.ts, *.validation.ts
   record/    *.endpoint.ts, *.store.ts
   kv/        *.endpoint.ts, *.store.ts

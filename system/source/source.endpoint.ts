@@ -1,4 +1,5 @@
 import type { Context } from "hono";
+import { extractConceptsFromSource } from "#system/source/source-extract.service.ts";
 import {
   createSource,
   CreateSourceRequestSchema,
@@ -35,4 +36,22 @@ export async function postSource(c: Context) {
   const parsed = CreateSourceRequestSchema.safeParse(body);
   if (!parsed.success) return c.json({ error: parsed.error.flatten() }, 400);
   return doPostSource(c, parsed.data);
+}
+
+export async function postSourceExtract(c: Context) {
+  const id = c.req.param("id");
+  const result = await extractConceptsFromSource(id);
+  if (!result.ok) {
+    const status = result.status;
+    return c.json(
+      { ok: false, status, body: result.message },
+      status,
+    );
+  }
+  return c.json({
+    ok: true,
+    concept_ids: result.concept_ids,
+    ...(result.subject_id != null && { subject_id: result.subject_id }),
+    extracted_at: result.extracted_at,
+  });
 }

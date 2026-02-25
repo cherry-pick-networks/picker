@@ -25,7 +25,7 @@ Use that document for AI direction and scope decisions.
 | **system/app/config/**    | Route registration (home, rest, scripts). Imports domain endpoints only.                                                                                          |
 | **system/actor/**         | Profile, progress: endpoint, service, store, schema.                                                                                                              |
 | **system/content/**       | Items, worksheets, prompt: endpoint, service, store, schema.                                                                                                      |
-| **system/source/**        | Source collection: endpoint, service, store.                                                                                                                      |
+| **system/source/**        | Source collection and KAG: endpoint, service, store, schema, source-extract.service, source-llm.client.                                                            |
 | **system/script/**        | Scripts store, mutate (LLM offload), Governance: endpoint, service, store, validation.                                                                            |
 | **system/record/**        | Record store (extracted/identity): endpoint, store.                                                                                                               |
 | **system/kv/**            | Generic key-value HTTP API: endpoint, store (Postgres-backed).                                                                                                    |
@@ -61,7 +61,8 @@ Use that document for AI direction and scope decisions.
 | POST   | `/content/worksheets/build-prompt` | Build worksheet prompt string from request and profile/context. Body: GenerateWorksheetRequest. Responds 200 with { prompt }. No LLM call.                                                                                            |
 | GET    | `/sources`                         | List or query sources (optional query params). Responds `{ "sources": Source[] }`.                                                                                                                                                    |
 | GET    | `/sources/:id`                     | Read source by id. Responds source object or 404.                                                                                                                                                                                     |
-| POST   | `/sources`                         | Collect and store a source. Body: source fields (id optional). Responds 201 with source.                                                                                                                                              |
+| POST   | `/sources`                         | Collect and store a source. Body: source fields (id optional, body optional). Responds 201 with source.                                                                                                                             |
+| POST   | `/sources/:id/extract`             | Extract subject/concept IDs from source body via LLM; save to source extracted_* and return. Body optional. 200 → { ok, concept_ids, subject_id?, extracted_at }; 4xx/5xx → { ok: false, status, body }. Requires source.body.        |
 | GET    | `/data/extracted-index`            | Read extracted-data index (UUID → type, source, oldPath). Responds JSON object.                                                                                                                                                       |
 | GET    | `/data/identity-index`             | Read identity index (UUID → kind, oldPath). Responds JSON object.                                                                                                                                                                     |
 | GET    | `/data/extracted/:id`              | Read extracted-data file by UUID. Responds JSON body or 404.                                                                                                                                                                          |
@@ -77,6 +78,8 @@ Use that document for AI direction and scope decisions.
   server-side MAB/DAG orchestration.
 - **Routes**: Do not write directly from routes; use system/script/validation
   flow.
+- **Source·KAG**: Only Source payload (including extracted_*) and KAG data are
+  mutated by POST /sources and POST /sources/:id/extract; no shared/runtime/store.
 - **Off-limits**: Do not write directly to config/ or credentials; use approved
   mechanisms only. File-based record store (shared/record/) is written only via
   system/record/store/data.ts.
