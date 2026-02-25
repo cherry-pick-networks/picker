@@ -81,7 +81,9 @@ system/routes/content.ts."
   - Refactor: `[target] + [direction]` — e.g.
     `Split content service functions over 80 lines`
 - **Procedure**: Open new chat → state goal in one sentence → send; optionally
-  rename the tab later in chat history if the auto-title is not ideal.
+  rename the tab later in chat history if the auto-title is not ideal. If the
+  task involves code changes, the agent should create a branch from the default
+  branch first (or confirm the current branch is not the default), then proceed.
 - **Snippet**: Use the `agent-start` snippet
   (`.vscode/cursor-session.code-snippets`) to paste the template and fill in the
   bracketed part.
