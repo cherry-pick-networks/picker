@@ -1,0 +1,11 @@
+---
+description: |
+  When the user requests creation of a planning document (기획서), structure
+  the content by scope and output a single document.
+alwaysApply: false
+---
+
+This rule is defined in `shared/prompt/store.md`.
+When the user requests creation of a planning document (e.g. 기획서 작성),
+read that file and follow **§V. Planning document by scope**.
+Do not duplicate the rule text here.
