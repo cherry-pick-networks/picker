@@ -8,8 +8,8 @@ if ! pgrep -x "cloudflared" > /dev/null; then
 fi
 
 export PG_PASSWORD=$(pass show picker/postgres)
-# export PG_HOST=${PG_HOST:-127.0.0.1}
-# export PG_PORT=${PG_PORT:-5432}
-# export PG_USER=${PG_USER:-postgres}
-# export PG_DATABASE=${PG_DATABASE:-picker}
+export PG_HOST=${PG_HOST:-localhost}
+export PG_PORT=${PG_PORT:-5432}
+export PG_USER=${PG_USER:-postgres}
+export PG_DATABASE=${PG_DATABASE:-picker}
 exec deno run -A --watch main.ts

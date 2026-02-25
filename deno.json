@@ -15,7 +15,6 @@
     "test": "deno test -A",
     "test:e2e-record": "deno run -A shared/prompt/scripts/run-e2e-record.ts",
     "db:schema": "deno run -A shared/infra/apply-schema.ts",
-    "db:test": "deno run -A shared/prompt/scripts/run-db-connection-test.ts",
     "type-check-policy": "deno run --allow-read shared/prompt/scripts/check-type-policy.ts",
     "migrate:old-to-data": "deno run -A shared/prompt/scripts/migrate-old-to-data.ts",
     "naming-layer-check": "deno run --allow-read shared/prompt/scripts/check-naming-layer.ts",
