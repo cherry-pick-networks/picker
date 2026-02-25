@@ -9,6 +9,7 @@ alwaysApply: true
 
 This rule is defined in `shared/prompt/store.md`.
 Read that file and follow:
+- **§7. Git, PR, CI**
 - **§A. Commit message format**
 - **§B. Commit and session boundary**
 - **§C. Language**
@@ -22,7 +23,8 @@ Read that file and follow:
 - **§J. Migration boundary**
 - **§N. Type-check policy**
 - **§O. Answer format (options with pros and cons)**
-- **§P. Format limits (code)**
+- **§P. Format limits (code)** — When writing or generating code, follow the §P
+  code-writing workflow in store.md (design → implement → self-review).
 - **§Q. Phase-gated feature implementation** (feature implementation only; see store.md)
 - **§R. AI document writing principles** (when editing shared/prompt/*.md except store.md and documentation/; see store.md)
 Do not duplicate the rule text here.

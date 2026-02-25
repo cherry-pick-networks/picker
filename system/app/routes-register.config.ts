@@ -56,6 +56,7 @@ function registerSource(app: Hono) {
   app.get("/sources", source.getSources);
   app.get("/sources/:id", source.getSource);
   app.post("/sources", source.postSource);
+  app.post("/sources/:id/extract", source.postSourceExtract);
 }
 
 function registerData(app: Hono) {

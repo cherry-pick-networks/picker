@@ -1,10 +1,10 @@
 ---
 description: |
-  Agent and scope. Do not extend scope arbitrarily; propose scope doc
-  changes for human approval, then implement after scope is updated.
+  Agent and todo. Do not extend todo arbitrarily; propose todo doc
+  changes for human approval, then implement after todo is updated.
 alwaysApply: true
 ---
 
 This rule is defined in `shared/prompt/store.md`.
-Read that file and follow **§L. Agent and scope**.
+Read that file and follow **§L. Agent and todo**.
 Do not duplicate the rule text here.

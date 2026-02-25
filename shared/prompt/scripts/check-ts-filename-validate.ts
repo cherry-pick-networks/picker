@@ -41,7 +41,7 @@ function validateTests(base: string): string | null {
   const name = base.slice(0, base.length - 8);
   if (!TEST_NAME_REGEX.test(name)) {
     return "tests/ name must be lowercase with hyphens " +
-      "(e.g. main-ast-apply_test.ts)";
+      "(e.g. main-e2e_test.ts)";
   }
   return null;
 }

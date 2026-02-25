@@ -46,10 +46,34 @@ Simplify (Tip 40 → §11).
   outputs work plan → execution steps → recommended direction for the first Next
   steps item, then proceeds (see handoff.md "Session start (for AI)").
 - **Next steps format**: Bullet list; one item = one logical unit (one commit or
-  one scoped task); one sentence per item. If no required follow-up, add at
-  least one optional or deferred item. For scope or dependency changes, note
-  "Propose scope update first" (or similar). See store.md §9.
+  one todo task); one sentence per item. If no required follow-up, add at least
+  one optional or deferred item. For todo or dependency changes, note "Propose
+  todo update first" (or similar). See store.md §9.
 - **Optional**: Use `/handoff` (e.g. dx plugin) if available.
+
+---
+
+## §P compliance (AI workflow and plan)
+
+**Goal**: Reduce CI failures from the function-length lint (§P: 2–4 statements
+per block body) by steering AI toward a design-first workflow and small-function
+patterns. See store.md §P and shared/prompt/documentation/reference.md (§P
+pattern guide).
+
+**Three-step workflow for AI** (store.md §P): (1) Design — list function
+signatures and roles only; (2) Implement — one function at a time, with a
+comment stating statement count per body; (3) Self-review — find and fix any 5+
+statement or non-exempt single-statement body.
+
+**Patterns**: Prefer functional style (filter/map/reduce, pipeline) and
+delegation; use the complex-statement exemption (single try/catch, switch, or
+block-bodied if) where it fits. Reserve `// function-length-ignore-file` for
+CI/utility scripts; document the reason at the top of the file.
+
+**Checklist** (when implementing this plan): AI behaviour guidelines in Cursor
+rules; §P pattern guide in reference.md; file-level ignore policy in store.md
+§P; optional refactor or ignore-for-script for specific scripts (e.g.
+check-sql-filename).
 
 ---
 
@@ -74,14 +98,16 @@ system/routes/content.ts."
 - **Format**: One sentence; under 15 words or ~40 characters; state one task or
   one question. Add context in a second message if needed.
 - **Templates**:
-  - Task: `[scope/target] + [what to do]` — e.g.
-    `Add routes missing from boundary.md to scope-check`
+  - Task: `[todo/target] + [what to do]` — e.g.
+    `Add routes missing from todo.md to todo-check`
   - Analysis: `[symptom/error] + find cause` — e.g.
     `Find why type-check-policy fails`
   - Refactor: `[target] + [direction]` — e.g.
     `Split content service functions over 80 lines`
 - **Procedure**: Open new chat → state goal in one sentence → send; optionally
-  rename the tab later in chat history if the auto-title is not ideal.
+  rename the tab later in chat history if the auto-title is not ideal. If the
+  task involves code changes, the agent should create a branch from the default
+  branch first (or confirm the current branch is not the default), then proceed.
 - **Snippet**: Use the `agent-start` snippet
   (`.vscode/cursor-session.code-snippets`) to paste the template and fill in the
   bracketed part.
@@ -100,7 +126,7 @@ system/routes/content.ts."
 
 - If using a minified CLI or custom system prompt: document the procedure (e.g.
   patch script, `system-prompt/` directory) locally. Do not add to repo without
-  scope doc update.
+  todo doc update.
 
 ---
 
