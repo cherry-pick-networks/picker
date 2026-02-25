@@ -19,16 +19,16 @@ with store.md §E/§F and modular monolith.
 
 ### Allowed infix (domains)
 
-| Infix   | Responsibility                                           |
-| ------- | -------------------------------------------------------- |
-| actor   | Profile, progress (identity and state)                   |
-| content | Items, worksheets, prompt building                       |
-| source  | Source collection and read                               |
-| script  | Scripts store, AST apply, Governance                     |
-| record  | Record store (extracted/identity data)                   |
+| Infix   | Responsibility                                                         |
+| ------- | ---------------------------------------------------------------------- |
+| actor   | Profile, progress (identity and state)                                 |
+| content | Items, worksheets, prompt building                                     |
+| source  | Source collection and read                                             |
+| script  | Scripts store, AST apply, Governance                                   |
+| record  | Record store (extracted/identity data)                                 |
 | kv      | Generic key-value HTTP API; Postgres-backed, client from shared/infra. |
-| audit   | Change/run log artifacts                                 |
-| app     | Route registration and app wiring                        |
+| audit   | Change/run log artifacts                                               |
+| app     | Route registration and app wiring                                      |
 
 ### Allowed suffix (artifacts)
 
@@ -69,50 +69,51 @@ are listed in PATH_EXCEPTIONS. Validated by `deno task ts-filename-check`.
 
 ### Schema (DDL) file naming
 
-DDL files under `shared/infra/schema/` use a fixed pattern so execution order
-is clear and names align with store.md §E (lowercase, hyphens, no underscores).
+DDL files under `shared/infra/schema/` use a fixed pattern so execution order is
+clear and names align with store.md §E (lowercase, hyphens, no underscores).
 
-**Rationale.** store.md §E and §F define naming for directories, documents,
-and TypeScript files only; `deno task ts-filename-check` validates `.ts` files
-only. DDL files had no explicit rule, so this section defines one: keep
-two-digit execution order (NN) and use the same name shape as §E (lowercase,
-one hyphen between words, no underscores) for the `<name>` part.
+**Rationale.** store.md §E and §F define naming for directories, documents, and
+TypeScript files only; `deno task ts-filename-check` validates `.ts` files only.
+DDL files had no explicit rule, so this section defines one: keep two-digit
+execution order (NN) and use the same name shape as §E (lowercase, one hyphen
+between words, no underscores) for the `<name>` part.
 
 - **Pattern**: `NN_<name>.sql`
   - **NN**: Two-digit number (00–99) for execution order. Preserved when adding
     migrations for the same domain (e.g. `02_source.sql`,
     `02_source-add-column.sql`).
   - **&lt;name&gt;**: Lowercase letters, digits, and hyphens only. Same rule as
-    the TS filename *name* part: `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. No underscores.
+    the TS filename _name_ part: `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. No
+    underscores.
 - **Examples**: `01_actor.sql`, `02_source.sql`, `03_kv.sql`, `04_content.sql`.
 - **Vocabulary**: Prefer names that match project axes (e.g. actor, content,
   source, kv). New domains: align with todo.md and this reference (allowed
   infix/suffix).
 - **Migration**: When renaming or adding DDL files, follow the migration
-  boundary (store.md §J): plan first, then apply renames and reference
-  updates in one logical change.
+  boundary (store.md §J): plan first, then apply renames and reference updates
+  in one logical change.
 
 **Application (example renames).** When aligning existing filenames to this
 rule, change only the name part: underscores → hyphens. Numeric prefix stays.
 
-| Current (if present)           | Proposed (name per §E)        |
-| ------------------------------ | ---------------------------- |
-| `00_init.sql`                  | `00_init.sql` (unchanged)    |
-| `01_actor.sql`                 | `01_actor.sql` (unchanged)   |
-| `02_content.sql`               | `02_content.sql` (unchanged) |
-| `02_content_add_payload.sql`   | `02_content-add-payload.sql` |
-| `03_source.sql`                | `03_source.sql` (unchanged)  |
-| `04_kv.sql`                    | `04_kv.sql` (unchanged)      |
-| `05_knowledge.sql`             | `05_knowledge.sql` (unchanged) |
-| `06_task_queue.sql`            | `06_task-queue.sql`          |
+| Current (if present)         | Proposed (name per §E)         |
+| ---------------------------- | ------------------------------ |
+| `00_init.sql`                | `00_init.sql` (unchanged)      |
+| `01_actor.sql`               | `01_actor.sql` (unchanged)     |
+| `02_content.sql`             | `02_content.sql` (unchanged)   |
+| `02_content_add_payload.sql` | `02_content-add-payload.sql`   |
+| `03_source.sql`              | `03_source.sql` (unchanged)    |
+| `04_kv.sql`                  | `04_kv.sql` (unchanged)        |
+| `05_knowledge.sql`           | `05_knowledge.sql` (unchanged) |
+| `06_task_queue.sql`          | `06_task-queue.sql`            |
 
 New DDL (e.g. ontology): use `NN_<name>.sql` with an available number and
 §E-compliant name; adjust numbering if needed (see todo.md and §J).
 
 **Validation (optional).** Script `shared/prompt/scripts/check-sql-filename.ts`
 checks that every `shared/infra/schema/*.sql` file matches `NN_<name>.sql` with
-name satisfying `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. Run: `deno task sql-filename-check`
-(pre-commit or CI; see store.md §5).
+name satisfying `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. Run:
+`deno task sql-filename-check` (pre-commit or CI; see store.md §5).
 
 ### Migration mapping (3-layer → flat, completed)
 
@@ -210,3 +211,45 @@ Rules are in store.md §T. This section gives examples and exceptions from
   persistence contract; document in the file (e.g. "API/DB contract"). Example:
   `system/content/content.schema.ts` uses `item_id`, `created_at`,
   `worksheet_id` for stored/API payload shape.
+
+### §P pattern guide (function body 2–4 statements)
+
+Store.md §P limits block bodies to 2–4 AST statements; a single statement is
+allowed when it is try/catch, switch, or block-bodied if (complex-statement
+exemption). Prefer small functions and delegation so each body stays within the
+limit.
+
+**Avoid** (procedural, too many statements in one body):
+
+```ts
+function validateSqlFiles(files: string[]) {
+  const invalidFiles = [];
+  for (const file of files) {
+    if (!file.endsWith(".sql")) continue;
+    if (!checkNamingRule(file)) invalidFiles.push(file);
+  }
+  if (invalidFiles.length > 0) throw new Error("Invalid");
+  return true;
+}
+```
+
+**Prefer** (functional pipeline; 2–4 statements per body):
+
+```ts
+function validateSqlFiles(files: string[]): boolean {
+  const sqlFiles = files.filter(isSqlExtension);
+  const invalidFiles = sqlFiles.filter(isInvalidNaming);
+  return checkAndThrow(invalidFiles);
+}
+```
+
+**Use complex-statement exemption** when a single guard is enough (e.g. throw if
+invalid):
+
+```ts
+function ensureValidName(filename: string): void {
+  if (!REGEX_SQL_NAME.test(filename)) {
+    throw new Error(`Invalid SQL file name: ${filename}`);
+  }
+}
+```
