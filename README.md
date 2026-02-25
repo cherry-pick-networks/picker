@@ -1,13 +1,13 @@
 # picker
 
-Deno app: Hono (HTTP), Zod, ts-morph (AST), Deno KV. Entry: `main.ts`; client:
+Deno app: Hono (HTTP), Zod, ts-morph (AST), PostgreSQL. Entry: `main.ts`; client:
 `client.ts`. Routes from `system/routes.ts` and `system/app/*.config.ts`; dev
 uses `main.ts`.
 
 ## Run
 
 - **Dev**: `deno task dev` (runs `main.ts` with watch)
-- **Once**: `deno run -A --unstable-kv main.ts`
+- **Once**: `deno run -A main.ts` (Postgres required)
 - **Build** (optional): `deno task build` — then **Start**: `deno task start`
 - **Test**: `deno test`
 

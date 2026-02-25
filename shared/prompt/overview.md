@@ -16,7 +16,7 @@ store.md §R.
 
 - **Name**: picker
 - **Runtime**: Deno
-- **Stack**: Hono (HTTP), Zod (validation), ts-morph (AST), Deno KV (storage)
+- **Stack**: Hono (HTTP), Zod (validation), ts-morph (AST), PostgreSQL (storage)
 - **Entry**: `main.ts` (Hono app, KV routes, AST demo)
 
 ---
@@ -40,7 +40,7 @@ store.md §R.
 ## Run, build, test
 
 - **Dev server**: `deno task dev` (watch mode)
-- **Run once**: `deno run --allow-net --unstable-kv main.ts`
+- **Run once**: `deno run -A main.ts` (Postgres required)
 - **Test**: `deno test` (add tests and tasks in deno.json as needed)
 - **Lint/format**: `deno lint`, `deno fmt` (or project config if present)
 
@@ -51,7 +51,7 @@ store.md §R.
 | Command                                      | Purpose                                        |
 | -------------------------------------------- | ---------------------------------------------- |
 | `deno task dev`                              | Start dev server with watch                    |
-| `deno run --allow-net --unstable-kv main.ts` | Run server once                                |
+| `deno run -A main.ts`                          | Run server once (Postgres required)            |
 | `deno test`                                  | Run tests                                      |
 | `gh pr create --draft`                       | Create draft PR                                |
 | `gh pr view`, `gh pr diff`                   | Inspect PR for review                          |

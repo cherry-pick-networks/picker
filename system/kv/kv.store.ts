@@ -1,37 +1,43 @@
-/** KV under prefix ["kv"]; logical key part only (e.g. "foo"). */
-import { getKv } from "#shared/infra/kv.client.ts";
+/** Generic key-value storage (Postgres). Logical key only (e.g. "foo"). */
 
-export { getKv } from "#shared/infra/kv.client.ts";
-
-function toLogicalKey(keyParts: string[]): string | null {
-  if (keyParts.length < 2 || keyParts[0] !== "kv") return null;
-  return keyParts.slice(1).join("/");
-}
-
-function pushValidKey(keys: string[], entry: Deno.KvEntry<unknown>): void {
-  const key = toLogicalKey(entry.key as string[]);
-  if (key !== null) keys.push(key);
-}
-
-async function collectKeys(kv: Deno.Kv): Promise<string[]> {
-  const keys: string[] = [];
-  for await (const entry of kv.list({ prefix: ["kv"] })) {
-    pushValidKey(keys, entry);
-  }
-  return keys;
-}
-
-async function listKvEntries(): Promise<string[]> {
-  const kv = await getKv();
-  return collectKeys(kv);
-}
+import { getPg } from "#shared/infra/pg.client.ts";
 
 export async function listKeys(prefix?: string): Promise<string[]> {
-  const keys = await listKvEntries();
-  return prefix === undefined ? keys : keys.filter((k) => k.startsWith(prefix));
+  const pg = await getPg();
+  const r = prefix
+    ? await pg.queryObject<{ logical_key: string }>(
+      "SELECT logical_key FROM kv WHERE logical_key LIKE $1 ORDER BY logical_key",
+      [prefix + "%"],
+    )
+    : await pg.queryObject<{ logical_key: string }>(
+      "SELECT logical_key FROM kv ORDER BY logical_key",
+    );
+  return r.rows.map((row) => row.logical_key);
+}
+
+export async function getKey(logicalKey: string): Promise<unknown | null> {
+  const pg = await getPg();
+  const r = await pg.queryObject<{ value: unknown }>(
+    "SELECT value FROM kv WHERE logical_key = $1",
+    [logicalKey],
+  );
+  const row = r.rows[0];
+  return row?.value ?? null;
+}
+
+export async function setKey(
+  logicalKey: string,
+  value: unknown,
+): Promise<void> {
+  const pg = await getPg();
+  await pg.queryArray(
+    `INSERT INTO kv (logical_key, value) VALUES ($1, $2)
+     ON CONFLICT (logical_key) DO UPDATE SET value = $2`,
+    [logicalKey, JSON.stringify(value)],
+  );
 }
 
 export async function deleteKey(logicalKey: string): Promise<void> {
-  const kv = await getKv();
-  await kv.delete(["kv", logicalKey]);
+  const pg = await getPg();
+  await pg.queryArray("DELETE FROM kv WHERE logical_key = $1", [logicalKey]);
 }

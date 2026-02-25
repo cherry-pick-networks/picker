@@ -26,7 +26,7 @@ with store.md §E/§F and modular monolith.
 | source  | Source collection and read                               |
 | script  | Scripts store, AST apply, Governance                     |
 | record  | Record store (extracted/identity data)                   |
-| kv      | Generic Deno KV HTTP API; KV instance from shared/infra. |
+| kv      | Generic key-value HTTP API; Postgres-backed, client from shared/infra. |
 | audit   | Change/run log artifacts                                 |
 | app     | Route registration and app wiring                        |
 
@@ -100,8 +100,8 @@ are listed in PATH_EXCEPTIONS. Validated by `deno task ts-filename-check`.
   if needed.
 - app/*.config.ts only imports domain endpoints and registers routes; no
   business logic.
-- KV instance: `shared/infra/kv.client.ts` provides `getKv()`. Domain stores and
-  system/kv use it; do not open Kv elsewhere.
+- Postgres: `shared/infra/pg.client.ts` provides `getPg()`. Domain stores and
+  system/kv use it; no KV or other storage client.
 
 ### Domain dependency (acyclic; hierarchy)
 

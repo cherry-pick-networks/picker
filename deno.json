@@ -9,11 +9,12 @@
     "lineWidth": 80
   },
   "tasks": {
-    "dev": "deno run -A --unstable-kv --watch main.ts",
+    "dev": "deno run -A --watch main.ts",
     "build": "deno run -A npm:vite build",
-    "start": "deno run -A --unstable-kv main.ts",
-    "test": "deno test -A --unstable-kv",
-    "test:e2e-record": "deno run -A --unstable-kv shared/prompt/scripts/run-e2e-record.ts",
+    "start": "deno run -A main.ts",
+    "test": "deno test -A",
+    "test:e2e-record": "deno run -A shared/prompt/scripts/run-e2e-record.ts",
+    "db:schema": "deno run -A shared/infra/apply-schema.ts",
     "scope-check": "deno run --allow-read shared/prompt/scripts/check-scope.ts",
     "scope-discovery": "deno run --allow-read shared/prompt/scripts/scope-discovery.ts",
     "type-check-policy": "deno run --allow-read shared/prompt/scripts/check-type-policy.ts",
@@ -49,6 +50,7 @@
     "hono": "jsr:@hono/hono@^4",
     "zod": "jsr:@zod/zod@^4",
     "ts-morph": "jsr:@ts-morph/ts-morph@^27",
-    "vite": "npm:vite@^6"
+    "vite": "npm:vite@^6",
+    "@db/postgres": "jsr:@db/postgres@^0.19"
   }
 }
