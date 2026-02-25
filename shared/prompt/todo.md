@@ -1,17 +1,17 @@
 ---
-title: boundary
-description: In-scope modules, API surface, and infrastructure.
+title: todo
+description: In-todo modules, API surface, and infrastructure.
 ---
 
-# Scope
+# Todo
 
-Single source of truth for in-scope modules, API surface, and infrastructure.
+Single source of truth for in-todo modules, API surface, and infrastructure.
 Add only modules, routes, and infrastructure listed here; update this file
 first, then implement.
 
 **Final implementation goal**: See `shared/prompt/goal.md` for the one-line
-goal, target phases (MVP vs full spec), scope source, and must/must-not rules.
-Use that document for AI direction and scope decisions.
+goal, target phases (MVP vs full spec), todo source, and must/must-not rules.
+Use that document for AI direction and todo decisions.
 
 ---
 
@@ -21,7 +21,7 @@ Use that document for AI direction and scope decisions.
 | ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **main.ts**               | Server entry: Hono app; routes registered from system/routes.ts (imports system/app/config).                                                                      |
 | **client.ts**             | Client entry (loaded on every page).                                                                                                                              |
-| **system/routes.ts**      | Route list (ROUTES) and registerRoutes(app); scope-check reads this.                                                                                              |
+| **system/routes.ts**      | Route list (ROUTES) and registerRoutes(app); todo-check reads this.                                                                                              |
 | **system/app/config/**    | Route registration (home, rest, scripts). Imports domain endpoints only.                                                                                          |
 | **system/actor/**         | Profile, progress: endpoint, service, store, schema.                                                                                                              |
 | **system/content/**       | Items, worksheets, prompt: endpoint, service, store, schema.                                                                                                      |
@@ -50,12 +50,12 @@ Use that document for AI direction and scope decisions.
 | POST   | `/script/mutate`                   | Mutate file in shared/runtime/store/ (LLM offload). Body: path (required), intent?, options? (maxBlocks?, strategy?). 200 → `{ "ok": true, "replacements": number }`; 4xx/5xx → `{ "ok": false, "status": number, "body": unknown }`. |
 | GET    | `/profile/:id`                     | Read actor profile by id. Responds profile object or 404.                                                                                                                                                                             |
 | POST   | `/profile`                         | Create actor profile. Body: profile fields (id optional, server-generated if omitted). Responds 201 with profile.                                                                                                                     |
-| PATCH  | `/profile/:id`                     | Update actor profile by id. Body: partial profile. Responds 200 or 404.                                                                                                                                                               |
+| PATCH  | `/profile/:id`                     | Update actor profile by id. Body: partial profile. Responds 200 or 404.                                                                                                                                                             |
 | GET    | `/progress/:id`                    | Read progress state by id. Responds progress object or 404.                                                                                                                                                                           |
 | PATCH  | `/progress/:id`                    | Update progress state by id. Body: partial progress. Responds 200 or 404.                                                                                                                                                             |
 | GET    | `/content/items/:id`               | Read content item by id. Responds item object or 404.                                                                                                                                                                                 |
 | POST   | `/content/items`                   | Create content item. Body: item fields (id optional). Responds 201 with item.                                                                                                                                                         |
-| PATCH  | `/content/items/:id`               | Update content item by id. Body: partial item. Responds 200 or 404.                                                                                                                                                                   |
+| PATCH  | `/content/items/:id`               | Update content item by id. Body: partial item. Responds 200 or 404.                                                                                                                                                                 |
 | GET    | `/content/worksheets/:id`          | Read worksheet meta by id. Responds worksheet object or 404.                                                                                                                                                                          |
 | POST   | `/content/worksheets/generate`     | Create worksheet (meta + item_ids from concepts). Body: title, concept_ids, item_count, etc. Responds 201 with worksheet.                                                                                                             |
 | POST   | `/content/worksheets/build-prompt` | Build worksheet prompt string from request and profile/context. Body: GenerateWorksheetRequest. Responds 200 with { prompt }. No LLM call.                                                                                            |

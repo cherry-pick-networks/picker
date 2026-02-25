@@ -27,11 +27,11 @@ tool-specific configs.
   counted.
 - **Allowed forms**: `prefix/`, `prefix/infix/`, `prefix/infix/suffix/`
 - **Naming axes** (use only approved segment names):
-  - **Prefix**: Scope (global, shared, system, module, component) or Layer or
+  - **Prefix**: Todo (global, shared, system, module, component) or Layer or
     Context
   - **Infix**: Actor, Action, or Entity (e.g. prompt, document, service)
   - **Suffix**: Artifact, Policy, or Meta (e.g. store, config, test)
-- **This file**: `shared/prompt/store.md` (shared = Scope, prompt = Entity;
+- **This file**: `shared/prompt/store.md` (shared = Todo, prompt = Entity;
   store as artifact naming in filename)
 - **Exceptions**: .git, .cursor, node_modules, dist, build, coverage, vendor,
   .cache, temp, tests (confirm per repo)
@@ -41,7 +41,7 @@ tool-specific configs.
   `@std/toml`. File names follow §E; record files are `{uuid}.toml`. Documents
   use Markdown (`.md`) or Cursor rules (`.mdc`) with optional YAML front matter;
   parse with `@std/front-matter`. Data file paths: see
-  `shared/prompt/boundary.md`.
+  `shared/prompt/todo.md`.
 
 ---
 
@@ -62,14 +62,14 @@ tool-specific configs.
 
 - **Language**: English only for code, comments, docstrings, UI/log strings, and
   docs.
-- **Commit message**: `<type>[(scope)]: <description>`; imperative, lowercase.\
-  Types: feat, fix, docs, chore, refactor, perf, test, ci, build. Scope optional
+- **Commit message**: `<type>[(todo)]: <description>`; imperative, lowercase.\
+  Types: feat, fix, docs, chore, refactor, perf, test, ci, build. Todo optional
   (e.g. module or feature flag).
 - **Dependencies**: Add only from the project's official list (e.g. deno.json
   imports); update that list first. No new deps without approval and
   stable-library criteria.
-- **Scope**: Do not add modules, API routes, or infrastructure unless they are
-  in the scope document; update the scope doc first, then implement.
+- **Todo**: Do not add modules, API routes, or infrastructure unless they are
+  in the todo document; update the todo doc first, then implement.
 - **Conventions**: Follow existing formatting, naming, and structure; prefer the
   simplest option (KISS); be consistent.
 
@@ -80,8 +80,8 @@ tool-specific configs.
 - `deno task dev` — start dev server with watch
 - `deno run -A main.ts` — run server once (Postgres required)
 - `deno test` — run tests
-- `deno task scope-check` — verify API routes are listed in
-  shared/prompt/boundary.md (runs in CI)
+- `deno task todo-check` — verify API routes are listed in
+  shared/prompt/todo.md (runs in CI)
 - `deno task type-check-policy` — verify no type-check bypass (runs in CI)
 - `deno task dependency-check` — verify acyclic domain deps and allowed matrix
   (runs in CI)
@@ -92,10 +92,10 @@ tool-specific configs.
 - `deno task sql-filename-check` — verify shared/infra/schema/*.sql per
   reference.md (Schema DDL file naming) (optional; run in pre-commit or CI)
 - `deno task pre-push` — run before push; same as CI (lint, fmt, line-length,
-  ts-filename-check, sql-filename-check, test, scope-check, boundary-check,
+  ts-filename-check, sql-filename-check, test, todo-check, boundary-check,
   dependency-check, type-check-policy, audit)
-- `deno task scope-discovery -- <entry-file>` — list direct imports for AI
-  session scope (see shared/prompt/documentation/strategy.md)
+- `deno task todo-discovery -- <entry-file>` — list direct imports for AI
+  session todo (see shared/prompt/documentation/strategy.md)
 - `gh pr create --draft` — create draft PR (review before marking ready)
 - `gh pr view`, `gh pr diff` — inspect PR for review
 - `gh run view` — inspect CI run (e.g. after failure)
@@ -132,7 +132,7 @@ tool-specific configs.
   ≤100 effective lines, function body 2–4 effective lines). (4) Test and commit
   — add or update tests, then commit per §B. One cycle = one entry file + its
   direct imports; see shared/prompt/documentation/strategy.md for
-  scope-discovery and prompt template. Optionally: after phase 2 approval,
+  todo-discovery and prompt template. Optionally: after phase 2 approval,
   writing a failing test before phase 3 is allowed (TDD); state this in the same
   workflow.
 
@@ -187,11 +187,11 @@ tool-specific configs.
   file. Optionally use `/handoff` (e.g. dx plugin) if available.
 - **Next steps (handoff)**: In the handoff doc, the "Next steps" section lists
   zero or more follow-up actions. Each item is one logical unit (one commit or
-  one scoped task); one sentence per item so a new session can start without
+  one todo task); one sentence per item so a new session can start without
   extra context. If there is no required follow-up, add at least one optional or
   deferred item (e.g. "Optional: add E2E for POST /kv") so the next session has
-  a starting point. Do not add items that require a scope-doc or dependency
-  change without noting it (e.g. "Propose scope update first, then implement
+  a starting point.   Do not add items that require a todo-doc or dependency
+  change without noting it (e.g. "Propose todo update first, then implement
   X"). Format: bullet list; first bullet may be the recommended next action.
 - **Branching experiments**: When trying a different approach from a point in
   time, fork the conversation or record the branch point in the handoff doc.
@@ -199,7 +199,7 @@ tool-specific configs.
   the first user message should be a single short sentence in English that
   states the session goal (one task or one question). This improves
   auto-generated chat titles (e.g. in Cursor). Prefer under 15 words or about 40
-  characters. Example: "Add scope validation to POST /content/worksheets API".
+  characters. Example: "Add todo validation to POST /content/worksheets API".
   Full procedure and examples: `shared/prompt/documentation/guide.md` (Session
   start).
 
@@ -271,11 +271,11 @@ always-applied bundle, one on-request).
 ### §A. Commit message format
 
 Pattern:
-<type>[optional scope]: <description>; type and description required; scope
+<type>[optional todo]: <description>; type and description required; todo
 optional. Types: feat (new feature), fix (bug fix), docs, chore, refactor, perf,
 test, ci, build; use feat for SemVer MINOR, fix for PATCH; use BREAKING CHANGE
-in footer or type! for MAJOR. Scope: use for feature flag or module (e.g.
-ff/CHECKOUT_STEP or module name) when the commit is scoped to that unit.
+in footer or type! for MAJOR. Todo: use for feature flag or module (e.g.
+ff/CHECKOUT_STEP or module name) when the commit is todo'd to that unit.
 Description: imperative, lowercase after colon; short summary (e.g. add handler,
 fix validation); optional body after blank line for context. Footer: BREAKING
 CHANGE: <description> or conventional footers (e.g. Ref: TICKET-1).
@@ -299,10 +299,10 @@ Language: English only for code, comments, docstrings, UI/log strings, docs.
 
 ### §S. Comment policy (TS)
 
-Scope: TypeScript source files (`**/*.ts`); exclude node_modules, vendor,
+Todo: TypeScript source files (`**/*.ts`); exclude node_modules, vendor,
 generated output. Keep only comments that help AI understand the file; write
 them per §R and §I (language, positive phrasing, one idea per block, concrete
-scope). Allow: one file-top block per file stating the module role and key
+todo). Allow: one file-top block per file stating the module role and key
 structure (e.g. keys or paths); one-line inline only for non-obvious reason or
 constraint. Remove: function JSDoc and inline comments that only repeat what the
 code does. Single source: detailed rules stay in this file; comments do not
@@ -310,7 +310,7 @@ duplicate them.
 
 ### §T. TypeScript symbol naming
 
-Scope: TypeScript source files (`**/*.ts`); exclude node_modules, vendor,
+Todo: TypeScript source files (`**/*.ts`); exclude node_modules, vendor,
 generated output. Type and interface names: PascalCase. Function and method
 names: camelCase. Variable and parameter names: camelCase. Zod schema constants
 (e.g. export const XSchema): PascalCase. Constants for magic strings or long
@@ -331,15 +331,15 @@ pronounceable, searchable. Axis rule: each segment uses exactly one axis from
 its allowed set (see §E); no axis pollution; one word must not appear in two
 axes. The same §E sets are the approved names for that tier and below (files,
 subfolders, modules, symbols). New rule files: pick one prefix from
-Scope/Layer/Context; one suffix from Artifact/Policy/Meta; add infix from
+Todo/Layer/Context; one suffix from Artifact/Policy/Meta; add infix from
 Actor/Action/Entity only when the rule applies to a specific focus.
 
 Document files under shared/prompt/: use [suffix].md only. Prefix and infix are
 implied by the path (shared = prefix, prompt = infix). Suffix must be from §E
 allowed sets (Artifact, Policy, Meta). Same segment form: lowercase; one hyphen
 between words; no underscores. Exceptions: see §F (e.g. README.md at tree root).
-Scope for document names: the segment naming rule applies to exactly one
-document tree; in this project only .md files under shared/prompt/ are in scope.
+Todo for document names: the segment naming rule applies to exactly one
+document tree; in this project only .md files under shared/prompt/ are in todo.
 Files outside that tree (e.g. root README.md, CONTRIBUTING.md, CHANGELOG.md) are
 not subject to document-name rules.
 
@@ -356,7 +356,7 @@ approved names for that tier and its subtree: use them for tier names and,
 within that tier, for file names, subfolder names, module/namespace names, and
 public symbol names. When the first tier is a Layer (presentation, application,
 domain, infrastructure), tier 2 and tier 3 names must use only that layer's
-allowed Infix and Suffix sets defined below. Mandatory scope: directory and
+allowed Infix and Suffix sets defined below. Mandatory todo: directory and
 rule/document naming per §D and §F; other uses apply from new or renamed items
 (see §J). Schema SQL files under shared/infra/schema/ follow reference.md (Schema DDL file naming).
 
@@ -373,7 +373,7 @@ identity record); one record per file or index entry.
 Prefix — one axis only: [ Scope | Layer | Context ]. Rule: prefix must denote
 system position only; technical tools (cache, redis) or artifact form (config,
 test) must not be prefix. Axis "Context" = Bounded Context (what it is for);
-Layer value "domain" = DDD domain layer only. Scope (blast radius — where impact
+Layer value "domain" = DDD domain layer only. Todo (blast radius — where impact
 reaches): global, shared, system, module, component. Never prefix: app (use
 system), config, file, code, architecture. Layer (stack position — where it
 sits): presentation, application, domain, infrastructure. Never prefix: api, web
@@ -405,7 +405,7 @@ usage, tips, overview, goal.
 
 Examples: payment-infra-redis-config (Context + Layer + Entity + Artifact);
 security-application-guard-policy (Context + Layer + Actor + Policy);
-global-config (Scope + Artifact).
+global-config (Todo + Artifact).
 
 Layer-specific allowed Infix and Suffix (when tier 1 is Layer): When the first
 tier is one of presentation, application, domain, infrastructure, tier 2 and
@@ -460,7 +460,7 @@ usage, strategy, guide, runbook. No other segment names; new docs in this
 directory must use one of these five.
 
 Documentation: Rule text lives only in this file; .cursor/rules/*.mdc state
-scope and when to apply (e.g. always vs on-request). In docs, state: scope, "max
+todo and when to apply (e.g. always vs on-request). In docs, state: todo, "max
 3 tiers" (prefix/infix/suffix only; root not counted), the three allowed forms,
 order, no fourth tier, naming reference, exception list.
 
@@ -514,11 +514,11 @@ break only at punctuation (;, ,) or after a complete phrase; never split a noun
 phrase or parenthetical mid-phrase; meaning per line over 80 chars in rule
 files. Clear rules (when adding from docs): only add to rules what satisfies all
 three: (1) stateable as must/do not/only in one sentence, no prefer/recommended;
-(2) concrete scope (files, symbols, or patterns named); (3) violation detectable
+(2) concrete todo (files, symbols, or patterns named); (3) violation detectable
 by static check or simple heuristic; otherwise keep in docs or as guidance only.
 No speculative implementation: do not add modules, endpoints, or infrastructure
-for a future phase; add only when the feature is in current scope
-(shared/prompt/boundary.md).
+for a future phase; add only when the feature is in current todo
+(shared/prompt/todo.md).
 
 ### §J. Migration boundary
 
@@ -532,27 +532,27 @@ without this mapping. Execute order: create all new rule files with split
 content first; only after that delete the old files; one logical migration (one
 plan) per commit. Naming: new rule file names must follow §D and §E; use infix
 from Actor/Action/Entity where it clarifies focus (e.g. document, event, agent).
-No scope doc change: adding or refactoring .cursor/rules does not require
-shared/prompt/boundary.md change; scope doc is for modules, API routes,
+No todo doc change: adding or refactoring .cursor/rules does not require
+shared/prompt/todo.md change; todo doc is for modules, API routes,
 infrastructure only. Document renames: when renaming .md under the document tree
 to comply with segment naming, (1) list current files and target names per
 §D/§E, (2) rename (prefer non-referenced files first), (3) update in-tree
 references and links, (4) verify with document-name validation if available;
 detailed steps in documentation/strategy.md or store §J.
 
-### §K. Scope document boundary
+### §K. Todo document boundary
 
-Scope document: the single source of truth for in-scope modules, API surface,
-and infrastructure is shared/prompt/boundary.md; update that doc before adding.
-Scope-bound implementation: do not add new modules, API routes (routers), or
+Todo document: the single source of truth for in-todo modules, API surface,
+and infrastructure is shared/prompt/todo.md; update that doc before adding.
+Todo-bound implementation: do not add new modules, API routes (routers), or
 infrastructure (broker, extra DB, queue, search engine) unless they are listed
-in shared/prompt/boundary.md; add them to shared/prompt/boundary.md first, then
+in shared/prompt/todo.md; add them to shared/prompt/todo.md first, then
 implement.
 
-### §L. Agent and scope
+### §L. Agent and todo
 
-Agent and scope: agent must not extend scope arbitrarily; propose scope doc
-changes for human approval, then implement only after scope is updated.
+Agent and todo: agent must not extend todo arbitrarily; propose todo doc
+changes for human approval, then implement only after todo is updated.
 Cross-domain service calls: must follow the allowed dependency matrix and remain
 acyclic (see shared/prompt/documentation/reference.md, § Domain dependency);
 update the matrix and check-domain-deps allowlist before adding a new
@@ -561,7 +561,7 @@ cross-domain dependency.
 ### §M. Root README boundary
 
 Root README (repository root README.md): the Documentation section lists only
-domain entry points; each entry links to a scope-level README (e.g.
+domain entry points; each entry links to a todo-level README (e.g.
 shared/README.md), not to files under prefix/infix/suffix. Deep links: do not
 add links from root README to individual docs (e.g. store.md, handoff.md,
 overview.md); those live in each domain's README.
@@ -658,7 +658,7 @@ does not apply to it. Files under documentation/ are for people and tips; §R
 does not apply there. Language: Use English only in those AI-facing docs (§C).
 Phrasing: Prefer positive phrasing ("Do X" over "Do not do Y"); see §I.
 Rule-like content: When stating a rule or constraint, use one sentence per rule;
-state scope concretely (files, symbols, or patterns); make violations detectable
+state todo concretely (files, symbols, or patterns); make violations detectable
 where possible; otherwise keep as guidance only. Structure: One idea per block;
 no blank line between continuations of the same rule; wrap lines at punctuation
 or phrase boundaries; do not split a noun phrase or parenthetical mid-phrase (§I
@@ -666,7 +666,7 @@ rule file format). Single source: Keep authoritative rule text only in this file
 (store.md); other AI-facing docs reference store sections and do not duplicate
 rule text. Naming: Use [suffix].md only under shared/prompt/; suffix from §E
 allowed sets; see §D and §F. Scannability: Use clear headings and one concept
-per bullet or block; state when a rule applies (scope, exceptions); include
+per bullet or block; state when a rule applies (todo, exceptions); include
 short fixed examples where they help agents parse intent.
 
 ### §U. SQL style

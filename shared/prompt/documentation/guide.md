@@ -46,9 +46,9 @@ Simplify (Tip 40 → §11).
   outputs work plan → execution steps → recommended direction for the first Next
   steps item, then proceeds (see handoff.md "Session start (for AI)").
 - **Next steps format**: Bullet list; one item = one logical unit (one commit or
-  one scoped task); one sentence per item. If no required follow-up, add at
-  least one optional or deferred item. For scope or dependency changes, note
-  "Propose scope update first" (or similar). See store.md §9.
+  one todo task); one sentence per item. If no required follow-up, add at
+  least one optional or deferred item. For todo or dependency changes, note
+  "Propose todo update first" (or similar). See store.md §9.
 - **Optional**: Use `/handoff` (e.g. dx plugin) if available.
 
 ---
@@ -74,8 +74,8 @@ system/routes/content.ts."
 - **Format**: One sentence; under 15 words or ~40 characters; state one task or
   one question. Add context in a second message if needed.
 - **Templates**:
-  - Task: `[scope/target] + [what to do]` — e.g.
-    `Add routes missing from boundary.md to scope-check`
+  - Task: `[todo/target] + [what to do]` — e.g.
+    `Add routes missing from todo.md to todo-check`
   - Analysis: `[symptom/error] + find cause` — e.g.
     `Find why type-check-policy fails`
   - Refactor: `[target] + [direction]` — e.g.
@@ -100,7 +100,7 @@ system/routes/content.ts."
 
 - If using a minified CLI or custom system prompt: document the procedure (e.g.
   patch script, `system-prompt/` directory) locally. Do not add to repo without
-  scope doc update.
+  todo doc update.
 
 ---
 

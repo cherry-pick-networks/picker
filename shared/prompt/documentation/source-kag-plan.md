@@ -15,7 +15,7 @@ description: Source data parsing and KAG build (system/source/).
 
 ## 2. Scope and constraints
 
-- **Domain**: `system/source/` (existing boundary.md scope unchanged).
+- **Domain**: `system/source/` (existing todo.md todo unchanged).
 - **Allowed changes**: Source schema extension, new service/endpoint, Source-only LLM client.
 - **Mutation boundary**: Only Source and KAG data change. No changes to `shared/runtime/store/`.
 - **Infra**: Existing Postgres and `getPg()`. Add DDL under `shared/infra/schema/` if needed (e.g. source–concept relation table).
@@ -137,7 +137,7 @@ KAG can be implemented without a separate table: one Source row holds passage + 
 
 | Phase | Content |
 |-------|---------|
-| **S1** | boundary.md and reference: Source extended fields, `POST /sources/:id/extract`, new service/client file names. |
+| **S1** | todo.md and reference: Source extended fields, `POST /sources/:id/extract`, new service/client file names. |
 | **S2** | Extend `SourceSchema`, add `SourceExtractOutputSchema` (source.schema.ts). |
 | **S3** | Implement `source-llm.client.ts` (prompt, fetch, Zod parse, mock). |
 | **S4** | Implement `source-extract.service.ts` (getSource → extract → setSource). |

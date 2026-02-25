@@ -33,5 +33,5 @@ JSON. List rulesets: `gh ruleset list`.
 
 After this, PRs cannot be merged until the **check** workflow succeeds. That
 ensures lint (including function-length), format, line-length,
-ts-filename-check, tests, scope-check, boundary-check, dependency-check,
+ts-filename-check, tests, todo-check, boundary-check, dependency-check,
 type-check-policy, and audit all pass before merge.

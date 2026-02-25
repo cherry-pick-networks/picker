@@ -17,11 +17,11 @@ description: Data migration strategy and shared single source.
 - **Two mdc files**: one always-applied (`global-agent-policy.mdc`), one
   on-request (`global-directory-boundary.mdc`). See `cursor-rules-policy.md`.
 
-## Scope (historical)
+## Todo (historical)
 
 - **Source**: 12 files under `.cursor/rules/*.mdc` (pre-simplification).
 - **Target**: `shared/prompt/store.md` (expand with §A–§L).
-- **No**: New deps, scope doc changes, or module/API/infra changes.
+- **No**: New deps, todo doc changes, or module/API/infra changes.
 
 ## Phases
 
@@ -55,8 +55,8 @@ description: Data migration strategy and shared single source.
 | H | Validation policy (libraries)      | global-validation-policy.mdc   |
 | I | Agent principles                   | global-agent-principle.mdc     |
 | J | Migration boundary                 | global-migration-boundary.mdc  |
-| K | Scope document boundary            | system-document-boundary.mdc   |
-| L | Agent and scope                    | system-agent-boundary.mdc      |
+| K | Todo document boundary             | system-document-boundary.mdc   |
+| L | Agent and todo                     | system-agent-boundary.mdc      |
 
 ## Rollback
 
@@ -88,7 +88,7 @@ Suffix. Canonical source: store.md §E. Below is a quick reference.
 
 ---
 
-# AI-assisted scope estimation
+# AI-assisted todo estimation
 
 Guideline for sizing AI-assisted coding sessions in micro-component (small-file,
 short-function) codebases. Use when giving the AI a multi-file task or when
@@ -108,40 +108,40 @@ refactors in one session.
 - Many small files form a "ravioli" structure.
 
 In that environment the main failure mode is **connection complexity** (imports,
-props, DI), not token count. Scoping by dependency tree reduces mistakes.
+props, DI), not token count. Todo by dependency tree reduces mistakes.
 
 ## Recommended workflow
 
 1. Choose or create **one entry file** for the feature (e.g. the route or
    top-level component).
-2. Run the scope-discovery script to list its direct imports (see below).
-3. Prompt the AI with that list as the in-scope set. Between each step
+2. Run the todo-discovery script to list its direct imports (see below).
+3. Prompt the AI with that list as the in-todo set. Between each step
    (requirement summary → interface proposal → implementation), proceed only
    after **user approval**; see store.md §Q.
 4. (Optional) Before commit, check that changed files are within entry + script
    output (manual or via optional check script).
 
-## Scope-discovery script
+## Todo-discovery script
 
 From repo root:
 
 ```bash
-deno run --allow-read shared/prompt/scripts/scope-discovery.ts <entry-file>
+deno run --allow-read shared/prompt/scripts/todo-discovery.ts <entry-file>
 ```
 
 Example:
 
 ```bash
-deno run --allow-read shared/prompt/scripts/scope-discovery.ts main.ts
+deno run --allow-read shared/prompt/scripts/todo-discovery.ts main.ts
 ```
 
 Output: the entry path plus one path per line for each file it **directly**
 imports (relative imports only; npm/jsr are skipped). Use this list as the
-"in-scope files" in your prompt. Optional: `--oneline` prints a single line for
+"in-todo files" in your prompt. Optional: `--oneline` prints a single line for
 pasting into the prompt.
 
-Task: `deno task scope-discovery -- <entry-file>` (e.g.
-`deno task scope-discovery -- main.ts`). Add `--oneline` for one-line output.
+Task: `deno task todo-discovery -- <entry-file>` (e.g.
+`deno task todo-discovery -- main.ts`). Add `--oneline` for one-line output.
 
 ## Phase flags (explicit prompt flags)
 
@@ -162,7 +162,7 @@ Use the script output and phase when filling the prompt:
 ```
 Phase: [1 | 2 | 3]. If 1: summarize requirement only. If 2: propose only interfaces/types. If 3: implement per approved design.
 Entry file: <path>
-In-scope files (do not modify others): <paste script output>
+In-todo files (do not modify others): <paste script output>
 Task: <one sentence>
 Order: define types/interfaces used in this tree first, then implement.
 ```
@@ -172,9 +172,9 @@ Order: define types/interfaces used in this tree first, then implement.
 - "Change all buttons / colors / variable names across the project" in one
   session.
 - Editing multiple unrelated feature trees in one session.
-- Omitting the in-scope list so the model infers scope itself (often wrong).
+- Omitting the in-todo list so the model infers todo itself (often wrong).
 
-## Optional: scope-drift check
+## Optional: todo-drift check
 
 Before commit you can verify that changed files are a subset of entry + direct
 dependents. Not enforced by default; add a small script or manual checklist if
