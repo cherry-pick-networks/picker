@@ -26,11 +26,11 @@ Use that document for AI direction and scope decisions.
 | **system/actor/**         | Profile, progress: endpoint, service, store, schema.                                                                                                              |
 | **system/content/**       | Items, worksheets, prompt: endpoint, service, store, schema.                                                                                                      |
 | **system/source/**        | Source collection: endpoint, service, store.                                                                                                                      |
-| **system/script/**        | Scripts store, AST apply, Governance: endpoint, service, store, validation.                                                                                       |
+| **system/script/**        | Scripts store, mutate (LLM offload), Governance: endpoint, service, store, validation.                                                                            |
 | **system/record/**        | Record store (extracted/identity): endpoint, store.                                                                                                               |
 | **system/kv/**            | Generic Deno KV: endpoint, store.                                                                                                                                 |
 | **system/audit/**         | Log artifact storage (e.g. e2e-runs.toml in same dir as audit.log.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added. |
-| **shared/runtime/store/** | Target path for AST-based self-edit; read and write only via Governance-verified flow.                                                                            |
+| **shared/runtime/store/** | Target path for self-edit; read and write only via Governance-verified flow.                                                                                       |
 | **shared/infra/**         | Shared infrastructure. KV client (`getKv()`) only; no business logic.                                                                                             |
 
 ---
@@ -44,12 +44,10 @@ Use that document for AI direction and scope decisions.
 | GET    | `/kv/:key`                         | Read value by key from Deno KV; responds value or `null`.                                                                                                                      |
 | DELETE | `/kv/:key`                         | Delete one key from Deno KV; responds 204 No Content.                                                                                                                          |
 | POST   | `/kv`                              | Write key-value to Deno KV. Body: `{ "key": string, "value": unknown }`. Responds `{ "key": string }` or 400 with validation error.                                            |
-| GET    | `/ast`                             | AST demo (ts-morph, in-memory sample). Responds `{ "variableDeclarations": number }`.                                                                                          |
-| GET    | `/ast-demo`                        | AST demo page (HTML). Fetches GET /ast and displays variableDeclarations.                                                                                                      |
 | GET    | `/scripts`                         | List entries in shared/runtime/store/ (Governance-verified). Responds `{ "entries": string[] }`.                                                                               |
 | GET    | `/scripts/:path*`                  | Read file in shared/runtime/store/ by path (Governance-verified). Responds file content or 404.                                                                                |
 | POST   | `/scripts/:path*`                  | Write file in shared/runtime/store/ at path (Governance-verified). Body: raw text. Responds 201 or 400/403/500.                                                                |
-| POST   | `/ast/apply`                       | Apply a text patch to a file in shared/runtime/store/. Body: `{ "path": string, "oldText": string, "newText": string }`. Governance-verified; responds 200 or 400/403/404/500. |
+| POST   | `/script/mutate`                   | Mutate file in shared/runtime/store/ (LLM offload). Body: path (required), intent?, options? (maxBlocks?, strategy?). 200 → `{ "ok": true, "replacements": number }`; 4xx/5xx → `{ "ok": false, "status": number, "body": unknown }`. |
 | GET    | `/profile/:id`                     | Read actor profile by id. Responds profile object or 404.                                                                                                                      |
 | POST   | `/profile`                         | Create actor profile. Body: profile fields (id optional, server-generated if omitted). Responds 201 with profile.                                                              |
 | PATCH  | `/profile/:id`                     | Update actor profile by id. Body: partial profile. Responds 200 or 404.                                                                                                        |
