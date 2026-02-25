@@ -88,6 +88,24 @@ system/routes/content.ts."
 
 ---
 
+## Multi-scope commit (reference)
+
+When a task touches more than one scope (e.g. `.github` and `shared/prompt`),
+commit once per scope so that each commit stays within one scope (store.md §U).
+
+- **Procedure**: (1) List the scopes involved. (2) Implement and commit the
+  first scope (e.g. all changes under `.github/` → `git add`, `git commit`). (3)
+  Implement and commit the next scope. Do not mix scopes in one commit.
+- **Classifying paths**: Run `deno task scope-of-paths` with no arguments to
+  classify current git changes by scope (output: `scope\tpath` per line). Use
+  that to group `git add` by scope. With arguments:
+  `deno task scope-of-paths
+  -- path1 path2 ...` to classify given paths.
+- **Example**: ".github only" → add `.github/*`, commit; "shared/prompt only" →
+  add `shared/prompt/*`, commit.
+
+---
+
 ## Blocked or private sites (Tip 11)
 
 - For URLs that cannot be fetched directly (e.g. Reddit, paywalled): use a

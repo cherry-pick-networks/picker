@@ -71,6 +71,7 @@ Optional tooling (status line, setup script, tips): see
 - **Reference (tips, not rules)**: `shared/prompt/documentation/guide.md`
 - **Handoff**: `shared/prompt/handoff.md` (linked from README)
 - **Scope** (modules, API, infra): `shared/prompt/boundary.md`
+- **Branching and PR** (scope-based): store.md §U
 - **Final goal** (for AI): `shared/prompt/goal.md`
 - **AI/tool single source**: `shared/prompt/store.md`
 
@@ -79,7 +80,7 @@ Optional tooling (status line, setup script, tips): see
 ## Rules summary (checkable)
 
 Rules that can be checked or defined as "this repo has X".\
-**Canonical source**: `shared/prompt/store.md` Part B (§A–§R).\
+**Canonical source**: `shared/prompt/store.md` Part B (§A–§R, §U).\
 Read store.md for full definitions; do not duplicate rule text here.\
 `.cursor/rules/*.mdc` define **when** each § applies (always vs on-request).
 

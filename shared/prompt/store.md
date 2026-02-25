@@ -93,6 +93,8 @@ tool-specific configs.
   type-check-policy, audit)
 - `deno task scope-discovery -- <entry-file>` — list direct imports for AI
   session scope (see shared/prompt/documentation/strategy.md)
+- `deno task scope-of-paths [-- path1 path2 ...]` — classify paths (or current
+  git changes) by scope for multi-scope commit grouping (§U)
 - `gh pr create --draft` — create draft PR (review before marking ready)
 - `gh pr view`, `gh pr diff` — inspect PR for review
 - `gh run view` — inspect CI run (e.g. after failure)
@@ -289,6 +291,23 @@ git add, git commit with message per this rule; (3) only after commit succeeds,
 proceed to the next unit. No batch commit at the end of the task. Session end:
 no need to output a suggested commit message; commits are made during the task
 at each boundary. Do not run git commit unless the user explicitly asks.
+
+### §U. Branching and PR by scope
+
+Branch and open PRs by scope so that one branch (and one PR) covers one scope.
+Scope: either a path prefix (e.g. shared/prompt, system/actor, .github) or a
+single purpose (e.g. format-docs, branch-protection). Align path scope with
+shared/prompt/boundary.md and directory prefixes (global, shared, system,
+module, component). Branch name: `<type>/<scope>` (e.g. chore/ts-filename,
+chore/branch-protection, fix/format-docs). One scope per branch; do not mix
+unrelated scopes in the same branch. If a change spans multiple scopes, split
+into separate branches or use one branch only when it is a single purpose (e.g.
+fix/format-docs touching .github and shared/prompt). Merge order: when one scope
+depends on another (e.g. boundary.md update before new module), open and merge
+the scope-doc or dependency PR first (see §K, §L). Multi-scope tasks: complete
+and commit one scope at a time; do not start the next scope before committing
+the current. Use `deno task scope-of-paths` to classify changed files by scope
+when grouping commits.
 
 ### §C. Language
 
@@ -665,3 +684,18 @@ rule text. Naming: Use [suffix].md only under shared/prompt/; suffix from §E
 allowed sets; see §D and §F. Scannability: Use clear headings and one concept
 per bullet or block; state when a rule applies (scope, exceptions); include
 short fixed examples where they help agents parse intent.
+
+### §V. Planning document by scope
+
+When to apply: only when the user explicitly requests creation of a planning
+document (e.g. "기획서 작성", "write a planning document", "draft a plan").
+Output: produce one planning document only; do not split into multiple files.
+Structure: organize the document by sections (e.g. goal, background, functional
+requirements, non-functional requirements, schedule). Within sections that
+describe features or implementation, subdivide by scope: use the same scope
+units as in shared/prompt/boundary.md (modules, API surface, infrastructure) or
+as in §U (path prefix or single purpose); state per scope its role, changes, and
+dependencies in one block. Format and naming: write in English (§C); if saving
+under shared/prompt/, use a single file with a name from §E allowed suffixes
+(e.g. plan.md per Meta). Single source: rule text stays in this file;
+.cursor/rules mdc only states when to apply and references this section.
