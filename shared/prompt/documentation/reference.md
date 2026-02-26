@@ -19,25 +19,25 @@ with store.md §E/§F and modular monolith.
 
 ### Allowed infix (domains)
 
-| Infix        | Responsibility                                                         |
-| ------------ | ---------------------------------------------------------------------- |
-| actor        | Profile, progress (identity and state)                                 |
-| app          | Route registration and app wiring                                      |
-| audit        | Change/run log artifacts                                               |
-| batch        | Batch jobs and bulk operations                                         |
-| concept      | Concept scheme, concept, concept_relation (ontology)                   |
-| content      | Items, worksheets, prompt building                                     |
-| data         | Data access / identity index (e.g. record/data)                        |
-| export       | Export and external output                                             |
-| kv           | Generic key-value HTTP API; Postgres-backed, client from shared/infra. |
-| notification | Notifications and alerts                                               |
-| record       | Identity index (shared/record/reference)                               |
-| report       | Reports and aggregations                                               |
-| schedule     | FSRS-rs schedule (actor, source, unit); weekly plan from grammar       |
-| script       | Scripts store, AST apply, Governance                                   |
-| source       | Source collection and read                                             |
-| sync         | Synchronization and replication                                        |
-| workflow     | Workflow and process orchestration                                     |
+| Infix        | Responsibility                                                                             |
+| ------------ | ------------------------------------------------------------------------------------------ |
+| actor        | Profile, progress (identity and state)                                                     |
+| app          | Route registration and app wiring                                                          |
+| audit        | Change/run log artifacts                                                                   |
+| batch        | Batch jobs and bulk operations                                                             |
+| concept      | Concept scheme, concept, concept_relation (ontology)                                       |
+| content      | Items, worksheets, prompt building                                                         |
+| data         | Data access / identity index (e.g. record/data)                                            |
+| export       | Export and external output                                                                 |
+| kv           | Generic key-value HTTP API; Postgres-backed, client from shared/infra.                     |
+| notification | Notifications and alerts                                                                   |
+| record       | Identity index (shared/record/reference)                                                   |
+| report       | Reports and aggregations                                                                   |
+| schedule     | FSRS schedule (in-house); weekly plan (3 sessions/week) and annual curriculum from grammar |
+| script       | Scripts store, AST apply, Governance                                                       |
+| source       | Source collection and read                                                                 |
+| sync         | Synchronization and replication                                                            |
+| workflow     | Workflow and process orchestration                                                         |
 
 ### Allowed suffix (artifacts)
 
@@ -68,14 +68,14 @@ with store.md §E/§F and modular monolith.
 
 ```
 system/
-  actor/     *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts, *.transfer.ts
-  app/       *.config.ts
-  audit/     *.log.ts
-  concept/   *.service.ts, *.store.ts
+  actor/     *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts, *.parser.ts
+  app/       *.config.ts, *.handler.ts, *.util.ts
+  audit/     audit-e2e-runs.ts
+  concept/   *.service.ts, *.store.ts, concept-schemes.ts
   content/   *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts
   kv/        *.endpoint.ts, *.store.ts
   record/    *.endpoint.ts, *.store.ts
-  schedule/  *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.grammar.ts, *.mapper.ts, *.weekly.ts, *.adapter.ts
+  schedule/  *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, fsrs.ts, *.grammar.ts, *.mapper.ts, *.weekly.ts, *.adapter.ts, *-annual.service.ts
   script/    *.endpoint.ts, *.service.ts, *.store.ts, *.types.ts, *.validation.ts
   source/    *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, source-extract.service.ts, source-llm.client.ts
   routes.ts  (entry; imports app/routes-register.config.ts)
@@ -87,6 +87,32 @@ Under `tests/`, every `.ts` file must be `[name]_test.ts` (Deno convention). The
 **name** part must use lowercase and hyphens only (§E), e.g.
 `scripts-store_test.ts`. Non-test helpers (e.g. `with_temp_scripts_store.ts`)
 are listed in PATH_EXCEPTIONS. Validated by `deno task ts-filename-check`.
+
+### Naming conventions (content and level)
+
+#### Content domain names (English learning data)
+
+For structural names (tables, API paths, `source_id` prefixes,
+`content_type_id`, seed paths, docs), use only these three terms for English
+learning data:
+
+| Domain name   | Use for                                                                                                                            |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **grammar**   | `source_id` prefix (e.g. `book-grammar-*`), grammar curriculum tables/schemas, content_type for grammar                            |
+| **lexis**     | Table names (e.g. `lexis_entry`), `system/lexis/`, seed `shared/infra/seed/lexis/`, `source_id` prefix (e.g. `lexis-middle-basic`) |
+| **phonology** | Tables, APIs, `source_id`, content_type for pronunciation/phonetic data                                                            |
+
+Do not use synonyms (e.g. vocabulary, pronunciation, phonics) in structural
+names. The suffix **grammar** in §E denotes parser/grammar rules
+(`*.grammar.ts`); the same word as content domain means “English grammar data”
+(sources, curriculum).
+
+#### Difficulty / level (3 stages)
+
+For curriculum, schedule, and source-level naming (e.g. grammar books, word
+lists), use three stages in **lowercase everywhere** (code, IDs, API values, DB,
+display): **basic**, **intermediate**, **advanced**. This is a documentation
+convention only; not a validated allowlist.
 
 ### Schema (DDL) file naming
 
@@ -161,19 +187,30 @@ typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
 | system/content/schema/*.ts         | system/content/*.schema.ts         |
 | system/source/endpoint             | service                            |
 | system/script/endpoint             | service                            |
-| system/record/endpoint             | data.store.ts                      |
+| system/record/endpoint             | identity-index.store.ts            |
 | system/kv/endpoint                 | store/kv.ts                        |
-| system/audit/log/log.ts            | system/audit/audit.log.ts          |
+| system/audit/log/log.ts            | system/audit/audit-e2e-runs.ts     |
 | system/app/config/*.ts             | system/app/*.config.ts             |
 
 ### Data file locations (TOML)
 
-| Path                                               | Purpose                                             |
-| -------------------------------------------------- | --------------------------------------------------- |
-| `shared/record/reference/identity-index.toml`      | Identity index (version, description, students)     |
-| `system/audit/e2e-runs.toml`                       | E2E run log (schemaVersion + runs[])                |
-| `shared/infra/seed/ontology/seed.sql`              | Ontology seed (DDC scheme).                         |
-| `shared/infra/seed/ontology/global-standards.toml` | Ontology seed: isced, iscedf, bloom (no CEFR/PISA). |
+| Path                                               | Purpose                                                                                                  |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `shared/record/reference/identity-index.toml`      | Identity index. API: redacted unless X-Client: agent.                                                    |
+| `system/audit/e2e-runs.toml`                       | E2E run log (schemaVersion + runs[])                                                                     |
+| `shared/infra/seed/ontology/seed.sql`              | Ontology seed (DDC scheme).                                                                              |
+| `shared/infra/seed/ontology/global-standards.toml` | Ontology seed: isced, iscedf, bloom (no CEFR/PISA).                                                      |
+| `shared/prompt/documentation/grammar-topics.md`    | Grammar curriculum: 17 major topics, level→unit mapping (schedule/content).                              |
+| `shared/infra/seed/curriculum-52weeks.json`        | Seed source for 52-week curriculum; runtime data in DB table `curriculum_slot`.                          |
+| `shared/infra/seed/lexis/lexis-sources.toml`       | Lexis source list (source_id, env_var). Actual metadata from .env (store.md §V); `deno task seed:lexis`. |
+
+### Curriculum (52 weeks)
+
+52-week grid (3 units per week per level) is stored in DB table
+`curriculum_slot`, seeded from `shared/infra/seed/curriculum-52weeks.json`
+(`deno task seed:curriculum`). Runtime: GET /schedule/plan/annual (query
+`level`). Topic mapping: grammar-topics.md. Weekly plan logic:
+schedule-fsrs-plan.md.
 
 ### Ontology and facet policy
 
@@ -183,7 +220,7 @@ typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
   and seed).
 - **Facet schemes**: Subject IDs use allowed schemes (ddc, isced, iscedf).
   Content type, cognitive level, and context use their respective allowed
-  schemes (see system/concept/concept.config.ts). Content and worksheet APIs
+  schemes (see system/concept/concept-schemes.ts). Content and worksheet APIs
   validate concept IDs per facet and cap at 500 per request.
 - **CI**: `deno task pre-push` does not run `ontology-acyclic-check`. After
   running `deno task seed:ontology`, run `deno task ontology-acyclic-check`
@@ -193,7 +230,7 @@ typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
 
 Single source for allowed concept codes:
 `shared/infra/seed/ontology/global-standards.toml`. Runtime validation:
-`system/concept/concept.config.ts` maps each facet to scheme(s); content and
+`system/concept/concept-schemes.ts` maps each facet to scheme(s); content and
 (when implemented) source APIs reject values not in the allowlist.
 
 **Facet → scheme mapping**
@@ -226,8 +263,8 @@ by updating global-standards.toml and re-running `deno task seed:ontology`.
 - Within a domain: endpoint → service → store/schema only.
 - Cross-domain: do not import another domain's store; use that domain's service
   if needed.
-- app/*.config.ts only imports domain endpoints and registers routes; no
-  business logic.
+- app/*.config.ts and *.handler.ts only import domain endpoints and register
+  routes; no business logic.
 - Postgres: `shared/infra/pg.client.ts` provides `getPg()`. Domain stores and
   system/kv use it; no KV or other storage client.
 
@@ -257,7 +294,7 @@ imports are forbidden (see Modular monolith rules above).
 | concept    | no    | —       | no      | no       | no     | no     | no     | no | no    |
 | content    | yes   | yes     | —       | no       | no     | yes    | no     | no | no    |
 | schedule   | no    | no      | no      | —        | yes    | no     | no     | no | no    |
-| source     | no    | yes     | no      | no       | —      | no     | no     | no | no    |
+| source     | no    | yes     | no      | no       | —      | no     | yes    | no | no    |
 | script     | no    | no      | no      | no       | no     | —      | no     | no | no    |
 | record     | no    | no      | no      | no       | no     | no     | —      | no | no    |
 | kv         | no    | no      | no      | no       | no     | no     | no     | —  | no    |

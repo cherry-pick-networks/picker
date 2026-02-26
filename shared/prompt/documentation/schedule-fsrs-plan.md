@@ -24,15 +24,21 @@ description: Weekly lesson plan via FSRS-rs and source grammar data.
     book-grammar-advanced.
   - `payload.metadata.level`, `payload.metadata.unit_ids` (e.g. unit_1, unit_2).
   - `payload.body`: markdown content.
+  - **Topic mapping**: 17 major topics and level→unit ranges — see
+    `shared/prompt/documentation/grammar-topics.md`. Curriculum order follows
+    `unit_ids`; topics are for reference and optional filtering.
+  - **52-week grid**: DB table `curriculum_slot`, seeded from
+    `shared/infra/seed/curriculum-52weeks.json`; reference.md § Curriculum (52
+    weeks).
 - **Schedule unit**: (actor_id, source_id, unit_id) = one schedule row.
 - **Terminology**: "schedule item" / "(actor, unit) schedule" (no "card").
 
 ## 3. Architecture
 
 - **Domain**: `schedule` (reference.md allowed infix, todo.md modules).
-- **Cross-domain**: schedule may call **source service** only (grammar source
-  list, unit_ids). No direct store imports.
-- **Dependency**: schedule → source (allowed edge).
+- **Cross-domain**: schedule may call **source service** (grammar source list,
+  unit_ids) and **curriculum store** (read curriculum_slot by level).
+- **Dependency**: schedule → source, schedule → curriculum store (read-only).
 
 ## 4. Data model
 
@@ -49,7 +55,18 @@ description: Weekly lesson plan via FSRS-rs and source grammar data.
 
 **DDL**: `shared/infra/schema/07_schedule.sql`.
 
-### 4.2 Review log (optional, Phase 2)
+### 4.2 Table: curriculum_slot
+
+- **level** (TEXT): basic | intermediate | advanced.
+- **week_number** (INT), **slot_index** (INT), **source_id**, **unit_id**
+  (TEXT).
+- **PK**: (level, week_number, slot_index). Index: (level, week_number).
+- Seeded from `shared/infra/seed/curriculum-52weeks.json` via
+  `deno task seed:curriculum`.
+
+**DDL**: `shared/infra/schema/08_curriculum.sql`.
+
+### 4.3 Review log (optional, Phase 2)
 
 - Table schedule_review_log; MVP can keep only latest in payload.
 

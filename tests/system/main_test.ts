@@ -1,5 +1,5 @@
 import { assertEquals } from "@std/assert";
-import { add } from "#system/app/add.config.ts";
+import { add } from "#system/app/add.util.ts";
 import { app } from "../../main.ts";
 import { hasDbEnv } from "./db-env_test.ts";
 

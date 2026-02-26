@@ -11,15 +11,12 @@
  */
 
 import { getPg } from "#shared/infra/pg.client.ts";
+import { loadSql } from "#shared/infra/sql-loader.ts";
 
 const REQUIRES = "requires";
 
-const EDGES_QUERY = `
-SELECT source_scheme_id AS from_scheme, source_code AS from_code,
-       target_scheme_id AS to_scheme, target_code AS to_code
-FROM concept_relation
-WHERE relation_type = $1
-`;
+const sqlDir = new URL("./sql/", import.meta.url);
+const EDGES_QUERY = await loadSql(sqlDir, "edges_concept_relation.sql");
 
 function nodeKey(scheme: string, code: string): string {
   return `${scheme}:${code}`;

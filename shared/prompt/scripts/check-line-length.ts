@@ -7,6 +7,10 @@
  */
 
 import {
+  isFileLengthExempt,
+  isLineLengthExemptFile,
+} from "./check-line-length-config.ts";
+import {
   collectTsFiles,
   collectViolations,
   FileLengthViolation,
@@ -14,12 +18,6 @@ import {
   MAX_EFFECTIVE_LINES_PER_FILE,
   MAX_LINE_LENGTH,
 } from "./check-line-length-helpers.ts";
-
-// function-length-ignore
-function isFileLengthExempt(rel: string): boolean {
-  return rel.endsWith("_test.ts") || rel.startsWith("tests/") ||
-    rel.includes("/tests/");
-}
 
 function logViolationsAndExit(
   lineLength: LineLengthViolation[],
@@ -72,6 +70,7 @@ async function main(): Promise<void> {
     root,
     files,
     isFileLengthExempt,
+    isLineLengthExemptFile,
   );
   reportResult(lineLength, fileLength);
 }

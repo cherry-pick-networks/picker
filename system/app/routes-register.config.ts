@@ -5,8 +5,8 @@
 
 import type { Hono } from "hono";
 import * as content from "#system/content/content.endpoint.ts";
-import * as data from "#system/record/data.endpoint.ts";
-import * as home from "./home.config.ts";
+import * as data from "#system/record/identity-index.endpoint.ts";
+import * as home from "./home.handler.ts";
 import * as kv from "#system/kv/kv.endpoint.ts";
 import * as profile from "#system/actor/profile.endpoint.ts";
 import * as schedule from "#system/schedule/schedule.endpoint.ts";
@@ -69,6 +69,7 @@ function registerData(app: Hono) {
 function registerSchedule(app: Hono) {
   app.get("/schedule/due", schedule.getDue);
   app.get("/schedule/plan/weekly", schedule.getWeekly);
+  app.get("/schedule/plan/annual", schedule.getAnnual);
   app.get("/schedule/items", schedule.getItems);
   app.post("/schedule/items", schedule.postItem);
   app.post("/schedule/items/:id/review", schedule.postReview);
@@ -95,4 +96,4 @@ export function registerRestHandlers(app: Hono): void {
   for (const fn of fns) fn(app);
 }
 
-export { registerAstAndScripts } from "./routes-register-ast.config.ts";
+export { registerAstAndScripts } from "./routes-register-scripts.config.ts";

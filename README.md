@@ -9,7 +9,8 @@ client: `client.ts`. Routes from `system/routes.ts` and
 - **Dev**: `deno task dev` (runs `main.ts` with watch)
 - **Once**: `deno run -A main.ts` (Postgres required)
 - **Build** (optional): `deno task build` — then **Start**: `deno task start`
-- **Test**: `deno test`
+- **Test**: `deno task test` or `./scripts/dev.sh test` (DB env). Before push:
+  `deno task pre-push` (runs via dev.sh).
 
 ## Documentation
 

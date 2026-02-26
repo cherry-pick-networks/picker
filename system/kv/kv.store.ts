@@ -1,27 +1,32 @@
 /** Generic key-value storage (Postgres). Logical key only (e.g. "foo"). */
 
 import { getPg } from "#shared/infra/pg.client.ts";
+import { loadSql } from "#shared/infra/sql-loader.ts";
+
+const sqlDir = new URL("./sql/", import.meta.url);
+const SQL_LIST_KEYS_BY_PREFIX = await loadSql(
+  sqlDir,
+  "list_keys_by_prefix.sql",
+);
+const SQL_LIST_KEYS = await loadSql(sqlDir, "list_keys.sql");
+const SQL_GET_KEY = await loadSql(sqlDir, "get_key.sql");
+const SQL_SET_KEY = await loadSql(sqlDir, "set_key.sql");
+const SQL_DELETE_KEY = await loadSql(sqlDir, "delete_key.sql");
 
 export async function listKeys(prefix?: string): Promise<string[]> {
   const pg = await getPg();
-  const r = prefix
-    ? await pg.queryObject<{ logical_key: string }>(
-      "SELECT logical_key FROM kv WHERE logical_key LIKE $1 " +
-        "ORDER BY logical_key",
-      [prefix + "%"],
-    )
-    : await pg.queryObject<{ logical_key: string }>(
-      "SELECT logical_key FROM kv ORDER BY logical_key",
-    );
+  const [sql, args] = prefix
+    ? [SQL_LIST_KEYS_BY_PREFIX, [prefix + "%"] as string[]]
+    : [SQL_LIST_KEYS, [] as string[]];
+  const r = await pg.queryObject<{ logical_key: string }>(sql, args);
   return r.rows.map((row) => row.logical_key);
 }
 
 export async function getKey(logicalKey: string): Promise<unknown | null> {
   const pg = await getPg();
-  const r = await pg.queryObject<{ value: unknown }>(
-    "SELECT value FROM kv WHERE logical_key = $1",
-    [logicalKey],
-  );
+  const r = await pg.queryObject<{ value: unknown }>(SQL_GET_KEY, [
+    logicalKey,
+  ]);
   const row = r.rows[0];
   return row?.value ?? null;
 }
@@ -31,14 +36,10 @@ export async function setKey(
   value: unknown,
 ): Promise<void> {
   const pg = await getPg();
-  await pg.queryArray(
-    `INSERT INTO kv (logical_key, value) VALUES ($1, $2)
-     ON CONFLICT (logical_key) DO UPDATE SET value = $2`,
-    [logicalKey, JSON.stringify(value)],
-  );
+  await pg.queryArray(SQL_SET_KEY, [logicalKey, JSON.stringify(value)]);
 }
 
 export async function deleteKey(logicalKey: string): Promise<void> {
   const pg = await getPg();
-  await pg.queryArray("DELETE FROM kv WHERE logical_key = $1", [logicalKey]);
+  await pg.queryArray(SQL_DELETE_KEY, [logicalKey]);
 }

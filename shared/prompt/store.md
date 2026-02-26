@@ -18,6 +18,9 @@ tool-specific configs.
 - **Runtime**: Deno
 - **Stack**: Hono (HTTP), Zod (validation), ts-morph (AST), PostgreSQL (storage)
 - **Entry**: `main.ts` (Hono app, routes from system/routes.ts)
+- **Sensitive data**: Identity PII and source copyright metadata are redacted
+  for external API callers; agent requests (`X-Client: agent` or
+  `INTERNAL_API_KEY`) receive full data. See todo.md API surface.
 
 ---
 
@@ -41,10 +44,13 @@ tool-specific configs.
   `@std/toml`. File names follow §E; record files are `{uuid}.toml`. Documents
   use Markdown (`.md`) or Cursor rules (`.mdc`) with optional YAML front matter;
   parse with `@std/front-matter`. Data file paths: see `shared/prompt/todo.md`.
+- **SQL only in .sql files**: Write all SQL in `.sql` files only; do not embed
+  SQL strings in TypeScript, JavaScript, or other code. Load at runtime via
+  `shared/infra/sql-loader.ts` (`loadSql(baseUrl, filename)`).
 - **DML SQL**: Keep application DML (SELECT, INSERT, UPDATE, DELETE) in
   `system/<module>/sql/*.sql` (one statement per file, snake_case filenames).
-  Load via `shared/infra/sql-loader.ts` (`loadSql(baseUrl, filename)`); use
-  `$1, $2, ...` for parameters; document parameter order in the file or store.
+  Use `$1, $2, ...` for parameters; document parameter order in the file or
+  store.
 
 ---
 
@@ -96,10 +102,10 @@ tool-specific configs.
   filenames per §E and reference.md (optional; run in pre-commit or CI)
 - `deno task sql-filename-check` — verify all .sql (DDL in shared/infra/schema,
   DML in system/*/sql) per reference.md (optional; run in pre-commit or CI)
-- `deno task pre-push` — run before push; same as CI (lint, fmt, line-length,
+- `deno task pre-push` — run before push; same as CI. Runs via dev.sh (so same
+  DB env as dev: pass and picker/postgres). Runs lint, format-check,
   ts-filename-check, sql-filename-check, test, todo-check, boundary-check,
-  dependency-check, type-check-policy, audit). Uses same DB env as dev (pass and
-  picker/postgres) when run locally.
+  dependency-check, type-check-policy, audit.
 - `deno task todo-discovery -- <entry-file>` — list direct imports for AI
   session todo (see shared/prompt/documentation/strategy.md)
 - `deno task rules:summary -- <task-type>` — list applicable store.md § for task
@@ -166,8 +172,9 @@ tool-specific configs.
 - **Merge strategy**: Default branch receives changes only via PR; merge using
   **Create a merge commit** so that the only commits with two parents are PR
   merges; keep branch history linear (see .github/BRANCH_PROTECTION.md).
-- **Before push or PR**: Run `deno task pre-push` so CI passes. Code must
-  satisfy §P (function body 2–4 statements; async only when body uses await).
+- **Before push or PR**: Run `deno task pre-push` (runs under dev.sh for local
+  DB env) so CI passes. Code must satisfy §P (function body 2–4 statements;
+  async only when body uses await).
 - **Pre-commit hook (optional)**: To run `deno lint` and
   `deno task format-check` on commit, set `git config core.hooksPath .githooks`
   and `chmod +x .githooks/pre-commit`.
@@ -290,19 +297,20 @@ and .mdc; rule text lives only in Part B below. The index and
 `deno task rules:summary -- <task-type>` are editor-agnostic; you can use them
 from any editor or CLI to apply the same rules.
 
-| Context                | Apply §          | Notes                       |
-| ---------------------- | ---------------- | --------------------------- |
-| always                 | C, I, O          | Every turn                  |
-| handoff / long session | B                | Commit and session boundary |
-| feature + code         | Q, P, B, S, T, N | Feature implementation (TS) |
-| refactor + code        | P, B, S, T, N    | Refactor (TS)               |
-| docs                   | R, D, E          | .md / .mdc editing          |
-| commit                 | A, B             | Commit message and boundary |
-| migration              | J, D, E, F       | Rule/directory migration    |
-| system                 | K, L, M, F       | todo, system/ editing       |
-| dependency             | G, H             | deno.json etc.              |
-| sql                    | U                | SQL/DDL                     |
-| directory              | F, D, E          | Directory creation          |
+| Context                | Apply §          | Notes                                                           |
+| ---------------------- | ---------------- | --------------------------------------------------------------- |
+| always                 | C, I, O          | Every turn                                                      |
+| handoff / long session | B                | Commit and session boundary                                     |
+| feature + code         | Q, P, B, S, T, N | Feature implementation (TS)                                     |
+| refactor + code        | P, B, S, T, N    | Refactor (TS)                                                   |
+| docs                   | R, D, E          | .md / .mdc editing                                              |
+| commit                 | A, B             | Commit message and boundary                                     |
+| migration              | J, D, E, F       | Rule/directory migration                                        |
+| system                 | K, L, M, F       | todo, system/ editing                                           |
+| dependency             | G, H             | deno.json etc.                                                  |
+| sql                    | U                | SQL/DDL                                                         |
+| directory              | F, D, E          | Directory creation                                              |
+| seed                   | V, U, E          | Seed data; serialization rationale only; sensitive data in .env |
 
 ---
 
@@ -414,7 +422,11 @@ education: only this spelling; never edu. type (TS/classification): use types in
 Suffix Meta; never type. core: forbidden in Context; use shared, base, or domain
 (layer). context (API): use provider in Infix Entity; do not use context as
 segment. record: only Entity; stored units of data (e.g. extracted record,
-identity record); one record per file or index entry.
+identity record); one record per file or index entry. grammar: as Suffix =
+parser/grammar rules (*.grammar.ts); as content domain = English grammar data
+(see reference.md Content domain names). lexis, phonology: content domain only
+(word data, pronunciation data); use for domain infix, table names, seed paths
+per reference.md.
 
 Prefix — one axis only: [ Scope | Layer | Context ]. Rule: prefix must denote
 system position only; technical tools (cache, redis) or artifact form (config,
@@ -651,6 +663,16 @@ generated output. Exception: file-length check is not applied to test files
 (paths ending with `_test.ts` or under a `tests/` directory); line-length check
 still applies.
 
+Line-length and file-length exceptions: Single source of truth for exemptions is
+shared/prompt/scripts/check-line-length-config.ts (and this doc). Line-length
+exceptions: allow only where documented (e.g. long URLs in comments, generated
+snippet). Put `// line-length-ignore` or `// line-length-ignore: <reason>` on
+the line immediately above the long line; prefer splitting the string or URL to
+stay under 80 chars. File-length exceptions: list path patterns and exact paths
+in the config; add only when splitting the file is not feasible (e.g. ported
+algorithm); document the reason in a comment in the config. Do not add
+file-length exempt to avoid splitting; split into sibling modules instead.
+
 Function body: block body 2–4 statements (AST direct statements in block body
 only); expression body allowed (counts as 1). A single statement is allowed when
 it is a try/catch, switch, or block-bodied if (complex statement exemption).
@@ -859,3 +881,19 @@ natural/surrogate principle (3.13). DML: standard JOIN (6.1.1), no hints unless
 justified (6.4), DRI over triggers (6.5), avoid correlated subqueries (6.9).
 VIEW: same naming as tables (7.1), explicit column names (7.1.1). Procedures:
 prefer set over cursor (8.4.2), dynamic SQL and injection prevention (8.6).
+
+### §V. Seed and copyright-sensitive data
+
+Scope: Seed data under shared/infra/seed/ (and any committed data that
+identifies textbooks, publishers, or other copyrightable material).
+
+- **Serialization rationale only in repo**: Commit only the _rationale_ for
+  serialization: schema, field semantics, and format. Do not commit
+  copyright-sensitive or identifying content (e.g. textbook titles, exact entry
+  counts, words_per_day, total_days that identify a specific book).
+- **Sensitive values in .env**: Store such values in `.env` (or equivalent
+  env-backed secret). Seed runners read them at runtime (e.g.
+  `LEXIS_SOURCE_META_<SOURCE_ID>`). `.env` is gitignored; do not commit it.
+- **API redaction unchanged**: Runtime redaction of source metadata for external
+  callers remains per todo.md (X-Client: agent or INTERNAL_API_KEY for full
+  data).

@@ -54,9 +54,11 @@ export const ALLOWED_SUFFIX = new Set([
   "event",
   "format",
   "grammar",
+  "handler",
   "log",
   "mapper",
   "mapping",
+  "parser",
   "pipeline",
   "request",
   "response",
@@ -65,6 +67,7 @@ export const ALLOWED_SUFFIX = new Set([
   "store",
   "transfer",
   "types",
+  "util",
   "validation",
   "weekly",
 ]);
@@ -72,6 +75,7 @@ export const ALLOWED_SUFFIX = new Set([
 /** Paths that are exempt from [name].[suffix].ts rule (exact relative path). */
 export const PATH_EXCEPTIONS = new Set([
   "system/routes.ts",
+  "system/schedule/fsrs.ts",
   "tests/system/with_temp_scripts_store.ts",
 ]);
 

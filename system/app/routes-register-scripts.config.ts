@@ -1,6 +1,5 @@
 /**
  * Script routes: scripts list/get/post and POST /script/mutate.
- * AST legacy endpoints removed in S4.
  */
 
 import type { Hono } from "hono";

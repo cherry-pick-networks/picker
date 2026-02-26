@@ -1,4 +1,5 @@
 import type { Context } from "hono";
+import { isAgentRequest } from "#system/app/request-context.ts";
 import {
   extractConceptsFromSource,
 } from "#system/source/source-extract.service.ts";
@@ -8,17 +9,20 @@ import {
   getSource as svcGetSource,
   listSources,
 } from "./source.service.ts";
+import { redactSource } from "#system/record/sensitive-redact.ts";
 
 export async function getSources(c: Context) {
   const sources = await listSources();
-  return c.json({ sources });
+  if (isAgentRequest(c)) return c.json({ sources });
+  const redacted = sources.map(redactSource);
+  return c.json({ sources: redacted });
 }
 
 export async function getSource(c: Context) {
   const id = c.req.param("id");
   const source = await svcGetSource(id);
   if (source == null) return c.json({ error: "Not found" }, 404);
-  return c.json(source);
+  return c.json(isAgentRequest(c) ? source : redactSource(source));
 }
 
 // function-length-ignore

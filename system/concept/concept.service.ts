@@ -1,6 +1,6 @@
 /** Concept validation: facet IDs must belong to designated scheme(s). */
 
-import { type FacetName, getAllowedSchemeIds } from "./concept.config.ts";
+import { type FacetName, getAllowedSchemeIds } from "./concept-schemes.ts";
 import * as conceptStore from "./concept.store.ts";
 
 export const ID_COUNT_LIMIT = 500;

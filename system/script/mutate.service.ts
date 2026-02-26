@@ -5,7 +5,7 @@
  */
 
 import { verifyGovernance } from "#system/script/governance.validation.ts";
-import { mutateViaLlm } from "#system/script/llm.client.ts";
+import { mutateViaLlm } from "#system/script/script-llm.client.ts";
 import type {
   MutateRequest,
   MutateResponse,

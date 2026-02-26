@@ -1,6 +1,17 @@
 /** Concept storage (Postgres): scheme and concept tables. */
 
 import { getPg } from "#shared/infra/pg.client.ts";
+import { loadSql } from "#shared/infra/sql-loader.ts";
+
+const sqlDir = new URL("./sql/", import.meta.url);
+const SQL_CHECK_IDS_IN_SCHEME = await loadSql(
+  sqlDir,
+  "check_ids_in_scheme.sql",
+);
+const SQL_GET_EXISTING_CONCEPT_IDS = await loadSql(
+  sqlDir,
+  "get_existing_concept_ids_by_schemes.sql",
+);
 
 export async function checkIdsInScheme(
   ids: string[],
@@ -9,7 +20,7 @@ export async function checkIdsInScheme(
   if (ids.length === 0) return true;
   const pg = await getPg();
   const r = await pg.queryObject<{ code: string }>(
-    "SELECT code FROM concept WHERE scheme_id = $1 AND code = ANY($2)",
+    SQL_CHECK_IDS_IN_SCHEME,
     [schemeId, ids],
   );
   return ids.every((id) => r.rows.some((row) => row.code === id));
@@ -22,7 +33,7 @@ export async function getExistingConceptIdsBySchemes(
   if (ids.length === 0 || allowedSchemeIds.length === 0) return new Set();
   const pg = await getPg();
   const r = await pg.queryObject<{ code: string }>(
-    "SELECT code FROM concept WHERE code = ANY($1) AND scheme_id = ANY($2)",
+    SQL_GET_EXISTING_CONCEPT_IDS,
     [ids, allowedSchemeIds],
   );
   return new Set(r.rows.map((row) => row.code));

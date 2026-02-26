@@ -27,6 +27,9 @@ async function applySchema(): Promise<void> {
     "03_kv.sql",
     "04_content.sql",
     "06_ontology.sql",
+    "07_schedule.sql",
+    "08_curriculum.sql",
+    "09_lexis-entry.sql",
   ];
   for (const name of files) {
     const url = new URL(name, SCHEMA_DIR);

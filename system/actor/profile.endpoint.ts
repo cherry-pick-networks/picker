@@ -3,7 +3,7 @@ import { z } from "zod";
 import {
   getPatchProfileInput,
   getPatchProgressInput,
-} from "./profile-patch-input.transfer.ts";
+} from "./profile-patch-input.parser.ts";
 import {
   createProfile,
   getProfile as svcGetProfile,
