@@ -22,8 +22,8 @@ Part B only; this skill gives a short checklist.
 
 ## §P — Format
 
-- Function body: 2–4 statements (block body); run `deno fmt`,
-  `deno task line-length-check`.
+- Function body: 2–4 statements (block body); run `deno fmt`, then
+  `deno task format-check`.
 - File: ≤100 effective lines; split when longer.
 - Line length: ≤80 characters.
 
@@ -42,5 +42,5 @@ Part B only; this skill gives a short checklist.
 - [ ] Requirement summary approved before design.
 - [ ] Design (interfaces/types) approved before implementation.
 - [ ] Each function body 2–4 statements; file ≤100 effective lines.
-- [ ] `deno fmt` and `deno task line-length-check` run.
+- [ ] `deno fmt` and `deno task format-check` run.
 - [ ] Commit at feature-flag/logical boundary per §B.

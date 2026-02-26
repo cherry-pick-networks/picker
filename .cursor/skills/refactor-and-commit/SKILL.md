@@ -13,7 +13,7 @@ Part B only; this skill gives a short checklist.
 ## §P — Format
 
 - Function body: 2–4 statements; file ≤100 effective lines; line length ≤80.
-- Run `deno fmt`, `deno task line-length-check` after edits.
+- Run `deno fmt`, then `deno task format-check` after edits.
 
 ## §B — Commit boundary
 
@@ -32,5 +32,5 @@ Part B only; this skill gives a short checklist.
 ## Checklist
 
 - [ ] Refactor preserves 2–4 statements per body and file length.
-- [ ] `deno fmt` and `deno task line-length-check` run.
+- [ ] `deno fmt` and `deno task format-check` run.
 - [ ] Commit message follows §A; one logical unit per commit (§B).

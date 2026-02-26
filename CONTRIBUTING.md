@@ -44,9 +44,8 @@ use Issues only for bugs and concrete feature requests.
    disable or bypass type checking (no `--no-check`, `@ts-ignore`, or
    `@ts-expect-error`); fix type errors in code or types.
 4. **Format and line length (store.md §P)**: Run `deno fmt` after editing code,
-   then ensure `deno fmt --check` and `deno task line-length-check` pass. For
-   line-length failures on long imports or strings, see the line-break patterns
-   in store.md §P.
+   then ensure `deno task format-check` passes. For line-length failures on long
+   imports or strings, see the line-break patterns in store.md §P.
 5. **Commit messages**: Use the format `<type>[(todo)]: <description>`
    (imperative, lowercase). Types: `feat`, `fix`, `docs`, `chore`, `refactor`,
    `perf`, `test`, `ci`, `build`.

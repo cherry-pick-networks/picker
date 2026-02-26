@@ -69,6 +69,9 @@ Optional tooling (status line, setup script, tips): see
 - **Rules (checkable)**: See Rules summary below; canonical source
   `shared/prompt/store.md` Part B.
 - **Reference (tips, not rules)**: `shared/prompt/documentation/guide.md`
+- **Cursor chat commands** (Cursor only; slash command list and when to use):
+  `shared/prompt/documentation/guide.md` § Cursor chat commands (project). For
+  other editors: § Using rules without Cursor.
 - **Handoff**: `shared/prompt/handoff.md` (linked from README)
 - **Todo** (modules, API, infra): `shared/prompt/todo.md`
 - **Final goal** (for AI): `shared/prompt/goal.md`
@@ -78,15 +81,15 @@ Optional tooling (status line, setup script, tips): see
 
 ## Rule application flow
 
-- **Always**: global-core.mdc applies §C, §I, §O (and §B for handoff). No other
-  rule text is duplicated in .mdc.
+- **Always** (Cursor): global-core.mdc applies §C, §I, §O (and §B for handoff).
+  No other rule text is duplicated in .mdc.
 - **By context**: Which § apply is in store.md "Rule index (context →
   sections)". Run `deno task rules:summary -- <task-type>` to get the list and
-  one-line titles, or use the matching skill (e.g. feature-implementation,
-  refactor-and-commit, docs-and-boundary) from `.cursor/skills/`.
-- **Heavy verification**: When you need a compliance check (e.g. "does this diff
-  satisfy §P and §N?"), use a subagent; see "Subagents for rules" in
-  shared/prompt/documentation/guide.md.
+  one-line titles (works from any editor). In Cursor, you can also use the
+  matching skill from `.cursor/skills/`.
+- **Heavy verification**: In Cursor, use a subagent; see "Subagents for rules"
+  in guide.md. Elsewhere, run rules:summary and check the change against the
+  cited § using store.md.
 
 ---
 
@@ -95,7 +98,7 @@ Optional tooling (status line, setup script, tips): see
 Rules that can be checked or defined as "this repo has X".\
 **Canonical source**: `shared/prompt/store.md` Part B (§A–§R).\
 Read store.md for full definitions; do not duplicate rule text here.\
-`.cursor/rules/*.mdc` define **when** each § applies (always vs on-request).
+When using Cursor, `.cursor/rules/*.mdc` define **when** each § applies.
 
 ---
 
