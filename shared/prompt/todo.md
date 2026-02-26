@@ -29,6 +29,7 @@ Use that document for AI direction and todo decisions.
 | **system/source/**        | Source collection and KAG: endpoint, service, store, schema, source-extract.service, source-llm.client.                                                           |
 | **system/script/**        | Scripts store, mutate (LLM offload), Governance: endpoint, service, store, validation.                                                                            |
 | **system/record/**        | Identity index: endpoint, store (reference/identity-index.toml only).                                                                                             |
+| **system/schedule/**      | FSRS-rs schedule (actor, source, unit): endpoint, service, store, schema, fsrs-adapter. Weekly plan from source grammar payload.                                  |
 | **system/kv/**            | Generic key-value HTTP API: endpoint, store (Postgres-backed).                                                                                                    |
 | **system/audit/**         | Log artifact storage (e.g. e2e-runs.toml in same dir as audit.log.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added. |
 | **shared/runtime/store/** | Target path for self-edit; read and write only via Governance-verified flow.                                                                                      |
@@ -66,6 +67,11 @@ Use that document for AI direction and todo decisions.
 | POST   | `/sources/:id/extract`             | Extract subject/concept IDs from source body via LLM; save to source extracted_* and return. Body optional. 200 → { ok, concept_ids, subject_id?, extracted_at }; 4xx/5xx → { ok: false, status, body }. Requires source.body.        |
 | GET    | `/data/identity-index`             | Read identity index (version, description, students). Responds JSON.                                                                                                                                                                  |
 | GET    | `/data/identity/:id`               | Read identity student by id (from index). Responds JSON or 404.                                                                                                                                                                       |
+| GET    | `/schedule/due`                    | List schedule items due in range. Query: actor_id, from, to. Responds { items: ScheduleItem[] }.                                                                                                                                       |
+| GET    | `/schedule/plan/weekly`            | Weekly lesson plan. Query: actor_id, week_start (or year, week), optional level. Responds { week_start, week_end, new_units, review_units }.                                                                                            |
+| GET    | `/schedule/items`                  | List schedule items. Query: actor_id, optional source_id. Responds { items: ScheduleItem[] }.                                                                                                                                          |
+| POST   | `/schedule/items`                  | Create schedule item. Body: actor_id, source_id, unit_id. Responds 201 with item.                                                                                                                                                       |
+| POST   | `/schedule/items/:id/review`       | Record review. Body: grade (1–4), optional reviewed_at. Responds 200 with updated item.                                                                                                                                               |
 
 ---
 
@@ -89,11 +95,11 @@ Use that document for AI direction and todo decisions.
 ## Infrastructure
 
 - **PostgreSQL** — single storage backend. Client: `shared/infra/pg.client.ts`
-  (`getPg()`). Domain stores (actor, source, kv, content) and system/kv use it.
-  Tables: `actor_profile`, `actor_progress`, `source`, `kv`, `content_item`,
-  `content_worksheet`. DDL under `shared/infra/schema/` (e.g. `01_actor.sql`,
-  `02_source.sql`, `03_kv.sql`, `04_content.sql`; see reference.md Schema DDL
-  file naming).
+  (`getPg()`). Domain stores (actor, source, kv, content, schedule) and
+  system/kv use it. Tables: `actor_profile`, `actor_progress`, `source`, `kv`,
+  `content_item`, `content_worksheet`, `schedule_item`. DDL under
+  `shared/infra/schema/` (e.g. `01_actor.sql`, `02_source.sql`, `07_schedule.sql`;
+  see reference.md Schema DDL file naming).
 - **File-based data** — under `shared/record/reference/`: single file
   `identity-index.toml` (version, description, students). Read via
   system/record/data.store.ts; no store directory.

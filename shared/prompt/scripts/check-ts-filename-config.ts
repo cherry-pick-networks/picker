@@ -33,6 +33,7 @@ export const SYSTEM_INFIX = new Set([
   "content",
   "kv",
   "record",
+  "schedule",
   "script",
   "source",
 ]);
