@@ -175,11 +175,11 @@ typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
 | `shared/infra/seed/ontology/seed.sql`              | Ontology seed (DDC scheme).                         |
 | `shared/infra/seed/ontology/global-standards.toml` | Ontology seed: isced, iscedf, bloom (no CEFR/PISA). |
 | `shared/prompt/documentation/grammar-topics.md`    | Grammar curriculum: 17 major topics, level→unit mapping (schedule/content). |
-| `shared/infra/seed/curriculum-52weeks.json`         | 52-week curriculum per level (basic/intermediate/advanced), 3 units/week. |
+| `shared/infra/seed/curriculum-52weeks.json`         | Seed source for 52-week curriculum; runtime data in DB table `curriculum_slot`. |
 
 ### Curriculum (52 weeks)
 
-52-week grid (3 units per week per level) is in `shared/infra/seed/curriculum-52weeks.json`. Topic mapping: grammar-topics.md. Weekly plan logic: schedule-fsrs-plan.md.
+52-week grid (3 units per week per level) is stored in DB table `curriculum_slot`, seeded from `shared/infra/seed/curriculum-52weeks.json` (`deno task seed:curriculum`). Runtime: GET /schedule/plan/annual (query `level`). Topic mapping: grammar-topics.md. Weekly plan logic: schedule-fsrs-plan.md.
 
 ### Ontology and facet policy
 
