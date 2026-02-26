@@ -26,6 +26,29 @@ Simplify (Tip 40 → §11).
 
 ---
 
+## Cursor chat commands (project)
+
+In Cursor chat, typing `/` shows project-defined commands. Below is a
+human-facing list of what exists and when to use each; for Cursor’s own docs
+see [Commands](https://cursor.com/docs/context/commands).
+
+| Command | Purpose | Reference |
+| ------- | ------- | --------- |
+| `/rules-summary` [task-type] | List applicable store.md § for the task type | §5, guide rules:summary |
+| `/session-goal` | State session goal in one sentence; ensure branch is not default | guide Session start |
+| `/pre-push` | Run pre-push (same as CI); fix and re-run if it fails | store.md §5, §7 |
+| `/commit-boundary` | Commit current changes as one logical unit | store.md §A, §B |
+| `/create-pr` | Create draft PR for current branch | store.md §7 |
+| `/rules-check` [task-type] | Verify change against applicable §; delegate to rules-subagent if needed | guide Subagents for rules |
+
+Anything you type after the command name (e.g. `/rules-summary refactor`) is
+passed to the model as part of that command’s instruction.
+
+Detailed rules stay in store.md and in each command’s `.md` under
+`.cursor/commands/`. This section is a summary for humans only.
+
+---
+
 ## Status line (Tip 0)
 
 - **Script**: `shared/prompt/scripts/context-bar.sh`

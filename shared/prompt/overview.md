@@ -69,6 +69,8 @@ Optional tooling (status line, setup script, tips): see
 - **Rules (checkable)**: See Rules summary below; canonical source
   `shared/prompt/store.md` Part B.
 - **Reference (tips, not rules)**: `shared/prompt/documentation/guide.md`
+- **Cursor chat commands** (slash command list and when to use):
+  `shared/prompt/documentation/guide.md` § Cursor chat commands (project).
 - **Handoff**: `shared/prompt/handoff.md` (linked from README)
 - **Todo** (modules, API, infra): `shared/prompt/todo.md`
 - **Final goal** (for AI): `shared/prompt/goal.md`
