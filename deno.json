@@ -33,7 +33,8 @@
     "todo-discovery": "deno run --allow-read shared/prompt/scripts/todo-discovery.ts",
     "ontology-acyclic-check": "deno run -A shared/prompt/scripts/check-ontology-acyclic.ts",
     "rules:summary": "deno run -A shared/prompt/scripts/rules-summary.ts",
-    "sql-filename-check": "deno run --allow-read shared/prompt/scripts/check-sql-filename.ts"
+    "sql-filename-check": "deno run --allow-read shared/prompt/scripts/check-sql-filename.ts",
+    "clean-branches": "sh shared/prompt/scripts/clean-local-branches.sh"
   },
   "lint": {
     "plugins": [
