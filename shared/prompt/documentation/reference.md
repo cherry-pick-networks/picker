@@ -144,6 +144,7 @@ name satisfying `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. Run:
 | `shared/infra/seed/ontology/seed.sql`               | Ontology seed (DDC scheme).                    |
 | `shared/infra/seed/csat-ontology.toml`              | Ontology seed (csat-type, cog, ctx).           |
 | `shared/infra/seed/ontology/csat-subjects.toml`     | Ontology seed: csat-subjects (all exam areas). |
+| `shared/infra/seed/ontology/global-standards.toml`  | Ontology seed: isced, iscedf, bloom (no CEFR/PISA). |
 
 ### Ontology and facet policy
 
@@ -152,9 +153,9 @@ name satisfying `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. Run:
   Run `deno task ontology-acyclic-check` to verify (e.g. after applying schema
   and seed).
 - **Facet schemes**: Subject IDs use allowed schemes (e.g. csat-subjects, ddc,
-  isced-f). Content type, cognitive level, and context use their respective
-  allowed schemes (see system/concept/concept.config.ts). Content and worksheet
-  APIs validate concept IDs per facet and cap at 500 per request.
+  isced, iscedf). Content type, cognitive level, and context use their
+  respective allowed schemes (see system/concept/concept.config.ts). Content and
+  worksheet APIs validate concept IDs per facet and cap at 500 per request.
 - **CI**: `deno task pre-push` does not run `ontology-acyclic-check`. After
   running `deno task seed:ontology`, run `deno task ontology-acyclic-check`
   manually when changing ontology seed or relations.

@@ -3,15 +3,12 @@
 export const SUBJECT_SCHEMES = [
   "csat-subjects",
   "ddc",
-  "isced-f",
+  "isced",
+  "iscedf",
 ] as const;
 export const CONTENT_TYPE_SCHEMES = ["csat-type"] as const;
-export const COGNITIVE_LEVEL_SCHEMES = [
-  "csat-cognitive",
-  "blooms-taxonomy",
-  "cefr",
-] as const;
-export const CONTEXT_SCHEMES = ["csat-context", "pisa-framework"] as const;
+export const COGNITIVE_LEVEL_SCHEMES = ["csat-cognitive", "bloom"] as const;
+export const CONTEXT_SCHEMES = ["csat-context"] as const;
 /** Extra schemes for concept facet only (e.g. LCSH for subject headings). */
 export const CONCEPT_EXTRA_SCHEMES = ["lcsh"] as const;
 
