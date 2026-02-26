@@ -29,15 +29,12 @@ async function del(
   return n;
 }
 
-// KV: test/e2e/del/list/pfx prefix keys (test patterns from main-kv_test, e2e)
-const kvPatterns = ["test-%", "e2e-%", "del-%", "list-%", "pfx-%"];
-let kvTotal = 0;
+// KV: test/e2e/del/list/pfx/other prefix keys (test patterns from main-kv_test, e2e)
+const kvPatterns = ["test-%", "e2e-%", "del-%", "list-%", "pfx-%", "other-%"];
 for (const pattern of kvPatterns) {
-  const sql = "DELETE FROM kv WHERE logical_key LIKE $1";
-  kvTotal += await del(`kv (${pattern})`, sql, [pattern]);
-}
-if (kvTotal > 0 && !execute) {
-  console.log(`[dry-run] kv total would delete: ${kvTotal}`);
+  await del(`kv (${pattern})`, "DELETE FROM kv WHERE logical_key LIKE $1", [
+    pattern,
+  ]);
 }
 
 // source: test-style IDs (no-body-*, extract-ok-* from tests), keep book-grammar-*
