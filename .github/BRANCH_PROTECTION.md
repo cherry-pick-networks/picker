@@ -11,20 +11,20 @@ either **branch protection rules** (UI) or **repository rulesets** (API/JSON).
   branch → push → open PR → CI passes → merge** (see “When the graph is broken”
   below). Do not force-push to main unless an exception applies.
 
-## Merge strategy (linear history)
+## Merge strategy (two-parent commits only at merge)
 
-We keep **main’s first-parent history as a single line** (no merge-commit
-sprawl).
+We keep **branch history linear** (one parent per commit) and allow **two
+parents only for the commit that merges a branch into the default branch**.
 
-- **Default:** Use **Rebase and merge** (or, if agreed, **Squash and merge**)
-  when merging PRs. This avoids creating merge commits and keeps the graph
-  linear.
-- **Avoid:** **Create a merge commit** for normal PRs. Using it repeatedly adds
-  merge commits and breaks the single-line view of main.
+- **On branches:** Keep history linear. Do not merge other branches into the
+  feature branch; use rebase to update or tidy the branch. Every commit on the
+  branch has exactly one parent.
+- **When merging into the default branch:** Use **Create a merge commit**. The
+  only commits with two parents are these PR merge commits. Do not use
+  **Rebase and merge** or **Squash and merge** for PRs into the default branch.
 - **Repository setting:** **Settings** → **General** → **Pull Requests** → set
-  the default merge button to **Rebase and merge** (or Squash and merge). You
-  can leave “Allow merge commits” off or use it only when there is a specific
-  reason.
+  the default merge button to **Create a merge commit** and enable **Allow
+  merge commits**.
 
 ## Option A: Repository ruleset (API)
 
@@ -61,18 +61,16 @@ type-check-policy, and audit all pass before merge.
 
 ## When the graph is broken
 
-If main’s first-parent line is already split (e.g. many merge commits), fix it
-via PR only:
+If history on main is inconsistent or needs repair, fix it via PR only:
 
-1. In a separate clone or worktree, rebase (or otherwise linearise) the desired
-   history onto the current main.
+1. In a separate clone or worktree, prepare the desired history (e.g. rebase
+   the branch onto current main).
 2. Push that result to a **new branch** (do not push to main).
 3. Open a PR from that branch into main.
-4. Let CI pass, then merge the PR using **Rebase and merge** (or Squash and
-   merge). Do not use “Create a merge commit.”
+4. Let CI pass, then merge the PR using **Create a merge commit** (same merge
+   strategy as above).
 
-This keeps branch protection in place and restores a linear first-parent line
-without force-pushing to main.
+This keeps branch protection in place without force-pushing to main.
 
 ## Exceptions
 
