@@ -1,4 +1,7 @@
-/** File-based identity data under shared/record/reference/ (identity-index only). */
+/**
+ * File-based identity data under shared/record/reference/
+ * (identity-index only).
+ */
 
 import { readTomlFile } from "./toml.service.ts";
 
