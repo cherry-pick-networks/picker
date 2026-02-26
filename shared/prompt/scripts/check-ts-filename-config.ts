@@ -75,6 +75,7 @@ export const ALLOWED_SUFFIX = new Set([
 /** Paths that are exempt from [name].[suffix].ts rule (exact relative path). */
 export const PATH_EXCEPTIONS = new Set([
   "system/routes.ts",
+  "system/schedule/fsrs.ts",
   "tests/system/with_temp_scripts_store.ts",
 ]);
 
