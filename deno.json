@@ -13,10 +13,11 @@
     "lineWidth": 80
   },
   "tasks": {
-    "dev": "./dev",
+    "dev": "./scripts/dev.sh",
     "build": "deno run -A npm:vite build",
     "start": "deno run -A main.ts",
     "test": "deno test -A",
+    "test:with-db": "./scripts/dev.sh test",
     "test:e2e-record": "deno run -A shared/prompt/scripts/run-e2e-record.ts",
     "db:schema": "deno run -A shared/infra/apply-schema.ts",
     "seed:ontology": "deno run -A shared/infra/seed/run-seed-ontology.ts",
@@ -28,7 +29,7 @@
     "line-length-check": "deno run --allow-read shared/prompt/scripts/check-line-length.ts",
     "boundary-check": "deno run --allow-read shared/prompt/scripts/check-domain-boundary.ts",
     "dependency-check": "deno run --allow-read shared/prompt/scripts/check-domain-deps.ts",
-    "pre-push": "deno lint && deno task format-check && deno task ts-filename-check && deno task sql-filename-check && deno task test && deno task todo-check && deno task boundary-check && deno task dependency-check && deno task type-check-policy && deno audit",
+    "pre-push": "deno lint && deno task format-check && deno task ts-filename-check && deno task sql-filename-check && deno task test:with-db && deno task todo-check && deno task boundary-check && deno task dependency-check && deno task type-check-policy && deno audit",
     "todo-check": "deno run --allow-read shared/prompt/scripts/check-todo.ts",
     "todo-discovery": "deno run --allow-read shared/prompt/scripts/todo-discovery.ts",
     "ontology-acyclic-check": "deno run -A shared/prompt/scripts/check-ontology-acyclic.ts",
