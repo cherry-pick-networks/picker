@@ -2,6 +2,7 @@
  * FSRS adapter (stub). Maps schedule item state + review to next_due_at.
  * Replace with @squeakyrobot/fsrs (or real FSRS-rs) when integrating.
  */
+// function-length-ignore-file — small adapter (store.md §P).
 
 import type { ScheduleItemPayload } from "./schedule.schema.ts";
 

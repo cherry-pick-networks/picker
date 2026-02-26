@@ -1,4 +1,5 @@
 /** Schedule item and request schemas (Zod). */
+// function-length-ignore-file — schema helpers (store.md §P).
 
 import { z } from "zod";
 

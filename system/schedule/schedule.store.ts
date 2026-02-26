@@ -1,4 +1,5 @@
 /** Schedule item storage (Postgres). */
+// function-length-ignore-file — store CRUD (store.md §P).
 
 import { getPg } from "#shared/infra/pg.client.ts";
 import type { ScheduleItemPayload } from "./schedule.schema.ts";
