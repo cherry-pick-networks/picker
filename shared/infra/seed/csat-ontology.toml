@@ -1,27 +1,5 @@
-# CSAT ontology seed. Core schemes: csat-subject, csat-type, csat-cognitive,
-# csat-context. Loaded by run-seed-ontology.ts. Path (ltree) enforces hierarchy.
-
-[[concept_scheme]]
-id = "csat-subject"
-name = "CSAT Subjects"
-
-[[concept]]
-scheme_id = "csat-subject"
-code = "subj-kor"
-pref_label = "Korean"
-path = "csat.subj.kor"
-
-[[concept]]
-scheme_id = "csat-subject"
-code = "subj-math"
-pref_label = "Mathematics"
-path = "csat.subj.math"
-
-[[concept]]
-scheme_id = "csat-subject"
-code = "subj-eng"
-pref_label = "English"
-path = "csat.subj.eng"
+# CSAT ontology seed. Schemes: csat-type, csat-cognitive, csat-context.
+# Subject uses ontology/csat-subjects.toml only. Loaded by run-seed-ontology.ts.
 
 [[concept_scheme]]
 id = "csat-type"

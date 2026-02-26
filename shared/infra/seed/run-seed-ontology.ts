@@ -63,8 +63,18 @@ async function runTomlSeed(
   }
 }
 
+const LEGACY_SCHEME_ID = "csat-subject";
+
 async function runSeed(): Promise<void> {
   const pg = await getPg();
+  await pg.queryArray(
+    `DELETE FROM concept WHERE scheme_id = $1`,
+    [LEGACY_SCHEME_ID],
+  );
+  await pg.queryArray(
+    `DELETE FROM concept_scheme WHERE scheme_id = $1`,
+    [LEGACY_SCHEME_ID],
+  );
   const sql = await Deno.readTextFile(SEED_SQL);
   for (const stmt of splitStatements(sql)) {
     await pg.queryArray(stmt + ";");
