@@ -96,10 +96,10 @@ tool-specific configs.
   filenames per §E and reference.md (optional; run in pre-commit or CI)
 - `deno task sql-filename-check` — verify all .sql (DDL in shared/infra/schema,
   DML in system/*/sql) per reference.md (optional; run in pre-commit or CI)
-- `deno task pre-push` — run before push; same as CI (lint, fmt, line-length,
+- `deno task pre-push` — run before push; same as CI. Runs via dev.sh (so same
+  DB env as dev: pass and picker/postgres). Runs lint, format-check,
   ts-filename-check, sql-filename-check, test, todo-check, boundary-check,
-  dependency-check, type-check-policy, audit). Uses same DB env as dev (pass and
-  picker/postgres) when run locally.
+  dependency-check, type-check-policy, audit.
 - `deno task todo-discovery -- <entry-file>` — list direct imports for AI
   session todo (see shared/prompt/documentation/strategy.md)
 - `deno task rules:summary -- <task-type>` — list applicable store.md § for task
@@ -166,8 +166,9 @@ tool-specific configs.
 - **Merge strategy**: Default branch receives changes only via PR; merge using
   **Create a merge commit** so that the only commits with two parents are PR
   merges; keep branch history linear (see .github/BRANCH_PROTECTION.md).
-- **Before push or PR**: Run `deno task pre-push` so CI passes. Code must
-  satisfy §P (function body 2–4 statements; async only when body uses await).
+- **Before push or PR**: Run `deno task pre-push` (runs under dev.sh for local
+  DB env) so CI passes. Code must satisfy §P (function body 2–4 statements;
+  async only when body uses await).
 - **Pre-commit hook (optional)**: To run `deno lint` and
   `deno task format-check` on commit, set `git config core.hooksPath .githooks`
   and `chmod +x .githooks/pre-commit`.
