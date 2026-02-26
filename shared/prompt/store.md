@@ -41,6 +41,10 @@ tool-specific configs.
   `@std/toml`. File names follow §E; record files are `{uuid}.toml`. Documents
   use Markdown (`.md`) or Cursor rules (`.mdc`) with optional YAML front matter;
   parse with `@std/front-matter`. Data file paths: see `shared/prompt/todo.md`.
+- **DML SQL**: Keep application DML (SELECT, INSERT, UPDATE, DELETE) in
+  `system/<module>/sql/*.sql` (one statement per file, snake_case filenames).
+  Load via `shared/infra/sql-loader.ts` (`loadSql(baseUrl, filename)`); use
+  `$1, $2, ...` for parameters; document parameter order in the file or store.
 
 ---
 
@@ -90,8 +94,8 @@ tool-specific configs.
   infix/suffix per §E (optional; run in pre-commit or CI)
 - `deno task ts-filename-check` — verify system/, shared/infra, and tests/ TS
   filenames per §E and reference.md (optional; run in pre-commit or CI)
-- `deno task sql-filename-check` — verify shared/infra/schema/*.sql per
-  reference.md (Schema DDL file naming) (optional; run in pre-commit or CI)
+- `deno task sql-filename-check` — verify all .sql (DDL in shared/infra/schema,
+  DML in system/*/sql) per reference.md (optional; run in pre-commit or CI)
 - `deno task pre-push` — run before push; same as CI (lint, fmt, line-length,
   ts-filename-check, sql-filename-check, test, todo-check, boundary-check,
   dependency-check, type-check-policy, audit). Uses same DB env as dev (pass and

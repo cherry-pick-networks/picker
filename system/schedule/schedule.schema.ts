@@ -3,7 +3,7 @@
 
 import { z } from "zod";
 
-/** FSRS state stored in payload (stub; replace with real FSRS types when wired). */
+/** FSRS state in payload (stub; use real FSRS types when wired). */
 export const ScheduleItemPayloadSchema = z.object({
   d: z.number().optional(),
   s: z.number().optional(),
