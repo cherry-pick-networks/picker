@@ -12,10 +12,22 @@ description: Data migration strategy and shared single source.
 - **Cursor Rules**: `.cursor/rules/*.mdc` only reference that file; no duplicate
   rule text. mdc files are for **when** to apply (always vs on-request).
 
-## Current layout (after simplification)
+## Current layout (Rule index + 3 .mdc + rules:summary + skills)
 
-- **Two mdc files**: one always-applied (`global-agent-policy.mdc`), one
-  on-request (`global-directory-boundary.mdc`). See `cursor-rules-policy.md`.
+- **Rule index**: In store.md, section "Rule index (context → sections)". Maps
+  context (always, feature+code, docs, commit, migration, system, dependency,
+  sql, directory) to § list. Shared by Commands, Skills, and .mdc.
+- **.mdc (3 files)**:
+  - `global-core.mdc`: always applied; §C, §I, §O (and §B for handoff). Points
+    to Rule index and `deno task rules:summary`.
+  - `global-context.mdc`: on-request; context-based rule index entry.
+  - `global-code.mdc`: globs `**/*.ts`; code-related § from Rule index.
+- **rules:summary**: `deno task rules:summary -- <task-type>`. Prints applicable
+  § and one-line title per §. Task types: feature, refactor, docs, commit,
+  migration, system, dependency, sql, directory, all.
+- **Skills** (`.cursor/skills/`): feature-implementation, refactor-and-commit,
+  docs-and-boundary, commit-boundary, migration-and-naming. Each references
+  store.md § and provides a short checklist; full text only in store.md.
 
 ## Todo (historical)
 
@@ -34,12 +46,15 @@ description: Data migration strategy and shared single source.
 
 ## Rule → section mapping
 
-### Current (after simplification)
+### Current (Rule index + 3 .mdc)
 
-| §        | Section ID                         | .mdc                                       |
-| -------- | ---------------------------------- | ------------------------------------------ |
-| A–E, G–L | (all except F)                     | global-agent-policy.mdc (always)           |
-| F        | Directory structure and exceptions | global-directory-boundary.mdc (on-request) |
+Context → § is in store.md Rule index. .mdc roles:
+
+| .mdc               | When applied    | Role                                        |
+| ------------------ | --------------- | ------------------------------------------- |
+| global-core.mdc    | always          | §C, §I, §O; §B for handoff; points to index |
+| global-context.mdc | on-request      | Context-based § from Rule index             |
+| global-code.mdc    | globs `**/*.ts` | Code § (e.g. §P, §Q, §S, §T, §N)            |
 
 ### Historical (pre-simplification)
 
@@ -70,6 +85,8 @@ description: Data migration strategy and shared single source.
 - [x] No duplicate long-form rule content in .mdc.
 - [x] Exactly two .mdc files; one always-applied, one on-request. See
       cursor-rules-policy.md.
+- [x] Rule index in store.md; 3 .mdc (global-core, global-context, global-code);
+      rules:summary task; project skills in .cursor/skills/.
 
 ---
 
