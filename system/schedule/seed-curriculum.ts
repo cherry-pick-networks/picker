@@ -5,7 +5,14 @@
  */
 
 import { getPg } from "#shared/infra/pg.client.ts";
+import { loadSql } from "#shared/infra/sql-loader.ts";
 import { listGrammarUnits } from "./schedule-grammar.service.ts";
+
+const sqlDir = new URL("./sql/", import.meta.url);
+const SQL_UPSERT_CURRICULUM_SLOT = await loadSql(
+  sqlDir,
+  "upsert_curriculum_slot.sql",
+);
 
 const CURRICULUM_JSON = new URL(
   "../../../shared/infra/seed/curriculum-52weeks.json",
@@ -46,15 +53,13 @@ async function runSeed(): Promise<void> {
         const unitNum = slotNums[slotIndex];
         const index = (unitNum - 1) % units.length;
         const { source_id, unit_id } = units[index];
-        await pg.queryArray(
-          `INSERT INTO curriculum_slot (level, week_number, slot_index,
-             source_id, unit_id)
-           VALUES ($1, $2, $3, $4, $5)
-           ON CONFLICT (level, week_number, slot_index)
-           DO UPDATE SET source_id = EXCLUDED.source_id,
-             unit_id = EXCLUDED.unit_id`,
-          [level, week + 1, slotIndex, source_id, unit_id],
-        );
+        await pg.queryArray(SQL_UPSERT_CURRICULUM_SLOT, [
+          level,
+          week + 1,
+          slotIndex,
+          source_id,
+          unit_id,
+        ]);
       }
     }
   }

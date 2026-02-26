@@ -3,41 +3,43 @@
  * Usage: ./scripts/dev.sh deno run -A scripts/db-list-all.ts
  */
 import { getPg } from "../shared/infra/pg.client.ts";
+import { loadSql } from "../shared/infra/sql-loader.ts";
+
+const listAllDir = new URL("./sql/db-list-all/", import.meta.url);
+const tables: { name: string }[] = [
+  { name: "actor_profile" },
+  { name: "actor_progress" },
+  { name: "source" },
+  { name: "kv" },
+  { name: "content_item" },
+  { name: "content_worksheet" },
+  { name: "schedule_item" },
+  { name: "concept_scheme" },
+  { name: "concept" },
+  { name: "concept_relation" },
+  { name: "curriculum_slot" },
+];
+
+const sqlMap = new Map<string, { count: string; sample: string }>();
+for (const { name } of tables) {
+  sqlMap.set(name, {
+    count: await loadSql(listAllDir, `count_${name}.sql`),
+    sample: await loadSql(listAllDir, `sample_${name}.sql`),
+  });
+}
 
 const pg = await getPg();
 
-const tables: { name: string; idColumn: string }[] = [
-  { name: "actor_profile", idColumn: "id" },
-  { name: "actor_progress", idColumn: "id" },
-  { name: "source", idColumn: "source_id" },
-  { name: "kv", idColumn: "logical_key" },
-  { name: "content_item", idColumn: "id" },
-  { name: "content_worksheet", idColumn: "id" },
-  { name: "schedule_item", idColumn: "actor_id" },
-  { name: "concept_scheme", idColumn: "scheme_id" },
-  { name: "concept", idColumn: "scheme_id" },
-  { name: "concept_relation", idColumn: "source_scheme_id" },
-  { name: "curriculum_slot", idColumn: "level" },
-];
-
 console.log("=== DB table counts and samples ===\n");
 
-for (const { name, idColumn } of tables) {
+for (const { name } of tables) {
   try {
-    const countR = await pg.queryObject<{ n: number }>(
-      `SELECT count(*)::int as n FROM ${name}`,
-    );
+    const { count: countSql, sample: sampleSql } = sqlMap.get(name)!;
+    const countR = await pg.queryObject<{ n: number }>(countSql);
     const n = countR.rows[0]?.n ?? 0;
     let sample = "";
     if (n > 0) {
-      const cols = name === "schedule_item"
-        ? "actor_id, source_id, unit_id"
-        : name === "curriculum_slot"
-        ? "level, week_number, slot_index, source_id, unit_id"
-        : idColumn;
-      const sampleR = await pg.queryArray(
-        `SELECT ${cols} FROM ${name} LIMIT 5`,
-      );
+      const sampleR = await pg.queryArray(sampleSql);
       sample = "  sample: " + JSON.stringify(sampleR.rows);
     }
     console.log(`${name}: ${n}${sample}`);
