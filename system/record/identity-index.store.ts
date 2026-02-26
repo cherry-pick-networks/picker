@@ -6,7 +6,12 @@
 import { readTomlFile } from "./toml.service.ts";
 
 const DATA_DIR = new URL("../../../shared/record/", import.meta.url).pathname;
-const IDENTITY_INDEX_PATH = `${DATA_DIR}reference/identity-index.toml`;
+const DEFAULT_IDENTITY_INDEX_PATH = `${DATA_DIR}reference/identity-index.toml`;
+
+function getIdentityIndexPathInternal(): string {
+  const envPath = Deno.env.get("IDENTITY_INDEX_PATH");
+  return envPath?.trim() ? envPath.trim() : DEFAULT_IDENTITY_INDEX_PATH;
+}
 
 /** One student row in identity-index.toml [[students]]. */
 export interface IdentityStudentEntry {
@@ -42,12 +47,12 @@ export function getDataDir(): string {
 }
 
 export function getIdentityIndexPath(): string {
-  const out = IDENTITY_INDEX_PATH;
-  return out;
+  return getIdentityIndexPathInternal();
 }
 
 export async function readIdentityIndex(): Promise<IdentityIndex> {
-  const data = await readTomlFile<IdentityIndex>(IDENTITY_INDEX_PATH);
+  const path = getIdentityIndexPathInternal();
+  const data = await readTomlFile<IdentityIndex>(path);
   return data ?? {};
 }
 

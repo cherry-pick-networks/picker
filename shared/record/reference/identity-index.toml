@@ -1,5 +1,5 @@
 version = 1
-description = "학생 개인정보 일원 관리. 반별 문서에는 UUID만 기재. 식별자: UUID v7."
+description = "학생 개인정보 일원 관리. 식별자: UUID v7."
 
 [[students]]
 id = "019c51b0-dfa6-7155-b875-3c0251b5fc92"

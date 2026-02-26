@@ -6,6 +6,9 @@ node_modules/
 .env.local
 .env.*.local
 
+# File-based record store: ignore data, keep structure
+shared/record/reference/identity-index.toml
+
 # OS
 .DS_Store
 Thumbs.db
