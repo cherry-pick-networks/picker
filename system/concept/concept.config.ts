@@ -1,9 +1,19 @@
 /** Allowed concept scheme IDs per facet. Used by validateFacetSchemes. */
 
-export const SUBJECT_SCHEMES = ["csat-subjects", "ddc"] as const;
+export const SUBJECT_SCHEMES = [
+  "csat-subjects",
+  "ddc",
+  "isced-f",
+] as const;
 export const CONTENT_TYPE_SCHEMES = ["csat-type"] as const;
-export const COGNITIVE_LEVEL_SCHEMES = ["csat-cognitive"] as const;
-export const CONTEXT_SCHEMES = ["csat-context"] as const;
+export const COGNITIVE_LEVEL_SCHEMES = [
+  "csat-cognitive",
+  "blooms-taxonomy",
+  "cefr",
+] as const;
+export const CONTEXT_SCHEMES = ["csat-context", "pisa-framework"] as const;
+/** Extra schemes for concept facet only (e.g. LCSH for subject headings). */
+export const CONCEPT_EXTRA_SCHEMES = ["lcsh"] as const;
 
 export type FacetName =
   | "subject"
@@ -30,7 +40,7 @@ export function getAllowedSchemeIds(facet: FacetName): string[] {
     case "context":
       return [...CONTEXT_SCHEMES];
     case "concept":
-      return [...ALL_SCHEMES];
+      return [...ALL_SCHEMES, ...CONCEPT_EXTRA_SCHEMES];
     default:
       return [];
   }

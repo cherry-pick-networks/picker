@@ -151,9 +151,9 @@ name satisfying `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. Run:
   cycles for any `relation_type` (e.g. broader, narrower, requires, depends-on).
   Run `deno task ontology-acyclic-check` to verify (e.g. after applying schema
   and seed).
-- **Facet schemes**: Subject IDs use allowed schemes (e.g. csat-subjects, ddc).
-  Content type, cognitive level, and context IDs use their respective allowed
-  schemes only (see system/concept/concept.config.ts). Content and worksheet
+- **Facet schemes**: Subject IDs use allowed schemes (e.g. csat-subjects, ddc,
+  isced-f). Content type, cognitive level, and context use their respective
+  allowed schemes (see system/concept/concept.config.ts). Content and worksheet
   APIs validate concept IDs per facet and cap at 500 per request.
 - **CI**: `deno task pre-push` does not run `ontology-acyclic-check`. After
   running `deno task seed:ontology`, run `deno task ontology-acyclic-check`
