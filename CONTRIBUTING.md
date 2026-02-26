@@ -25,7 +25,8 @@ use Issues only for bugs and concrete feature requests.
   - `deno test` — run tests (unit only; storage tests need DB env)
   - `deno task test:with-db` or `./scripts/dev.sh test` — run tests with same DB
     env as `./scripts/dev.sh` (requires [pass](https://www.passwordstore.org/)
-    and `picker/postgres` entry)
+    and `picker/postgres` entry). For other DB-needing tasks (e.g. seed, schema,
+    ontology check), run `./scripts/dev.sh deno task <task-name>`.
   - `deno task pre-push` — same checks as CI; uses `test:with-db` so it requires
     the same DB env as dev (pass and `picker/postgres`) to run storage tests.
   - `deno task todo-check` — verify API routes are listed in the todo document
