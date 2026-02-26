@@ -5,6 +5,7 @@ import {
   ItemSchema,
   WorksheetSchema,
 } from "./content.schema.ts";
+import { validateItemFacets } from "./content-facet-validation.ts";
 import { nowIso, parseItem } from "./content-parse.service.ts";
 export {
   CreateItemRequestSchema,
@@ -41,6 +42,7 @@ function buildItemRaw(body: CreateItemRequestType): Item {
 }
 
 export async function createItem(body: CreateItemRequestType): Promise<Item> {
+  await validateItemFacets(body);
   const item = buildItemRaw(body);
   await contentStore.setItem(item as unknown as Record<string, unknown>);
   return item;
@@ -63,6 +65,7 @@ export async function updateItem(
 ): Promise<Item | null> {
   const existing = await getItem(id);
   if (existing == null) return null;
+  await validateItemFacets(body);
   return mergeAndSaveItem(id, existing, body);
 }
 

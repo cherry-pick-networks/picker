@@ -137,12 +137,29 @@ name satisfying `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. Run:
 
 ### Data file locations (TOML)
 
-| Path                                                | Purpose                              |
-| --------------------------------------------------- | ------------------------------------ |
-| `shared/record/reference/extracted-data-index.toml` | Extracted-data index (UUID → entry)  |
-| `shared/record/reference/identity-index.toml`       | Identity index (UUID → entry)        |
-| `shared/record/store/<uuid>.toml`                   | Single record (UUID v7)              |
-| `system/audit/e2e-runs.toml`                        | E2E run log (schemaVersion + runs[]) |
+| Path                                                | Purpose                                        |
+| --------------------------------------------------- | ---------------------------------------------- |
+| `shared/record/reference/extracted-data-index.toml` | Extracted-data index (UUID → entry)            |
+| `shared/record/reference/identity-index.toml`       | Identity index (UUID → entry)                  |
+| `shared/record/store/<uuid>.toml`                   | Single record (UUID v7)                        |
+| `system/audit/e2e-runs.toml`                        | E2E run log (schemaVersion + runs[])           |
+| `shared/infra/seed/ontology/seed.sql`               | Ontology seed (DDC scheme).                    |
+| `shared/infra/seed/csat-ontology.toml`              | Ontology seed (csat-type, cog, ctx).           |
+| `shared/infra/seed/ontology/csat-subjects.toml`     | Ontology seed: csat-subjects (all exam areas). |
+
+### Ontology and facet policy
+
+- **DAG**: The whole of `concept_relation` must form a DAG; there must be no
+  cycles for any `relation_type` (e.g. broader, narrower, requires, depends-on).
+  Run `deno task ontology-acyclic-check` to verify (e.g. after applying schema
+  and seed).
+- **Facet schemes**: Subject IDs use allowed schemes (e.g. csat-subjects, ddc).
+  Content type, cognitive level, and context IDs use their respective allowed
+  schemes only (see system/concept/concept.config.ts). Content and worksheet
+  APIs validate concept IDs per facet and cap at 500 per request.
+- **CI**: `deno task pre-push` does not run `ontology-acyclic-check`. After
+  running `deno task seed:ontology`, run `deno task ontology-acyclic-check`
+  manually when changing ontology seed or relations.
 
 ### Modular monolith rules
 
