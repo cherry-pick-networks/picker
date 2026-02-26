@@ -321,7 +321,7 @@ multi-flag work: (1) implement one feature-flag unit only; (2) run git status,
 git add, git commit with message per this rule; (3) only after commit succeeds,
 proceed to the next unit. No batch commit at the end of the task. Session end:
 no need to output a suggested commit message; commits are made during the task
-at each boundary. Do not run git commit unless the user explicitly asks.
+at each boundary.
 
 ### §C. Language
 
