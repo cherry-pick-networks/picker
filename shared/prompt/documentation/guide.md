@@ -42,9 +42,12 @@ or CLI, see § Using rules without Cursor.
 | `/rules-summary` [task-type] | List applicable store.md § for the task type                             | §5, guide rules:summary   |
 | `/session-goal`              | State session goal in one sentence; ensure branch is not default         | guide Session start       |
 | `/pre-push`                  | Run pre-push (same as CI); fix and re-run if it fails                    | store.md §5, §7           |
-| `/commit-boundary`           | Commit current changes as one logical unit                               | store.md §A, §B           |
 | `/create-pr`                 | Create draft PR for current branch                                       | store.md §7               |
 | `/rules-check` [task-type]   | Verify change against applicable §; delegate to rules-subagent if needed | guide Subagents for rules |
+
+For **commit-at-boundary** there is no slash command; use the **commit-boundary**
+skill. Trigger by saying e.g. “commit current changes”, “커밋해줘”, or when a
+logical unit is done; for applicable rules run `deno task rules:summary -- commit`.
 
 Anything you type after the command name (e.g. `/rules-summary refactor`) is
 passed to the model as part of that command’s instruction.
@@ -55,8 +58,8 @@ Detailed rules stay in store.md and in each command’s `.md` under
 **Project context vs skills vs commands (Tip 25)** — In this project:
 **store.md** is the single source of truth and is always loaded; the Rule index
 and `rules:summary` determine which § apply. **.cursor/skills** are loaded by
-task type when relevant. **.cursor/commands** are slash commands that you or the
-agent invoke (e.g. `/rules-summary`, `/commit-boundary`).
+task type when relevant (e.g. commit-boundary for commit). **.cursor/commands**
+are slash commands that you or the agent invoke (e.g. `/rules-summary`).
 
 ---
 
@@ -163,6 +166,9 @@ system/routes/content.ts."
 - **Output**: Line "Applicable sections: §X, §Y, …" then each § with its title
   from store.md Part B. Full rule text stays in `shared/prompt/store.md`; Rule
   index is in store.md "Rule index (context → sections)".
+- **Commit**: For commit procedure (message format, git steps), use the
+  **commit-boundary** skill; it applies when task type is `commit` or when the
+  user asks to commit.
 
 ---
 
