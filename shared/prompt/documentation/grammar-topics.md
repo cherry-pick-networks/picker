@@ -3,7 +3,7 @@ title: grammar-topics
 description: Grammar curriculum — 17 major topics and level mapping (Basic/Intermediate/Advanced). Aligns schedule and content with study_guide.
 ---
 
-# Grammar topics (대주제)
+# Grammar topics
 
 Three books (Basic, Intermediate, Advanced) are organized by **study_guide** into **17 major topics**. Units in each book map to these topics; the same topic may appear across levels with different depth.
 
@@ -11,7 +11,7 @@ Three books (Basic, Intermediate, Advanced) are organized by **study_guide** int
 
 ---
 
-## 1. Tense & Time (시제·시간 표현)
+## 1. Tense & Time
 
 | Topic        | Basic | Intermediate | Advanced |
 | ------------ | ----- | ------------- | -------- |
@@ -20,7 +20,7 @@ Three books (Basic, Intermediate, Advanced) are organized by **study_guide** int
 
 ---
 
-## 2. Modals & Modality (조동사·양태)
+## 2. Modals & Modality
 
 | Topic        | Basic | Intermediate | Advanced |
 | ------------ | ----- | ------------- | -------- |
@@ -28,7 +28,7 @@ Three books (Basic, Intermediate, Advanced) are organized by **study_guide** int
 
 ---
 
-## 3. Conditionals (조건문)
+## 3. Conditionals
 
 | Topic        | Basic | Intermediate | Advanced |
 | ------------ | ----- | ------------- | -------- |
@@ -36,7 +36,7 @@ Three books (Basic, Intermediate, Advanced) are organized by **study_guide** int
 
 ---
 
-## 4. Passive Voice (수동태)
+## 4. Passive Voice
 
 | Topic        | Basic | Intermediate | Advanced |
 | ------------ | ----- | ------------- | -------- |
@@ -44,7 +44,7 @@ Three books (Basic, Intermediate, Advanced) are organized by **study_guide** int
 
 ---
 
-## 5. Questions & Sentence Structure (질문·문장 구조)
+## 5. Questions & Sentence Structure
 
 | Topic        | Basic | Intermediate | Advanced |
 | ------------ | ----- | ------------- | -------- |
@@ -52,7 +52,7 @@ Three books (Basic, Intermediate, Advanced) are organized by **study_guide** int
 
 ---
 
-## 6. Reporting (간접화법·보고)
+## 6. Reporting
 
 | Topic        | Basic | Intermediate | Advanced |
 | ------------ | ----- | ------------- | -------- |
@@ -60,7 +60,7 @@ Three books (Basic, Intermediate, Advanced) are organized by **study_guide** int
 
 ---
 
-## 7. Comparison & Contrast (비교·대조)
+## 7. Comparison & Contrast
 
 | Topic        | Basic | Intermediate | Advanced |
 | ------------ | ----- | ------------- | -------- |
@@ -68,7 +68,7 @@ Three books (Basic, Intermediate, Advanced) are organized by **study_guide** int
 
 ---
 
-## 8. Quantifiers & Determiners (수량사·한정사)
+## 8. Quantifiers & Determiners
 
 | Topic        | Basic | Intermediate | Advanced |
 | ------------ | ----- | ------------- | -------- |
@@ -76,7 +76,7 @@ Three books (Basic, Intermediate, Advanced) are organized by **study_guide** int
 
 ---
 
-## 9. Prepositions (전치사)
+## 9. Prepositions
 
 | Topic        | Basic | Intermediate | Advanced |
 | ------------ | ----- | ------------- | -------- |
@@ -84,7 +84,7 @@ Three books (Basic, Intermediate, Advanced) are organized by **study_guide** int
 
 ---
 
-## 10. Verb Patterns (동사 패턴)
+## 10. Verb Patterns
 
 | Topic        | Basic | Intermediate | Advanced |
 | ------------ | ----- | ------------- | -------- |
@@ -92,7 +92,7 @@ Three books (Basic, Intermediate, Advanced) are organized by **study_guide** int
 
 ---
 
-## 11. Nouns, Articles & Noun Phrases (명사·관사·명사구)
+## 11. Nouns, Articles & Noun Phrases
 
 | Topic        | Basic | Intermediate | Advanced |
 | ------------ | ----- | ------------- | -------- |
@@ -100,7 +100,7 @@ Three books (Basic, Intermediate, Advanced) are organized by **study_guide** int
 
 ---
 
-## 12. Pronouns (대명사)
+## 12. Pronouns
 
 | Topic        | Basic | Intermediate | Advanced |
 | ------------ | ----- | ------------- | -------- |
@@ -108,7 +108,7 @@ Three books (Basic, Intermediate, Advanced) are organized by **study_guide** int
 
 ---
 
-## 13. Conjunctions & Connectors (접속사·연결어)
+## 13. Conjunctions & Connectors
 
 | Topic        | Basic | Intermediate | Advanced |
 | ------------ | ----- | ------------- | -------- |
@@ -116,7 +116,7 @@ Three books (Basic, Intermediate, Advanced) are organized by **study_guide** int
 
 ---
 
-## 14. Adjectives & Adverbs (형용사·부사)
+## 14. Adjectives & Adverbs
 
 | Topic        | Basic | Intermediate | Advanced |
 | ------------ | ----- | ------------- | -------- |
@@ -124,7 +124,7 @@ Three books (Basic, Intermediate, Advanced) are organized by **study_guide** int
 
 ---
 
-## 15. Subject–Verb Agreement (주어–동사 일치)
+## 15. Subject–Verb Agreement
 
 | Topic        | Basic | Intermediate | Advanced |
 | ------------ | ----- | ------------- | -------- |
@@ -132,7 +132,7 @@ Three books (Basic, Intermediate, Advanced) are organized by **study_guide** int
 
 ---
 
-## 16. Phrasal Verbs (구동사)
+## 16. Phrasal Verbs
 
 | Topic        | Basic | Intermediate | Advanced |
 | ------------ | ----- | ------------- | -------- |
@@ -140,7 +140,7 @@ Three books (Basic, Intermediate, Advanced) are organized by **study_guide** int
 
 ---
 
-## 17. Existential Clauses (존재문)
+## 17. Existential Clauses
 
 | Topic        | Basic | Intermediate | Advanced |
 | ------------ | ----- | ------------- | -------- |
