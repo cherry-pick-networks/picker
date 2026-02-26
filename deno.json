@@ -24,7 +24,6 @@
     "seed:ontology:with-db": "./scripts/dev.sh deno task seed:ontology",
     "ontology-acyclic-check:with-db": "./scripts/dev.sh deno task ontology-acyclic-check",
     "type-check-policy": "deno run --allow-read shared/prompt/scripts/check-type-policy.ts",
-    "migrate:old-to-data": "deno run -A shared/prompt/scripts/migrate-old-to-data.ts",
     "naming-layer-check": "deno run --allow-read shared/prompt/scripts/check-naming-layer.ts",
     "ts-filename-check": "deno run --allow-read shared/prompt/scripts/check-ts-filename.ts",
     "format-check": "deno fmt --check && deno task line-length-check",

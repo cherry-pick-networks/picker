@@ -171,7 +171,6 @@ approves this design. After approval, proceed to Phase 3 (S3a–S3e).
 - Mutate flow and tests (S5) are in place; pre-push passes.
 - Optional: Split remaining §P >100-line files (system/routes.ts,
   system/actor/profile.service.ts, system/script/scripts.store.ts,
-  shared/prompt/scripts/migrate-old-to-data.ts,
   shared/prompt/scripts/check-naming-layer.ts) and run 80-char line check.
 - Deferred: Spec summary (e.g. current phase in goal.md or documentation/guide);
   then extend patch format (e.g. ts-morph-based edits) or Thompson Sampling MAB.
