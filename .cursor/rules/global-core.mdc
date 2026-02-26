@@ -15,4 +15,6 @@ Do not duplicate the rule text here.
 
 For other rules, use the Rule index in shared/prompt/store.md. Run
 `deno task rules:summary -- <task-type>` to get the list of applicable
-sections for your current task, or use the relevant context skill.
+sections for your current task, or use the relevant context skill. When rule
+compliance check (e.g. §P, §N) or heavy/parallel verification is needed, use
+**rules-subagent** (guide.md "Subagents for rules").

@@ -9,4 +9,6 @@ alwaysApply: false
 
 This rule is defined in shared/prompt/store.md. When editing .ts, follow the
 sections for code context from the Rule index (e.g. §P, §Q, §S, §T, §N). Run
-`deno task rules:summary -- feature` or `-- refactor` as needed.
+`deno task rules:summary -- feature` or `-- refactor` as needed. For feature
+work request **feature-implementation** skill; for refactor request
+**refactor-and-commit** skill.
