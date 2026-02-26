@@ -12,3 +12,7 @@ Read that file and follow:
 - **§O. Answer format (options with pros and cons)**
 For handoff or long sessions, also follow **§B. Commit and session boundary**.
 Do not duplicate the rule text here.
+
+For other rules, use the Rule index in shared/prompt/store.md. Run
+`deno task rules:summary -- <task-type>` to get the list of applicable
+sections for your current task, or use the relevant context skill.

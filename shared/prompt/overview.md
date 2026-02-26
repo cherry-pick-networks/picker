@@ -76,6 +76,20 @@ Optional tooling (status line, setup script, tips): see
 
 ---
 
+## Rule application flow
+
+- **Always**: global-core.mdc applies §C, §I, §O (and §B for handoff). No other
+  rule text is duplicated in .mdc.
+- **By context**: Which § apply is in store.md "Rule index (context →
+  sections)". Run `deno task rules:summary -- <task-type>` to get the list and
+  one-line titles, or use the matching skill (e.g. feature-implementation,
+  refactor-and-commit, docs-and-boundary) from `.cursor/skills/`.
+- **Heavy verification**: When you need a compliance check (e.g. "does this diff
+  satisfy §P and §N?"), use a subagent; see "Subagents for rules" in
+  shared/prompt/documentation/guide.md.
+
+---
+
 ## Rules summary (checkable)
 
 Rules that can be checked or defined as "this repo has X".\
