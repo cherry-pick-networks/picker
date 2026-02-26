@@ -51,7 +51,9 @@ tool-specific configs.
 - **Run once**: `deno run -A main.ts` (Postgres required).
 - **Test**: Add and run tests via `deno test`; keep commands in `deno.json`
   tasks if needed. Tests that use storage require Postgres: run
-  `deno task db:schema` once when the DB is up.
+  `deno task db:schema` once when the DB is up. For local runs, use the same DB
+  env as dev (e.g. `deno task test:with-db` or `./test-with-db`, which set
+  `PG_PASSWORD` from `pass show picker/postgres`).
 - **Lint/format**: Use project lint/format config if present; otherwise
   `deno lint`, `deno fmt`.
 
