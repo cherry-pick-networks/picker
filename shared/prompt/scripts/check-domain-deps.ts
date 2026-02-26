@@ -23,6 +23,7 @@ const DOMAINS = [
   "actor",
   "concept",
   "content",
+  "schedule",
   "source",
   "script",
   "record",
@@ -36,6 +37,8 @@ const ALLOWED_EDGES: [string, string][] = [
   ["content", "concept"],
   ["content", "script"],
   ["audit", "record"],
+  ["schedule", "source"],
+  ["source", "concept"],
 ];
 
 // function-length-ignore

@@ -1,3 +1,4 @@
+import { validateFacetSchemes } from "#system/concept/concept.service.ts";
 import * as sourceSchema from "./source.schema.ts";
 import * as sourceStore from "./source.store.ts";
 
@@ -40,6 +41,14 @@ function buildSourceRaw(
 export async function createSource(
   body: sourceSchema.CreateSourceRequest,
 ): Promise<sourceSchema.Source> {
+  if (body.type != null && body.type !== "") {
+    const { invalid } = await validateFacetSchemes("contentType", [body.type]);
+    if (invalid.length > 0) {
+      const msg = "Invalid document_type: " + body.type +
+        ". Must be a valid Schema.org or BibTeX code.";
+      throw new Error(msg);
+    }
+  }
   const source = buildSourceRaw(body);
   await sourceStore.setSource(
     source as unknown as Record<string, unknown>,

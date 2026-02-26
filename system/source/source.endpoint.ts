@@ -28,8 +28,9 @@ async function doPostSource(
 ) {
   try {
     return c.json(await createSource(data), 201);
-  } catch {
-    return c.json({ error: "Invalid source" }, 400);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : "Invalid source";
+    return c.json({ error: msg }, 400);
   }
 }
 
