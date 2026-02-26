@@ -12,16 +12,28 @@ description: Data migration strategy and shared single source.
 - **Cursor Rules**: `.cursor/rules/*.mdc` only reference that file; no duplicate
   rule text. mdc files are for **when** to apply (always vs on-request).
 
-## Current layout (after simplification)
+## Current layout (Rule index + 3 .mdc + rules:summary + skills)
 
-- **Two mdc files**: one always-applied (`global-agent-policy.mdc`), one
-  on-request (`global-directory-boundary.mdc`). See `cursor-rules-policy.md`.
+- **Rule index**: In store.md, section "Rule index (context → sections)". Maps
+  context (always, feature+code, docs, commit, migration, system, dependency,
+  sql, directory) to § list. Shared by Commands, Skills, and .mdc.
+- **.mdc (3 files)**:
+  - `global-core.mdc`: always applied; §C, §I, §O (and §B for handoff). Points
+    to Rule index and `deno task rules:summary`.
+  - `global-context.mdc`: on-request; context-based rule index entry.
+  - `global-code.mdc`: globs `**/*.ts`; code-related § from Rule index.
+- **rules:summary**: `deno task rules:summary -- <task-type>`. Prints applicable
+  § and one-line title per §. Task types: feature, refactor, docs, commit,
+  migration, system, dependency, sql, directory, all.
+- **Skills** (`.cursor/skills/`): feature-implementation, refactor-and-commit,
+  docs-and-boundary, commit-boundary, migration-and-naming. Each references
+  store.md § and provides a short checklist; full text only in store.md.
 
-## Scope (historical)
+## Todo (historical)
 
 - **Source**: 12 files under `.cursor/rules/*.mdc` (pre-simplification).
 - **Target**: `shared/prompt/store.md` (expand with §A–§L).
-- **No**: New deps, scope doc changes, or module/API/infra changes.
+- **No**: New deps, todo doc changes, or module/API/infra changes.
 
 ## Phases
 
@@ -34,12 +46,15 @@ description: Data migration strategy and shared single source.
 
 ## Rule → section mapping
 
-### Current (after simplification)
+### Current (Rule index + 3 .mdc)
 
-| §        | Section ID                         | .mdc                                       |
-| -------- | ---------------------------------- | ------------------------------------------ |
-| A–E, G–L | (all except F)                     | global-agent-policy.mdc (always)           |
-| F        | Directory structure and exceptions | global-directory-boundary.mdc (on-request) |
+Context → § is in store.md Rule index. .mdc roles:
+
+| .mdc               | When applied    | Role                                        |
+| ------------------ | --------------- | ------------------------------------------- |
+| global-core.mdc    | always          | §C, §I, §O; §B for handoff; points to index |
+| global-context.mdc | on-request      | Context-based § from Rule index             |
+| global-code.mdc    | globs `**/*.ts` | Code § (e.g. §P, §Q, §S, §T, §N)            |
 
 ### Historical (pre-simplification)
 
@@ -55,8 +70,8 @@ description: Data migration strategy and shared single source.
 | H | Validation policy (libraries)      | global-validation-policy.mdc   |
 | I | Agent principles                   | global-agent-principle.mdc     |
 | J | Migration boundary                 | global-migration-boundary.mdc  |
-| K | Scope document boundary            | system-document-boundary.mdc   |
-| L | Agent and scope                    | system-agent-boundary.mdc      |
+| K | Todo document boundary             | system-document-boundary.mdc   |
+| L | Agent and todo                     | system-agent-boundary.mdc      |
 
 ## Rollback
 
@@ -70,6 +85,8 @@ description: Data migration strategy and shared single source.
 - [x] No duplicate long-form rule content in .mdc.
 - [x] Exactly two .mdc files; one always-applied, one on-request. See
       cursor-rules-policy.md.
+- [x] Rule index in store.md; 3 .mdc (global-core, global-context, global-code);
+      rules:summary task; project skills in .cursor/skills/.
 
 ---
 
@@ -88,7 +105,7 @@ Suffix. Canonical source: store.md §E. Below is a quick reference.
 
 ---
 
-# AI-assisted scope estimation
+# AI-assisted todo estimation
 
 Guideline for sizing AI-assisted coding sessions in micro-component (small-file,
 short-function) codebases. Use when giving the AI a multi-file task or when
@@ -108,40 +125,40 @@ refactors in one session.
 - Many small files form a "ravioli" structure.
 
 In that environment the main failure mode is **connection complexity** (imports,
-props, DI), not token count. Scoping by dependency tree reduces mistakes.
+props, DI), not token count. Todo by dependency tree reduces mistakes.
 
 ## Recommended workflow
 
 1. Choose or create **one entry file** for the feature (e.g. the route or
    top-level component).
-2. Run the scope-discovery script to list its direct imports (see below).
-3. Prompt the AI with that list as the in-scope set. Between each step
+2. Run the todo-discovery script to list its direct imports (see below).
+3. Prompt the AI with that list as the in-todo set. Between each step
    (requirement summary → interface proposal → implementation), proceed only
    after **user approval**; see store.md §Q.
 4. (Optional) Before commit, check that changed files are within entry + script
    output (manual or via optional check script).
 
-## Scope-discovery script
+## Todo-discovery script
 
 From repo root:
 
 ```bash
-deno run --allow-read shared/prompt/scripts/scope-discovery.ts <entry-file>
+deno run --allow-read shared/prompt/scripts/todo-discovery.ts <entry-file>
 ```
 
 Example:
 
 ```bash
-deno run --allow-read shared/prompt/scripts/scope-discovery.ts main.ts
+deno run --allow-read shared/prompt/scripts/todo-discovery.ts main.ts
 ```
 
 Output: the entry path plus one path per line for each file it **directly**
 imports (relative imports only; npm/jsr are skipped). Use this list as the
-"in-scope files" in your prompt. Optional: `--oneline` prints a single line for
+"in-todo files" in your prompt. Optional: `--oneline` prints a single line for
 pasting into the prompt.
 
-Task: `deno task scope-discovery -- <entry-file>` (e.g.
-`deno task scope-discovery -- main.ts`). Add `--oneline` for one-line output.
+Task: `deno task todo-discovery -- <entry-file>` (e.g.
+`deno task todo-discovery -- main.ts`). Add `--oneline` for one-line output.
 
 ## Phase flags (explicit prompt flags)
 
@@ -162,7 +179,7 @@ Use the script output and phase when filling the prompt:
 ```
 Phase: [1 | 2 | 3]. If 1: summarize requirement only. If 2: propose only interfaces/types. If 3: implement per approved design.
 Entry file: <path>
-In-scope files (do not modify others): <paste script output>
+In-todo files (do not modify others): <paste script output>
 Task: <one sentence>
 Order: define types/interfaces used in this tree first, then implement.
 ```
@@ -172,9 +189,9 @@ Order: define types/interfaces used in this tree first, then implement.
 - "Change all buttons / colors / variable names across the project" in one
   session.
 - Editing multiple unrelated feature trees in one session.
-- Omitting the in-scope list so the model infers scope itself (often wrong).
+- Omitting the in-todo list so the model infers todo itself (often wrong).
 
-## Optional: scope-drift check
+## Optional: todo-drift check
 
 Before commit you can verify that changed files are a subset of entry + direct
 dependents. Not enforced by default; add a small script or manual checklist if

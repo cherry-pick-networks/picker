@@ -1,0 +1,72 @@
+# CSAT ontology seed. Core schemes: csat-subject, csat-type, csat-cognitive,
+# csat-context. Loaded by run-seed-ontology.ts. Path (ltree) enforces hierarchy.
+
+[[concept_scheme]]
+id = "csat-subject"
+name = "CSAT Subjects"
+
+[[concept]]
+scheme_id = "csat-subject"
+code = "subj-kor"
+pref_label = "Korean"
+path = "csat.subj.kor"
+
+[[concept]]
+scheme_id = "csat-subject"
+code = "subj-math"
+pref_label = "Mathematics"
+path = "csat.subj.math"
+
+[[concept]]
+scheme_id = "csat-subject"
+code = "subj-eng"
+pref_label = "English"
+path = "csat.subj.eng"
+
+[[concept_scheme]]
+id = "csat-type"
+name = "CSAT Question Type"
+
+[[concept]]
+scheme_id = "csat-type"
+code = "type-multiple"
+pref_label = "Multiple choice"
+path = "csat.type.multiple"
+
+[[concept]]
+scheme_id = "csat-type"
+code = "type-short"
+pref_label = "Short answer"
+path = "csat.type.short"
+
+[[concept_scheme]]
+id = "csat-cognitive"
+name = "CSAT Cognitive Level"
+
+[[concept]]
+scheme_id = "csat-cognitive"
+code = "cog-know"
+pref_label = "Knowledge"
+path = "csat.cog.know"
+
+[[concept]]
+scheme_id = "csat-cognitive"
+code = "cog-apply"
+pref_label = "Application"
+path = "csat.cog.apply"
+
+[[concept_scheme]]
+id = "csat-context"
+name = "CSAT Context"
+
+[[concept]]
+scheme_id = "csat-context"
+code = "ctx-reading"
+pref_label = "Reading"
+path = "csat.ctx.reading"
+
+[[concept]]
+scheme_id = "csat-context"
+code = "ctx-listening"
+pref_label = "Listening"
+path = "csat.ctx.listening"

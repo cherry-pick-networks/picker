@@ -1,8 +1,8 @@
 #!/bin/sh
-# Pre-push hook: run scope-check before pushing.
+# Pre-push hook: run todo-check before pushing.
 # Install: cp shared/prompt/scripts/git-hooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push
 # Git runs hooks from repo root.
 
 set -e
 cd "$(git rev-parse --show-toplevel)"
-deno task scope-check
+deno task todo-check
