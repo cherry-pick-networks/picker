@@ -1,43 +1,33 @@
-import { z } from "zod";
+import * as sourceSchema from "./source.schema.ts";
 import * as sourceStore from "./source.store.ts";
 
-export const SourceSchema = z.object({
-  source_id: z.string(),
-  url: z.string().optional(),
-  type: z.string().optional(),
-  collected_at: z.string().optional(),
-  metadata: z.record(z.string(), z.unknown()).optional(),
-});
-export type Source = z.infer<typeof SourceSchema>;
-
-export const CreateSourceRequestSchema = SourceSchema.omit({
-  source_id: true,
-  collected_at: true,
-}).extend({
-  source_id: z.string().optional(),
-  collected_at: z.string().optional(),
-});
-export type CreateSourceRequest = z.infer<typeof CreateSourceRequestSchema>;
+const { SourceSchema } = sourceSchema;
+export type { CreateSourceRequest, Source } from "./source.schema.ts";
+export { CreateSourceRequestSchema, SourceSchema } from "./source.schema.ts";
 
 function nowIso(): string {
   const s = new Date().toISOString();
   return s;
 }
 
-function parseSource(raw: unknown): Source {
+function parseSource(raw: unknown): sourceSchema.Source {
   const parsed = SourceSchema.safeParse(raw);
   if (!parsed.success) throw new Error("Invalid source");
   return parsed.data;
 }
 
-export async function getSource(id: string): Promise<Source | null> {
+export async function getSource(
+  id: string,
+): Promise<sourceSchema.Source | null> {
   const raw = await sourceStore.getSource(id);
   if (raw == null) return null;
   const parsed = SourceSchema.safeParse(raw);
   return parsed.success ? parsed.data : null;
 }
 
-function buildSourceRaw(body: CreateSourceRequest): Source {
+function buildSourceRaw(
+  body: sourceSchema.CreateSourceRequest,
+): sourceSchema.Source {
   const id = body.source_id ?? crypto.randomUUID();
   const collected_at = body.collected_at ?? nowIso();
   return parseSource({
@@ -48,8 +38,8 @@ function buildSourceRaw(body: CreateSourceRequest): Source {
 }
 
 export async function createSource(
-  body: CreateSourceRequest,
-): Promise<Source> {
+  body: sourceSchema.CreateSourceRequest,
+): Promise<sourceSchema.Source> {
   const source = buildSourceRaw(body);
   await sourceStore.setSource(
     source as unknown as Record<string, unknown>,
@@ -57,9 +47,9 @@ export async function createSource(
   return source;
 }
 
-export async function listSources(): Promise<Source[]> {
+export async function listSources(): Promise<sourceSchema.Source[]> {
   const rawList = await sourceStore.listSources();
-  const out: Source[] = [];
+  const out: sourceSchema.Source[] = [];
   for (const raw of rawList) {
     const parsed = SourceSchema.safeParse(raw);
     if (parsed.success) out.push(parsed.data);

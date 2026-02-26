@@ -23,29 +23,31 @@ use Issues only for bugs and concrete feature requests.
 - **Clone** the repo and from the project root run:
   - `deno task dev` — start dev server (watch)
   - `deno test` — run tests
-  - `deno task scope-check` — verify API routes are listed in the scope document
+  - `deno task todo-check` — verify API routes are listed in the todo document
   - `deno task type-check-policy` — verify no type-check bypass (no --no-check,
     @ts-ignore, @ts-expect-error)
   - `deno task line-length-check` — verify line and file length (store.md §P)
 - **Pre-commit hook (optional)**: To run lint, format check, and line-length
   check on each commit: `git config core.hooksPath .githooks` and
   `chmod +x .githooks/pre-commit`.
-- **Pre-push hook (optional)**: To run `deno task scope-check` automatically
+- **Pre-push hook (optional)**: To run `deno task todo-check` automatically
   before every push, install the hook from the repo root:
   `cp shared/prompt/scripts/git-hooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push`
 
 ## Before submitting a PR
 
 1. **Tests**: `deno test` must pass.
-2. **Scope check**: `deno task scope-check` must pass. If you add new API
-   routes, modules, or infrastructure, add them to
-   [shared/prompt/boundary.md](shared/prompt/boundary.md) first, then implement.
+2. **Todo check**: `deno task todo-check` must pass. If you add new API routes,
+   modules, or infrastructure, add them to
+   [shared/prompt/todo.md](shared/prompt/todo.md) first, then implement.
 3. **Type-check policy**: `deno task type-check-policy` must pass. Do not
    disable or bypass type checking (no `--no-check`, `@ts-ignore`, or
    `@ts-expect-error`); fix type errors in code or types.
-4. **Format and line length (store.md §P)**: `deno fmt --check` and
-   `deno task line-length-check` must pass.
-5. **Commit messages**: Use the format `<type>[(scope)]: <description>`
+4. **Format and line length (store.md §P)**: Run `deno fmt` after editing code,
+   then ensure `deno fmt --check` and `deno task line-length-check` pass. For
+   line-length failures on long imports or strings, see the line-break patterns
+   in store.md §P.
+5. **Commit messages**: Use the format `<type>[(todo)]: <description>`
    (imperative, lowercase). Types: `feat`, `fix`, `docs`, `chore`, `refactor`,
    `perf`, `test`, `ci`, `build`.
 6. **Language**: Code, comments, and docs are in English.
