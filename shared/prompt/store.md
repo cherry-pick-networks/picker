@@ -95,6 +95,9 @@ tool-specific configs.
   dependency-check, type-check-policy, audit)
 - `deno task todo-discovery -- <entry-file>` — list direct imports for AI
   session todo (see shared/prompt/documentation/strategy.md)
+- `deno task rules:summary -- <task-type>` — list applicable store.md § for
+  task type (feature, refactor, docs, commit, migration, system, dependency,
+  sql, directory, all); see Rule index and guide.md
 - `gh pr create --draft` — create draft PR (review before marking ready)
 - `gh pr view`, `gh pr diff` — inspect PR for review
 - `gh run view` — inspect CI run (e.g. after failure)
@@ -262,6 +265,27 @@ tool-specific configs.
   rule text in root README.
 - **AI-facing docs**: When writing or editing .md under shared/prompt/ (except
   store.md and documentation/), follow §R.
+
+---
+
+## Rule index (context → sections)
+
+Mapping from task/context to applicable §. Use this index for Commands, Skills,
+and .mdc; rule text lives only in Part B below.
+
+| Context              | Apply §       | Notes                    |
+| -------------------- | ------------- | ------------------------ |
+| always               | C, I, O       | Every turn               |
+| handoff / long session | B          | Commit and session boundary |
+| feature + code        | Q, P, B, S, T, N | Feature implementation (TS) |
+| refactor + code      | P, B, S, T, N | Refactor (TS)            |
+| docs                 | R, D, E       | .md / .mdc editing       |
+| commit               | A, B          | Commit message and boundary |
+| migration            | J, D, E, F    | Rule/directory migration |
+| system               | K, L, M, F    | todo, system/ editing    |
+| dependency           | G, H          | deno.json etc.           |
+| sql                  | U             | SQL/DDL                  |
+| directory            | F, D, E       | Directory creation       |
 
 ---
 
