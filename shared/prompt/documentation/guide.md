@@ -41,7 +41,7 @@ or CLI, see § Using rules without Cursor.
 | ---------------------------- | ------------------------------------------------------------------------ | ------------------------- |
 | `/rules-summary` [task-type] | List applicable store.md § for the task type                             | §5, guide rules:summary   |
 | `/session-goal`              | State session goal in one sentence; ensure branch is not default         | guide Session start       |
-| `/pre-push`                  | Run pre-push (same as CI); fix and re-run if it fails                    | store.md §5, §7           |
+| `/pre-push`                  | Run pre-push via dev.sh (same as CI); fix and re-run if it fails         | store.md §5, §7           |
 | `/create-pr`                 | Create draft PR for current branch                                       | store.md §7               |
 | `/clean-branches`            | Leave only main locally; sync with origin/main; delete other branches    | guide (this section)      |
 | `/rules-check` [task-type]   | Verify change against applicable §; delegate to rules-subagent if needed | guide Subagents for rules |
@@ -302,8 +302,8 @@ type-check bypass. Return a short list of violations or OK."
 
 ## GitHub Actions / DevOps (Tip 29)
 
-- Before push: run `deno task pre-push` (same checks as CI) to avoid CI failures
-  (store.md §5, §7).
+- Before push: run `deno task pre-push` (runs under dev.sh for DB env; same
+  checks as CI) to avoid CI failures (store.md §5, §7).
 - For CI failures: use `gh run view` and logs to find root cause or flakiness
   (store.md §7). If using Claude with dx plugin, `/dx:gha <GitHub Actions URL>`
   can automate investigation and suggest fixes.
