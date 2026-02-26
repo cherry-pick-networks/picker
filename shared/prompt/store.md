@@ -159,6 +159,9 @@ tool-specific configs.
   one worktree per branch/dir.
 - **PR review**: Use `gh pr view` and `gh pr diff`; review file-by-file or
   step-by-step as needed.
+- **Merge strategy**: Default branch receives changes only via PR; merge using
+  **Create a merge commit** so that the only commits with two parents are PR
+  merges; keep branch history linear (see .github/BRANCH_PROTECTION.md).
 - **Before push or PR**: Run `deno task pre-push` so CI passes. Code must
   satisfy §P (function body 2–4 statements; async only when body uses await).
 - **Pre-commit hook (optional)**: To run `deno lint` and
