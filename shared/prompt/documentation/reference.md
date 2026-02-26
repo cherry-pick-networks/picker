@@ -19,33 +19,50 @@ with store.md §E/§F and modular monolith.
 
 ### Allowed infix (domains)
 
-| Infix   | Responsibility                                                         |
-| ------- | ---------------------------------------------------------------------- |
-| actor   | Profile, progress (identity and state)                                 |
-| app     | Route registration and app wiring                                      |
-| audit   | Change/run log artifacts                                               |
-| concept | Concept scheme, concept, concept_relation (ontology)                   |
-| content | Items, worksheets, prompt building                                     |
-| kv      | Generic key-value HTTP API; Postgres-backed, client from shared/infra. |
-| record   | Identity index (shared/record/reference)                               |
-| schedule | FSRS-rs schedule (actor, source, unit); weekly plan from grammar      |
-| script   | Scripts store, AST apply, Governance                                   |
-| source   | Source collection and read                                             |
+| Infix        | Responsibility                                                         |
+| ------------ | ---------------------------------------------------------------------- |
+| actor        | Profile, progress (identity and state)                                 |
+| app          | Route registration and app wiring                                      |
+| audit        | Change/run log artifacts                                               |
+| batch        | Batch jobs and bulk operations                                         |
+| concept      | Concept scheme, concept, concept_relation (ontology)                   |
+| content      | Items, worksheets, prompt building                                     |
+| data         | Data access / identity index (e.g. record/data)                         |
+| export       | Export and external output                                             |
+| kv           | Generic key-value HTTP API; Postgres-backed, client from shared/infra. |
+| notification | Notifications and alerts                                               |
+| record       | Identity index (shared/record/reference)                               |
+| report       | Reports and aggregations                                               |
+| schedule     | FSRS-rs schedule (actor, source, unit); weekly plan from grammar       |
+| script       | Scripts store, AST apply, Governance                                   |
+| source       | Source collection and read                                             |
+| sync         | Synchronization and replication                                        |
+| workflow     | Workflow and process orchestration                                     |
 
 ### Allowed suffix (artifacts)
 
 | Suffix     | Meaning                               | §E axis  |
 | ---------- | ------------------------------------- | -------- |
+| adapter    | External/system adapter               | Artifact |
+| client     | Client wrapper (e.g. KV, API)         | Artifact |
+| config     | Wiring (e.g. route registration)      | Artifact |
 | endpoint   | HTTP entry (Hono routes)              | Artifact |
+| event      | Domain/application events             | Artifact |
+| format     | Serialization/format handling         | Artifact |
+| grammar    | Parser/grammar rules                  | Artifact |
+| log        | Log artifact storage                  | Meta     |
+| mapper     | Row/DTO mapping                       | Artifact |
+| mapping    | Mapping definitions                   | Artifact |
+| pipeline   | Processing pipeline                   | Artifact |
+| request    | Request DTO/schema                    | Artifact |
+| response   | Response DTO/schema                   | Artifact |
+| schema     | Zod schemas and domain types          | Artifact |
 | service    | Application service (use cases)       | —        |
 | store      | Persistence (KV, file)                | Artifact |
-| schema     | Zod schemas and domain types          | Artifact |
-| types      | Type-only definitions                 | Meta     |
 | transfer   | Request/response or DTO types         | Artifact |
-| client     | Client wrapper (e.g. KV, API)         | Artifact |
+| types      | Type-only definitions                 | Meta     |
 | validation | Policy/verification (e.g. Governance) | Policy   |
-| log        | Log artifact storage                  | Meta     |
-| config     | Wiring (e.g. route registration)      | Artifact |
+| weekly     | Weekly view / period-specific logic   | Meta     |
 
 ### Target layout (flat domain: files under system/<infix>/)
 
@@ -58,7 +75,7 @@ system/
   content/   *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts
   kv/        *.endpoint.ts, *.store.ts
   record/    *.endpoint.ts, *.store.ts
-  schedule/  *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, fsrs-adapter.ts
+  schedule/  *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.grammar.ts, *.mapper.ts, *.weekly.ts, *.adapter.ts
   script/    *.endpoint.ts, *.service.ts, *.store.ts, *.types.ts, *.validation.ts
   source/    *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, source-extract.service.ts, source-llm.client.ts
   routes.ts  (entry; imports app/routes-register.config.ts)
@@ -116,9 +133,21 @@ New DDL (e.g. ontology): use `NN_<name>.sql` with an available number and
 §E-compliant name; adjust numbering if needed (see todo.md and §J).
 
 **Validation (optional).** Script `shared/prompt/scripts/check-sql-filename.ts`
-checks that every `shared/infra/schema/*.sql` file matches `NN_<name>.sql` with
-name satisfying `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. Run:
-`deno task sql-filename-check` (pre-commit or CI; see store.md §5).
+checks all .sql files: (1) `shared/infra/schema/*.sql` must match
+`NN_<name>.sql` with name `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`; (2)
+`system/<module>/sql/*.sql` must be lowercase snake_case (e.g.
+`get_schedule_item.sql`). Run: `deno task sql-filename-check` (pre-commit or CI;
+see store.md §5).
+
+### DML (queries)
+
+Application DML lives under `system/<module>/sql/` (e.g.
+`system/schedule/sql/`). One statement per file; filenames lowercase snake_case
+(e.g. `get_schedule_item.sql`); validated by sql-filename-check. Load with
+`loadSql(baseUrl, filename)` from `shared/infra/sql-loader.ts`; baseUrl
+typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
+`$1, $2, ...`; document order/meaning in the .sql file or store. DDL:
+`shared/infra/schema/*.sql`. Seed: `shared/infra/seed/...`.
 
 ### Migration mapping (3-layer → flat, completed)
 

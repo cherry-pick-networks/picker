@@ -3,12 +3,12 @@
 import type { Context } from "hono";
 import {
   createItem,
-  getWeeklyPlan,
   listDue,
   listItems,
   recordReview,
   scheduleItemId,
 } from "./schedule.service.ts";
+import { getWeeklyPlan } from "./schedule-weekly.service.ts";
 import {
   CreateScheduleItemRequestSchema,
   ReviewRequestSchema,
@@ -82,7 +82,11 @@ export async function postReview(c: Context) {
   if (!parsed.success) {
     return c.json({ error: parsed.error.flatten() }, 400);
   }
-  const item = await recordReview(id, parsed.data.grade, parsed.data.reviewed_at);
+  const item = await recordReview(
+    id,
+    parsed.data.grade,
+    parsed.data.reviewed_at,
+  );
   if (item == null) return c.json({ error: "Not found" }, 404);
   return c.json({ ...item, id: scheduleItemId(item) });
 }

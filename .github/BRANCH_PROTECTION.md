@@ -20,11 +20,11 @@ parents only for the commit that merges a branch into the default branch**.
   feature branch; use rebase to update or tidy the branch. Every commit on the
   branch has exactly one parent.
 - **When merging into the default branch:** Use **Create a merge commit**. The
-  only commits with two parents are these PR merge commits. Do not use
-  **Rebase and merge** or **Squash and merge** for PRs into the default branch.
+  only commits with two parents are these PR merge commits. Do not use **Rebase
+  and merge** or **Squash and merge** for PRs into the default branch.
 - **Repository setting:** **Settings** → **General** → **Pull Requests** → set
-  the default merge button to **Create a merge commit** and enable **Allow
-  merge commits**.
+  the default merge button to **Create a merge commit** and enable **Allow merge
+  commits**.
 
 ## Option A: Repository ruleset (API)
 
@@ -63,8 +63,8 @@ type-check-policy, and audit all pass before merge.
 
 If history on main is inconsistent or needs repair, fix it via PR only:
 
-1. In a separate clone or worktree, prepare the desired history (e.g. rebase
-   the branch onto current main).
+1. In a separate clone or worktree, prepare the desired history (e.g. rebase the
+   branch onto current main).
 2. Push that result to a **new branch** (do not push to main).
 3. Open a PR from that branch into main.
 4. Let CI pass, then merge the PR using **Create a merge commit** (same merge

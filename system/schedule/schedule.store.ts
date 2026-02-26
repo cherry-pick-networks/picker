@@ -2,7 +2,23 @@
 // function-length-ignore-file — store CRUD (store.md §P).
 
 import { getPg } from "#shared/infra/pg.client.ts";
+import { loadSql } from "#shared/infra/sql-loader.ts";
 import type { ScheduleItemPayload } from "./schedule.schema.ts";
+
+const sqlDir = new URL("./sql/", import.meta.url);
+const SQL_GET = await loadSql(sqlDir, "get_schedule_item.sql");
+const SQL_SET = await loadSql(sqlDir, "set_schedule_item.sql");
+const SQL_LIST_BY_ACTOR = await loadSql(
+  sqlDir,
+  "list_schedule_items_by_actor.sql",
+);
+const SQL_LIST_DUE = await loadSql(sqlDir, "list_due.sql");
+
+function parsePayload(raw: unknown): ScheduleItemPayload {
+  return (typeof raw === "string"
+    ? JSON.parse(raw)
+    : raw) as ScheduleItemPayload;
+}
 
 export interface ScheduleItemRow {
   actor_id: string;
@@ -20,37 +36,27 @@ export async function getScheduleItem(
   unitId: string,
 ): Promise<ScheduleItemRow | null> {
   const pg = await getPg();
-  const r = await pg.queryObject<ScheduleItemRow>(
-    `SELECT actor_id, source_id, unit_id, payload, next_due_at::text, created_at::text, updated_at::text
-     FROM schedule_item WHERE actor_id = $1 AND source_id = $2 AND unit_id = $3`,
-    [actorId, sourceId, unitId],
-  );
+  const r = await pg.queryObject<ScheduleItemRow>(SQL_GET, [
+    actorId,
+    sourceId,
+    unitId,
+  ]);
   const row = r.rows[0];
   if (!row) return null;
-  const raw = row.payload;
-  return {
-    ...row,
-    payload: (typeof raw === "string" ? JSON.parse(raw) : raw) as ScheduleItemPayload,
-  };
+  return { ...row, payload: parsePayload(row.payload) };
 }
 
 export async function setScheduleItem(row: ScheduleItemRow): Promise<void> {
   const pg = await getPg();
-  await pg.queryArray(
-    `INSERT INTO schedule_item (actor_id, source_id, unit_id, payload, next_due_at, created_at, updated_at)
-     VALUES ($1, $2, $3, $4, $5::timestamptz, $6::timestamptz, $7::timestamptz)
-     ON CONFLICT (actor_id, source_id, unit_id)
-     DO UPDATE SET payload = $4, next_due_at = $5::timestamptz, updated_at = $7::timestamptz`,
-    [
-      row.actor_id,
-      row.source_id,
-      row.unit_id,
-      JSON.stringify(row.payload),
-      row.next_due_at,
-      row.created_at,
-      row.updated_at,
-    ],
-  );
+  await pg.queryArray(SQL_SET, [
+    row.actor_id,
+    row.source_id,
+    row.unit_id,
+    JSON.stringify(row.payload),
+    row.next_due_at,
+    row.created_at,
+    row.updated_at,
+  ]);
 }
 
 export async function listScheduleItemsByActor(
@@ -58,24 +64,11 @@ export async function listScheduleItemsByActor(
   sourceId?: string,
 ): Promise<ScheduleItemRow[]> {
   const pg = await getPg();
-  const r = sourceId
-    ? await pg.queryObject<ScheduleItemRow>(
-        `SELECT actor_id, source_id, unit_id, payload, next_due_at::text, created_at::text, updated_at::text
-         FROM schedule_item WHERE actor_id = $1 AND source_id = $2 ORDER BY next_due_at`,
-        [actorId, sourceId],
-      )
-    : await pg.queryObject<ScheduleItemRow>(
-        `SELECT actor_id, source_id, unit_id, payload, next_due_at::text, created_at::text, updated_at::text
-         FROM schedule_item WHERE actor_id = $1 ORDER BY next_due_at`,
-        [actorId],
-      );
-  return r.rows.map((row) => {
-    const raw = row.payload;
-    return {
-      ...row,
-      payload: (typeof raw === "string" ? JSON.parse(raw) : raw) as ScheduleItemPayload,
-    };
-  });
+  const r = await pg.queryObject<ScheduleItemRow>(SQL_LIST_BY_ACTOR, [
+    actorId,
+    sourceId ?? null,
+  ]);
+  return r.rows.map((row) => ({ ...row, payload: parsePayload(row.payload) }));
 }
 
 export async function listDue(
@@ -84,18 +77,10 @@ export async function listDue(
   to: string,
 ): Promise<ScheduleItemRow[]> {
   const pg = await getPg();
-  const r = await pg.queryObject<ScheduleItemRow>(
-    `SELECT actor_id, source_id, unit_id, payload, next_due_at::text, created_at::text, updated_at::text
-     FROM schedule_item
-     WHERE actor_id = $1 AND next_due_at >= $2::timestamptz AND next_due_at <= $3::timestamptz
-     ORDER BY next_due_at`,
-    [actorId, from, to],
-  );
-  return r.rows.map((row) => {
-    const raw = row.payload;
-    return {
-      ...row,
-      payload: (typeof raw === "string" ? JSON.parse(raw) : raw) as ScheduleItemPayload,
-    };
-  });
+  const r = await pg.queryObject<ScheduleItemRow>(SQL_LIST_DUE, [
+    actorId,
+    from,
+    to,
+  ]);
+  return r.rows.map((row) => ({ ...row, payload: parsePayload(row.payload) }));
 }

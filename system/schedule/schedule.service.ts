@@ -1,28 +1,13 @@
-/** Schedule service: CRUD, due list, review, grammar unit resolution. */
+/** Schedule service: CRUD, due list, review. */
 // function-length-ignore-file — schedule service orchestration (store.md §P).
 
-import { listSources } from "#system/source/source.service.ts";
 import { applyReview, initState } from "./fsrs-adapter.ts";
 import type { ScheduleItem } from "./schedule.schema.ts";
-import {
-  parseScheduleItemId,
-  scheduleItemId,
-} from "./schedule.schema.ts";
+import { parseScheduleItemId, scheduleItemId } from "./schedule.schema.ts";
+import { rowToItem } from "./schedule-mapper.service.ts";
 import * as scheduleStore from "./schedule.store.ts";
 
-const GRAMMAR_SOURCE_PREFIX = "book-grammar-";
-
-function rowToItem(row: scheduleStore.ScheduleItemRow): ScheduleItem {
-  return {
-    actor_id: row.actor_id,
-    source_id: row.source_id,
-    unit_id: row.unit_id,
-    payload: row.payload,
-    next_due_at: row.next_due_at,
-    created_at: row.created_at,
-    updated_at: row.updated_at,
-  };
-}
+export { rowToItem };
 
 export async function getScheduleItem(
   actorId: string,
@@ -112,79 +97,6 @@ export async function recordReview(
   };
   await scheduleStore.setScheduleItem(updated);
   return rowToItem(updated);
-}
-
-/** List (source_id, unit_id) from grammar sources (source payload.metadata.unit_ids). */
-export async function listGrammarUnits(level?: string): Promise<
-  { source_id: string; unit_id: string; level?: string }[]
-> {
-  const sources = await listSources();
-  const out: { source_id: string; unit_id: string; level?: string }[] = [];
-  for (const s of sources) {
-    if (!s.source_id.startsWith(GRAMMAR_SOURCE_PREFIX)) continue;
-    const meta = s.metadata as { level?: string; unit_ids?: string[] } | undefined;
-    const unitIds = meta?.unit_ids ?? [];
-    const lvl = level ?? meta?.level;
-    if (level != null && lvl !== level) continue;
-    for (const unitId of unitIds) {
-      out.push({ source_id: s.source_id, unit_id: unitId, level: lvl });
-    }
-  }
-  return out;
-}
-
-/** Week plan: new_units (not yet scheduled) and review_units (due in range). */
-export interface WeeklyPlan {
-  week_start: string;
-  week_end: string;
-  new_units: { source_id: string; unit_id: string }[];
-  review_units: ScheduleItem[];
-}
-
-/** Start of week (Monday) and end (Sunday 23:59:59.999) in ISO. */
-// function-length-ignore
-function weekRange(weekStart: string): { start: string; end: string } {
-  const start = new Date(weekStart);
-  const end = new Date(start);
-  end.setDate(end.getDate() + 6);
-  end.setHours(23, 59, 59, 999);
-  return { start: start.toISOString(), end: end.toISOString() };
-}
-
-// function-length-ignore
-export async function getWeeklyPlan(
-  actorId: string,
-  weekStart: string,
-  options?: { level?: string; new_unit_count?: number },
-): Promise<WeeklyPlan> {
-  const { start, end } = weekRange(weekStart);
-  const level = options?.level;
-  const newCount = options?.new_unit_count ?? 5;
-  const [dueRows, grammarUnits] = await Promise.all([
-    scheduleStore.listDue(actorId, start, end),
-    listGrammarUnits(level),
-  ]);
-  const review_units = dueRows.map(rowToItem);
-  const existingKeys = new Set(
-    (await scheduleStore.listScheduleItemsByActor(actorId)).map(
-      (r) => `${r.source_id}:${r.unit_id}`,
-    ),
-  );
-  const new_units: { source_id: string; unit_id: string }[] = [];
-  for (const u of grammarUnits) {
-    if (new_units.length >= newCount) break;
-    const key = `${u.source_id}:${u.unit_id}`;
-    if (!existingKeys.has(key)) {
-      new_units.push({ source_id: u.source_id, unit_id: u.unit_id });
-      existingKeys.add(key);
-    }
-  }
-  return {
-    week_start: start,
-    week_end: end,
-    new_units,
-    review_units,
-  };
 }
 
 export { scheduleItemId };
