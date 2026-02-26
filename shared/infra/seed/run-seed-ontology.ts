@@ -9,6 +9,10 @@ import { getPg } from "../pg.client.ts";
 
 const SEED_SQL = new URL("./ontology/seed.sql", import.meta.url);
 const SEED_CSAT = new URL("./csat-ontology.toml", import.meta.url);
+const SEED_CSAT_SUBJECTS = new URL(
+  "./ontology/csat-subjects.toml",
+  import.meta.url,
+);
 
 function stripLeadingComments(block: string): string {
   const noComments = block.replace(/^\s*(--[^\n]*\n)*/m, "");
@@ -32,10 +36,11 @@ interface CsatConcept {
   path: string;
 }
 
-async function runCsatSeed(
+async function runTomlSeed(
   pg: Awaited<ReturnType<typeof getPg>>,
+  url: URL,
 ): Promise<void> {
-  const raw = await Deno.readTextFile(SEED_CSAT);
+  const raw = await Deno.readTextFile(url);
   const data = parse(raw) as {
     concept_scheme?: CsatScheme[];
     concept?: CsatConcept[];
@@ -64,7 +69,8 @@ async function runSeed(): Promise<void> {
   for (const stmt of splitStatements(sql)) {
     await pg.queryArray(stmt + ";");
   }
-  await runCsatSeed(pg);
+  await runTomlSeed(pg, SEED_CSAT);
+  await runTomlSeed(pg, SEED_CSAT_SUBJECTS);
   await pg.end();
 }
 
