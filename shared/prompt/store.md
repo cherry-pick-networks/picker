@@ -158,9 +158,9 @@ tool-specific configs.
   step-by-step as needed.
 - **Before push or PR**: Run `deno task pre-push` so CI passes. Code must
   satisfy §P (function body 2–4 statements; async only when body uses await).
-- **Pre-commit hook (optional)**: To run `deno lint`, `deno fmt --check`, and
-  `deno task line-length-check` on commit, set
-  `git config core.hooksPath .githooks` and `chmod +x .githooks/pre-commit`.
+- **Pre-commit hook (optional)**: To run `deno lint` and
+  `deno task format-check` on commit, set `git config core.hooksPath .githooks`
+  and `chmod +x .githooks/pre-commit`.
 - **CI failure**: Use `gh run view`, logs, and (if needed) `gh` GraphQL/API to
   find root cause, flakiness, or breaking commit.
 - **Dangerous commands**: Audit approved commands periodically (e.g. patterns
@@ -180,7 +180,9 @@ tool-specific configs.
 - **Paths**: When referring to files outside the current tree, use `realpath`
   (or equivalent) to pass absolute paths.
 - **Long-running jobs**: For CI/build or external waits, use manual exponential
-  backoff (e.g. check at 1m, 2m, 4m, …) instead of one long wait.
+  backoff (e.g. check at 1m, 2m, 4m, …) instead of one long wait. For
+  long-running or high-permission tasks (e.g. experiments with auto-approve),
+  prefer running in a container so failures are isolated.
 
 ---
 
@@ -247,9 +249,9 @@ tool-specific configs.
 - **Single source**: Add or change rules and habits only in this file
   (`shared/prompt/store.md`). Do not duplicate in Cursor Rules or other tool
   configs; reference this file instead.
-- **.cursor/rules**: mdc files are for **when** to apply (e.g. always vs
-  on-request); keep one file per apply timing. Rule text stays here only; mdc
-  names follow §D and §E.
+- **.cursor/rules** (optional, when using Cursor): mdc files define **when** to
+  apply (e.g. always vs on-request); keep one file per apply timing. Rule text
+  stays here only; mdc names follow §D and §E.
 - **Review**: Review this file periodically (e.g. quarterly); add repeated
   instructions as they appear; remove or update outdated lines. Use recent
   conversations to propose new lines (repeated instructions from chats →
@@ -265,13 +267,18 @@ tool-specific configs.
   rule text in root README.
 - **AI-facing docs**: When writing or editing .md under shared/prompt/ (except
   store.md and documentation/), follow §R.
+- **Changing store.md**: Keep all rule text in Part B and update the Rule index
+  and context mapping when adding or changing §. Propose changes for human
+  review; the agent suggests edits only—a human performs the commit.
 
 ---
 
 ## Rule index (context → sections)
 
 Mapping from task/context to applicable §. Use this index for Commands, Skills,
-and .mdc; rule text lives only in Part B below.
+and .mdc; rule text lives only in Part B below. The index and
+`deno task rules:summary -- <task-type>` are editor-agnostic; you can use them
+from any editor or CLI to apply the same rules.
 
 | Context                | Apply §          | Notes                       |
 | ---------------------- | ---------------- | --------------------------- |
@@ -291,11 +298,10 @@ and .mdc; rule text lives only in Part B below.
 
 ## Part B. Rule definitions (authoritative)
 
-Cursor Rules (`.cursor/rules/*.mdc`) reference these sections only; they do not
-duplicate the text below. The role of each mdc is to define **when** to apply
-(e.g. alwaysApply). Rule content lives only in this file; mdc bodies list which
-§ to follow. Keep the number of mdc files aligned with apply timings (e.g. one
-always-applied bundle, one on-request).
+Rule content lives only in this file. When using Cursor, `.cursor/rules/*.mdc`
+reference these sections only (they do not duplicate the text below) and define
+**when** to apply (e.g. alwaysApply). Other editors or CLI: use the Rule index
+above and `deno task rules:summary -- <task-type>`; no .mdc required.
 
 ### §A. Commit message format
 
@@ -320,7 +326,7 @@ multi-flag work: (1) implement one feature-flag unit only; (2) run git status,
 git add, git commit with message per this rule; (3) only after commit succeeds,
 proceed to the next unit. No batch commit at the end of the task. Session end:
 no need to output a suggested commit message; commits are made during the task
-at each boundary. Do not run git commit unless the user explicitly asks.
+at each boundary.
 
 ### §C. Language
 
@@ -614,17 +620,26 @@ comparison.
 
 ### §P. Format limits (code)
 
-Formatter: use the project formatter (deno fmt, lineWidth 80); prefer Format on
-Save so the machine handles line breaks (Track A) and §P is satisfied. After
-writing or editing code, run `deno fmt` so the machine handles line breaks; do
-not rely on manual 80-char counting. Line length: keep lines to 80 characters or
-fewer (strict); exceptions only where documented (e.g. long URLs in comments).
-One effective line = 80 character units per physical line: ceil(length/80);
-empty line = 0. File length: keep files to 100 effective lines or fewer (sum of
-effective lines over all physical lines); split when longer. Scope: TypeScript
-source (e.g. `**/*.ts`); exclude node_modules, vendor, generated output.
-Exception: file-length check is not applied to test files (paths ending with
-`_test.ts` or under a `tests/` directory); line-length check still applies.
+Formatter vs lint: the formatter (deno fmt) handles style (indentation, quotes,
+line breaks); lint (deno lint) handles rules (function body length, etc.). Run
+order: run `deno lint` then format checks (formatter does not change logic).
+Format options are explicit in deno.json and aligned with lint; use
+`deno task format-check` for fmt --check plus line-length check together.
+Formatter runs on all TypeScript sources; lint excludes test file patterns per
+deno.json.
+
+Formatter: use the project formatter (deno fmt; options in deno.json, lineWidth
+80); prefer Format on Save so the machine handles line breaks (Track A) and §P
+is satisfied. After writing or editing code, run `deno fmt` so the machine
+handles line breaks; do not rely on manual 80-char counting. Line length: keep
+lines to 80 characters or fewer (strict); exceptions only where documented (e.g.
+long URLs in comments). One effective line = 80 character units per physical
+line: ceil(length/80); empty line = 0. File length: keep files to 100 effective
+lines or fewer (sum of effective lines over all physical lines); split when
+longer. Scope: TypeScript source (e.g. `**/*.ts`); exclude node_modules, vendor,
+generated output. Exception: file-length check is not applied to test files
+(paths ending with `_test.ts` or under a `tests/` directory); line-length check
+still applies.
 
 Function body: block body 2–4 statements (AST direct statements in block body
 only); expression body allowed (counts as 1). A single statement is allowed when
@@ -652,8 +667,9 @@ body, write a short comment stating the AST statement count before the code. (3)
 **Self-review**: After writing, check for any function whose block body has 5+
 statements or a single statement that is not the complex-statement exemption
 (try/catch, switch, block-bodied if); fix or extract before committing. Then run
-`deno fmt` and `deno task line-length-check`; if line-length fails (e.g. on
-imports or long strings), apply the line-break patterns in this section.
+`deno fmt` and `deno task format-check` (or `deno task line-length-check`
+alone); if line-length fails (e.g. on imports or long strings), apply the
+line-break patterns in this section.
 
 80-character defense (Track B — architectural extraction): when line length
 would otherwise exceed 80 chars or harm readability, apply these rules. Extract
