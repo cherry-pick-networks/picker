@@ -1,10 +1,10 @@
-import {
-  ID_COUNT_LIMIT,
-  validateFacetSchemes,
-} from "#system/concept/concept.service.ts";
 import * as contentStore from "./content.store.ts";
 import type { GenerateWorksheetRequest, Worksheet } from "./content.schema.ts";
 import { nowIso } from "./content-parse.service.ts";
+import {
+  initWorksheetRequest,
+  validateAndInitWorksheet,
+} from "./content-worksheet-request.ts";
 
 async function collectItemIds(
   conceptIds: string[],
@@ -54,15 +54,6 @@ function buildWorksheetMeta(
   };
 }
 
-function initWorksheetRequest(request: GenerateWorksheetRequest) {
-  const conceptIds = request.concept_ids?.length ? request.concept_ids : [];
-  const perConcept = Math.max(
-    1,
-    Math.floor((request.item_count ?? 5) / Math.max(1, conceptIds.length)),
-  );
-  return { worksheet_id: crypto.randomUUID(), conceptIds, perConcept };
-}
-
 async function saveWorksheet(worksheet: Worksheet): Promise<Worksheet> {
   await contentStore.setWorksheet(
     worksheet as unknown as Record<string, unknown>,
@@ -70,30 +61,26 @@ async function saveWorksheet(worksheet: Worksheet): Promise<Worksheet> {
   return worksheet;
 }
 
-export async function generateWorksheet(
+async function resolveItemIds(
   request: GenerateWorksheetRequest,
-): Promise<Worksheet> {
-  const conceptIds = request.concept_ids?.length ? request.concept_ids : [];
-  if (conceptIds.length > ID_COUNT_LIMIT) {
-    throw new Error(
-      `Too many concept IDs in request (max ${ID_COUNT_LIMIT})`,
-    );
-  }
-  const { invalid } = await validateFacetSchemes("concept", conceptIds);
-  if (invalid.length > 0) {
-    throw new Error(`Invalid concept IDs: ${invalid.join(", ")}`);
-  }
-  const { worksheet_id, conceptIds: ids, perConcept } = initWorksheetRequest(
-    request,
-  );
+  init: ReturnType<typeof initWorksheetRequest>,
+): Promise<string[]> {
   const item_count = request.item_count ?? 5;
-  const item_ids = request.subject_weights &&
+  return request.subject_weights &&
       Object.keys(request.subject_weights).length > 0
     ? await collectItemIdsBySubjectWeights(
       request.subject_weights,
       item_count,
     )
-    : await collectItemIds(ids, perConcept);
-  const worksheet = buildWorksheetMeta(request, worksheet_id, item_ids);
-  return saveWorksheet(worksheet);
+    : await collectItemIds(init.conceptIds, init.perConcept);
+}
+
+export async function generateWorksheet(
+  request: GenerateWorksheetRequest,
+): Promise<Worksheet> {
+  const init = await validateAndInitWorksheet(request);
+  const item_ids = await resolveItemIds(request, init);
+  return saveWorksheet(
+    buildWorksheetMeta(request, init.worksheet_id, item_ids),
+  );
 }

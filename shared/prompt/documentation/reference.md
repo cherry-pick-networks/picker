@@ -137,15 +137,15 @@ name satisfying `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. Run:
 
 ### Data file locations (TOML)
 
-| Path                                                | Purpose                              |
-| --------------------------------------------------- | ------------------------------------ |
-| `shared/record/reference/extracted-data-index.toml` | Extracted-data index (UUID → entry)  |
-| `shared/record/reference/identity-index.toml`       | Identity index (UUID → entry)        |
-| `shared/record/store/<uuid>.toml`                   | Single record (UUID v7)              |
-| `system/audit/e2e-runs.toml`                        | E2E run log (schemaVersion + runs[]) |
-| `shared/infra/seed/ontology/seed.sql`              | Ontology seed (DDC scheme).          |
-| `shared/infra/seed/csat-ontology.toml`              | Ontology seed (csat-type, cog, ctx). |
-| `shared/infra/seed/ontology/csat-subjects.toml`    | Ontology seed: csat-subjects (all exam areas). |
+| Path                                                | Purpose                                        |
+| --------------------------------------------------- | ---------------------------------------------- |
+| `shared/record/reference/extracted-data-index.toml` | Extracted-data index (UUID → entry)            |
+| `shared/record/reference/identity-index.toml`       | Identity index (UUID → entry)                  |
+| `shared/record/store/<uuid>.toml`                   | Single record (UUID v7)                        |
+| `system/audit/e2e-runs.toml`                        | E2E run log (schemaVersion + runs[])           |
+| `shared/infra/seed/ontology/seed.sql`               | Ontology seed (DDC scheme).                    |
+| `shared/infra/seed/csat-ontology.toml`              | Ontology seed (csat-type, cog, ctx).           |
+| `shared/infra/seed/ontology/csat-subjects.toml`     | Ontology seed: csat-subjects (all exam areas). |
 
 ### Ontology and facet policy
 

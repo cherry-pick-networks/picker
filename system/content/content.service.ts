@@ -1,7 +1,3 @@
-import {
-  ID_COUNT_LIMIT,
-  validateFacetSchemes,
-} from "#system/concept/concept.service.ts";
 import * as contentStore from "./content.store.ts";
 import type { Item, ItemPatch, Worksheet } from "./content.schema.ts";
 import {
@@ -9,6 +5,7 @@ import {
   ItemSchema,
   WorksheetSchema,
 } from "./content.schema.ts";
+import { validateItemFacets } from "./content-facet-validation.ts";
 import { nowIso, parseItem } from "./content-parse.service.ts";
 export {
   CreateItemRequestSchema,
@@ -42,38 +39,6 @@ function buildItemRaw(body: CreateItemRequestType): Item {
     item_id: id,
     created_at,
   });
-}
-
-async function validateItemFacets(
-  body: CreateItemRequestType | ItemPatch,
-): Promise<void> {
-  const checks: Array<
-    [
-      "subject" | "contentType" | "cognitiveLevel" | "context" | "concept",
-      string[],
-    ]
-  > = [];
-  if (body.subject_ids?.length) checks.push(["subject", body.subject_ids]);
-  if (body.content_type_id) {
-    checks.push(["contentType", [body.content_type_id]]);
-  }
-  if (body.cognitive_level_id) {
-    checks.push(["cognitiveLevel", [body.cognitive_level_id]]);
-  }
-  if (body.context_ids?.length) checks.push(["context", body.context_ids]);
-  if (body.concept_id) checks.push(["concept", [body.concept_id]]);
-  const total = checks.reduce((n, [, ids]) => n + ids.length, 0);
-  if (total > ID_COUNT_LIMIT) {
-    throw new Error(`Too many concept IDs in request (max ${ID_COUNT_LIMIT})`);
-  }
-  for (const [facet, ids] of checks) {
-    const { invalid } = await validateFacetSchemes(facet, ids);
-    if (invalid.length > 0) {
-      throw new Error(
-        `Invalid concept IDs for ${facet}: ${invalid.join(", ")}`,
-      );
-    }
-  }
 }
 
 export async function createItem(body: CreateItemRequestType): Promise<Item> {

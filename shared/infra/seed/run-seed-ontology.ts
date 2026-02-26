@@ -9,7 +9,10 @@ import { getPg } from "../pg.client.ts";
 
 const SEED_SQL = new URL("./ontology/seed.sql", import.meta.url);
 const SEED_CSAT = new URL("./csat-ontology.toml", import.meta.url);
-const SEED_CSAT_SUBJECTS = new URL("./ontology/csat-subjects.toml", import.meta.url);
+const SEED_CSAT_SUBJECTS = new URL(
+  "./ontology/csat-subjects.toml",
+  import.meta.url,
+);
 
 function stripLeadingComments(block: string): string {
   const noComments = block.replace(/^\s*(--[^\n]*\n)*/m, "");

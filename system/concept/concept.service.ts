@@ -15,6 +15,5 @@ export async function validateFacetSchemes(
     ids,
     allowedSchemeIds,
   );
-  const invalid = ids.filter((id) => !existing.has(id));
-  return { invalid };
+  return { invalid: ids.filter((id) => !existing.has(id)) };
 }
