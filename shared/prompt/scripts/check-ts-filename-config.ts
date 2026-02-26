@@ -27,13 +27,14 @@ export const ROOT_ALLOWED = new Set([
 /** system/ infix (domain folders) per reference.md. */
 export const SYSTEM_INFIX = new Set([
   "actor",
-  "content",
-  "source",
-  "script",
-  "record",
-  "kv",
-  "audit",
   "app",
+  "audit",
+  "concept",
+  "content",
+  "kv",
+  "record",
+  "script",
+  "source",
 ]);
 
 /** Allowed suffix for [name].[suffix].ts (reference.md, store.md §E). */

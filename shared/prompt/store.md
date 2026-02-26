@@ -95,6 +95,9 @@ tool-specific configs.
   dependency-check, type-check-policy, audit)
 - `deno task todo-discovery -- <entry-file>` — list direct imports for AI
   session todo (see shared/prompt/documentation/strategy.md)
+- `deno task rules:summary -- <task-type>` — list applicable store.md § for task
+  type (feature, refactor, docs, commit, migration, system, dependency, sql,
+  directory, all); see Rule index and guide.md
 - `gh pr create --draft` — create draft PR (review before marking ready)
 - `gh pr view`, `gh pr diff` — inspect PR for review
 - `gh run view` — inspect CI run (e.g. after failure)
@@ -262,6 +265,27 @@ tool-specific configs.
   rule text in root README.
 - **AI-facing docs**: When writing or editing .md under shared/prompt/ (except
   store.md and documentation/), follow §R.
+
+---
+
+## Rule index (context → sections)
+
+Mapping from task/context to applicable §. Use this index for Commands, Skills,
+and .mdc; rule text lives only in Part B below.
+
+| Context                | Apply §          | Notes                       |
+| ---------------------- | ---------------- | --------------------------- |
+| always                 | C, I, O          | Every turn                  |
+| handoff / long session | B                | Commit and session boundary |
+| feature + code         | Q, P, B, S, T, N | Feature implementation (TS) |
+| refactor + code        | P, B, S, T, N    | Refactor (TS)               |
+| docs                   | R, D, E          | .md / .mdc editing          |
+| commit                 | A, B             | Commit message and boundary |
+| migration              | J, D, E, F       | Rule/directory migration    |
+| system                 | K, L, M, F       | todo, system/ editing       |
+| dependency             | G, H             | deno.json etc.              |
+| sql                    | U                | SQL/DDL                     |
+| directory              | F, D, E          | Directory creation          |
 
 ---
 
@@ -591,15 +615,16 @@ comparison.
 ### §P. Format limits (code)
 
 Formatter: use the project formatter (deno fmt, lineWidth 80); prefer Format on
-Save so the machine handles line breaks (Track A) and §P is satisfied. Line
-length: keep lines to 80 characters or fewer (strict); exceptions only where
-documented (e.g. long URLs in comments). One effective line = 80 character units
-per physical line: ceil(length/80); empty line = 0. File length: keep files to
-100 effective lines or fewer (sum of effective lines over all physical lines);
-split when longer. Scope: TypeScript source (e.g. `**/*.ts`); exclude
-node_modules, vendor, generated output. Exception: file-length check is not
-applied to test files (paths ending with `_test.ts` or under a `tests/`
-directory); line-length check still applies.
+Save so the machine handles line breaks (Track A) and §P is satisfied. After
+writing or editing code, run `deno fmt` so the machine handles line breaks; do
+not rely on manual 80-char counting. Line length: keep lines to 80 characters or
+fewer (strict); exceptions only where documented (e.g. long URLs in comments).
+One effective line = 80 character units per physical line: ceil(length/80);
+empty line = 0. File length: keep files to 100 effective lines or fewer (sum of
+effective lines over all physical lines); split when longer. Scope: TypeScript
+source (e.g. `**/*.ts`); exclude node_modules, vendor, generated output.
+Exception: file-length check is not applied to test files (paths ending with
+`_test.ts` or under a `tests/` directory); line-length check still applies.
 
 Function body: block body 2–4 statements (AST direct statements in block body
 only); expression body allowed (counts as 1). A single statement is allowed when
@@ -626,7 +651,9 @@ statements. (2) **Implement**: Implement one function at a time; for each block
 body, write a short comment stating the AST statement count before the code. (3)
 **Self-review**: After writing, check for any function whose block body has 5+
 statements or a single statement that is not the complex-statement exemption
-(try/catch, switch, block-bodied if); fix or extract before committing.
+(try/catch, switch, block-bodied if); fix or extract before committing. Then run
+`deno fmt` and `deno task line-length-check`; if line-length fails (e.g. on
+imports or long strings), apply the line-break patterns in this section.
 
 80-character defense (Track B — architectural extraction): when line length
 would otherwise exceed 80 chars or harm readability, apply these rules. Extract
@@ -639,6 +666,14 @@ extract it to a constant (UPPER_SNAKE_CASE) at file top or in a dedicated
 constants module. Separate assignment and evaluation: when destructuring the
 result of a complex call would exceed 80 chars, introduce an intermediate
 variable or break the right-hand side across lines for clarity.
+
+Line-break patterns (formatter does not split these; apply manually): (1)
+**Import**: if a single import line exceeds 80 chars, split across lines with
+opening brace on same line as `import`, one symbol per line, closing brace and
+`from "..."` on their own line. (2) **Long strings / test names**: if
+`Deno.test("...", ...)` or any string literal exceeds 80 chars, split the string
+with `+` concatenation across lines or use a template literal across lines; keep
+each line under 80 chars.
 
 File-length conflict protocol: when keeping to the function body limit (2–4
 statements) would make a file exceed 100 effective lines, do not add a

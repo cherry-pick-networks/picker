@@ -1,0 +1,13 @@
+---
+description: |
+  Context-based rule index entry. For code/docs/system/commit/migration etc.,
+  which § to apply is defined in store.md Rule index. Use
+  `deno task rules:summary -- <task-type>` or the matching skill for the
+  current context.
+alwaysApply: false
+---
+
+See Rule index in shared/prompt/store.md. Use
+`deno task rules:summary -- <task-type>` or the matching skill for the current
+context (e.g. feature, refactor, docs, commit, migration, system, dependency,
+sql, directory).
