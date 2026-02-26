@@ -3,6 +3,10 @@ import { z } from "zod";
 export const ItemSchema = z.object({
   item_id: z.string(),
   concept_id: z.string().optional(),
+  subject_ids: z.array(z.string()).optional(),
+  content_type_id: z.string().optional(),
+  cognitive_level_id: z.string().optional(),
+  context_ids: z.array(z.string()).optional(),
   stem: z.string().optional(),
   difficulty: z.string().optional(),
   created_at: z.string().optional(),
@@ -39,7 +43,9 @@ export const GenerateWorksheetRequestSchema = z.object({
   question_type: z.string().optional(),
   week: z.number().optional(),
   elem_slot_index: z.number().optional(),
-  subject_weights: z.record(z.string(), z.number()).optional(),
+  subject_weights: z
+    .record(z.string(), z.number().min(0).max(1))
+    .optional(),
 });
 export type GenerateWorksheetRequest = z.infer<
   typeof GenerateWorksheetRequestSchema
