@@ -16,6 +16,8 @@ Nothing here is a rule or checklist; compliance is not checked.
 level (Tip 32 → §11), TDD (Tip 34 → §6), Plan then prototype (Tip 39 → §6),
 Simplify (Tip 40 → §11).
 
+Planning: [Claude Code guide adoption](plan-claude-code-guide-adoption.md).
+
 ---
 
 ## Slash commands (Tip 1)
@@ -23,6 +25,57 @@ Simplify (Tip 40 → §11).
 - When using Claude Code: useful built-ins include `/usage` (rate limits),
   `/mcp` (MCP servers), `/stats` (usage graph), `/clear` (fresh conversation).
   See claude-code-tips for full list.
+- **! prefix**: In Claude Code, `!` runs a shell command immediately (e.g.
+  `!git status`, `!deno test`), saving tokens and giving quick status checks.
+
+---
+
+## Cursor chat commands (project)
+
+The list below is for **Cursor** chat: typing `/` shows these project-defined
+commands. For Cursor’s own docs see
+[Commands](https://cursor.com/docs/context/commands). If you use another editor
+or CLI, see § Using rules without Cursor.
+
+| Command                      | Purpose                                                                  | Reference                 |
+| ---------------------------- | ------------------------------------------------------------------------ | ------------------------- |
+| `/rules-summary` [task-type] | List applicable store.md § for the task type                             | §5, guide rules:summary   |
+| `/session-goal`              | State session goal in one sentence; ensure branch is not default         | guide Session start       |
+| `/pre-push`                  | Run pre-push (same as CI); fix and re-run if it fails                    | store.md §5, §7           |
+| `/commit-boundary`           | Commit current changes as one logical unit                               | store.md §A, §B           |
+| `/create-pr`                 | Create draft PR for current branch                                       | store.md §7               |
+| `/rules-check` [task-type]   | Verify change against applicable §; delegate to rules-subagent if needed | guide Subagents for rules |
+
+Anything you type after the command name (e.g. `/rules-summary refactor`) is
+passed to the model as part of that command’s instruction.
+
+Detailed rules stay in store.md and in each command’s `.md` under
+`.cursor/commands/`. This section is a summary for humans only.
+
+**Project context vs skills vs commands (Tip 25)** — In this project:
+**store.md** is the single source of truth and is always loaded; the Rule index
+and `rules:summary` determine which § apply. **.cursor/skills** are loaded by
+task type when relevant. **.cursor/commands** are slash commands that you or the
+agent invoke (e.g. `/rules-summary`, `/commit-boundary`).
+
+---
+
+## Using rules without Cursor
+
+You can follow the same rules and workflows from any editor or CLI. No Cursor
+features required.
+
+- **Rule text**: `shared/prompt/store.md` Part B.
+- **Which § apply**: Run `deno task rules:summary -- <task-type>` (e.g.
+  `refactor`, `feature`, `docs`). Use the Rule index in store.md if needed.
+- **Checklists and tips**: `shared/prompt/documentation/guide.md` and the
+  `.cursor/skills/` directory (read the SKILL.md files as plain markdown).
+- **Rule compliance**: For a given change, run rules:summary for the task type,
+  then check the diff or path against the cited § (e.g. §P, §N) using store.md
+  Part B; no subagent required.
+- **When using Cursor**: Slash commands, `.cursor/rules`, and agents (e.g.
+  rules-subagent) are optional; see § Cursor chat commands (project) and §
+  Subagents for rules.
 
 ---
 
@@ -49,7 +102,14 @@ Simplify (Tip 40 → §11).
   one todo task); one sentence per item. If no required follow-up, add at least
   one optional or deferred item. For todo or dependency changes, note "Propose
   todo update first" (or similar). See store.md §9.
-- **Optional**: Use `/handoff` (e.g. dx plugin) if available.
+- **Optional**: Use `/handoff` (e.g. dx plugin) if available. To trim long
+  conversations, use `/clone` or `/half-clone` (or dx plugin) to copy or keep
+  only the second half; combine with writing the handoff before starting a new
+  session.
+- **Context usage (Ado #15)**: In long sessions or when you see performance
+  issues, use `/context` (or equivalent) to check token use, MCP usage, and
+  conversation balance. Disable unused MCP servers or skills to keep context
+  lean.
 
 ---
 
@@ -70,10 +130,10 @@ delegation; use the complex-statement exemption (single try/catch, switch, or
 block-bodied if) where it fits. Reserve `// function-length-ignore-file` for
 CI/utility scripts; document the reason at the top of the file.
 
-**Checklist** (when implementing this plan): AI behaviour guidelines in Cursor
-rules; §P pattern guide in reference.md; file-level ignore policy in store.md
-§P; optional refactor or ignore-for-script for specific scripts (e.g.
-check-sql-filename).
+**Checklist** (when implementing this plan): AI behaviour guidelines in editor
+rules (e.g. Cursor .mdc) or via rules:summary; §P pattern guide in reference.md;
+file-level ignore policy in store.md §P; optional refactor or ignore-for-script
+for specific scripts (e.g. check-sql-filename).
 
 ---
 
@@ -111,6 +171,8 @@ system/routes/content.ts."
 When to use subagents (e.g. mcp_task with explore or generalPurpose): the main
 agent gets the applicable § list via `deno task rules:summary -- <task-type>` or
 the matching skill; delegate **heavy verification** to a subagent when needed.
+Delegation is a Cursor feature (e.g. mcp_task). In other environments, run
+rules:summary and verify the change against the cited § yourself using store.md.
 
 **Scenario 1 — Rule compliance check**: "Does this change satisfy §P and §N?" →
 Have the subagent check the diff or path against store.md §P, §N (function body
@@ -133,9 +195,10 @@ type-check bypass. Return a short list of violations or OK."
 
 ## Session start (first message)
 
-- **When**: Starting a new agent or chat session in Cursor (store.md §9).
+- **When**: Starting a new agent or chat session (e.g. Cursor or other AI chat)
+  (store.md §9).
 - **Goal**: First message: one short sentence stating the session goal (store.md
-  §9 allows Korean for Cursor chat titles).
+  §9 allows Korean for chat titles).
 - **Format**: One sentence; under 15 words or ~40 characters; state one task or
   one question. Add context in a second message if needed.
 - **Templates**:
@@ -152,6 +215,8 @@ type-check bypass. Return a short list of violations or OK."
 - **Snippet**: Use the `agent-start` snippet
   (`.vscode/cursor-session.code-snippets`) to paste the template and fill in the
   bracketed part.
+- **Named sessions (Claude Code)**: To name a session use `/rename <name>`;
+  resume later with `--resume <name>`.
 
 ---
 
@@ -160,6 +225,18 @@ type-check bypass. Return a short list of violations or OK."
 - For URLs that cannot be fetched directly (e.g. Reddit, paywalled): use a
   fallback skill (e.g. reddit-fetch in `~/.claude/skills/` or dx plugin) or
   Gemini CLI. Document the chosen method here or in store.md.
+
+---
+
+## MCP and browser automation
+
+- **MCP**: store.md §8 prefers MCP for integrations. If the project uses MCP
+  servers (e.g. Playwright, DB), list them here with install/run steps. If none
+  are used yet, note: "Not in use; when we adopt MCP, document the list and
+  setup here."
+- **Browser automation**: When using Playwright or similar for E2E or scraping,
+  document the scenario and any caveats (e.g. headless, timeouts, blocked sites)
+  in a sentence or two here or in store.md §8.
 
 ---
 
@@ -191,6 +268,9 @@ type-check bypass. Return a short list of violations or OK."
 
 - Run **cc-safe** (or equivalent) on a schedule: e.g. `npx cc-safe .` before
   opening a PR or monthly. See store.md §7.
+- **Hooks**: In Cursor or Claude Code, a PreToolUse (or equivalent) hook can
+  block dangerous commands (e.g. `rm -rf /`, `sudo`). See claude-code-tips or
+  official docs for examples; if the team adopts hooks, document links here.
 
 ---
 
@@ -198,7 +278,8 @@ type-check bypass. Return a short list of violations or OK."
 
 - For long-running or risky work (e.g. research,
   `--dangerously-skip-permissions`): prefer running in a container so failures
-  are isolated. See store.md §8 for long-running jobs; use a container when the
+  are isolated. See store.md §8 (long-running jobs and the guideline: "prefer
+  running in a container so failures are isolated"); use a container when the
   task is both long and permission-heavy.
 
 ---
@@ -244,6 +325,26 @@ type-check bypass. Return a short list of violations or OK."
 - **Use**: Run once from repo root to make context-bar executable and print
   reminders (cc-safe, handoff path). Add status line to shell profile manually
   if desired.
+
+---
+
+## New project bootstrap
+
+- To bootstrap store.md and overview in a new (sub)project: copy and adapt from
+  `shared/prompt/store.md` (e.g. §1–§5 and Rule index skeleton) and
+  `shared/prompt/overview.md`. Ensure `deno task rules:summary -- all` works
+  (add the task in deno.json if needed). Optionally add a task `init-prompt`
+  that runs a script in `shared/prompt/scripts/` to copy templates.
+
+---
+
+## Plan mode vs YOLO (Ado #18, #19)
+
+For **complex, multi-file, or high-regression work**, prefer Plan mode
+(Shift+Tab×2 in Claude Code) so the agent plans before editing. For **simple,
+isolated, or experimental** tasks, YOLO in a container is fine. Do **not** run
+YOLO for risky or long-running work on the host; use a container so failures are
+isolated.
 
 ---
 

@@ -3,6 +3,13 @@
 Todo for project-wide context, conventions, and tooling. Start here for prompts,
 documentation, and scripts.
 
+## AI and tooling
+
+Project rules and AI usage live in **`shared/prompt/store.md`** (single source
+of truth). Usage and tips are in **`shared/prompt/documentation/guide.md`**.
+When using Cursor, see `.cursor/rules`, `.cursor/commands`, and `.cursor/skills`
+for how rules and slash commands are applied.
+
 ## Structure
 
 | Path                                           | Purpose                                                                                                                        |
