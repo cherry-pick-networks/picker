@@ -1,0 +1,14 @@
+---
+description: |
+  Use only allowlist values for classification (concept IDs, DocType, Subject,
+  Cognitive, Proficiency). See reference.md § Classification allowlists.
+alwaysApply: true
+---
+
+When creating or editing data that uses classification fields (concept IDs,
+subject_ids, content_type_id, cognitive_level_id, context_ids, document_type,
+type for source), use **only** values from the allowlist.
+
+- **Allowlist source**: `shared/prompt/documentation/reference.md` § Classification allowlists. Canonical data: `shared/infra/seed/ontology/global-standards.toml`.
+- **Do not** invent new codes or labels (e.g. new doctype or CEFR levels). To add values, update global-standards.toml and run `deno task seed:ontology`, then update reference.md if the summary list there is maintained.
+- Applies to: Item/content payloads, Source payloads, seed/ontology files, and any code or prompts that output or validate concept IDs.

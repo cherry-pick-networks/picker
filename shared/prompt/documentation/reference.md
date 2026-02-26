@@ -19,32 +19,50 @@ with store.md §E/§F and modular monolith.
 
 ### Allowed infix (domains)
 
-| Infix   | Responsibility                                                         |
-| ------- | ---------------------------------------------------------------------- |
-| actor   | Profile, progress (identity and state)                                 |
-| app     | Route registration and app wiring                                      |
-| audit   | Change/run log artifacts                                               |
-| concept | Concept scheme, concept, concept_relation (ontology)                   |
-| content | Items, worksheets, prompt building                                     |
-| kv      | Generic key-value HTTP API; Postgres-backed, client from shared/infra. |
-| record  | Identity index (shared/record/reference)                               |
-| script  | Scripts store, AST apply, Governance                                   |
-| source  | Source collection and read                                             |
+| Infix        | Responsibility                                                         |
+| ------------ | ---------------------------------------------------------------------- |
+| actor        | Profile, progress (identity and state)                                 |
+| app          | Route registration and app wiring                                      |
+| audit        | Change/run log artifacts                                               |
+| batch        | Batch jobs and bulk operations                                         |
+| concept      | Concept scheme, concept, concept_relation (ontology)                   |
+| content      | Items, worksheets, prompt building                                     |
+| data         | Data access / identity index (e.g. record/data)                        |
+| export       | Export and external output                                             |
+| kv           | Generic key-value HTTP API; Postgres-backed, client from shared/infra. |
+| notification | Notifications and alerts                                               |
+| record       | Identity index (shared/record/reference)                               |
+| report       | Reports and aggregations                                               |
+| schedule     | FSRS-rs schedule (actor, source, unit); weekly plan from grammar       |
+| script       | Scripts store, AST apply, Governance                                   |
+| source       | Source collection and read                                             |
+| sync         | Synchronization and replication                                        |
+| workflow     | Workflow and process orchestration                                     |
 
 ### Allowed suffix (artifacts)
 
 | Suffix     | Meaning                               | §E axis  |
 | ---------- | ------------------------------------- | -------- |
+| adapter    | External/system adapter               | Artifact |
+| client     | Client wrapper (e.g. KV, API)         | Artifact |
+| config     | Wiring (e.g. route registration)      | Artifact |
 | endpoint   | HTTP entry (Hono routes)              | Artifact |
+| event      | Domain/application events             | Artifact |
+| format     | Serialization/format handling         | Artifact |
+| grammar    | Parser/grammar rules                  | Artifact |
+| log        | Log artifact storage                  | Meta     |
+| mapper     | Row/DTO mapping                       | Artifact |
+| mapping    | Mapping definitions                   | Artifact |
+| pipeline   | Processing pipeline                   | Artifact |
+| request    | Request DTO/schema                    | Artifact |
+| response   | Response DTO/schema                   | Artifact |
+| schema     | Zod schemas and domain types          | Artifact |
 | service    | Application service (use cases)       | —        |
 | store      | Persistence (KV, file)                | Artifact |
-| schema     | Zod schemas and domain types          | Artifact |
-| types      | Type-only definitions                 | Meta     |
 | transfer   | Request/response or DTO types         | Artifact |
-| client     | Client wrapper (e.g. KV, API)         | Artifact |
+| types      | Type-only definitions                 | Meta     |
 | validation | Policy/verification (e.g. Governance) | Policy   |
-| log        | Log artifact storage                  | Meta     |
-| config     | Wiring (e.g. route registration)      | Artifact |
+| weekly     | Weekly view / period-specific logic   | Meta     |
 
 ### Target layout (flat domain: files under system/<infix>/)
 
@@ -57,6 +75,7 @@ system/
   content/   *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts
   kv/        *.endpoint.ts, *.store.ts
   record/    *.endpoint.ts, *.store.ts
+  schedule/  *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.grammar.ts, *.mapper.ts, *.weekly.ts, *.adapter.ts
   script/    *.endpoint.ts, *.service.ts, *.store.ts, *.types.ts, *.validation.ts
   source/    *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, source-extract.service.ts, source-llm.client.ts
   routes.ts  (entry; imports app/routes-register.config.ts)
@@ -114,9 +133,21 @@ New DDL (e.g. ontology): use `NN_<name>.sql` with an available number and
 §E-compliant name; adjust numbering if needed (see todo.md and §J).
 
 **Validation (optional).** Script `shared/prompt/scripts/check-sql-filename.ts`
-checks that every `shared/infra/schema/*.sql` file matches `NN_<name>.sql` with
-name satisfying `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. Run:
-`deno task sql-filename-check` (pre-commit or CI; see store.md §5).
+checks all .sql files: (1) `shared/infra/schema/*.sql` must match
+`NN_<name>.sql` with name `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`; (2)
+`system/<module>/sql/*.sql` must be lowercase snake_case (e.g.
+`get_schedule_item.sql`). Run: `deno task sql-filename-check` (pre-commit or CI;
+see store.md §5).
+
+### DML (queries)
+
+Application DML lives under `system/<module>/sql/` (e.g.
+`system/schedule/sql/`). One statement per file; filenames lowercase snake_case
+(e.g. `get_schedule_item.sql`); validated by sql-filename-check. Load with
+`loadSql(baseUrl, filename)` from `shared/infra/sql-loader.ts`; baseUrl
+typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
+`$1, $2, ...`; document order/meaning in the .sql file or store. DDL:
+`shared/infra/schema/*.sql`. Seed: `shared/infra/seed/...`.
 
 ### Migration mapping (3-layer → flat, completed)
 
@@ -158,6 +189,38 @@ name satisfying `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. Run:
   running `deno task seed:ontology`, run `deno task ontology-acyclic-check`
   manually when changing ontology seed or relations.
 
+### Classification allowlists (4 facets)
+
+Single source for allowed concept codes:
+`shared/infra/seed/ontology/global-standards.toml`. Runtime validation:
+`system/concept/concept.config.ts` maps each facet to scheme(s); content and
+(when implemented) source APIs reject values not in the allowlist.
+
+**Facet → scheme mapping**
+
+| Facet                 | Schemes       | Standard                                 |
+| --------------------- | ------------- | ---------------------------------------- |
+| Subject               | isced, iscedf | ISCED 2011 (level), ISCED-F 2013 (field) |
+| DocType (contentType) | doctype       | Schema.org / BibTeX                      |
+| Cognitive             | bloom         | Bloom's taxonomy (revised)               |
+| Proficiency (context) | cefr          | CEFR                                     |
+
+**Allowed codes per scheme (canonical list in global-standards.toml)**
+
+- **isced**: isced-0 … isced-8 (Early childhood … Doctoral).
+- **iscedf**: iscedf-00 … iscedf-10 (Generic programmes … Services).
+- **bloom**: bloom-1 … bloom-6 (Remember … Create).
+- **cefr**: cefr-a1, cefr-a2, cefr-b1, cefr-b2, cefr-c1, cefr-c2.
+- **actfl**: actfl-n, actfl-nl, actfl-nm, actfl-nh, actfl-i, actfl-il, actfl-im,
+  actfl-ih, actfl-a, actfl-al, actfl-am, actfl-ah, actfl-s.
+- **doctype**: book, article, news-article, video-object, web-page;
+  inproceedings, techreport, manual, unpublished, misc (BibTeX).
+
+When adding or editing items, sources, or any payload that uses concept IDs
+(subject_ids, content_type_id, cognitive_level_id, context_ids, document_type,
+concept_id): use only these codes. Do not invent new codes; add new values only
+by updating global-standards.toml and re-running `deno task seed:ontology`.
+
 ### Modular monolith rules
 
 - Within a domain: endpoint → service → store/schema only.
@@ -188,16 +251,17 @@ Rows = source domain (importer). Columns = target domain (imported). Only
 service (and types/schema where needed) may be imported cross-domain; store
 imports are forbidden (see Modular monolith rules above).
 
-| From \\ To | actor | concept | content | source | script | record | kv | audit |
-| ---------- | ----- | ------- | ------- | ------ | ------ | ------ | -- | ----- |
-| actor      | —     | no      | no      | no     | no     | no     | no | no    |
-| concept    | no    | —       | no      | no     | no     | no     | no | no    |
-| content    | yes   | yes     | —       | no     | yes    | no     | no | no    |
-| source     | no    | no      | no      | —      | no     | no     | no | no    |
-| script     | no    | no      | no      | no     | —      | no     | no | no    |
-| record     | no    | no      | no      | no     | no     | —      | no | no    |
-| kv         | no    | no      | no      | no     | no     | no     | —  | no    |
-| audit      | no    | no      | no      | no     | no     | yes    | no | —     |
+| From \\ To | actor | concept | content | schedule | source | script | record | kv | audit |
+| ---------- | ----- | ------- | ------- | -------- | ------ | ------ | ------ | -- | ----- |
+| actor      | —     | no      | no      | no       | no     | no     | no     | no | no    |
+| concept    | no    | —       | no      | no       | no     | no     | no     | no | no    |
+| content    | yes   | yes     | —       | no       | no     | yes    | no     | no | no    |
+| schedule   | no    | no      | no      | —        | yes    | no     | no     | no | no    |
+| source     | no    | yes     | no      | no       | —      | no     | no     | no | no    |
+| script     | no    | no      | no      | no       | no     | —      | no     | no | no    |
+| record     | no    | no      | no      | no       | no     | no     | —      | no | no    |
+| kv         | no    | no      | no      | no       | no     | no     | no     | —  | no    |
+| audit      | no    | no      | no      | no       | no     | no     | yes    | no | —     |
 
 When adding a new cross-domain service dependency: (1) ensure it does not
 introduce a cycle; (2) add the edge to this matrix and to the allowlist in
