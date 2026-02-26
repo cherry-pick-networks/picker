@@ -22,6 +22,8 @@
     "db:schema": "deno run -A shared/infra/apply-schema.ts",
     "seed:ontology": "deno run -A shared/infra/seed/run-seed-ontology.ts",
     "seed:ontology:with-db": "./scripts/dev.sh deno task seed:ontology",
+    "seed:curriculum": "deno run -A system/schedule/seed-curriculum.ts",
+    "seed:curriculum:with-db": "./scripts/dev.sh deno task seed:curriculum",
     "import:books": "deno run -A scripts/import-books-to-sources.ts",
     "import:books:with-db": "./scripts/dev.sh deno run -A scripts/import-books-to-sources.ts",
     "ontology-acyclic-check:with-db": "./scripts/dev.sh deno task ontology-acyclic-check",
