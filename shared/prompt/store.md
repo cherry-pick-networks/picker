@@ -94,8 +94,8 @@ tool-specific configs.
   reference.md (Schema DDL file naming) (optional; run in pre-commit or CI)
 - `deno task pre-push` — run before push; same as CI (lint, fmt, line-length,
   ts-filename-check, sql-filename-check, test, todo-check, boundary-check,
-  dependency-check, type-check-policy, audit). Uses same DB env as dev (pass
-  and picker/postgres) when run locally.
+  dependency-check, type-check-policy, audit). Uses same DB env as dev (pass and
+  picker/postgres) when run locally.
 - `deno task todo-discovery -- <entry-file>` — list direct imports for AI
   session todo (see shared/prompt/documentation/strategy.md)
 - `deno task rules:summary -- <task-type>` — list applicable store.md § for task

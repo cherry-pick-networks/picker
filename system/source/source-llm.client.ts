@@ -75,7 +75,7 @@ async function callChat(
 /** Fixed mock output when SOURCE_EXTRACT_LLM_MOCK is set. */
 const MOCK_OUTPUT: SourceExtractOutput = {
   concept_ids: ["mock-concept-1"],
-  subject_id: "reading",
+  subject_id: "iscedf-02",
 };
 
 /**

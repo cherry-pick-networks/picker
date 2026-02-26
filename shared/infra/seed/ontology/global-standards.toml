@@ -1,5 +1,5 @@
-# Global classification standards. ISCED 2011 (level), ISCED-F 2013 (field), Bloom revised.
-# Loaded by run-seed-ontology.ts. No CEFR/PISA.
+# Global classification standards. ISCED, ISCED-F, Bloom, CEFR, Schema.org DocType.
+# Loaded by run-seed-ontology.ts.
 
 [[concept_scheme]]
 id = "isced"
@@ -168,3 +168,77 @@ scheme_id = "bloom"
 code = "bloom-6"
 pref_label = "Create (design, construct, plan)"
 path = "bloom.6"
+
+[[concept_scheme]]
+id = "cefr"
+name = "CEFR: Common European Framework of Reference for Languages"
+
+[[concept]]
+scheme_id = "cefr"
+code = "cefr-a1"
+pref_label = "A1 (Breakthrough or beginner)"
+path = "cefr.a1"
+
+[[concept]]
+scheme_id = "cefr"
+code = "cefr-a2"
+pref_label = "A2 (Waystage or elementary)"
+path = "cefr.a2"
+
+[[concept]]
+scheme_id = "cefr"
+code = "cefr-b1"
+pref_label = "B1 (Threshold or intermediate)"
+path = "cefr.b1"
+
+[[concept]]
+scheme_id = "cefr"
+code = "cefr-b2"
+pref_label = "B2 (Vantage or upper intermediate)"
+path = "cefr.b2"
+
+[[concept]]
+scheme_id = "cefr"
+code = "cefr-c1"
+pref_label = "C1 (Effective operational proficiency or advanced)"
+path = "cefr.c1"
+
+[[concept]]
+scheme_id = "cefr"
+code = "cefr-c2"
+pref_label = "C2 (Mastery or proficiency)"
+path = "cefr.c2"
+
+[[concept_scheme]]
+id = "doctype"
+name = "Schema.org / document type"
+
+[[concept]]
+scheme_id = "doctype"
+code = "book"
+pref_label = "Book"
+path = "doctype.book"
+
+[[concept]]
+scheme_id = "doctype"
+code = "article"
+pref_label = "Article"
+path = "doctype.article"
+
+[[concept]]
+scheme_id = "doctype"
+code = "news-article"
+pref_label = "NewsArticle"
+path = "doctype.news-article"
+
+[[concept]]
+scheme_id = "doctype"
+code = "video-object"
+pref_label = "VideoObject"
+path = "doctype.video-object"
+
+[[concept]]
+scheme_id = "doctype"
+code = "web-page"
+pref_label = "WebPage"
+path = "doctype.web-page"

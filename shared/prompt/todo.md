@@ -28,7 +28,7 @@ Use that document for AI direction and todo decisions.
 | **system/content/**       | Items, worksheets, prompt: endpoint, service, store, schema.                                                                                                      |
 | **system/source/**        | Source collection and KAG: endpoint, service, store, schema, source-extract.service, source-llm.client.                                                           |
 | **system/script/**        | Scripts store, mutate (LLM offload), Governance: endpoint, service, store, validation.                                                                            |
-| **system/record/**        | Identity index: endpoint, store (reference/identity-index.toml only).                                                                                          |
+| **system/record/**        | Identity index: endpoint, store (reference/identity-index.toml only).                                                                                             |
 | **system/kv/**            | Generic key-value HTTP API: endpoint, store (Postgres-backed).                                                                                                    |
 | **system/audit/**         | Log artifact storage (e.g. e2e-runs.toml in same dir as audit.log.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added. |
 | **shared/runtime/store/** | Target path for self-edit; read and write only via Governance-verified flow.                                                                                      |
@@ -64,7 +64,7 @@ Use that document for AI direction and todo decisions.
 | GET    | `/sources/:id`                     | Read source by id. Responds source object or 404.                                                                                                                                                                                     |
 | POST   | `/sources`                         | Collect and store a source. Body: source fields (id optional, body optional). Responds 201 with source.                                                                                                                               |
 | POST   | `/sources/:id/extract`             | Extract subject/concept IDs from source body via LLM; save to source extracted_* and return. Body optional. 200 → { ok, concept_ids, subject_id?, extracted_at }; 4xx/5xx → { ok: false, status, body }. Requires source.body.        |
-| GET    | `/data/identity-index`             | Read identity index (version, description, students). Responds JSON.                                                                                                                                                                 |
+| GET    | `/data/identity-index`             | Read identity index (version, description, students). Responds JSON.                                                                                                                                                                  |
 | GET    | `/data/identity/:id`               | Read identity student by id (from index). Responds JSON or 404.                                                                                                                                                                       |
 
 ---

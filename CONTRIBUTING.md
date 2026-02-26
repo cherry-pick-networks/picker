@@ -24,9 +24,10 @@ use Issues only for bugs and concrete feature requests.
   - `deno task dev` — start dev server (watch)
   - `deno task test` — run tests (uses same DB env as dev; requires
     [pass](https://www.passwordstore.org/) and `picker/postgres` entry)
-  - `deno task db:schema`, `deno task seed:ontology`, `deno task ontology-acyclic-check`
-    — DB tasks (same env as dev)
-  - `deno task pre-push` — same checks as CI (includes test; requires same DB env)
+  - `deno task db:schema`, `deno task seed:ontology`,
+    `deno task ontology-acyclic-check` — DB tasks (same env as dev)
+  - `deno task pre-push` — same checks as CI (includes test; requires same DB
+    env)
   - `deno task todo-check` — verify API routes are listed in the todo document
   - `deno task type-check-policy` — verify no type-check bypass (no --no-check,
     @ts-ignore, @ts-expect-error)

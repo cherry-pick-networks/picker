@@ -27,7 +27,7 @@ with store.md §E/§F and modular monolith.
 | concept | Concept scheme, concept, concept_relation (ontology)                   |
 | content | Items, worksheets, prompt building                                     |
 | kv      | Generic key-value HTTP API; Postgres-backed, client from shared/infra. |
-| record  | Identity index (shared/record/reference)                                |
+| record  | Identity index (shared/record/reference)                               |
 | script  | Scripts store, AST apply, Governance                                   |
 | source  | Source collection and read                                             |
 
@@ -137,12 +137,12 @@ name satisfying `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. Run:
 
 ### Data file locations (TOML)
 
-| Path                                          | Purpose                                        |
-| --------------------------------------------- | ---------------------------------------------- |
-| `shared/record/reference/identity-index.toml` | Identity index (version, description, students)|
-| `system/audit/e2e-runs.toml`                  | E2E run log (schemaVersion + runs[])           |
-| `shared/infra/seed/ontology/seed.sql`               | Ontology seed (DDC scheme).                    |
-| `shared/infra/seed/ontology/global-standards.toml`  | Ontology seed: isced, iscedf, bloom (no CEFR/PISA). |
+| Path                                               | Purpose                                             |
+| -------------------------------------------------- | --------------------------------------------------- |
+| `shared/record/reference/identity-index.toml`      | Identity index (version, description, students)     |
+| `system/audit/e2e-runs.toml`                       | E2E run log (schemaVersion + runs[])                |
+| `shared/infra/seed/ontology/seed.sql`              | Ontology seed (DDC scheme).                         |
+| `shared/infra/seed/ontology/global-standards.toml` | Ontology seed: isced, iscedf, bloom (no CEFR/PISA). |
 
 ### Ontology and facet policy
 
