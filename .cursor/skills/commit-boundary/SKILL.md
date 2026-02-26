@@ -9,6 +9,17 @@ description: |
 
 Apply store.md **§A, §B**. Full text in shared/prompt/store.md Part B only.
 
+**When to use this skill** — Use when the user asks to commit (e.g. “commit
+current changes”, “커밋해줘”), when a logical unit is done, or when the task
+type is `commit` (e.g. after `deno task rules:summary -- commit`).
+
+## Procedure
+
+1. Run `git status`; then `git add` (appropriate paths), then `git commit` with
+   a message per §A.
+2. Do not start the next logical unit without committing the current one; no
+   batch commit at the end.
+
 ## §A — Commit message format
 
 - `<type>[(todo)]: <description>`; imperative, lowercase.
