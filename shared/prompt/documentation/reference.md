@@ -96,11 +96,11 @@ For structural names (tables, API paths, `source_id` prefixes,
 `content_type_id`, seed paths, docs), use only these three terms for English
 learning data:
 
-| Domain name   | Use for                                                                                                                                 |
-| ------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| **grammar**   | `source_id` prefix (e.g. `book-grammar-*`), grammar curriculum tables/schemas, content_type for grammar                                 |
-| **lexis**     | Table names (e.g. `lexis_entry`), `system/lexis/`, seed `shared/infra/seed/lexis/`, `source_id` prefix (e.g. `wordmaster-middle-basic`) |
-| **phonology** | Tables, APIs, `source_id`, content_type for pronunciation/phonetic data                                                                 |
+| Domain name   | Use for                                                                                                                            |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **grammar**   | `source_id` prefix (e.g. `book-grammar-*`), grammar curriculum tables/schemas, content_type for grammar                            |
+| **lexis**     | Table names (e.g. `lexis_entry`), `system/lexis/`, seed `shared/infra/seed/lexis/`, `source_id` prefix (e.g. `lexis-middle-basic`) |
+| **phonology** | Tables, APIs, `source_id`, content_type for pronunciation/phonetic data                                                            |
 
 Do not use synonyms (e.g. vocabulary, pronunciation, phonics) in structural
 names. The suffix **grammar** in §E denotes parser/grammar rules
