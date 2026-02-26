@@ -5,4 +5,4 @@ export PG_HOST=${PG_HOST:-localhost}
 export PG_PORT=${PG_PORT:-5432}
 export PG_USER=${PG_USER:-postgres}
 export PG_DATABASE=${PG_DATABASE:-picker}
-exec deno test -A
+exec deno run -A --watch main.ts

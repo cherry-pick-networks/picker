@@ -13,11 +13,11 @@
     "lineWidth": 80
   },
   "tasks": {
-    "dev": "./dev",
+    "dev": "./scripts/dev.sh",
     "build": "deno run -A npm:vite build",
     "start": "deno run -A main.ts",
     "test": "deno test -A",
-    "test:with-db": "./test-with-db",
+    "test:with-db": "./scripts/test-with-db.sh",
     "test:e2e-record": "deno run -A shared/prompt/scripts/run-e2e-record.ts",
     "db:schema": "deno run -A shared/infra/apply-schema.ts",
     "seed:ontology": "deno run -A shared/infra/seed/run-seed-ontology.ts",
