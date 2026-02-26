@@ -8,6 +8,11 @@ alwaysApply: false
 
 # SQL style (AI)
 
+- **Write SQL only in .sql files.** Do not embed SQL in TypeScript/JavaScript;
+  keep all SQL in `.sql` files and load via `loadSql(baseUrl, filename)` from
+  `shared/infra/sql-loader.ts`. DDL: `shared/infra/schema/*.sql`. DML:
+  `system/<module>/sql/*.sql`.
+
 Short checklist for SQL/DDL. **Full text**: `shared/prompt/store.md` §U. DDL file naming: `shared/prompt/documentation/reference.md` (Schema DDL file naming).
 
 ## 1. Names and identifiers

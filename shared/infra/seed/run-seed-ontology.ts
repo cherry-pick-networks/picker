@@ -6,8 +6,15 @@
 
 import { parse } from "@std/toml";
 import { getPg } from "../pg.client.ts";
+import { loadSql } from "../sql-loader.ts";
 
-const SEED_SQL = new URL("./ontology/seed.sql", import.meta.url);
+const ontologyDir = new URL("./ontology/", import.meta.url);
+const SEED_SQL = new URL("seed.sql", ontologyDir);
+const SQL_INSERT_CONCEPT_SCHEME = await loadSql(
+  ontologyDir,
+  "insert_concept_scheme.sql",
+);
+const SQL_INSERT_CONCEPT = await loadSql(ontologyDir, "insert_concept.sql");
 const SEED_GLOBAL_STANDARDS = new URL(
   "./ontology/global-standards.toml",
   import.meta.url,
@@ -47,18 +54,15 @@ async function runTomlSeed(
   const schemes = data.concept_scheme ?? [];
   const concepts = data.concept ?? [];
   for (const s of schemes) {
-    await pg.queryArray(
-      `INSERT INTO concept_scheme (scheme_id, name)
-       VALUES ($1, $2) ON CONFLICT (scheme_id) DO NOTHING`,
-      [s.id, s.name],
-    );
+    await pg.queryArray(SQL_INSERT_CONCEPT_SCHEME, [s.id, s.name]);
   }
   for (const c of concepts) {
-    await pg.queryArray(
-      `INSERT INTO concept (scheme_id, code, pref_label, path)
-       VALUES ($1, $2, $3, $4::ltree) ON CONFLICT (scheme_id, code) DO NOTHING`,
-      [c.scheme_id, c.code, c.pref_label, c.path],
-    );
+    await pg.queryArray(SQL_INSERT_CONCEPT, [
+      c.scheme_id,
+      c.code,
+      c.pref_label,
+      c.path,
+    ]);
   }
 }
 
