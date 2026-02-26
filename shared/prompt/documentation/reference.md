@@ -27,9 +27,10 @@ with store.md §E/§F and modular monolith.
 | concept | Concept scheme, concept, concept_relation (ontology)                   |
 | content | Items, worksheets, prompt building                                     |
 | kv      | Generic key-value HTTP API; Postgres-backed, client from shared/infra. |
-| record  | Identity index (shared/record/reference)                               |
-| script  | Scripts store, AST apply, Governance                                   |
-| source  | Source collection and read                                             |
+| record   | Identity index (shared/record/reference)                               |
+| schedule | FSRS-rs schedule (actor, source, unit); weekly plan from grammar      |
+| script   | Scripts store, AST apply, Governance                                   |
+| source   | Source collection and read                                             |
 
 ### Allowed suffix (artifacts)
 
@@ -57,6 +58,7 @@ system/
   content/   *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts
   kv/        *.endpoint.ts, *.store.ts
   record/    *.endpoint.ts, *.store.ts
+  schedule/  *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, fsrs-adapter.ts
   script/    *.endpoint.ts, *.service.ts, *.store.ts, *.types.ts, *.validation.ts
   source/    *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, source-extract.service.ts, source-llm.client.ts
   routes.ts  (entry; imports app/routes-register.config.ts)
@@ -220,16 +222,17 @@ Rows = source domain (importer). Columns = target domain (imported). Only
 service (and types/schema where needed) may be imported cross-domain; store
 imports are forbidden (see Modular monolith rules above).
 
-| From \\ To | actor | concept | content | source | script | record | kv | audit |
-| ---------- | ----- | ------- | ------- | ------ | ------ | ------ | -- | ----- |
-| actor      | —     | no      | no      | no     | no     | no     | no | no    |
-| concept    | no    | —       | no      | no     | no     | no     | no | no    |
-| content    | yes   | yes     | —       | no     | yes    | no     | no | no    |
-| source     | no    | yes     | no      | —      | no     | no     | no | no    |
-| script     | no    | no      | no      | no     | —      | no     | no | no    |
-| record     | no    | no      | no      | no     | no     | —      | no | no    |
-| kv         | no    | no      | no      | no     | no     | no     | —  | no    |
-| audit      | no    | no      | no      | no     | no     | yes    | no | —     |
+| From \\ To | actor | concept | content | schedule | source | script | record | kv | audit |
+| ---------- | ----- | ------- | ------- | -------- | ------ | ------ | ------ | -- | ----- |
+| actor      | —     | no      | no      | no       | no     | no     | no     | no | no    |
+| concept    | no    | —       | no      | no       | no     | no     | no     | no | no    |
+| content    | yes   | yes     | —       | no       | no     | yes    | no     | no | no    |
+| schedule   | no    | no      | no      | —        | yes    | no     | no     | no | no    |
+| source     | no    | yes     | no      | no       | —      | no     | no     | no | no    |
+| script     | no    | no      | no      | no       | no     | —      | no     | no | no    |
+| record     | no    | no      | no      | no       | no     | no     | —      | no | no    |
+| kv         | no    | no      | no      | no       | no     | no     | no     | —  | no    |
+| audit      | no    | no      | no      | no       | no     | no     | yes    | no | —     |
 
 When adding a new cross-domain service dependency: (1) ensure it does not
 introduce a cycle; (2) add the edge to this matrix and to the allowlist in
