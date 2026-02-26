@@ -24,9 +24,11 @@ description: Weekly lesson plan via FSRS-rs and source grammar data.
     book-grammar-advanced.
   - `payload.metadata.level`, `payload.metadata.unit_ids` (e.g. unit_1, unit_2).
   - `payload.body`: markdown content.
-  - **Topic mapping**: 17 major topics (대주제) and level→unit ranges — see
+  - **Topic mapping**: 17 major topics and level→unit ranges — see
     `shared/prompt/documentation/grammar-topics.md`. Curriculum order follows
     `unit_ids`; topics are for reference and optional filtering.
+  - **52-week grid**: `shared/infra/seed/curriculum-52weeks.json` (3 units per
+    week per level); reference.md § Curriculum (52 weeks).
 - **Schedule unit**: (actor_id, source_id, unit_id) = one schedule row.
 - **Terminology**: "schedule item" / "(actor, unit) schedule" (no "card").
 
