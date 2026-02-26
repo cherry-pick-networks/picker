@@ -16,7 +16,7 @@ store.md §R.
 
 - **Name**: picker
 - **Runtime**: Deno
-- **Stack**: Hono (HTTP), Zod (validation), ts-morph (AST), Deno KV (storage)
+- **Stack**: Hono (HTTP), Zod (validation), ts-morph (AST), PostgreSQL (storage)
 - **Entry**: `main.ts` (Hono app, KV routes, AST demo)
 
 ---
@@ -30,7 +30,7 @@ store.md §R.
   the first tier is a Layer (presentation, application, domain, infrastructure),
   use that layer's allowed Infix/Suffix only; see store.md §E. Rules summary
   below references store.md §D–§F.
-- **This file**: `shared/prompt/overview.md` (shared = Scope, prompt = Entity,
+- **This file**: `shared/prompt/overview.md` (shared = Todo, prompt = Entity,
   overview = Meta)
 - **Exceptions**: .git, .cursor, node_modules, dist, build, coverage, vendor,
   .cache (confirm per repo)
@@ -40,7 +40,7 @@ store.md §R.
 ## Run, build, test
 
 - **Dev server**: `deno task dev` (watch mode)
-- **Run once**: `deno run --allow-net --unstable-kv main.ts`
+- **Run once**: `deno run -A main.ts` (Postgres required)
 - **Test**: `deno test` (add tests and tasks in deno.json as needed)
 - **Lint/format**: `deno lint`, `deno fmt` (or project config if present)
 
@@ -48,16 +48,16 @@ store.md §R.
 
 ## Frequently used commands
 
-| Command                                      | Purpose                                        |
-| -------------------------------------------- | ---------------------------------------------- |
-| `deno task dev`                              | Start dev server with watch                    |
-| `deno run --allow-net --unstable-kv main.ts` | Run server once                                |
-| `deno test`                                  | Run tests                                      |
-| `gh pr create --draft`                       | Create draft PR                                |
-| `gh pr view`, `gh pr diff`                   | Inspect PR for review                          |
-| `gh run view`                                | Inspect CI run                                 |
-| `git worktree add <path> <branch>`           | Work on another branch in a separate directory |
-| `realpath <path>`                            | Resolve absolute path outside current tree     |
+| Command                            | Purpose                                        |
+| ---------------------------------- | ---------------------------------------------- |
+| `deno task dev`                    | Start dev server with watch                    |
+| `deno run -A main.ts`              | Run server once (Postgres required)            |
+| `deno test`                        | Run tests                                      |
+| `gh pr create --draft`             | Create draft PR                                |
+| `gh pr view`, `gh pr diff`         | Inspect PR for review                          |
+| `gh run view`                      | Inspect CI run                                 |
+| `git worktree add <path> <branch>` | Work on another branch in a separate directory |
+| `realpath <path>`                  | Resolve absolute path outside current tree     |
 
 Optional tooling (status line, setup script, tips): see
 `shared/prompt/documentation/guide.md`.
@@ -70,9 +70,23 @@ Optional tooling (status line, setup script, tips): see
   `shared/prompt/store.md` Part B.
 - **Reference (tips, not rules)**: `shared/prompt/documentation/guide.md`
 - **Handoff**: `shared/prompt/handoff.md` (linked from README)
-- **Scope** (modules, API, infra): `shared/prompt/boundary.md`
+- **Todo** (modules, API, infra): `shared/prompt/todo.md`
 - **Final goal** (for AI): `shared/prompt/goal.md`
 - **AI/tool single source**: `shared/prompt/store.md`
+
+---
+
+## Rule application flow
+
+- **Always**: global-core.mdc applies §C, §I, §O (and §B for handoff). No other
+  rule text is duplicated in .mdc.
+- **By context**: Which § apply is in store.md "Rule index (context →
+  sections)". Run `deno task rules:summary -- <task-type>` to get the list and
+  one-line titles, or use the matching skill (e.g. feature-implementation,
+  refactor-and-commit, docs-and-boundary) from `.cursor/skills/`.
+- **Heavy verification**: When you need a compliance check (e.g. "does this diff
+  satisfy §P and §N?"), use a subagent; see "Subagents for rules" in
+  shared/prompt/documentation/guide.md.
 
 ---
 
@@ -88,7 +102,7 @@ Read store.md for full definitions; do not duplicate rule text here.\
 ## Reference vs rules
 
 - **Rules**: Stored in store.md Part B; checkable (directory structure, naming,
-  commit format, scope). Use store.md when you need the exact rule text.
+  commit format, todo). Use store.md when you need the exact rule text.
 - **Reference**: `shared/prompt/documentation/guide.md` holds usage tips and
   workflow habits; not checkable; for team or personal use.
 - **When in doubt**: State it as "Do X" with a concrete, checkable outcome and

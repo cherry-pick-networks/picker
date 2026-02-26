@@ -9,6 +9,24 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: picker
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/picker
+
     steps:
       - uses: actions/checkout@v4
 
@@ -37,11 +55,14 @@ jobs:
       - name: TS filename check
         run: deno task ts-filename-check
 
+      - name: Apply DB schema
+        run: deno task db:schema
+
       - name: Run tests
         run: deno task test
 
-      - name: Scope check
-        run: deno task scope-check
+      - name: Todo check
+        run: deno task todo-check
 
       - name: Boundary check
         run: deno task boundary-check

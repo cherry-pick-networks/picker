@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -e
+
+# Cloudflare DB Tunnel startup
+if ! pgrep -x "cloudflared" > /dev/null; then
+  nohup cloudflared access tcp --hostname db.cherry-pick.net --listener localhost:5432 > /dev/null 2>&1 &
+  echo "🚀 Cloudflare DB Tunnel started in background."
+fi
+
+export PG_PASSWORD=$(pass show picker/postgres)
+export PG_HOST=${PG_HOST:-localhost}
+export PG_PORT=${PG_PORT:-5432}
+export PG_USER=${PG_USER:-postgres}
+export PG_DATABASE=${PG_DATABASE:-picker}
+exec deno run -A --watch main.ts

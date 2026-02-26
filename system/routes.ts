@@ -1,6 +1,6 @@
 /**
- * Single source of route list for scope-check and main.ts registration.
- * Must match shared/prompt/boundary.md API surface table.
+ * Single source of route list for todo-check and main.ts registration.
+ * Must match shared/prompt/todo.md API surface table.
  */
 
 import type { Hono } from "hono";
@@ -29,16 +29,15 @@ export const ROUTES: { method: string; path: string }[] = [
   { method: "GET", path: "/sources" },
   { method: "GET", path: "/sources/:id" },
   { method: "POST", path: "/sources" },
+  { method: "POST", path: "/sources/:id/extract" },
   { method: "GET", path: "/data/extracted-index" },
   { method: "GET", path: "/data/identity-index" },
   { method: "GET", path: "/data/extracted/:id" },
   { method: "GET", path: "/data/identity/:id" },
-  { method: "GET", path: "/ast" },
-  { method: "GET", path: "/ast-demo" },
-  { method: "POST", path: "/ast/apply" },
   { method: "GET", path: "/scripts" },
   { method: "GET", path: "/scripts/:path*" },
   { method: "POST", path: "/scripts/:path*" },
+  { method: "POST", path: "/script/mutate" },
 ];
 
 export function registerRoutes(app: Hono): void {

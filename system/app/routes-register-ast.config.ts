@@ -1,27 +1,20 @@
 /**
- * AST and scripts route registration.
- * Used by routes-register.ts.
+ * Script routes: scripts list/get/post and POST /script/mutate.
+ * AST legacy endpoints removed in S4.
  */
 
 import type { Hono } from "hono";
-import * as ast from "#system/script/ast.endpoint.ts";
-import * as astApply from "#system/script/ast-apply.endpoint.ts";
-import * as astDemo from "#system/script/ast-demo.endpoint.ts";
+import * as mutate from "#system/script/mutate.endpoint.ts";
 import * as scripts from "#system/script/scripts.endpoint.ts";
 
-function registerAst(app: Hono) {
-  app.get("/ast", ast.getAst);
-  app.get("/ast-demo", astDemo.getAstDemo);
-  app.post("/ast/apply", astApply.postAstApply);
-}
-
-function registerScripts(app: Hono) {
+function registerScriptsAndMutate(app: Hono) {
   app.get("/scripts", scripts.getScriptsList);
   app.get("/scripts/*", scripts.getScriptPath);
   app.post("/scripts/*", scripts.postScriptPath);
+  app.post("/script/mutate", mutate.postScriptMutate);
 }
 
+// function-length-ignore
 export function registerAstAndScripts(app: Hono): void {
-  registerAst(app);
-  registerScripts(app);
+  registerScriptsAndMutate(app);
 }

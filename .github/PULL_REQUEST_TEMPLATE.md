@@ -5,8 +5,8 @@
 ## Checklist
 
 - [ ] `deno test` passes
-- [ ] `deno task scope-check` passes
+- [ ] `deno task todo-check` passes
 - [ ] If adding new API routes, modules, or infrastructure:
-      [shared/prompt/boundary.md](shared/prompt/boundary.md) was updated first
-- [ ] Commit messages follow `<type>[(scope)]: <description>` (see
+      [shared/prompt/todo.md](shared/prompt/todo.md) was updated first
+- [ ] Commit messages follow `<type>[(todo)]: <description>` (see
       [CONTRIBUTING.md](../CONTRIBUTING.md))

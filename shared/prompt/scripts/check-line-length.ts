@@ -32,6 +32,9 @@ function logViolationsAndExit(
     for (const v of lineLength) {
       console.error(`  ${v.file}:${v.line}: ${v.length} chars`);
     }
+    console.error(
+      "  Run `deno fmt` to fix most issues; long strings split manually (§P).",
+    );
   }
   if (fileLength.length > 0) {
     console.error(

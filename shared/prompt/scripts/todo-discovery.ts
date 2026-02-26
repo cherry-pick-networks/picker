@@ -1,9 +1,9 @@
 /**
- * Print direct dependencies of an entry file (for AI session scope).
+ * Print direct dependencies of an entry file (for AI session todo).
  * Only relative imports (./ or ../) are resolved; npm/jsr are skipped.
  * Run from repo root:
- *   deno run --allow-read shared/prompt/scripts/scope-discovery.ts <entry-file>
- * Or: deno task scope-discovery -- <entry-file>
+ *   deno run --allow-read shared/prompt/scripts/todo-discovery.ts <entry-file>
+ * Or: deno task todo-discovery -- <entry-file>
  * Options: --oneline  print paths on one line for pasting into a prompt.
  */
 // function-length-ignore-file
@@ -66,7 +66,7 @@ async function main(): Promise<void> {
   const args = Deno.args.filter((a) => a !== "--oneline" && a !== "--");
   const oneline = Deno.args.includes("--oneline");
   if (args.length === 0) {
-    console.error("Usage: scope-discovery.ts <entry-file> [--oneline]");
+    console.error("Usage: todo-discovery.ts <entry-file> [--oneline]");
     Deno.exit(1);
   }
   const entryArg = args[0]!;
