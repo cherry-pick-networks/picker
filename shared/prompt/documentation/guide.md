@@ -16,6 +16,8 @@ Nothing here is a rule or checklist; compliance is not checked.
 level (Tip 32 → §11), TDD (Tip 34 → §6), Plan then prototype (Tip 39 → §6),
 Simplify (Tip 40 → §11).
 
+Planning: [Claude Code guide adoption](plan-claude-code-guide-adoption.md).
+
 ---
 
 ## Slash commands (Tip 1)
@@ -23,6 +25,8 @@ Simplify (Tip 40 → §11).
 - When using Claude Code: useful built-ins include `/usage` (rate limits),
   `/mcp` (MCP servers), `/stats` (usage graph), `/clear` (fresh conversation).
   See claude-code-tips for full list.
+- **! prefix**: In Claude Code, `!` runs a shell command immediately (e.g.
+  `!git status`, `!deno test`), saving tokens and giving quick status checks.
 
 ---
 
@@ -47,6 +51,12 @@ passed to the model as part of that command’s instruction.
 
 Detailed rules stay in store.md and in each command’s `.md` under
 `.cursor/commands/`. This section is a summary for humans only.
+
+**Project context vs skills vs commands (Tip 25)** — In this project: **store.md**
+is the single source of truth and is always loaded; the Rule index and
+`rules:summary` determine which § apply. **.cursor/skills** are loaded by task
+type when relevant. **.cursor/commands** are slash commands that you or the
+agent invoke (e.g. `/rules-summary`, `/commit-boundary`).
 
 ---
 
@@ -92,7 +102,14 @@ features required.
   one todo task); one sentence per item. If no required follow-up, add at least
   one optional or deferred item. For todo or dependency changes, note "Propose
   todo update first" (or similar). See store.md §9.
-- **Optional**: Use `/handoff` (e.g. dx plugin) if available.
+- **Optional**: Use `/handoff` (e.g. dx plugin) if available. To trim long
+  conversations, use `/clone` or `/half-clone` (or dx plugin) to copy or keep
+  only the second half; combine with writing the handoff before starting a new
+  session.
+- **Context usage (Ado #15)**: In long sessions or when you see performance
+  issues, use `/context` (or equivalent) to check token use, MCP usage, and
+  conversation balance. Disable unused MCP servers or skills to keep context
+  lean.
 
 ---
 
@@ -198,6 +215,8 @@ type-check bypass. Return a short list of violations or OK."
 - **Snippet**: Use the `agent-start` snippet
   (`.vscode/cursor-session.code-snippets`) to paste the template and fill in the
   bracketed part.
+- **Named sessions (Claude Code)**: To name a session use `/rename <name>`; resume
+  later with `--resume <name>`.
 
 ---
 
@@ -206,6 +225,18 @@ type-check bypass. Return a short list of violations or OK."
 - For URLs that cannot be fetched directly (e.g. Reddit, paywalled): use a
   fallback skill (e.g. reddit-fetch in `~/.claude/skills/` or dx plugin) or
   Gemini CLI. Document the chosen method here or in store.md.
+
+---
+
+## MCP and browser automation
+
+- **MCP**: store.md §8 prefers MCP for integrations. If the project uses MCP
+  servers (e.g. Playwright, DB), list them here with install/run steps. If none
+  are used yet, note: "Not in use; when we adopt MCP, document the list and
+  setup here."
+- **Browser automation**: When using Playwright or similar for E2E or scraping,
+  document the scenario and any caveats (e.g. headless, timeouts, blocked
+  sites) in a sentence or two here or in store.md §8.
 
 ---
 
@@ -237,6 +268,9 @@ type-check bypass. Return a short list of violations or OK."
 
 - Run **cc-safe** (or equivalent) on a schedule: e.g. `npx cc-safe .` before
   opening a PR or monthly. See store.md §7.
+- **Hooks**: In Cursor or Claude Code, a PreToolUse (or equivalent) hook can
+  block dangerous commands (e.g. `rm -rf /`, `sudo`). See claude-code-tips or
+  official docs for examples; if the team adopts hooks, document links here.
 
 ---
 
@@ -244,7 +278,8 @@ type-check bypass. Return a short list of violations or OK."
 
 - For long-running or risky work (e.g. research,
   `--dangerously-skip-permissions`): prefer running in a container so failures
-  are isolated. See store.md §8 for long-running jobs; use a container when the
+  are isolated. See store.md §8 (long-running jobs and the guideline: "prefer
+  running in a container so failures are isolated"); use a container when the
   task is both long and permission-heavy.
 
 ---
@@ -290,6 +325,27 @@ type-check bypass. Return a short list of violations or OK."
 - **Use**: Run once from repo root to make context-bar executable and print
   reminders (cc-safe, handoff path). Add status line to shell profile manually
   if desired.
+
+---
+
+## New project bootstrap
+
+- To bootstrap store.md and overview in a new (sub)project: copy and adapt
+  from `shared/prompt/store.md` (e.g. §1–§5 and Rule index skeleton) and
+  `shared/prompt/overview.md`. Ensure `deno task rules:summary -- all` works
+  (add the task in deno.json if needed). Optionally add a task
+  `init-prompt` that runs a script in `shared/prompt/scripts/` to copy
+  templates.
+
+---
+
+## Plan mode vs YOLO (Ado #18, #19)
+
+For **complex, multi-file, or high-regression work**, prefer Plan mode
+(Shift+Tab×2 in Claude Code) so the agent plans before editing. For **simple,
+isolated, or experimental** tasks, YOLO in a container is fine. Do **not** run
+YOLO for risky or long-running work on the host; use a container so failures are
+isolated.
 
 ---
 

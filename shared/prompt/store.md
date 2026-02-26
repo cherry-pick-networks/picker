@@ -180,7 +180,9 @@ tool-specific configs.
 - **Paths**: When referring to files outside the current tree, use `realpath`
   (or equivalent) to pass absolute paths.
 - **Long-running jobs**: For CI/build or external waits, use manual exponential
-  backoff (e.g. check at 1m, 2m, 4m, …) instead of one long wait.
+  backoff (e.g. check at 1m, 2m, 4m, …) instead of one long wait. For
+  long-running or high-permission tasks (e.g. experiments with auto-approve),
+  prefer running in a container so failures are isolated.
 
 ---
 
@@ -265,6 +267,9 @@ tool-specific configs.
   rule text in root README.
 - **AI-facing docs**: When writing or editing .md under shared/prompt/ (except
   store.md and documentation/), follow §R.
+- **Changing store.md**: Keep all rule text in Part B and update the Rule index
+  and context mapping when adding or changing §. Propose changes for human
+  review; the agent suggests edits only—a human performs the commit.
 
 ---
 
