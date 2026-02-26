@@ -5,13 +5,15 @@
 
 import { assertEquals } from "@std/assert";
 import { app } from "../../main.ts";
+import { hasDbEnv } from "./db-env_test.ts";
 
 const handler = (req: Request) => app.fetch(req);
 const handlerTestOpts = { sanitizeResources: false };
+const dbTestOpts = () => ({ ...handlerTestOpts, ignore: !hasDbEnv() });
 
 Deno.test(
   "POST /sources/:id/extract returns 404 for missing source",
-  handlerTestOpts,
+  dbTestOpts(),
   async () => {
     const res = await handler(
       new Request("http://localhost/sources/nonexistent-id-404/extract", {
@@ -28,7 +30,7 @@ Deno.test(
 
 Deno.test(
   "POST /sources/:id/extract returns 400 when source has no body",
-  handlerTestOpts,
+  dbTestOpts(),
   async () => {
     const id = `no-body-${Date.now()}`;
     await handler(
@@ -53,7 +55,7 @@ Deno.test(
 
 Deno.test(
   "POST /sources/:id/extract 200 and concept_ids (mock LLM)",
-  handlerTestOpts,
+  dbTestOpts(),
   async () => {
     Deno.env.set("SOURCE_EXTRACT_LLM_MOCK", "1");
     try {

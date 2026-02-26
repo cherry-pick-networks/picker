@@ -1,12 +1,14 @@
 import { assertEquals } from "@std/assert";
 import { app } from "../../main.ts";
+import { hasDbEnv } from "./db-env_test.ts";
 
 const handler = (req: Request) => app.fetch(req);
 const handlerTestOpts = { sanitizeResources: false };
+const dbTestOpts = () => ({ ...handlerTestOpts, ignore: !hasDbEnv() });
 
 Deno.test(
   "GET /kv/:key returns 200 and value or null",
-  handlerTestOpts,
+  dbTestOpts(),
   async () => {
     const res = await handler(
       new Request("http://localhost/kv/test-key-missing"),
@@ -19,7 +21,7 @@ Deno.test(
 
 Deno.test(
   "POST /kv writes and GET /kv/:key reads",
-  handlerTestOpts,
+  dbTestOpts(),
   async () => {
     const key = `test-${Date.now()}`;
     const value = { foo: "bar" };
@@ -43,7 +45,7 @@ Deno.test(
 
 Deno.test(
   "DELETE /kv/:key returns 204 and key is gone",
-  handlerTestOpts,
+  dbTestOpts(),
   async () => {
     const key = `del-${Date.now()}`;
     await handler(
@@ -68,7 +70,7 @@ Deno.test(
 
 Deno.test(
   "POST /kv with invalid body returns 400",
-  handlerTestOpts,
+  dbTestOpts(),
   async () => {
     const res = await handler(
       new Request("http://localhost/kv", {
