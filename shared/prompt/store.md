@@ -247,9 +247,9 @@ tool-specific configs.
 - **Single source**: Add or change rules and habits only in this file
   (`shared/prompt/store.md`). Do not duplicate in Cursor Rules or other tool
   configs; reference this file instead.
-- **.cursor/rules**: mdc files are for **when** to apply (e.g. always vs
-  on-request); keep one file per apply timing. Rule text stays here only; mdc
-  names follow §D and §E.
+- **.cursor/rules** (optional, when using Cursor): mdc files define **when** to
+  apply (e.g. always vs on-request); keep one file per apply timing. Rule text
+  stays here only; mdc names follow §D and §E.
 - **Review**: Review this file periodically (e.g. quarterly); add repeated
   instructions as they appear; remove or update outdated lines. Use recent
   conversations to propose new lines (repeated instructions from chats →
@@ -271,7 +271,9 @@ tool-specific configs.
 ## Rule index (context → sections)
 
 Mapping from task/context to applicable §. Use this index for Commands, Skills,
-and .mdc; rule text lives only in Part B below.
+and .mdc; rule text lives only in Part B below. The index and
+`deno task rules:summary -- <task-type>` are editor-agnostic; you can use them
+from any editor or CLI to apply the same rules.
 
 | Context                | Apply §          | Notes                       |
 | ---------------------- | ---------------- | --------------------------- |
@@ -291,11 +293,10 @@ and .mdc; rule text lives only in Part B below.
 
 ## Part B. Rule definitions (authoritative)
 
-Cursor Rules (`.cursor/rules/*.mdc`) reference these sections only; they do not
-duplicate the text below. The role of each mdc is to define **when** to apply
-(e.g. alwaysApply). Rule content lives only in this file; mdc bodies list which
-§ to follow. Keep the number of mdc files aligned with apply timings (e.g. one
-always-applied bundle, one on-request).
+Rule content lives only in this file. When using Cursor, `.cursor/rules/*.mdc`
+reference these sections only (they do not duplicate the text below) and define
+**when** to apply (e.g. alwaysApply). Other editors or CLI: use the Rule index
+above and `deno task rules:summary -- <task-type>`; no .mdc required.
 
 ### §A. Commit message format
 

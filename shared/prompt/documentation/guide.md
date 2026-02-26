@@ -28,9 +28,9 @@ Simplify (Tip 40 → §11).
 
 ## Cursor chat commands (project)
 
-In Cursor chat, typing `/` shows project-defined commands. Below is a
-human-facing list of what exists and when to use each; for Cursor’s own docs
-see [Commands](https://cursor.com/docs/context/commands).
+The list below is for **Cursor** chat: typing `/` shows these project-defined
+commands. For Cursor’s own docs see [Commands](https://cursor.com/docs/context/commands).
+If you use another editor or CLI, see § Using rules without Cursor.
 
 | Command | Purpose | Reference |
 | ------- | ------- | --------- |
@@ -46,6 +46,25 @@ passed to the model as part of that command’s instruction.
 
 Detailed rules stay in store.md and in each command’s `.md` under
 `.cursor/commands/`. This section is a summary for humans only.
+
+---
+
+## Using rules without Cursor
+
+You can follow the same rules and workflows from any editor or CLI. No Cursor
+features required.
+
+- **Rule text**: `shared/prompt/store.md` Part B.
+- **Which § apply**: Run `deno task rules:summary -- <task-type>` (e.g.
+  `refactor`, `feature`, `docs`). Use the Rule index in store.md if needed.
+- **Checklists and tips**: `shared/prompt/documentation/guide.md` and the
+  `.cursor/skills/` directory (read the SKILL.md files as plain markdown).
+- **Rule compliance**: For a given change, run rules:summary for the task type,
+  then check the diff or path against the cited § (e.g. §P, §N) using store.md
+  Part B; no subagent required.
+- **When using Cursor**: Slash commands, `.cursor/rules`, and agents (e.g.
+  rules-subagent) are optional; see § Cursor chat commands (project) and
+  § Subagents for rules.
 
 ---
 
@@ -93,10 +112,10 @@ delegation; use the complex-statement exemption (single try/catch, switch, or
 block-bodied if) where it fits. Reserve `// function-length-ignore-file` for
 CI/utility scripts; document the reason at the top of the file.
 
-**Checklist** (when implementing this plan): AI behaviour guidelines in Cursor
-rules; §P pattern guide in reference.md; file-level ignore policy in store.md
-§P; optional refactor or ignore-for-script for specific scripts (e.g.
-check-sql-filename).
+**Checklist** (when implementing this plan): AI behaviour guidelines in editor
+rules (e.g. Cursor .mdc) or via rules:summary; §P pattern guide in reference.md;
+file-level ignore policy in store.md §P; optional refactor or ignore-for-script
+for specific scripts (e.g. check-sql-filename).
 
 ---
 
@@ -134,6 +153,8 @@ system/routes/content.ts."
 When to use subagents (e.g. mcp_task with explore or generalPurpose): the main
 agent gets the applicable § list via `deno task rules:summary -- <task-type>` or
 the matching skill; delegate **heavy verification** to a subagent when needed.
+Delegation is a Cursor feature (e.g. mcp_task). In other environments, run
+rules:summary and verify the change against the cited § yourself using store.md.
 
 **Scenario 1 — Rule compliance check**: "Does this change satisfy §P and §N?" →
 Have the subagent check the diff or path against store.md §P, §N (function body
@@ -156,9 +177,10 @@ type-check bypass. Return a short list of violations or OK."
 
 ## Session start (first message)
 
-- **When**: Starting a new agent or chat session in Cursor (store.md §9).
+- **When**: Starting a new agent or chat session (e.g. Cursor or other AI chat)
+  (store.md §9).
 - **Goal**: First message: one short sentence stating the session goal (store.md
-  §9 allows Korean for Cursor chat titles).
+  §9 allows Korean for chat titles).
 - **Format**: One sentence; under 15 words or ~40 characters; state one task or
   one question. Add context in a second message if needed.
 - **Templates**:
