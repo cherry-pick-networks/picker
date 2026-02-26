@@ -24,6 +24,8 @@
     "seed:ontology:with-db": "./scripts/dev.sh deno task seed:ontology",
     "seed:curriculum": "deno run -A system/schedule/seed-curriculum.ts",
     "seed:curriculum:with-db": "./scripts/dev.sh deno task seed:curriculum",
+    "seed:lexis": "deno run -A shared/infra/seed/run-seed-lexis.ts",
+    "seed:lexis:with-db": "./scripts/dev.sh deno task seed:lexis",
     "import:books": "deno run -A scripts/import-books-to-sources.ts",
     "import:books:with-db": "./scripts/dev.sh deno run -A scripts/import-books-to-sources.ts",
     "ontology-acyclic-check:with-db": "./scripts/dev.sh deno task ontology-acyclic-check",

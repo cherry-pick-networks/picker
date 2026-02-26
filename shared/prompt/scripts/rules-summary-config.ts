@@ -15,6 +15,7 @@ export type TaskType =
   | "dependency"
   | "sql"
   | "directory"
+  | "seed"
   | "all";
 
 export const CONTEXT_TO_SECTIONS: Record<string, string> = {
@@ -29,6 +30,7 @@ export const CONTEXT_TO_SECTIONS: Record<string, string> = {
   "dependency": "G, H",
   "sql": "U",
   "directory": "F, D, E",
+  "seed": "V, U, E",
 };
 
 export const TASK_TO_CONTEXTS: Record<TaskType, string[]> = {
@@ -41,6 +43,7 @@ export const TASK_TO_CONTEXTS: Record<TaskType, string[]> = {
   dependency: ["dependency"],
   sql: ["sql"],
   directory: ["directory"],
+  seed: ["seed"],
   all: [
     "always",
     "handoff / long session",
@@ -53,6 +56,7 @@ export const TASK_TO_CONTEXTS: Record<TaskType, string[]> = {
     "dependency",
     "sql",
     "directory",
+    "seed",
   ],
 };
 

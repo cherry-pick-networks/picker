@@ -1,0 +1,17 @@
+---
+description: |
+  When creating or editing grammar, lexis, or phonology data or code (tables,
+  APIs, source_id, content_type, seed paths, docs), use content domain names and
+  level names per reference.md.
+alwaysApply: false
+---
+
+When working on **grammar**, **lexis**, or **phonology** (English learning data):
+
+- **Content domain names**: Use only **grammar**, **lexis**, **phonology** for
+  structural names. No synonyms (e.g. vocabulary,
+  pronunciation, phonics). See `shared/prompt/documentation/reference.md` §
+  Naming conventions → Content domain names.
+- **Difficulty / level**: Use **basic**, **intermediate**, **advanced** (lowercase
+  everywhere). See reference.md § Naming conventions → Difficulty / level (3
+  stages).
