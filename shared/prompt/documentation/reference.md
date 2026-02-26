@@ -88,6 +88,30 @@ Under `tests/`, every `.ts` file must be `[name]_test.ts` (Deno convention). The
 `scripts-store_test.ts`. Non-test helpers (e.g. `with_temp_scripts_store.ts`)
 are listed in PATH_EXCEPTIONS. Validated by `deno task ts-filename-check`.
 
+### Naming conventions (content and level)
+
+#### Content domain names (English learning data)
+
+For structural names (tables, API paths, `source_id` prefixes, `content_type_id`,
+seed paths, docs), use only these three terms for English learning data:
+
+| Domain name  | Use for |
+| ------------ | ------- |
+| **grammar**  | `source_id` prefix (e.g. `book-grammar-*`), grammar curriculum tables/schemas, content_type for grammar |
+| **lexis**    | Table names (e.g. `lexis_entry`), `system/lexis/`, seed `shared/infra/seed/lexis/`, `source_id` prefix (e.g. `wordmaster-middle-basic`) |
+| **phonology**| Tables, APIs, `source_id`, content_type for pronunciation/phonetic data |
+
+Do not use synonyms (e.g. vocabulary, pronunciation, phonics) in structural
+names. The suffix **grammar** in §E denotes parser/grammar rules (`*.grammar.ts`);
+the same word as content domain means “English grammar data” (sources, curriculum).
+
+#### Difficulty / level (3 stages)
+
+For curriculum, schedule, and source-level naming (e.g. grammar books, word
+lists), use three stages in **lowercase everywhere** (code, IDs, API values, DB,
+display): **basic**, **intermediate**, **advanced**. This is a documentation
+convention only; not a validated allowlist.
+
 ### Schema (DDL) file naming
 
 DDL files under `shared/infra/schema/` use a fixed pattern so execution order is
@@ -176,6 +200,7 @@ typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
 | `shared/infra/seed/ontology/global-standards.toml` | Ontology seed: isced, iscedf, bloom (no CEFR/PISA).                             |
 | `shared/prompt/documentation/grammar-topics.md`    | Grammar curriculum: 17 major topics, level→unit mapping (schedule/content).     |
 | `shared/infra/seed/curriculum-52weeks.json`        | Seed source for 52-week curriculum; runtime data in DB table `curriculum_slot`. |
+| `shared/infra/seed/lexis/lexis-sources.toml`     | Lexis source list (source_id, env_var). Actual metadata from .env (store.md §V); `deno task seed:lexis`. |
 
 ### Curriculum (52 weeks)
 

@@ -307,6 +307,7 @@ from any editor or CLI to apply the same rules.
 | dependency             | G, H             | deno.json etc.              |
 | sql                    | U                | SQL/DDL                     |
 | directory              | F, D, E          | Directory creation          |
+| seed                   | V, U, E          | Seed data; serialization rationale only; sensitive data in .env |
 
 ---
 
@@ -418,7 +419,11 @@ education: only this spelling; never edu. type (TS/classification): use types in
 Suffix Meta; never type. core: forbidden in Context; use shared, base, or domain
 (layer). context (API): use provider in Infix Entity; do not use context as
 segment. record: only Entity; stored units of data (e.g. extracted record,
-identity record); one record per file or index entry.
+identity record); one record per file or index entry. grammar: as Suffix =
+parser/grammar rules (*.grammar.ts); as content domain = English grammar data
+(see reference.md Content domain names). lexis, phonology: content domain only
+(word data, pronunciation data); use for domain infix, table names, seed paths
+per reference.md.
 
 Prefix — one axis only: [ Scope | Layer | Context ]. Rule: prefix must denote
 system position only; technical tools (cache, redis) or artifact form (config,
@@ -863,3 +868,19 @@ natural/surrogate principle (3.13). DML: standard JOIN (6.1.1), no hints unless
 justified (6.4), DRI over triggers (6.5), avoid correlated subqueries (6.9).
 VIEW: same naming as tables (7.1), explicit column names (7.1.1). Procedures:
 prefer set over cursor (8.4.2), dynamic SQL and injection prevention (8.6).
+
+### §V. Seed and copyright-sensitive data
+
+Scope: Seed data under shared/infra/seed/ (and any committed data that
+identifies textbooks, publishers, or other copyrightable material).
+
+- **Serialization rationale only in repo**: Commit only the *rationale* for
+  serialization: schema, field semantics, and format. Do not commit
+  copyright-sensitive or identifying content (e.g. textbook titles, exact
+  entry counts, words_per_day, total_days that identify a specific book).
+- **Sensitive values in .env**: Store such values in `.env` (or equivalent
+  env-backed secret). Seed runners read them at runtime (e.g.
+  `LEXIS_SOURCE_META_<SOURCE_ID>`). `.env` is gitignored; do not commit it.
+- **API redaction unchanged**: Runtime redaction of source metadata for
+  external callers remains per todo.md (X-Client: agent or INTERNAL_API_KEY for
+  full data).

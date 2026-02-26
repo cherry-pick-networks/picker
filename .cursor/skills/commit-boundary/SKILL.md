@@ -9,8 +9,7 @@ description: |
 
 Apply store.md **§A, §B**. Full text in shared/prompt/store.md Part B only.
 
-**When to use this skill** — Use when the user asks to commit (e.g. “commit
-current changes”, “커밋해줘”), when a logical unit is done, or when the task
+**When to use this skill** — Use when the user asks to commit (e.g. “commit current changes”), when a logical unit is done, or when the task
 type is `commit` (e.g. after `deno task rules:summary -- commit`).
 
 ## Procedure
