@@ -33,7 +33,7 @@ with store.md §E/§F and modular monolith.
 | notification | Notifications and alerts                                               |
 | record       | Identity index (shared/record/reference)                               |
 | report       | Reports and aggregations                                               |
-| schedule     | FSRS-rs schedule (actor, source, unit); weekly plan from grammar       |
+| schedule     | FSRS schedule (in-house); weekly plan (3 sessions/week) and annual curriculum from grammar |
 | script       | Scripts store, AST apply, Governance                                   |
 | source       | Source collection and read                                             |
 | sync         | Synchronization and replication                                        |
@@ -75,7 +75,7 @@ system/
   content/   *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts
   kv/        *.endpoint.ts, *.store.ts
   record/    *.endpoint.ts, *.store.ts
-  schedule/  *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.grammar.ts, *.mapper.ts, *.weekly.ts, *.adapter.ts
+  schedule/  *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, fsrs.ts, *.grammar.ts, *.mapper.ts, *.weekly.ts, *.adapter.ts, *-annual.service.ts
   script/    *.endpoint.ts, *.service.ts, *.store.ts, *.types.ts, *.validation.ts
   source/    *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, source-extract.service.ts, source-llm.client.ts
   routes.ts  (entry; imports app/routes-register.config.ts)
@@ -174,6 +174,7 @@ typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
 | `system/audit/e2e-runs.toml`                       | E2E run log (schemaVersion + runs[])                |
 | `shared/infra/seed/ontology/seed.sql`              | Ontology seed (DDC scheme).                         |
 | `shared/infra/seed/ontology/global-standards.toml` | Ontology seed: isced, iscedf, bloom (no CEFR/PISA). |
+| `shared/prompt/documentation/grammar-topics.md`    | Grammar curriculum: 17 major topics, level→unit mapping (schedule/content). |
 
 ### Ontology and facet policy
 

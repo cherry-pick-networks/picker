@@ -34,6 +34,7 @@ export const ROUTES: { method: string; path: string }[] = [
   { method: "GET", path: "/data/identity/:id" },
   { method: "GET", path: "/schedule/due" },
   { method: "GET", path: "/schedule/plan/weekly" },
+  { method: "GET", path: "/schedule/plan/annual" },
   { method: "GET", path: "/schedule/items" },
   { method: "POST", path: "/schedule/items" },
   { method: "POST", path: "/schedule/items/:id/review" },
