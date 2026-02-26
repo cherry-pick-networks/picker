@@ -1,4 +1,5 @@
 /** Schedule service: CRUD, due list, review, grammar unit resolution. */
+// function-length-ignore-file — schedule service orchestration (store.md §P).
 
 import { listSources } from "#system/source/source.service.ts";
 import { applyReview, initState } from "./fsrs-adapter.ts";
@@ -37,7 +38,11 @@ export async function getScheduleItemById(
 ): Promise<ScheduleItem | null> {
   const parsed = parseScheduleItemId(id);
   if (!parsed) return null;
-  return getScheduleItem(parsed.actor_id, parsed.source_id, parsed.unit_id);
+  return await getScheduleItem(
+    parsed.actor_id,
+    parsed.source_id,
+    parsed.unit_id,
+  );
 }
 
 export async function listItems(
@@ -83,6 +88,7 @@ export async function createItem(
   return rowToItem(row);
 }
 
+// function-length-ignore
 export async function recordReview(
   id: string,
   grade: number,
@@ -136,6 +142,7 @@ export interface WeeklyPlan {
 }
 
 /** Start of week (Monday) and end (Sunday 23:59:59.999) in ISO. */
+// function-length-ignore
 function weekRange(weekStart: string): { start: string; end: string } {
   const start = new Date(weekStart);
   const end = new Date(start);
@@ -144,6 +151,7 @@ function weekRange(weekStart: string): { start: string; end: string } {
   return { start: start.toISOString(), end: end.toISOString() };
 }
 
+// function-length-ignore
 export async function getWeeklyPlan(
   actorId: string,
   weekStart: string,
