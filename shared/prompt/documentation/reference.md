@@ -158,6 +158,34 @@ name satisfying `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. Run:
   running `deno task seed:ontology`, run `deno task ontology-acyclic-check`
   manually when changing ontology seed or relations.
 
+### Classification allowlists (4 facets)
+
+Single source for allowed concept codes: `shared/infra/seed/ontology/global-standards.toml`.
+Runtime validation: `system/concept/concept.config.ts` maps each facet to scheme(s);
+content and (when implemented) source APIs reject values not in the allowlist.
+
+**Facet → scheme mapping**
+
+| Facet | Schemes | Standard |
+| ----- | ------- | -------- |
+| Subject | isced, iscedf | ISCED 2011 (level), ISCED-F 2013 (field) |
+| DocType (contentType) | doctype | Schema.org / BibTeX |
+| Cognitive | bloom | Bloom's taxonomy (revised) |
+| Proficiency (context) | cefr | CEFR |
+
+**Allowed codes per scheme (canonical list in global-standards.toml)**
+
+- **isced**: isced-0 … isced-8 (Early childhood … Doctoral).
+- **iscedf**: iscedf-00 … iscedf-10 (Generic programmes … Services).
+- **bloom**: bloom-1 … bloom-6 (Remember … Create).
+- **cefr**: cefr-a1, cefr-a2, cefr-b1, cefr-b2, cefr-c1, cefr-c2.
+- **doctype**: book, article, news-article, video-object, web-page.
+
+When adding or editing items, sources, or any payload that uses concept IDs
+(subject_ids, content_type_id, cognitive_level_id, context_ids, document_type,
+concept_id): use only these codes. Do not invent new codes; add new values only
+by updating global-standards.toml and re-running `deno task seed:ontology`.
+
 ### Modular monolith rules
 
 - Within a domain: endpoint → service → store/schema only.
