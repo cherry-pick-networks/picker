@@ -160,18 +160,19 @@ name satisfying `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. Run:
 
 ### Classification allowlists (4 facets)
 
-Single source for allowed concept codes: `shared/infra/seed/ontology/global-standards.toml`.
-Runtime validation: `system/concept/concept.config.ts` maps each facet to scheme(s);
-content and (when implemented) source APIs reject values not in the allowlist.
+Single source for allowed concept codes:
+`shared/infra/seed/ontology/global-standards.toml`. Runtime validation:
+`system/concept/concept.config.ts` maps each facet to scheme(s); content and
+(when implemented) source APIs reject values not in the allowlist.
 
 **Facet → scheme mapping**
 
-| Facet | Schemes | Standard |
-| ----- | ------- | -------- |
-| Subject | isced, iscedf | ISCED 2011 (level), ISCED-F 2013 (field) |
-| DocType (contentType) | doctype | Schema.org / BibTeX |
-| Cognitive | bloom | Bloom's taxonomy (revised) |
-| Proficiency (context) | cefr | CEFR |
+| Facet                 | Schemes       | Standard                                 |
+| --------------------- | ------------- | ---------------------------------------- |
+| Subject               | isced, iscedf | ISCED 2011 (level), ISCED-F 2013 (field) |
+| DocType (contentType) | doctype       | Schema.org / BibTeX                      |
+| Cognitive             | bloom         | Bloom's taxonomy (revised)               |
+| Proficiency (context) | cefr          | CEFR                                     |
 
 **Allowed codes per scheme (canonical list in global-standards.toml)**
 
@@ -179,7 +180,10 @@ content and (when implemented) source APIs reject values not in the allowlist.
 - **iscedf**: iscedf-00 … iscedf-10 (Generic programmes … Services).
 - **bloom**: bloom-1 … bloom-6 (Remember … Create).
 - **cefr**: cefr-a1, cefr-a2, cefr-b1, cefr-b2, cefr-c1, cefr-c2.
-- **doctype**: book, article, news-article, video-object, web-page.
+- **actfl**: actfl-n, actfl-nl, actfl-nm, actfl-nh, actfl-i, actfl-il, actfl-im,
+  actfl-ih, actfl-a, actfl-al, actfl-am, actfl-ah, actfl-s.
+- **doctype**: book, article, news-article, video-object, web-page;
+  inproceedings, techreport, manual, unpublished, misc (BibTeX).
 
 When adding or editing items, sources, or any payload that uses concept IDs
 (subject_ids, content_type_id, cognitive_level_id, context_ids, document_type,
@@ -221,7 +225,7 @@ imports are forbidden (see Modular monolith rules above).
 | actor      | —     | no      | no      | no     | no     | no     | no | no    |
 | concept    | no    | —       | no      | no     | no     | no     | no | no    |
 | content    | yes   | yes     | —       | no     | yes    | no     | no | no    |
-| source     | no    | no      | no      | —      | no     | no     | no | no    |
+| source     | no    | yes     | no      | —      | no     | no     | no | no    |
 | script     | no    | no      | no      | no     | —      | no     | no | no    |
 | record     | no    | no      | no      | no     | no     | —      | no | no    |
 | kv         | no    | no      | no      | no     | no     | no     | —  | no    |

@@ -242,3 +242,116 @@ scheme_id = "doctype"
 code = "web-page"
 pref_label = "WebPage"
 path = "doctype.web-page"
+
+# BibTeX document types (Schema.org/doctype scheme)
+[[concept]]
+scheme_id = "doctype"
+code = "inproceedings"
+pref_label = "Conference Paper (InProceedings)"
+path = "doctype.inproceedings"
+
+[[concept]]
+scheme_id = "doctype"
+code = "techreport"
+pref_label = "Technical Report"
+path = "doctype.techreport"
+
+[[concept]]
+scheme_id = "doctype"
+code = "manual"
+pref_label = "Technical Manual"
+path = "doctype.manual"
+
+[[concept]]
+scheme_id = "doctype"
+code = "unpublished"
+pref_label = "Unpublished Manuscript"
+path = "doctype.unpublished"
+
+[[concept]]
+scheme_id = "doctype"
+code = "misc"
+pref_label = "Miscellaneous Content"
+path = "doctype.misc"
+
+[[concept_scheme]]
+id = "actfl"
+name = "ACTFL: American Council on the Teaching of Foreign Languages"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-n"
+pref_label = "Novice"
+path = "actfl.n"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-nl"
+pref_label = "Novice Low"
+path = "actfl.n.nl"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-nm"
+pref_label = "Novice Mid"
+path = "actfl.n.nm"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-nh"
+pref_label = "Novice High"
+path = "actfl.n.nh"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-i"
+pref_label = "Intermediate"
+path = "actfl.i"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-il"
+pref_label = "Intermediate Low"
+path = "actfl.i.il"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-im"
+pref_label = "Intermediate Mid"
+path = "actfl.i.im"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-ih"
+pref_label = "Intermediate High"
+path = "actfl.i.ih"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-a"
+pref_label = "Advanced"
+path = "actfl.a"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-al"
+pref_label = "Advanced Low"
+path = "actfl.a.al"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-am"
+pref_label = "Advanced Mid"
+path = "actfl.a.am"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-ah"
+pref_label = "Advanced High"
+path = "actfl.a.ah"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-s"
+pref_label = "Superior"
+path = "actfl.s"
