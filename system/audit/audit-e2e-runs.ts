@@ -1,5 +1,5 @@
 /**
- * Log artifacts under system/audit/ (e2e-runs.toml); not served.
+ * E2E run artifacts under system/audit/ (e2e-runs.toml); not served.
  */
 
 import { readTomlFile, writeTomlFile } from "#system/record/toml.service.ts";

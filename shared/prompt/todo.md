@@ -17,23 +17,23 @@ Use that document for AI direction and todo decisions.
 
 ## Modules
 
-| Module                    | Role                                                                                                                                                              |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **main.ts**               | Server entry: Hono app; routes registered from system/routes.ts (imports system/app/config).                                                                      |
-| **client.ts**             | Client entry (loaded on every page).                                                                                                                              |
-| **system/routes.ts**      | Route list (ROUTES) and registerRoutes(app); todo-check reads this.                                                                                               |
-| **system/app/config/**    | Route registration (home, rest, scripts). Imports domain endpoints only.                                                                                          |
-| **system/actor/**         | Profile, progress: endpoint, service, store, schema.                                                                                                              |
-| **system/concept/**       | Ontology validation: store (checkIdsInScheme), service (validateFacetSchemes). Facet ID checks capped at 500 per boundary.md.                                     |
-| **system/content/**       | Items, worksheets, prompt: endpoint, service, store, schema.                                                                                                      |
-| **system/source/**        | Source collection and KAG: endpoint, service, store, schema, source-extract.service, source-llm.client.                                                           |
-| **system/script/**        | Scripts store, mutate (LLM offload), Governance: endpoint, service, store, validation.                                                                            |
-| **system/record/**        | Identity index: endpoint, store (reference/identity-index.toml only).                                                                                             |
-| **system/schedule/**      | FSRS-rs schedule (actor, source, unit): endpoint, service, store, schema, fsrs-adapter. Weekly plan from source grammar payload.                                  |
-| **system/kv/**            | Generic key-value HTTP API: endpoint, store (Postgres-backed).                                                                                                    |
-| **system/audit/**         | Log artifact storage (e.g. e2e-runs.toml in same dir as audit.log.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added. |
-| **shared/runtime/store/** | Target path for self-edit; read and write only via Governance-verified flow.                                                                                      |
-| **shared/infra/**         | Shared infrastructure. Postgres client (`getPg()`) only; no KV, no business logic.                                                                                |
+| Module                    | Role                                                                                                                                                                   |
+| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **main.ts**               | Server entry: Hono app; routes registered from system/routes.ts (imports system/app/config).                                                                           |
+| **client.ts**             | Client entry (loaded on every page).                                                                                                                                   |
+| **system/routes.ts**      | Route list (ROUTES) and registerRoutes(app); todo-check reads this.                                                                                                    |
+| **system/app/config/**    | Route registration (home, rest, scripts). Imports domain endpoints only.                                                                                               |
+| **system/actor/**         | Profile, progress: endpoint, service, store, schema.                                                                                                                   |
+| **system/concept/**       | Ontology validation: store (checkIdsInScheme), service (validateFacetSchemes). Facet ID checks capped at 500 per boundary.md.                                          |
+| **system/content/**       | Items, worksheets, prompt: endpoint, service, store, schema.                                                                                                           |
+| **system/source/**        | Source collection and KAG: endpoint, service, store, schema, source-extract.service, source-llm.client.                                                                |
+| **system/script/**        | Scripts store, mutate (LLM offload), Governance: endpoint, service, store, validation.                                                                                 |
+| **system/record/**        | Identity index: endpoint, store (reference/identity-index.toml only).                                                                                                  |
+| **system/schedule/**      | FSRS-rs schedule (actor, source, unit): endpoint, service, store, schema, fsrs-adapter. Weekly plan from source grammar payload.                                       |
+| **system/kv/**            | Generic key-value HTTP API: endpoint, store (Postgres-backed).                                                                                                         |
+| **system/audit/**         | Log artifact storage (e.g. e2e-runs.toml in same dir as audit-e2e-runs.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added. |
+| **shared/runtime/store/** | Target path for self-edit; read and write only via Governance-verified flow.                                                                                           |
+| **shared/infra/**         | Shared infrastructure. Postgres client (`getPg()`) only; no KV, no business logic.                                                                                     |
 
 ---
 
@@ -88,7 +88,7 @@ Use that document for AI direction and todo decisions.
   shared/runtime/store.
 - **Off-limits**: Do not write directly to config/ or credentials; use approved
   mechanisms only. File-based record store (shared/record/) is written only via
-  system/record/data.store.ts (identity-index only).
+  system/record/identity-index.store.ts (identity-index only).
 
 ---
 
@@ -102,7 +102,7 @@ Use that document for AI direction and todo decisions.
   `07_schedule.sql`; see reference.md Schema DDL file naming).
 - **File-based data** — under `shared/record/reference/`: single file
   `identity-index.toml` (version, description, students). Read via
-  system/record/data.store.ts; no store directory.
+  system/record/identity-index.store.ts; no store directory.
 - **Worksheet prompt templates** — read-only from `shared/runtime/store/` (e.g.
   docs/contract/); Governance-verified read.
 - **Change audit log** — stored under `system/audit/log/` (e.g. JSON file(s));

@@ -2,7 +2,7 @@ import type { Context } from "hono";
 import {
   getIdentityById as getIdentityByIdStore,
   readIdentityIndex,
-} from "./data.store.ts";
+} from "./identity-index.store.ts";
 
 export async function getIdentityIndex(c: Context) {
   const index = await readIdentityIndex();
