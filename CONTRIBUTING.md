@@ -23,7 +23,7 @@ use Issues only for bugs and concrete feature requests.
 - **Clone** the repo and from the project root run:
   - `deno task dev` — start dev server (watch)
   - `deno test` — run tests (unit only; storage tests need DB env)
-  - `deno task test:with-db` or `./scripts/test-with-db.sh` — run tests with
+  - `deno task test:with-db` or `./scripts/dev.sh test` — run tests with
     same DB env as `./scripts/dev.sh` (requires
     [pass](https://www.passwordstore.org/) and `picker/postgres` entry)
   - `deno task todo-check` — verify API routes are listed in the todo document
