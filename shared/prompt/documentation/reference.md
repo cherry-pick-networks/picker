@@ -68,10 +68,10 @@ with store.md §E/§F and modular monolith.
 
 ```
 system/
-  actor/     *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts, *.transfer.ts
-  app/       *.config.ts
-  audit/     *.log.ts
-  concept/   *.service.ts, *.store.ts
+  actor/     *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts, *.parser.ts
+  app/       *.config.ts, *.handler.ts, *.util.ts
+  audit/     audit-e2e-runs.ts
+  concept/   *.service.ts, *.store.ts, concept-schemes.ts
   content/   *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts
   kv/        *.endpoint.ts, *.store.ts
   record/    *.endpoint.ts, *.store.ts
@@ -161,9 +161,9 @@ typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
 | system/content/schema/*.ts         | system/content/*.schema.ts         |
 | system/source/endpoint             | service                            |
 | system/script/endpoint             | service                            |
-| system/record/endpoint             | data.store.ts                      |
+| system/record/endpoint             | identity-index.store.ts            |
 | system/kv/endpoint                 | store/kv.ts                        |
-| system/audit/log/log.ts            | system/audit/audit.log.ts          |
+| system/audit/log/log.ts            | system/audit/audit-e2e-runs.ts     |
 | system/app/config/*.ts             | system/app/*.config.ts             |
 
 ### Data file locations (TOML)
@@ -183,7 +183,7 @@ typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
   and seed).
 - **Facet schemes**: Subject IDs use allowed schemes (ddc, isced, iscedf).
   Content type, cognitive level, and context use their respective allowed
-  schemes (see system/concept/concept.config.ts). Content and worksheet APIs
+  schemes (see system/concept/concept-schemes.ts). Content and worksheet APIs
   validate concept IDs per facet and cap at 500 per request.
 - **CI**: `deno task pre-push` does not run `ontology-acyclic-check`. After
   running `deno task seed:ontology`, run `deno task ontology-acyclic-check`
@@ -193,7 +193,7 @@ typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
 
 Single source for allowed concept codes:
 `shared/infra/seed/ontology/global-standards.toml`. Runtime validation:
-`system/concept/concept.config.ts` maps each facet to scheme(s); content and
+`system/concept/concept-schemes.ts` maps each facet to scheme(s); content and
 (when implemented) source APIs reject values not in the allowlist.
 
 **Facet → scheme mapping**
@@ -226,8 +226,8 @@ by updating global-standards.toml and re-running `deno task seed:ontology`.
 - Within a domain: endpoint → service → store/schema only.
 - Cross-domain: do not import another domain's store; use that domain's service
   if needed.
-- app/*.config.ts only imports domain endpoints and registers routes; no
-  business logic.
+- app/*.config.ts and *.handler.ts only import domain endpoints and register
+  routes; no business logic.
 - Postgres: `shared/infra/pg.client.ts` provides `getPg()`. Domain stores and
   system/kv use it; no KV or other storage client.
 

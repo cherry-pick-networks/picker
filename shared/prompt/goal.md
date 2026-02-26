@@ -52,8 +52,8 @@ format are defined in todo.md and the spec. Add only items inside that todo.
 - Add only modules, routes, and infrastructure listed in todo (todo.md or spec).
 - Mutate only within shared/runtime/store/; use Governance-verified flow.
 - Write to config/ or credentials only via approved mechanisms; file-based
-  shared/record/ (identity-index only) only via system/record/data.store.ts (see
-  todo.md).
+  shared/record/ (identity-index only) only via
+  system/record/identity-index.store.ts (see todo.md).
 - Apply type-check policy (store.md §N).
 
 Concretes: spec §44–§48 and store.md.

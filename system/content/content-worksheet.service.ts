@@ -1,10 +1,10 @@
 import * as contentStore from "./content.store.ts";
 import type { GenerateWorksheetRequest, Worksheet } from "./content.schema.ts";
-import { nowIso } from "./content-parse.service.ts";
+import { nowIso } from "./content-schema-parse.service.ts";
 import {
   initWorksheetRequest,
   validateAndInitWorksheet,
-} from "./content-worksheet-request.ts";
+} from "./content-worksheet-init.ts";
 
 async function collectItemIds(
   conceptIds: string[],

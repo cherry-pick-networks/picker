@@ -6,7 +6,7 @@ import {
   DEFAULT_QUESTION_TYPE,
   DEFAULT_WORKSHEET_CONTEXT,
   type WorksheetContext,
-} from "./content-prompt.types.ts";
+} from "./content-worksheet-context.types.ts";
 
 export type { WorksheetContext };
 import { getProfile } from "#system/actor/profile.service.ts";

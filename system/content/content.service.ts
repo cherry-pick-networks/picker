@@ -6,7 +6,7 @@ import {
   WorksheetSchema,
 } from "./content.schema.ts";
 import { validateItemFacets } from "./content-facet-validation.ts";
-import { nowIso, parseItem } from "./content-parse.service.ts";
+import { nowIso, parseItem } from "./content-schema-parse.service.ts";
 export {
   CreateItemRequestSchema,
   GenerateWorksheetRequestSchema,
