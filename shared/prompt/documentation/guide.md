@@ -43,6 +43,7 @@ or CLI, see § Using rules without Cursor.
 | `/session-goal`              | State session goal in one sentence; ensure branch is not default         | guide Session start       |
 | `/pre-push`                  | Run pre-push (same as CI); fix and re-run if it fails                    | store.md §5, §7           |
 | `/create-pr`                 | Create draft PR for current branch                                       | store.md §7               |
+| `/clean-branches`            | Leave only main locally; sync with origin/main; delete other branches    | guide (this section)      |
 | `/rules-check` [task-type]   | Verify change against applicable §; delegate to rules-subagent if needed | guide Subagents for rules |
 
 For **commit-at-boundary** there is no slash command; use the
