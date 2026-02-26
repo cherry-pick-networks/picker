@@ -44,10 +44,12 @@ tool-specific configs.
   `@std/toml`. File names follow §E; record files are `{uuid}.toml`. Documents
   use Markdown (`.md`) or Cursor rules (`.mdc`) with optional YAML front matter;
   parse with `@std/front-matter`. Data file paths: see `shared/prompt/todo.md`.
+- **SQL only in .sql files**: Write all SQL in `.sql` files only; do not embed
+  SQL strings in TypeScript, JavaScript, or other code. Load at runtime via
+  `shared/infra/sql-loader.ts` (`loadSql(baseUrl, filename)`).
 - **DML SQL**: Keep application DML (SELECT, INSERT, UPDATE, DELETE) in
   `system/<module>/sql/*.sql` (one statement per file, snake_case filenames).
-  Load via `shared/infra/sql-loader.ts` (`loadSql(baseUrl, filename)`); use
-  `$1, $2, ...` for parameters; document parameter order in the file or store.
+  Use `$1, $2, ...` for parameters; document parameter order in the file or store.
 
 ---
 
@@ -659,6 +661,16 @@ longer. Scope: TypeScript source (e.g. `**/*.ts`); exclude node_modules, vendor,
 generated output. Exception: file-length check is not applied to test files
 (paths ending with `_test.ts` or under a `tests/` directory); line-length check
 still applies.
+
+Line-length and file-length exceptions: Single source of truth for exemptions is
+shared/prompt/scripts/check-line-length-config.ts (and this doc). Line-length
+exceptions: allow only where documented (e.g. long URLs in comments, generated
+snippet). Put `// line-length-ignore` or `// line-length-ignore: <reason>` on the
+line immediately above the long line; prefer splitting the string or URL to stay
+under 80 chars. File-length exceptions: list path patterns and exact paths in
+the config; add only when splitting the file is not feasible (e.g. ported
+algorithm); document the reason in a comment in the config. Do not add
+file-length exempt to avoid splitting; split into sibling modules instead.
 
 Function body: block body 2–4 statements (AST direct statements in block body
 only); expression body allowed (counts as 1). A single statement is allowed when
