@@ -1,27 +1,37 @@
 /**
- * FSRS adapter (stub). Maps schedule item state + review to next_due_at.
- * Replace with @squeakyrobot/fsrs (or real FSRS-rs) when integrating.
+ * FSRS adapter. Maps schedule item payload to in-house FSRS (fsrs.ts), returns next_due_at.
  */
 // function-length-ignore-file — small adapter (store.md §P).
 
+import {
+  initState as fsrsInitState,
+  scheduleNew,
+  scheduleReview,
+} from "./fsrs.ts";
 import type { ScheduleItemPayload } from "./schedule.schema.ts";
 
-/** Days until next review by grade (1–4). Stub; real FSRS uses D/S model. */
-const INTERVAL_DAYS = [1, 3, 7, 14] as const;
+function toState(
+  p: ScheduleItemPayload,
+): { difficulty: number; stability: number } {
+  return {
+    difficulty: p.d ?? 5,
+    stability: p.s ?? 0,
+  };
+}
 
 export function initState(): {
   payload: ScheduleItemPayload;
   next_due_at: string;
 } {
-  const now = new Date().toISOString();
+  const now = new Date();
+  const state = fsrsInitState();
   return {
     payload: {
-      d: 5,
-      s: 0,
-      last_interval_days: 0,
+      d: state.difficulty,
+      s: state.stability,
       grade_history: [],
     },
-    next_due_at: now,
+    next_due_at: now.toISOString(),
   };
 }
 
@@ -31,19 +41,29 @@ export function applyReview(
   reviewedAt: string,
 ): { payload: ScheduleItemPayload; next_due_at: string } {
   const g = Math.min(4, Math.max(1, Math.round(grade)));
-  const intervalDays = INTERVAL_DAYS[g - 1] ?? 1;
-  const reviewed = new Date(reviewedAt);
-  const next = new Date(reviewed);
-  next.setDate(next.getDate() + intervalDays);
+  const at = new Date(reviewedAt);
+  const state = toState(current);
+  const isNew = (current.s ?? 0) <= 0 && !current.last_reviewed_at;
+  const { nextDue, state: nextState } = isNew
+    ? scheduleNew(g, at)
+    : scheduleReview(
+      state,
+      g,
+      new Date(current.last_reviewed_at ?? reviewedAt),
+      at,
+    );
+  const intervalDays = Math.round(
+    (nextDue.getTime() - at.getTime()) / (24 * 60 * 60 * 1000),
+  );
   const gradeHistory = [...(current.grade_history ?? []), g];
   return {
     payload: {
-      d: current.d ?? 5,
-      s: current.s ?? 0,
+      d: nextState.difficulty,
+      s: nextState.stability,
       last_reviewed_at: reviewedAt,
       last_interval_days: intervalDays,
       grade_history: gradeHistory,
     },
-    next_due_at: next.toISOString(),
+    next_due_at: nextDue.toISOString(),
   };
 }

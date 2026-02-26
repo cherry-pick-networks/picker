@@ -1,6 +1,7 @@
 /** Schedule HTTP endpoints. */
 
 import type { Context } from "hono";
+import { getAnnualCurriculum } from "./schedule-annual.service.ts";
 import {
   createItem,
   listDue,
@@ -30,21 +31,29 @@ export async function getDue(c: Context) {
 }
 
 // function-length-ignore
+export async function getAnnual(c: Context) {
+  const yearStr = c.req.query("year") ?? "";
+  const level = c.req.query("level") ?? undefined;
+  const year = yearStr ? parseInt(yearStr, 10) : new Date().getFullYear();
+  if (Number.isNaN(year)) {
+    return c.json({ error: "Query year must be a number" }, 400);
+  }
+  const curriculum = await getAnnualCurriculum({ level, year });
+  return c.json(curriculum);
+}
+
+// function-length-ignore
 export async function getWeekly(c: Context) {
   const actorId = c.req.query("actor_id") ?? "";
   const weekStart = c.req.query("week_start") ?? "";
   const level = c.req.query("level") ?? undefined;
-  const newUnitCount = c.req.query("new_unit_count");
   if (!actorId || !weekStart) {
     return c.json(
       { error: "Query actor_id and week_start required (ISO date)" },
       400,
     );
   }
-  const plan = await getWeeklyPlan(actorId, weekStart, {
-    level,
-    new_unit_count: newUnitCount ? parseInt(newUnitCount, 10) : undefined,
-  });
+  const plan = await getWeeklyPlan(actorId, weekStart, { level });
   return c.json(plan);
 }
 

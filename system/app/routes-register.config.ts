@@ -69,6 +69,7 @@ function registerData(app: Hono) {
 function registerSchedule(app: Hono) {
   app.get("/schedule/due", schedule.getDue);
   app.get("/schedule/plan/weekly", schedule.getWeekly);
+  app.get("/schedule/plan/annual", schedule.getAnnual);
   app.get("/schedule/items", schedule.getItems);
   app.post("/schedule/items", schedule.postItem);
   app.post("/schedule/items/:id/review", schedule.postReview);
