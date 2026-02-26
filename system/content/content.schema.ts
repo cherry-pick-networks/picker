@@ -3,6 +3,10 @@ import { z } from "zod";
 export const ItemSchema = z.object({
   item_id: z.string(),
   concept_id: z.string().optional(),
+  subject_ids: z.array(z.string()).optional(),
+  content_type_id: z.string().optional(),
+  cognitive_level_id: z.string().optional(),
+  context_ids: z.array(z.string()).optional(),
   stem: z.string().optional(),
   difficulty: z.string().optional(),
   created_at: z.string().optional(),

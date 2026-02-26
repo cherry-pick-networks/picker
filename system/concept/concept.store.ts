@@ -14,3 +14,16 @@ export async function checkIdsInScheme(
   );
   return ids.every((id) => r.rows.some((row) => row.code === id));
 }
+
+export async function getExistingConceptIdsBySchemes(
+  ids: string[],
+  allowedSchemeIds: string[],
+): Promise<Set<string>> {
+  if (ids.length === 0 || allowedSchemeIds.length === 0) return new Set();
+  const pg = await getPg();
+  const r = await pg.queryObject<{ code: string }>(
+    "SELECT code FROM concept WHERE code = ANY($1) AND scheme_id = ANY($2)",
+    [ids, allowedSchemeIds],
+  );
+  return new Set(r.rows.map((row) => row.code));
+}

@@ -1,3 +1,7 @@
+import {
+  ID_COUNT_LIMIT,
+  validateFacetSchemes,
+} from "#system/concept/concept.service.ts";
 import * as contentStore from "./content.store.ts";
 import type { GenerateWorksheetRequest, Worksheet } from "./content.schema.ts";
 import { nowIso } from "./content-parse.service.ts";
@@ -52,10 +56,20 @@ async function saveWorksheet(worksheet: Worksheet): Promise<Worksheet> {
 export async function generateWorksheet(
   request: GenerateWorksheetRequest,
 ): Promise<Worksheet> {
-  const { worksheet_id, conceptIds, perConcept } = initWorksheetRequest(
+  const conceptIds = request.concept_ids?.length ? request.concept_ids : [];
+  if (conceptIds.length > ID_COUNT_LIMIT) {
+    throw new Error(
+      `Too many concept IDs in request (max ${ID_COUNT_LIMIT})`,
+    );
+  }
+  const { invalid } = await validateFacetSchemes("concept", conceptIds);
+  if (invalid.length > 0) {
+    throw new Error(`Invalid concept IDs: ${invalid.join(", ")}`);
+  }
+  const { worksheet_id, conceptIds: ids, perConcept } = initWorksheetRequest(
     request,
   );
-  const item_ids = await collectItemIds(conceptIds, perConcept);
+  const item_ids = await collectItemIds(ids, perConcept);
   const worksheet = buildWorksheetMeta(request, worksheet_id, item_ids);
   return saveWorksheet(worksheet);
 }
