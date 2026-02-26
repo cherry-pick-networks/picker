@@ -52,10 +52,10 @@ passed to the model as part of that command’s instruction.
 Detailed rules stay in store.md and in each command’s `.md` under
 `.cursor/commands/`. This section is a summary for humans only.
 
-**Project context vs skills vs commands (Tip 25)** — In this project: **store.md**
-is the single source of truth and is always loaded; the Rule index and
-`rules:summary` determine which § apply. **.cursor/skills** are loaded by task
-type when relevant. **.cursor/commands** are slash commands that you or the
+**Project context vs skills vs commands (Tip 25)** — In this project:
+**store.md** is the single source of truth and is always loaded; the Rule index
+and `rules:summary` determine which § apply. **.cursor/skills** are loaded by
+task type when relevant. **.cursor/commands** are slash commands that you or the
 agent invoke (e.g. `/rules-summary`, `/commit-boundary`).
 
 ---
@@ -215,8 +215,8 @@ type-check bypass. Return a short list of violations or OK."
 - **Snippet**: Use the `agent-start` snippet
   (`.vscode/cursor-session.code-snippets`) to paste the template and fill in the
   bracketed part.
-- **Named sessions (Claude Code)**: To name a session use `/rename <name>`; resume
-  later with `--resume <name>`.
+- **Named sessions (Claude Code)**: To name a session use `/rename <name>`;
+  resume later with `--resume <name>`.
 
 ---
 
@@ -235,8 +235,8 @@ type-check bypass. Return a short list of violations or OK."
   are used yet, note: "Not in use; when we adopt MCP, document the list and
   setup here."
 - **Browser automation**: When using Playwright or similar for E2E or scraping,
-  document the scenario and any caveats (e.g. headless, timeouts, blocked
-  sites) in a sentence or two here or in store.md §8.
+  document the scenario and any caveats (e.g. headless, timeouts, blocked sites)
+  in a sentence or two here or in store.md §8.
 
 ---
 
@@ -330,12 +330,11 @@ type-check bypass. Return a short list of violations or OK."
 
 ## New project bootstrap
 
-- To bootstrap store.md and overview in a new (sub)project: copy and adapt
-  from `shared/prompt/store.md` (e.g. §1–§5 and Rule index skeleton) and
+- To bootstrap store.md and overview in a new (sub)project: copy and adapt from
+  `shared/prompt/store.md` (e.g. §1–§5 and Rule index skeleton) and
   `shared/prompt/overview.md`. Ensure `deno task rules:summary -- all` works
-  (add the task in deno.json if needed). Optionally add a task
-  `init-prompt` that runs a script in `shared/prompt/scripts/` to copy
-  templates.
+  (add the task in deno.json if needed). Optionally add a task `init-prompt`
+  that runs a script in `shared/prompt/scripts/` to copy templates.
 
 ---
 

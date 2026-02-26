@@ -7,8 +7,8 @@ documentation, and scripts.
 
 Project rules and AI usage live in **`shared/prompt/store.md`** (single source
 of truth). Usage and tips are in **`shared/prompt/documentation/guide.md`**.
-When using Cursor, see `.cursor/rules`, `.cursor/commands`, and
-`.cursor/skills` for how rules and slash commands are applied.
+When using Cursor, see `.cursor/rules`, `.cursor/commands`, and `.cursor/skills`
+for how rules and slash commands are applied.
 
 ## Structure
 
