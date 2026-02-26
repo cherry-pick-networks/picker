@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 
+/** type = document type: doctype scheme code (Schema.org or BibTeX). */
 export const SourceSchema = z.object({
   source_id: z.string(),
   url: z.string().optional(),
