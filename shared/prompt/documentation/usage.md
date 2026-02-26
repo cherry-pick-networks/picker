@@ -348,6 +348,25 @@ Difficulty: Easy
 
 ---
 
+## Passage length and text characteristics by type
+
+The table below summarizes average word counts and text characteristics by question type, for use when designing the DB or setting passage difficulty.
+
+| Category | Question type | Avg. word count | Text characteristics and DB design notes |
+| --- | --- | --- | --- |
+| Short | 9. Content match/mismatch and practical texts | 100–130 words | Relies more on tables or bullet points than continuous text. Sentence structure is very simple. |
+| Medium | 6. Irrelevant sentence | 140–160 words | Conveys a single topic quickly, so the structure is relatively short and clear. |
+| | 1. Main idea (topic / gist) | 150–170 words | The most standard CSAT passage length. One complete paragraph of 5–7 sentences. |
+| | 3. Indirect writing (sentence ordering) | 150–170 words | The passage is split into (A), (B), (C); each segment tends to be 40–50 words. |
+| | 4. Grammar / vocabulary inference | 150–170 words | Syntax complexity of the underlined part is much higher than passage length would suggest. |
+| Dense | 2. Blank inference | 150–180 words | [Killer item] Length is similar to medium, but **lexical density** is highest. Often abstract or philosophical; individual sentences are long. |
+| | 5. Sentence insertion | 160–180 words | The given sentence (about 15–20 words) is outside the passage, so total length is slightly longer than standard. |
+| | 7. Summary completion | 160–180 words | Structure: main body (140–150 words) plus a summary sentence below (20–30 words). |
+| Long | 8. One passage, two items (Q41–42) | 250–280 words | Equivalent to two normal passages. Usually 2–3 paragraphs. |
+| (Reference) | One passage, three items (Q43–45 storytelling) | 350–400 words | Story-type long passage at the end, separate from the nine types above. Longest in length but lower in difficulty. |
+
+---
+
 ## Design points
 
 1. **Front matter** (top `---` block): Store `Year`, `Question`, `Type`, `Difficulty` as metadata so scripts (e.g. Python, Node) can parse and load items into a DB or app.
