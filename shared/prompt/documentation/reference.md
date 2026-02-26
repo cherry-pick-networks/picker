@@ -87,12 +87,8 @@ between words, no underscores) for the `<name>` part.
   - **&lt;name&gt;**: Lowercase letters, digits, and hyphens only. Same rule as
     the TS filename _name_ part: `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. No
     underscores.
-<<<<<<< HEAD
-- **Examples**: `01_actor.sql`, `02_source.sql`, `03_kv.sql`, `04_content.sql`.
-=======
 - **Examples**: `01_actor.sql`, `02_source.sql`, `03_kv.sql`, `04_content.sql`,
   `06_ontology.sql` (concept scheme, concept, concept_relation).
->>>>>>> origin/main
 - **Vocabulary**: Prefer names that match project axes (e.g. actor, content,
   source, kv). New domains: align with todo.md and this reference (allowed
   infix/suffix).
