@@ -28,7 +28,7 @@ Use that document for AI direction and todo decisions.
 | **system/content/**       | Items, worksheets, prompt: endpoint, service, store, schema.                                                                                                      |
 | **system/source/**        | Source collection and KAG: endpoint, service, store, schema, source-extract.service, source-llm.client.                                                           |
 | **system/script/**        | Scripts store, mutate (LLM offload), Governance: endpoint, service, store, validation.                                                                            |
-| **system/record/**        | Record store (extracted/identity): endpoint, store.                                                                                                               |
+| **system/record/**        | Identity index: endpoint, store (reference/identity-index.toml only).                                                                                          |
 | **system/kv/**            | Generic key-value HTTP API: endpoint, store (Postgres-backed).                                                                                                    |
 | **system/audit/**         | Log artifact storage (e.g. e2e-runs.toml in same dir as audit.log.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added. |
 | **shared/runtime/store/** | Target path for self-edit; read and write only via Governance-verified flow.                                                                                      |
@@ -64,10 +64,8 @@ Use that document for AI direction and todo decisions.
 | GET    | `/sources/:id`                     | Read source by id. Responds source object or 404.                                                                                                                                                                                     |
 | POST   | `/sources`                         | Collect and store a source. Body: source fields (id optional, body optional). Responds 201 with source.                                                                                                                               |
 | POST   | `/sources/:id/extract`             | Extract subject/concept IDs from source body via LLM; save to source extracted_* and return. Body optional. 200 → { ok, concept_ids, subject_id?, extracted_at }; 4xx/5xx → { ok: false, status, body }. Requires source.body.        |
-| GET    | `/data/extracted-index`            | Read extracted-data index (UUID → type, source, oldPath). Responds JSON object.                                                                                                                                                       |
-| GET    | `/data/identity-index`             | Read identity index (UUID → kind, oldPath). Responds JSON object.                                                                                                                                                                     |
-| GET    | `/data/extracted/:id`              | Read extracted-data file by UUID. Responds JSON body or 404.                                                                                                                                                                          |
-| GET    | `/data/identity/:id`               | Read identity file by UUID. Responds JSON body or 404.                                                                                                                                                                                |
+| GET    | `/data/identity-index`             | Read identity index (version, description, students). Responds JSON.                                                                                                                                                                 |
+| GET    | `/data/identity/:id`               | Read identity student by id (from index). Responds JSON or 404.                                                                                                                                                                       |
 
 ---
 
@@ -84,7 +82,7 @@ Use that document for AI direction and todo decisions.
   shared/runtime/store.
 - **Off-limits**: Do not write directly to config/ or credentials; use approved
   mechanisms only. File-based record store (shared/record/) is written only via
-  system/record/store/data.ts.
+  system/record/data.store.ts (identity-index only).
 
 ---
 
@@ -96,11 +94,9 @@ Use that document for AI direction and todo decisions.
   `content_worksheet`. DDL under `shared/infra/schema/` (e.g. `01_actor.sql`,
   `02_source.sql`, `03_kv.sql`, `04_content.sql`; see reference.md Schema DDL
   file naming).
-- **File-based data** — under `shared/record/`: suffix `store` (payload) or
-  `reference` (index). Store: `shared/record/store/*.toml`. Indexes:
-  `shared/record/reference/extracted-data-index.toml`,
-  `shared/record/reference/identity-index.toml`. Populated by migration from
-  `.old`; read/write via system/record/data.store.ts.
+- **File-based data** — under `shared/record/reference/`: single file
+  `identity-index.toml` (version, description, students). Read via
+  system/record/data.store.ts; no store directory.
 - **Worksheet prompt templates** — read-only from `shared/runtime/store/` (e.g.
   docs/contract/); Governance-verified read.
 - **Change audit log** — stored under `system/audit/log/` (e.g. JSON file(s));

@@ -27,7 +27,7 @@ with store.md §E/§F and modular monolith.
 | concept | Concept scheme, concept, concept_relation (ontology)                   |
 | content | Items, worksheets, prompt building                                     |
 | kv      | Generic key-value HTTP API; Postgres-backed, client from shared/infra. |
-| record  | Record store (extracted/identity data)                                 |
+| record  | Identity index (shared/record/reference)                                |
 | script  | Scripts store, AST apply, Governance                                   |
 | source  | Source collection and read                                             |
 
@@ -130,19 +130,17 @@ name satisfying `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. Run:
 | system/content/schema/*.ts         | system/content/*.schema.ts         |
 | system/source/endpoint             | service                            |
 | system/script/endpoint             | service                            |
-| system/record/endpoint             | store/data.ts                      |
+| system/record/endpoint             | data.store.ts                      |
 | system/kv/endpoint                 | store/kv.ts                        |
 | system/audit/log/log.ts            | system/audit/audit.log.ts          |
 | system/app/config/*.ts             | system/app/*.config.ts             |
 
 ### Data file locations (TOML)
 
-| Path                                                | Purpose                                        |
-| --------------------------------------------------- | ---------------------------------------------- |
-| `shared/record/reference/extracted-data-index.toml` | Extracted-data index (UUID → entry)            |
-| `shared/record/reference/identity-index.toml`       | Identity index (UUID → entry)                  |
-| `shared/record/store/<uuid>.toml`                   | Single record (UUID v7)                        |
-| `system/audit/e2e-runs.toml`                        | E2E run log (schemaVersion + runs[])           |
+| Path                                          | Purpose                                        |
+| --------------------------------------------- | ---------------------------------------------- |
+| `shared/record/reference/identity-index.toml` | Identity index (version, description, students)|
+| `system/audit/e2e-runs.toml`                  | E2E run log (schemaVersion + runs[])           |
 | `shared/infra/seed/ontology/seed.sql`               | Ontology seed (DDC scheme).                    |
 | `shared/infra/seed/csat-ontology.toml`              | Ontology seed (csat-type, cog, ctx).           |
 | `shared/infra/seed/ontology/csat-subjects.toml`     | Ontology seed: csat-subjects (all exam areas). |
