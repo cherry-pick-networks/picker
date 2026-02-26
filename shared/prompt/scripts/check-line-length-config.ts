@@ -7,6 +7,7 @@
 export const FILE_LENGTH_EXEMPT = new Set([
   "system/schedule/fsrs.ts", // ported algorithm
   "shared/prompt/scripts/check-domain-deps.ts", // CI/utility allowlist
+  "scripts/db-clean-dummy.ts", // one-off DB script
 ]);
 
 /** Line-length exempt (whole file). Prefer inline // line-length-ignore. */
