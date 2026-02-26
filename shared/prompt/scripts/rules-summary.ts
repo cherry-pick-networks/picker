@@ -42,6 +42,9 @@ function main(): void {
   const ordered = Array.from(sectionIds).sort();
   const sectionList = ordered.map((id) => `§${id}`).join(", ");
   console.log("Applicable sections:", sectionList);
+  if (taskType === "commit") {
+    console.log("Skill: commit-boundary");
+  }
   console.log("");
   for (const id of ordered) {
     const title = titles.get(id) ?? "(see store.md Part B)";
