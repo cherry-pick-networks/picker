@@ -294,19 +294,19 @@ and .mdc; rule text lives only in Part B below. The index and
 `deno task rules:summary -- <task-type>` are editor-agnostic; you can use them
 from any editor or CLI to apply the same rules.
 
-| Context                | Apply §          | Notes                       |
-| ---------------------- | ---------------- | --------------------------- |
-| always                 | C, I, O          | Every turn                  |
-| handoff / long session | B                | Commit and session boundary |
-| feature + code         | Q, P, B, S, T, N | Feature implementation (TS) |
-| refactor + code        | P, B, S, T, N    | Refactor (TS)               |
-| docs                   | R, D, E          | .md / .mdc editing          |
-| commit                 | A, B             | Commit message and boundary |
-| migration              | J, D, E, F       | Rule/directory migration    |
-| system                 | K, L, M, F       | todo, system/ editing       |
-| dependency             | G, H             | deno.json etc.              |
-| sql                    | U                | SQL/DDL                     |
-| directory              | F, D, E          | Directory creation          |
+| Context                | Apply §          | Notes                                                           |
+| ---------------------- | ---------------- | --------------------------------------------------------------- |
+| always                 | C, I, O          | Every turn                                                      |
+| handoff / long session | B                | Commit and session boundary                                     |
+| feature + code         | Q, P, B, S, T, N | Feature implementation (TS)                                     |
+| refactor + code        | P, B, S, T, N    | Refactor (TS)                                                   |
+| docs                   | R, D, E          | .md / .mdc editing                                              |
+| commit                 | A, B             | Commit message and boundary                                     |
+| migration              | J, D, E, F       | Rule/directory migration                                        |
+| system                 | K, L, M, F       | todo, system/ editing                                           |
+| dependency             | G, H             | deno.json etc.                                                  |
+| sql                    | U                | SQL/DDL                                                         |
+| directory              | F, D, E          | Directory creation                                              |
 | seed                   | V, U, E          | Seed data; serialization rationale only; sensitive data in .env |
 
 ---
@@ -874,13 +874,13 @@ prefer set over cursor (8.4.2), dynamic SQL and injection prevention (8.6).
 Scope: Seed data under shared/infra/seed/ (and any committed data that
 identifies textbooks, publishers, or other copyrightable material).
 
-- **Serialization rationale only in repo**: Commit only the *rationale* for
+- **Serialization rationale only in repo**: Commit only the _rationale_ for
   serialization: schema, field semantics, and format. Do not commit
-  copyright-sensitive or identifying content (e.g. textbook titles, exact
-  entry counts, words_per_day, total_days that identify a specific book).
+  copyright-sensitive or identifying content (e.g. textbook titles, exact entry
+  counts, words_per_day, total_days that identify a specific book).
 - **Sensitive values in .env**: Store such values in `.env` (or equivalent
   env-backed secret). Seed runners read them at runtime (e.g.
   `LEXIS_SOURCE_META_<SOURCE_ID>`). `.env` is gitignored; do not commit it.
-- **API redaction unchanged**: Runtime redaction of source metadata for
-  external callers remains per todo.md (X-Client: agent or INTERNAL_API_KEY for
-  full data).
+- **API redaction unchanged**: Runtime redaction of source metadata for external
+  callers remains per todo.md (X-Client: agent or INTERNAL_API_KEY for full
+  data).

@@ -1,12 +1,16 @@
 /**
  * Seed source table from lexis-sources.toml + .env (store.md §V).
- * Requires db:schema and ontology seeded. Usage: deno run -A shared/infra/seed/run-seed-lexis.ts
+ * Requires db:schema and ontology seeded.
+ * Usage: deno run -A shared/infra/seed/run-seed-lexis.ts
  */
 
 import { parse } from "@std/toml";
 import { createSource } from "#system/source/source.service.ts";
 
-const LEXIS_SOURCES_TOML = new URL("./lexis/lexis-sources.toml", import.meta.url);
+const LEXIS_SOURCES_TOML = new URL(
+  "./lexis/lexis-sources.toml",
+  import.meta.url,
+);
 
 interface SourceEntry {
   source_id: string;

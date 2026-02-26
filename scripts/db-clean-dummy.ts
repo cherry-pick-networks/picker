@@ -9,19 +9,26 @@ import { getPg } from "../shared/infra/pg.client.ts";
 const execute = Deno.args.includes("--execute");
 const pg = await getPg();
 
-async function del(
+async function dryRunCount(
   label: string,
   sql: string,
-  params: unknown[] = [],
+  params: unknown[],
 ): Promise<number> {
-  if (!execute) {
-    const countSql = sql
-      .replace(/^\s*DELETE\s+FROM\s+/i, "SELECT count(*)::int as n FROM ");
-    const countR = await pg.queryObject<{ n: number }>(countSql, params);
-    const n = countR.rows[0]?.n ?? 0;
-    console.log(`[dry-run] ${label}: would delete ${n} row(s)`);
-    return n;
-  }
+  const countSql = sql
+    .replace(/^\s*DELETE\s+FROM\s+/i, "SELECT count(*)::int as n FROM ");
+  const countR = await pg.queryObject<{ n: number }>(countSql, params);
+  console.log(
+    `[dry-run] ${label}: would delete ${countR.rows[0]?.n ?? 0} row(s)`,
+  );
+  return countR.rows[0]?.n ?? 0;
+}
+
+// function-length-ignore
+async function runDelete(
+  label: string,
+  sql: string,
+  params: unknown[],
+): Promise<number> {
   const returnSql = sql.replace(/;\s*$/, "") + " RETURNING 1";
   const r = await pg.queryArray(returnSql, params);
   const n = (r as { rows: unknown[][] }).rows?.length ?? 0;
@@ -29,7 +36,16 @@ async function del(
   return n;
 }
 
-// KV: test/e2e/del/list/pfx/other prefix keys (test patterns from main-kv_test, e2e)
+async function del(
+  label: string,
+  sql: string,
+  params: unknown[] = [],
+): Promise<number> {
+  if (!execute) return await dryRunCount(label, sql, params);
+  return await runDelete(label, sql, params);
+}
+
+// KV: test/e2e/del/list/pfx/other prefix keys (main-kv_test, e2e)
 const kvPatterns = ["test-%", "e2e-%", "del-%", "list-%", "pfx-%", "other-%"];
 for (const pattern of kvPatterns) {
   await del(`kv (${pattern})`, "DELETE FROM kv WHERE logical_key LIKE $1", [
@@ -37,7 +53,7 @@ for (const pattern of kvPatterns) {
   ]);
 }
 
-// source: test-style IDs (no-body-*, extract-ok-* from tests), keep book-grammar-*
+// source: test-style IDs (no-body-*, extract-ok-*); keep book-grammar-*
 const sourceSql =
   "DELETE FROM source WHERE source_id LIKE $1 OR source_id LIKE $2";
 await del("source (no-body-*, extract-ok-*)", sourceSql, [
@@ -45,13 +61,14 @@ await del("source (no-body-*, extract-ok-*)", sourceSql, [
   "extract-ok-%",
 ]);
 
-// schedule_item: if table exists, delete rows with test-style actor_id or source_id
+// schedule_item: delete test-style actor_id/source_id if table exists
 try {
   await pg.queryArray("SELECT 1 FROM schedule_item LIMIT 1");
   await del(
     "schedule_item (test actor/source)",
     `DELETE FROM schedule_item
-     WHERE actor_id LIKE $1 OR actor_id LIKE $2 OR source_id LIKE $3 OR source_id LIKE $4`,
+     WHERE actor_id LIKE $1 OR actor_id LIKE $2
+       OR source_id LIKE $3 OR source_id LIKE $4`,
     ["%test%", "%e2e%", "no-body-%", "extract-ok-%"],
   );
 } catch {

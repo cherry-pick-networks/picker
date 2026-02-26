@@ -1,5 +1,5 @@
 /**
- * FSRS adapter. Maps schedule item payload to in-house FSRS (fsrs.ts), returns next_due_at.
+ * FSRS adapter: schedule item → in-house FSRS (fsrs.ts); returns next_due_at.
  */
 // function-length-ignore-file — small adapter (store.md §P).
 

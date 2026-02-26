@@ -1,4 +1,4 @@
-/** Weekly plan: new_units from annual by week number (1–52), review_units due in range. */
+/** Weekly plan: new_units from annual (week 1–52), review_units in range. */
 
 import type { ScheduleItem } from "./schedule.schema.ts";
 import { getAnnualCurriculum } from "./schedule-annual.service.ts";
@@ -15,23 +15,36 @@ export interface WeeklyPlan {
   review_units: ScheduleItem[];
 }
 
-/** ISO week number (1–53) from date. Week 1 = week containing Jan 4. */
-function getWeekNumber(date: Date): number {
+/** Thursday of the same ISO week as date (for week-number calc). */
+function toWeekThursday(date: Date): Date {
   const d = new Date(
     Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
   );
   const day = d.getUTCDay() || 7;
   d.setUTCDate(d.getUTCDate() + 4 - day);
-  const jan1 = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return d;
+}
+
+/** ISO week number (1–53) from date. Week 1 = week containing Jan 4. */
+function getWeekNumber(date: Date): number {
+  const thursday = toWeekThursday(date);
+  const jan1 = new Date(Date.UTC(thursday.getUTCFullYear(), 0, 1));
   return 1 +
-    Math.floor((d.getTime() - jan1.getTime()) / (7 * 24 * 60 * 60 * 1000));
+    Math.floor(
+      (thursday.getTime() - jan1.getTime()) / (7 * 24 * 60 * 60 * 1000),
+    );
+}
+
+function endOfDayPlusDays(d: Date, days: number): Date {
+  const e = new Date(d);
+  e.setDate(e.getDate() + days);
+  e.setHours(23, 59, 59, 999);
+  return e;
 }
 
 function weekRange(weekStart: string): { start: string; end: string } {
   const start = new Date(weekStart);
-  const end = new Date(start);
-  end.setDate(end.getDate() + 6);
-  end.setHours(23, 59, 59, 999);
+  const end = endOfDayPlusDays(start, 6);
   return { start: start.toISOString(), end: end.toISOString() };
 }
 

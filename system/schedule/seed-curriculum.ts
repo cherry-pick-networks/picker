@@ -1,4 +1,4 @@
-// function-length-ignore-file — Seed curriculum_slot from curriculum-52weeks.json.
+// function-length-ignore-file — Seed curriculum_slot (curriculum-52weeks.json).
 /**
  * Requires db:schema (08_curriculum) and grammar sources in source table.
  * Usage: deno run -A system/schedule/seed-curriculum.ts
@@ -47,10 +47,12 @@ async function runSeed(): Promise<void> {
         const index = (unitNum - 1) % units.length;
         const { source_id, unit_id } = units[index];
         await pg.queryArray(
-          `INSERT INTO curriculum_slot (level, week_number, slot_index, source_id, unit_id)
+          `INSERT INTO curriculum_slot (level, week_number, slot_index,
+             source_id, unit_id)
            VALUES ($1, $2, $3, $4, $5)
            ON CONFLICT (level, week_number, slot_index)
-           DO UPDATE SET source_id = EXCLUDED.source_id, unit_id = EXCLUDED.unit_id`,
+           DO UPDATE SET source_id = EXCLUDED.source_id,
+             unit_id = EXCLUDED.unit_id`,
           [level, week + 1, slotIndex, source_id, unit_id],
         );
       }

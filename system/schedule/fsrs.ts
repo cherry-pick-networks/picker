@@ -1,6 +1,6 @@
 /**
- * FSRS scheduler (in-house). Formulas and default weights from rs-fsrs (open-source).
- * Rating: 1=Again, 2=Hard, 3=Good, 4=Easy. State: D (difficulty), S (stability in days).
+ * FSRS scheduler (in-house). Formulas/weights from rs-fsrs (open-source).
+ * Rating: 1=Again, 2=Hard, 3=Good, 4=Easy. State: D, S (stability days).
  */
 // function-length-ignore-file — algorithm (store.md §P).
 
@@ -73,7 +73,7 @@ function nextDifficulty(difficulty: number, rating: number): number {
   return clamp(meanReversion(initDifficulty(4), next), 1, 10);
 }
 
-function shortTermStability(stability: number, rating: number): number {
+function _shortTermStability(stability: number, rating: number): number {
   const g = clamp(rating, 1, 4);
   return stability * Math.exp(W[17] * (g - 3 + W[18]));
 }
@@ -122,7 +122,7 @@ export function scheduleNew(
   return { nextDue: next, state: { difficulty: d, stability: s } };
 }
 
-/** Reviewed card: has D, S and last review. Returns next_due_at and new state. */
+/** Reviewed card: D, S, last review. Returns next_due_at and new state. */
 export function scheduleReview(
   state: FSRSState,
   rating: number,

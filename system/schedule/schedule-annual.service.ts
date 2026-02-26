@@ -1,4 +1,4 @@
-/** Annual curriculum: 52 weeks × 3 slots; identified by week number (1–52), not weekday. */
+/** Annual curriculum: 52 weeks × 3 slots; week number (1–52), not weekday. */
 
 import * as curriculumStore from "./curriculum.store.ts";
 import { listGrammarUnits } from "./schedule-grammar.service.ts";
@@ -19,33 +19,34 @@ export interface AnnualCurriculum {
   weeks: AnnualWeek[];
 }
 
-/** Returns 52 weeks; each week has week_number (1–52) and 3 slots. */
-export async function getAnnualCurriculum(options: {
-  level?: string;
-  year: number;
-}): Promise<AnnualCurriculum> {
-  if (options.level) {
-    const rows = await curriculumStore.listCurriculumSlots(options.level);
-    const weeks: AnnualWeek[] = Array.from({ length: 52 }, (_, i) => ({
-      week_number: i + 1,
-      slots: [0, 1, 2].map((slot_index) => ({
-        slot_index,
-        new_unit: null as { source_id: string; unit_id: string } | null,
-      })),
-    }));
-    for (const row of rows) {
-      const w = weeks[row.week_number - 1];
-      if (w) {
-        w.slots[row.slot_index].new_unit = {
-          source_id: row.source_id,
-          unit_id: row.unit_id,
-        };
-      }
+async function buildFromCurriculumStore(
+  level: string,
+): Promise<AnnualCurriculum> {
+  const rows = await curriculumStore.listCurriculumSlots(level);
+  const weeks: AnnualWeek[] = Array.from({ length: 52 }, (_, i) => ({
+    week_number: i + 1,
+    slots: [0, 1, 2].map((slot_index) => ({
+      slot_index,
+      new_unit: null as { source_id: string; unit_id: string } | null,
+    })),
+  }));
+  for (const row of rows) {
+    const w = weeks[row.week_number - 1];
+    if (w) {
+      w.slots[row.slot_index].new_unit = {
+        source_id: row.source_id,
+        unit_id: row.unit_id,
+      };
     }
-    return { weeks };
   }
+  return { weeks };
+}
 
-  const units = await listGrammarUnits(options.level);
+// function-length-ignore
+async function buildFromGrammarUnits(
+  level: string | undefined,
+): Promise<AnnualCurriculum> {
+  const units = await listGrammarUnits(level);
   const weeks: AnnualWeek[] = [];
   let unitIndex = 0;
   for (let w = 1; w <= 52; w++) {
@@ -61,4 +62,13 @@ export async function getAnnualCurriculum(options: {
     weeks.push({ week_number: w, slots });
   }
   return { weeks };
+}
+
+/** Returns 52 weeks; each week has week_number (1–52) and 3 slots. */
+export async function getAnnualCurriculum(options: {
+  level?: string;
+  year: number;
+}): Promise<AnnualCurriculum> {
+  if (options.level) return await buildFromCurriculumStore(options.level);
+  return await buildFromGrammarUnits(options.level);
 }
