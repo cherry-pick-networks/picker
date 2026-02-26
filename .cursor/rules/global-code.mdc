@@ -1,0 +1,12 @@
+---
+globs: ["**/*.ts"]
+description: |
+  TypeScript editing: apply code-related § from Rule index (e.g. §P, §Q, §S,
+  §T, §N). For new features use rules:summary -- feature; for refactor use
+  rules:summary -- refactor.
+alwaysApply: false
+---
+
+This rule is defined in shared/prompt/store.md. When editing .ts, follow the
+sections for code context from the Rule index (e.g. §P, §Q, §S, §T, §N). Run
+`deno task rules:summary -- feature` or `-- refactor` as needed.
