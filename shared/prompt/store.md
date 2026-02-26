@@ -49,7 +49,8 @@ tool-specific configs.
   `shared/infra/sql-loader.ts` (`loadSql(baseUrl, filename)`).
 - **DML SQL**: Keep application DML (SELECT, INSERT, UPDATE, DELETE) in
   `system/<module>/sql/*.sql` (one statement per file, snake_case filenames).
-  Use `$1, $2, ...` for parameters; document parameter order in the file or store.
+  Use `$1, $2, ...` for parameters; document parameter order in the file or
+  store.
 
 ---
 
@@ -665,10 +666,10 @@ still applies.
 Line-length and file-length exceptions: Single source of truth for exemptions is
 shared/prompt/scripts/check-line-length-config.ts (and this doc). Line-length
 exceptions: allow only where documented (e.g. long URLs in comments, generated
-snippet). Put `// line-length-ignore` or `// line-length-ignore: <reason>` on the
-line immediately above the long line; prefer splitting the string or URL to stay
-under 80 chars. File-length exceptions: list path patterns and exact paths in
-the config; add only when splitting the file is not feasible (e.g. ported
+snippet). Put `// line-length-ignore` or `// line-length-ignore: <reason>` on
+the line immediately above the long line; prefer splitting the string or URL to
+stay under 80 chars. File-length exceptions: list path patterns and exact paths
+in the config; add only when splitting the file is not feasible (e.g. ported
 algorithm); document the reason in a comment in the config. Do not add
 file-length exempt to avoid splitting; split into sibling modules instead.
 
