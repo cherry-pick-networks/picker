@@ -58,5 +58,16 @@ export type WorksheetPromptResponse = z.infer<
   typeof WorksheetPromptResponseSchema
 >;
 
+export const GenerateItemsRequestSchema = z.object({
+  source_id: z.string(),
+  unit_id: z.string(),
+  topic_label: z.string().optional(),
+  question_type: z.string().optional(),
+  count: z.number().int().min(1).max(10).optional(),
+});
+export type GenerateItemsRequest = z.infer<
+  typeof GenerateItemsRequestSchema
+>;
+
 export const ItemPatchSchema = ItemSchema.partial().omit({ item_id: true });
 export type ItemPatch = z.infer<typeof ItemPatchSchema>;

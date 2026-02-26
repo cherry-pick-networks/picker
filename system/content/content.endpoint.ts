@@ -3,6 +3,7 @@ import {
   buildWorksheetPrompt,
   createItem,
   CreateItemRequestSchema,
+  GenerateItemsRequestSchema,
   generateWorksheet,
   GenerateWorksheetRequestSchema,
   getItem as svcGetItem,
@@ -10,6 +11,7 @@ import {
   ItemPatchSchema,
   updateItem,
 } from "./content.service.ts";
+import { generateItems } from "./content-generate.service.ts";
 import type { ItemPatch } from "./content.schema.ts";
 
 export async function getItem(c: Context) {
@@ -36,6 +38,17 @@ export async function postItem(c: Context) {
   const parsed = CreateItemRequestSchema.safeParse(body);
   if (!parsed.success) return c.json({ error: parsed.error.flatten() }, 400);
   return doPostItem(c, parsed.data);
+}
+
+export async function postItemsGenerate(c: Context) {
+  const body = await c.req.json().catch(() => ({}));
+  const parsed = GenerateItemsRequestSchema.safeParse(body);
+  if (!parsed.success) return c.json({ error: parsed.error.flatten() }, 400);
+  const result = await generateItems(parsed.data);
+  if (!result.ok) {
+    return c.json({ error: result.message }, result.status);
+  }
+  return c.json({ items: result.items }, 201);
 }
 
 async function parsePatchBody(c: Context) {

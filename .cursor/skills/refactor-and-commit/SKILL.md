@@ -10,6 +10,10 @@ description: |
 Apply store.md **§P, §B, §S, §T, §N, §A**. Full text in shared/prompt/store.md
 Part B only; this skill gives a short checklist.
 
+**Before editing**: Run `deno task rules:summary -- refactor` (or use
+/rules-summary refactor) and apply the listed § for this session. Keep the
+output in context.
+
 ## §P — Format
 
 - Function body: 2–4 statements; file ≤100 effective lines; line length ≤80.

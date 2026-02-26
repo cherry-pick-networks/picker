@@ -9,6 +9,9 @@ description: |
 
 Apply store.md **§A, §B**. Full text in shared/prompt/store.md Part B only.
 
+**Before using**: Run `deno task rules:summary -- commit` to confirm §A, §B
+for this session.
+
 **When to use this skill** — Use when the user asks to commit (e.g. “commit
 current changes”), when a logical unit is done, or when the task type is
 `commit` (e.g. after `deno task rules:summary -- commit`).

@@ -10,6 +10,10 @@ description: |
 Apply store.md **§J, §D, §E, §F**. Full text in shared/prompt/store.md Part B
 only.
 
+**Before editing**: Run `deno task rules:summary -- migration` (or use
+/rules-summary migration) and apply the listed § for this session. Keep the
+output in context.
+
 ## §J — Migration boundary
 
 - Plan before execute: write a migration plan (current file → target filename

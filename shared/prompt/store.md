@@ -269,6 +269,9 @@ tool-specific configs.
 - **.cursor/rules** (optional, when using Cursor): mdc files define **when** to
   apply (e.g. always vs on-request); keep one file per apply timing. Rule text
   stays here only; mdc names follow §D and §E.
+- **rule-digest.md**: Short agent-context digest of §C, §I, §O and Rule index
+  summary; canonical rule text remains in Part B. Attach it (e.g.
+  @rule-digest.md) at session start so always-applied rules are in context.
 - **Review**: Review this file periodically (e.g. quarterly); add repeated
   instructions as they appear; remove or update outdated lines. Use recent
   conversations to propose new lines (repeated instructions from chats →

@@ -9,6 +9,7 @@ import { validateItemFacets } from "./content-facet-validation.ts";
 import { nowIso, parseItem } from "./content-schema-parse.service.ts";
 export {
   CreateItemRequestSchema,
+  GenerateItemsRequestSchema,
   GenerateWorksheetRequestSchema,
   ItemPatchSchema,
   ItemSchema,
@@ -17,6 +18,7 @@ export {
 } from "./content.schema.ts";
 export type {
   CreateItemRequest,
+  GenerateItemsRequest,
   Item,
   ItemPatch,
   Worksheet,

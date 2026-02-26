@@ -194,15 +194,16 @@ typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
 
 ### Data file locations (TOML)
 
-| Path                                               | Purpose                                                                                                  |
-| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
-| `shared/record/reference/identity-index.toml`      | Identity index. API: redacted unless X-Client: agent.                                                    |
-| `system/audit/e2e-runs.toml`                       | E2E run log (schemaVersion + runs[])                                                                     |
-| `shared/infra/seed/ontology/seed.sql`              | Ontology seed (DDC scheme).                                                                              |
-| `shared/infra/seed/ontology/global-standards.toml` | Ontology seed: isced, iscedf, bloom (no CEFR/PISA).                                                      |
-| `shared/prompt/documentation/grammar-topics.md`    | Grammar curriculum: 17 major topics, level→unit mapping (schedule/content).                              |
-| `shared/infra/seed/curriculum-52weeks.json`        | Seed source for 52-week curriculum; runtime data in DB table `curriculum_slot`.                          |
-| `shared/infra/seed/lexis/lexis-sources.toml`       | Lexis source list (source_id, env_var). Actual metadata from .env (store.md §V); `deno task seed:lexis`. |
+| Path                                               | Purpose                                                                                                          |
+| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `shared/record/reference/identity-index.toml`      | Identity index. API: redacted unless X-Client: agent.                                                            |
+| `system/audit/e2e-runs.toml`                       | E2E run log (schemaVersion + runs[])                                                                             |
+| `shared/infra/seed/ontology/seed.sql`              | Ontology seed (DDC scheme).                                                                                      |
+| `shared/infra/seed/ontology/global-standards.toml` | Ontology seed: isced, iscedf, bloom (no CEFR/PISA).                                                              |
+| `shared/prompt/documentation/grammar-topics.md`    | Grammar curriculum: 17 major topics, level→unit mapping (schedule/content).                                      |
+| `shared/infra/seed/grammar-unit-topics.toml`       | unit_id → topic_label for grammar item generation (POST /content/items/generate). Synced with grammar-topics.md. |
+| `shared/infra/seed/curriculum-52weeks.json`        | Seed source for 52-week curriculum; runtime data in DB table `curriculum_slot`.                                  |
+| `shared/infra/seed/lexis/lexis-sources.toml`       | Lexis source list (source_id, env_var). Actual metadata from .env (store.md §V); `deno task seed:lexis`.         |
 
 ### Curriculum (52 weeks)
 

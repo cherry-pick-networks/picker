@@ -22,6 +22,7 @@ export const ROUTES: { method: string; path: string }[] = [
   { method: "PATCH", path: "/progress/:id" },
   { method: "GET", path: "/content/items/:id" },
   { method: "POST", path: "/content/items" },
+  { method: "POST", path: "/content/items/generate" },
   { method: "PATCH", path: "/content/items/:id" },
   { method: "GET", path: "/content/worksheets/:id" },
   { method: "POST", path: "/content/worksheets/generate" },

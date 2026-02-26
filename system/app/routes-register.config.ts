@@ -37,6 +37,7 @@ function registerContent(app: Hono) {
 function registerContentItems(app: Hono) {
   app.get("/content/items/:id", content.getItem);
   app.post("/content/items", content.postItem);
+  app.post("/content/items/generate", content.postItemsGenerate);
   app.patch("/content/items/:id", content.patchItem);
 }
 

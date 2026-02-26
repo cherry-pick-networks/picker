@@ -220,6 +220,10 @@ type-check bypass. Return a short list of violations or OK."
   rename the tab later in chat history if the auto-title is not ideal. If the
   task involves code changes, the agent should create a branch from the default
   branch first (or confirm the current branch is not the default), then proceed.
+- **Rule context**: For implementation, refactor, or docs-editing sessions,
+  attach `@shared/prompt/store.md` or `@shared/prompt/rule-digest.md` in the
+  first message, or include `/rules-summary <task-type>` so the agent knows
+  which § apply.
 - **Snippet**: Use the `agent-start` snippet
   (`.vscode/cursor-session.code-snippets`) to paste the template and fill in the
   bracketed part.
