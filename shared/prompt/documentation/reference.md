@@ -27,7 +27,7 @@ with store.md §E/§F and modular monolith.
 | batch        | Batch jobs and bulk operations                                         |
 | concept      | Concept scheme, concept, concept_relation (ontology)                   |
 | content      | Items, worksheets, prompt building                                     |
-| data         | Data access / identity index (e.g. record/data)                         |
+| data         | Data access / identity index (e.g. record/data)                        |
 | export       | Export and external output                                             |
 | kv           | Generic key-value HTTP API; Postgres-backed, client from shared/infra. |
 | notification | Notifications and alerts                                               |
