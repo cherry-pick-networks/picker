@@ -60,9 +60,7 @@ function registerSource(app: Hono) {
 }
 
 function registerData(app: Hono) {
-  app.get("/data/extracted-index", data.getExtractedIndex);
   app.get("/data/identity-index", data.getIdentityIndex);
-  app.get("/data/extracted/:id", data.getExtractedById);
   app.get("/data/identity/:id", data.getIdentityById);
 }
 

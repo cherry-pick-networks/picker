@@ -14,7 +14,7 @@ Deno.test(
       assertEquals(result.ok, true);
       if (result.ok) {
         assertEquals(result.output.concept_ids, ["mock-concept-1"]);
-        assertEquals(result.output.subject_id, "reading");
+        assertEquals(result.output.subject_id, "iscedf-02");
       }
     } finally {
       Deno.env.delete("SOURCE_EXTRACT_LLM_MOCK");
