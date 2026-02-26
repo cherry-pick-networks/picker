@@ -6,7 +6,36 @@ globs: ["**/*.sql", "shared/infra/schema/**"]
 alwaysApply: false
 ---
 
-This rule is defined in `shared/prompt/store.md`.
-Read that file and follow:
-- **§U. SQL style**
-Do not duplicate the rule text here.
+# SQL style (AI)
+
+Short checklist for SQL/DDL. **Full text**: `shared/prompt/store.md` §U. DDL file naming: `shared/prompt/documentation/reference.md` (Schema DDL file naming).
+
+## 1. Names and identifiers
+
+- Use only letters, digits, and underscore; length limit (e.g. 30). No quoted identifiers (double-quoted).
+- **Case**: Reserved words UPPERCASE; tables, views, columns, variables lowercase snake_case.
+- No `tbl_`, `vw_`, or other table/view prefixes.
+- Use standard suffixes: `_id`, `_date`, `_nbr`, `_name`, `_code`, `_status`. No bare `id`, `date`, or `amount`; use qualified names (e.g. `user_id`, `created_at`).
+- Table and view names: plural or set nouns (e.g. `actor_profile`, `concept_scheme`). Same attribute name for same meaning across schema.
+
+## 2. DDL
+
+- PRIMARY KEY at top of CREATE TABLE (first column or first in list). Every constraint must have a name (CONSTRAINT name) for CHECK, UNIQUE, FK.
+- Use standard data types only; avoid non-standard extensions. Every table must have a key (natural or surrogate); do not expose physical locators as logical keys.
+
+## 3. DML
+
+- Use standard ANSI JOIN (LEFT JOIN … ON, RIGHT JOIN … ON); no comma-style joins.
+- Prefer joins or non-correlated subqueries over correlated subqueries. Prefer declarative referential integrity (DRI) over triggers.
+
+## 4. VIEW
+
+- View names: same rules as tables (plural/set noun); no `vw_` prefix. CREATE VIEW must list column names explicitly.
+
+## 5. Procedures and scripts
+
+- Avoid dynamic SQL; if used, prevent SQL injection. Prefer set-based operations over cursors.
+
+---
+
+When in doubt or for typography, defaults, and exceptions, see store.md §U.

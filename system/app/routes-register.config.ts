@@ -9,6 +9,7 @@ import * as data from "#system/record/data.endpoint.ts";
 import * as home from "./home.config.ts";
 import * as kv from "#system/kv/kv.endpoint.ts";
 import * as profile from "#system/actor/profile.endpoint.ts";
+import * as schedule from "#system/schedule/schedule.endpoint.ts";
 import * as source from "#system/source/source.endpoint.ts";
 
 function registerHomeAndKv(app: Hono) {
@@ -64,6 +65,15 @@ function registerData(app: Hono) {
   app.get("/data/identity/:id", data.getIdentityById);
 }
 
+// function-length-ignore
+function registerSchedule(app: Hono) {
+  app.get("/schedule/due", schedule.getDue);
+  app.get("/schedule/plan/weekly", schedule.getWeekly);
+  app.get("/schedule/items", schedule.getItems);
+  app.post("/schedule/items", schedule.postItem);
+  app.post("/schedule/items/:id/review", schedule.postReview);
+}
+
 function registerKvMutate(app: Hono) {
   app.post("/kv", kv.postKv);
   app.delete("/kv/:key", kv.deleteKvKey);
@@ -76,6 +86,7 @@ const REST_HANDLERS = [
   registerContent,
   registerSource,
   registerData,
+  registerSchedule,
   registerKvMutate,
 ];
 
