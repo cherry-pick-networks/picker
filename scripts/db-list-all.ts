@@ -1,5 +1,5 @@
 /**
- * List all tables with row counts and sample IDs. Requires DB env (e.g. ./scripts/dev.sh).
+ * List tables with row counts and sample IDs. Needs DB (e.g. ./scripts/dev.sh).
  * Usage: ./scripts/dev.sh deno run -A scripts/db-list-all.ts
  */
 import { getPg } from "../shared/infra/pg.client.ts";

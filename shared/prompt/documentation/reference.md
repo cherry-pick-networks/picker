@@ -92,18 +92,20 @@ are listed in PATH_EXCEPTIONS. Validated by `deno task ts-filename-check`.
 
 #### Content domain names (English learning data)
 
-For structural names (tables, API paths, `source_id` prefixes, `content_type_id`,
-seed paths, docs), use only these three terms for English learning data:
+For structural names (tables, API paths, `source_id` prefixes,
+`content_type_id`, seed paths, docs), use only these three terms for English
+learning data:
 
-| Domain name  | Use for |
-| ------------ | ------- |
-| **grammar**  | `source_id` prefix (e.g. `book-grammar-*`), grammar curriculum tables/schemas, content_type for grammar |
-| **lexis**    | Table names (e.g. `lexis_entry`), `system/lexis/`, seed `shared/infra/seed/lexis/`, `source_id` prefix (e.g. `wordmaster-middle-basic`) |
-| **phonology**| Tables, APIs, `source_id`, content_type for pronunciation/phonetic data |
+| Domain name   | Use for                                                                                                                                 |
+| ------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| **grammar**   | `source_id` prefix (e.g. `book-grammar-*`), grammar curriculum tables/schemas, content_type for grammar                                 |
+| **lexis**     | Table names (e.g. `lexis_entry`), `system/lexis/`, seed `shared/infra/seed/lexis/`, `source_id` prefix (e.g. `wordmaster-middle-basic`) |
+| **phonology** | Tables, APIs, `source_id`, content_type for pronunciation/phonetic data                                                                 |
 
 Do not use synonyms (e.g. vocabulary, pronunciation, phonics) in structural
-names. The suffix **grammar** in §E denotes parser/grammar rules (`*.grammar.ts`);
-the same word as content domain means “English grammar data” (sources, curriculum).
+names. The suffix **grammar** in §E denotes parser/grammar rules
+(`*.grammar.ts`); the same word as content domain means “English grammar data”
+(sources, curriculum).
 
 #### Difficulty / level (3 stages)
 
@@ -192,15 +194,15 @@ typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
 
 ### Data file locations (TOML)
 
-| Path                                               | Purpose                                                                         |
-| -------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `shared/record/reference/identity-index.toml`      | Identity index. API: redacted unless X-Client: agent.                           |
-| `system/audit/e2e-runs.toml`                       | E2E run log (schemaVersion + runs[])                                            |
-| `shared/infra/seed/ontology/seed.sql`              | Ontology seed (DDC scheme).                                                     |
-| `shared/infra/seed/ontology/global-standards.toml` | Ontology seed: isced, iscedf, bloom (no CEFR/PISA).                             |
-| `shared/prompt/documentation/grammar-topics.md`    | Grammar curriculum: 17 major topics, level→unit mapping (schedule/content).     |
-| `shared/infra/seed/curriculum-52weeks.json`        | Seed source for 52-week curriculum; runtime data in DB table `curriculum_slot`. |
-| `shared/infra/seed/lexis/lexis-sources.toml`     | Lexis source list (source_id, env_var). Actual metadata from .env (store.md §V); `deno task seed:lexis`. |
+| Path                                               | Purpose                                                                                                  |
+| -------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `shared/record/reference/identity-index.toml`      | Identity index. API: redacted unless X-Client: agent.                                                    |
+| `system/audit/e2e-runs.toml`                       | E2E run log (schemaVersion + runs[])                                                                     |
+| `shared/infra/seed/ontology/seed.sql`              | Ontology seed (DDC scheme).                                                                              |
+| `shared/infra/seed/ontology/global-standards.toml` | Ontology seed: isced, iscedf, bloom (no CEFR/PISA).                                                      |
+| `shared/prompt/documentation/grammar-topics.md`    | Grammar curriculum: 17 major topics, level→unit mapping (schedule/content).                              |
+| `shared/infra/seed/curriculum-52weeks.json`        | Seed source for 52-week curriculum; runtime data in DB table `curriculum_slot`.                          |
+| `shared/infra/seed/lexis/lexis-sources.toml`       | Lexis source list (source_id, env_var). Actual metadata from .env (store.md §V); `deno task seed:lexis`. |
 
 ### Curriculum (52 weeks)
 
@@ -292,7 +294,7 @@ imports are forbidden (see Modular monolith rules above).
 | concept    | no    | —       | no      | no       | no     | no     | no     | no | no    |
 | content    | yes   | yes     | —       | no       | no     | yes    | no     | no | no    |
 | schedule   | no    | no      | no      | —        | yes    | no     | no     | no | no    |
-| source     | no    | yes     | no      | no       | —      | no     | no     | no | no    |
+| source     | no    | yes     | no      | no       | —      | no     | yes    | no | no    |
 | script     | no    | no      | no      | no       | no     | —      | no     | no | no    |
 | record     | no    | no      | no      | no       | no     | no     | —      | no | no    |
 | kv         | no    | no      | no      | no       | no     | no     | no     | —  | no    |

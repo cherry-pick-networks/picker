@@ -7,7 +7,12 @@ import type {
   IdentityIndex,
   IdentityStudentEntry,
 } from "./identity-index.store.ts";
-import type { Source } from "#system/source/source.schema.ts";
+
+/** Minimal shape for source redaction (avoids record→source dependency). */
+interface SourceLike {
+  metadata?: Record<string, unknown>;
+  [k: string]: unknown;
+}
 
 /** External view: no name, school, diagnosis_file. */
 export interface RedactedIdentityEntry {
@@ -49,7 +54,9 @@ export function redactIdentityIndex(
   };
 }
 
-function stripSensitiveMetadata(meta: Record<string, unknown>): Record<string, unknown> {
+function stripSensitiveMetadata(
+  meta: Record<string, unknown>,
+): Record<string, unknown> {
   const out = { ...meta };
   for (const k of Object.keys(out)) {
     if (SENSITIVE_KEYS.has(k.toLowerCase())) delete out[k];
@@ -58,9 +65,12 @@ function stripSensitiveMetadata(meta: Record<string, unknown>): Record<string, u
 }
 
 /** Strip copyright-related keys from source metadata for external. */
-export function redactSource(source: Source): Source {
+export function redactSource<T extends SourceLike>(source: T): T {
   const meta = source.metadata;
   if (meta == null) return source;
   const cleaned = stripSensitiveMetadata(meta);
-  return { ...source, metadata: Object.keys(cleaned).length ? cleaned : undefined };
+  return {
+    ...source,
+    metadata: Object.keys(cleaned).length ? cleaned : undefined,
+  };
 }

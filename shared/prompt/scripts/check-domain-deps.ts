@@ -39,6 +39,7 @@ const ALLOWED_EDGES: [string, string][] = [
   ["audit", "record"],
   ["schedule", "source"],
   ["source", "concept"],
+  ["source", "record"],
 ];
 
 // function-length-ignore
