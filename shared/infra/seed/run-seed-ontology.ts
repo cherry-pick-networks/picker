@@ -1,6 +1,6 @@
 // function-length-ignore-file — Seed runner; loops over schemes/concepts.
 /**
- * Run ontology seed SQL and CSAT TOML. Requires db:schema applied first.
+ * Run ontology seed SQL and TOML. Requires db:schema applied first.
  * Usage: deno run -A shared/infra/seed/run-seed-ontology.ts
  */
 
@@ -8,11 +8,6 @@ import { parse } from "@std/toml";
 import { getPg } from "../pg.client.ts";
 
 const SEED_SQL = new URL("./ontology/seed.sql", import.meta.url);
-const SEED_CSAT = new URL("./csat-ontology.toml", import.meta.url);
-const SEED_CSAT_SUBJECTS = new URL(
-  "./ontology/csat-subjects.toml",
-  import.meta.url,
-);
 const SEED_GLOBAL_STANDARDS = new URL(
   "./ontology/global-standards.toml",
   import.meta.url,
@@ -28,12 +23,12 @@ function splitStatements(sql: string): string[] {
   return parts.filter((s) => s.length > 0 && /^\s*INSERT\s/i.test(s));
 }
 
-interface CsatScheme {
+interface SchemeFromToml {
   id: string;
   name: string;
 }
 
-interface CsatConcept {
+interface ConceptFromToml {
   scheme_id: string;
   code: string;
   pref_label: string;
@@ -46,8 +41,8 @@ async function runTomlSeed(
 ): Promise<void> {
   const raw = await Deno.readTextFile(url);
   const data = parse(raw) as {
-    concept_scheme?: CsatScheme[];
-    concept?: CsatConcept[];
+    concept_scheme?: SchemeFromToml[];
+    concept?: ConceptFromToml[];
   };
   const schemes = data.concept_scheme ?? [];
   const concepts = data.concept ?? [];
@@ -67,24 +62,12 @@ async function runTomlSeed(
   }
 }
 
-const LEGACY_SCHEME_ID = "csat-subject";
-
 async function runSeed(): Promise<void> {
   const pg = await getPg();
-  await pg.queryArray(
-    `DELETE FROM concept WHERE scheme_id = $1`,
-    [LEGACY_SCHEME_ID],
-  );
-  await pg.queryArray(
-    `DELETE FROM concept_scheme WHERE scheme_id = $1`,
-    [LEGACY_SCHEME_ID],
-  );
   const sql = await Deno.readTextFile(SEED_SQL);
   for (const stmt of splitStatements(sql)) {
     await pg.queryArray(stmt + ";");
   }
-  await runTomlSeed(pg, SEED_CSAT);
-  await runTomlSeed(pg, SEED_CSAT_SUBJECTS);
   await runTomlSeed(pg, SEED_GLOBAL_STANDARDS);
   await pg.end();
 }

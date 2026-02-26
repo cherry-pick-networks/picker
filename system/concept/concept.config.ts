@@ -1,14 +1,9 @@
 /** Allowed concept scheme IDs per facet. Used by validateFacetSchemes. */
 
-export const SUBJECT_SCHEMES = [
-  "csat-subjects",
-  "ddc",
-  "isced",
-  "iscedf",
-] as const;
-export const CONTENT_TYPE_SCHEMES = ["csat-type"] as const;
-export const COGNITIVE_LEVEL_SCHEMES = ["csat-cognitive", "bloom"] as const;
-export const CONTEXT_SCHEMES = ["csat-context"] as const;
+export const SUBJECT_SCHEMES = ["ddc", "isced", "iscedf"] as const;
+export const CONTENT_TYPE_SCHEMES = [] as const;
+export const COGNITIVE_LEVEL_SCHEMES = ["bloom"] as const;
+export const CONTEXT_SCHEMES = [] as const;
 /** Extra schemes for concept facet only (e.g. LCSH for subject headings). */
 export const CONCEPT_EXTRA_SCHEMES = ["lcsh"] as const;
 

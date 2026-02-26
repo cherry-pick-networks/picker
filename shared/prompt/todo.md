@@ -105,6 +105,4 @@ Use that document for AI direction and todo decisions.
   retention and format defined by implementation.
 - **Ontology (Todo 1)** — DDL: `shared/infra/schema/06_ontology.sql`
   (concept_scheme, concept, concept_relation). Seed path:
-  `shared/infra/seed/ontology/`. Seed task: `deno task seed:ontology`. Ontology
-  seed: csat-subjects (all exam subject areas) in
-  `shared/infra/seed/ontology/csat-subjects.toml`.
+  `shared/infra/seed/ontology/`. Seed task: `deno task seed:ontology`.
