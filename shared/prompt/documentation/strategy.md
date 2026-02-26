@@ -14,17 +14,17 @@ description: Data migration strategy and shared single source.
 
 ## Current layout (Rule index + 3 .mdc + rules:summary + skills)
 
-- **Rule index**: In store.md, section "Rule index (context → sections)".
-  Maps context (always, feature+code, docs, commit, migration, system,
-  dependency, sql, directory) to § list. Shared by Commands, Skills, and .mdc.
+- **Rule index**: In store.md, section "Rule index (context → sections)". Maps
+  context (always, feature+code, docs, commit, migration, system, dependency,
+  sql, directory) to § list. Shared by Commands, Skills, and .mdc.
 - **.mdc (3 files)**:
   - `global-core.mdc`: always applied; §C, §I, §O (and §B for handoff). Points
     to Rule index and `deno task rules:summary`.
   - `global-context.mdc`: on-request; context-based rule index entry.
   - `global-code.mdc`: globs `**/*.ts`; code-related § from Rule index.
-- **rules:summary**: `deno task rules:summary -- <task-type>`. Prints
-  applicable § and one-line title per §. Task types: feature, refactor, docs,
-  commit, migration, system, dependency, sql, directory, all.
+- **rules:summary**: `deno task rules:summary -- <task-type>`. Prints applicable
+  § and one-line title per §. Task types: feature, refactor, docs, commit,
+  migration, system, dependency, sql, directory, all.
 - **Skills** (`.cursor/skills/`): feature-implementation, refactor-and-commit,
   docs-and-boundary, commit-boundary, migration-and-naming. Each references
   store.md § and provides a short checklist; full text only in store.md.
@@ -50,11 +50,11 @@ description: Data migration strategy and shared single source.
 
 Context → § is in store.md Rule index. .mdc roles:
 
-| .mdc               | When applied        | Role                                      |
-| ------------------ | ------------------- | ----------------------------------------- |
-| global-core.mdc    | always              | §C, §I, §O; §B for handoff; points to index |
-| global-context.mdc | on-request          | Context-based § from Rule index           |
-| global-code.mdc    | globs `**/*.ts`     | Code § (e.g. §P, §Q, §S, §T, §N)          |
+| .mdc               | When applied    | Role                                        |
+| ------------------ | --------------- | ------------------------------------------- |
+| global-core.mdc    | always          | §C, §I, §O; §B for handoff; points to index |
+| global-context.mdc | on-request      | Context-based § from Rule index             |
+| global-code.mdc    | globs `**/*.ts` | Code § (e.g. §P, §Q, §S, §T, §N)            |
 
 ### Historical (pre-simplification)
 

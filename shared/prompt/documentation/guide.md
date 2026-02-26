@@ -100,9 +100,9 @@ system/routes/content.ts."
   `system` | `dependency` | `sql` | `directory` | `all`.
 - **Optional flags**: `--code`, `--docs`, `--system` to add those contexts'
   sections to the output.
-- **Output**: Line "Applicable sections: §X, §Y, …" then each § with its title from
-  store.md Part B. Full rule text stays in `shared/prompt/store.md`; Rule index
-  is in store.md "Rule index (context → sections)".
+- **Output**: Line "Applicable sections: §X, §Y, …" then each § with its title
+  from store.md Part B. Full rule text stays in `shared/prompt/store.md`; Rule
+  index is in store.md "Rule index (context → sections)".
 
 ---
 
@@ -112,10 +112,10 @@ When to use subagents (e.g. mcp_task with explore or generalPurpose): the main
 agent gets the applicable § list via `deno task rules:summary -- <task-type>` or
 the matching skill; delegate **heavy verification** to a subagent when needed.
 
-**Scenario 1 — Rule compliance check**: "Does this change satisfy §P and §N?"
-→ Have the subagent check the diff or path against store.md §P, §N (function
-body 2–4 statements, line length 80, no type-check bypass). Return a short list
-of violations or OK.
+**Scenario 1 — Rule compliance check**: "Does this change satisfy §P and §N?" →
+Have the subagent check the diff or path against store.md §P, §N (function body
+2–4 statements, line length 80, no type-check bypass). Return a short list of
+violations or OK.
 
 **Scenario 2 — Applicable § list**: For the current path or task type, which §
 apply? Prefer `rules:summary`; if the case is complex, the subagent can explore

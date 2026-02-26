@@ -17,9 +17,11 @@ Apply store.md **§A, §B**. Full text in shared/prompt/store.md Part B only.
 
 ## §B — When to commit and session end
 
-- Commit at each feature-flag or logical unit boundary; do not batch at end of task.
+- Commit at each feature-flag or logical unit boundary; do not batch at end of
+  task.
 - Before starting the next unit: git add and git commit current changes.
-- Session/handoff: for long sessions or handoff, follow §B (handoff doc, next steps).
+- Session/handoff: for long sessions or handoff, follow §B (handoff doc, next
+  steps).
 
 ## Checklist
 

@@ -7,8 +7,8 @@ description: |
 
 # Docs and boundary
 
-Apply store.md **§R, §D, §E, §F, §K, §L, §M**. Full text in shared/prompt/store.md
-Part B only; this skill gives a short checklist.
+Apply store.md **§R, §D, §E, §F, §K, §L, §M**. Full text in
+shared/prompt/store.md Part B only; this skill gives a short checklist.
 
 ## §R — AI document writing
 
@@ -25,8 +25,8 @@ Part B only; this skill gives a short checklist.
 ## §F — Directory structure and exceptions
 
 - Allowed forms: prefix/, prefix/infix/, prefix/infix/suffix/. Exceptions list
-  per project. Documentation allowed names: reference, usage, strategy,
-  guide, runbook.
+  per project. Documentation allowed names: reference, usage, strategy, guide,
+  runbook.
 
 ## §K, §L, §M — Todo and system boundary
 

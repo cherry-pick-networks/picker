@@ -26,7 +26,8 @@ Part B only; this skill gives a short checklist.
 
 ## §S, §T, §N
 
-- Comments: only those that help AI (§S). Naming per §T. No type-check bypass (§N).
+- Comments: only those that help AI (§S). Naming per §T. No type-check bypass
+  (§N).
 
 ## Checklist
 

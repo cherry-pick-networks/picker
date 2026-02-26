@@ -7,12 +7,13 @@ description: |
 
 # Migration and naming
 
-Apply store.md **§J, §D, §E, §F**. Full text in shared/prompt/store.md Part B only.
+Apply store.md **§J, §D, §E, §F**. Full text in shared/prompt/store.md Part B
+only.
 
 ## §J — Migration boundary
 
-- Plan before execute: write a migration plan (current file → target filename and
-  content responsibility); do not rename or split without this mapping.
+- Plan before execute: write a migration plan (current file → target filename
+  and content responsibility); do not rename or split without this mapping.
 - Execute order: create all new rule/files first, then delete old ones; one
   logical migration per commit.
 - New names follow §D and §E. Adding/refactoring .cursor/rules does not require
@@ -21,8 +22,8 @@ Apply store.md **§J, §D, §E, §F**. Full text in shared/prompt/store.md Part 
 ## §D, §E, §F
 
 - Document and directory format/naming: segment form, axis rule, allowed sets
-  per §E. Directory structure: max 3 tiers, allowed forms only; exceptions
-  list maintained.
+  per §E. Directory structure: max 3 tiers, allowed forms only; exceptions list
+  maintained.
 
 ## Checklist
 
