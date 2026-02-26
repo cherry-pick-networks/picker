@@ -158,9 +158,9 @@ tool-specific configs.
   step-by-step as needed.
 - **Before push or PR**: Run `deno task pre-push` so CI passes. Code must
   satisfy §P (function body 2–4 statements; async only when body uses await).
-- **Pre-commit hook (optional)**: To run `deno lint`, `deno fmt --check`, and
-  `deno task line-length-check` on commit, set
-  `git config core.hooksPath .githooks` and `chmod +x .githooks/pre-commit`.
+- **Pre-commit hook (optional)**: To run `deno lint` and
+  `deno task format-check` on commit, set `git config core.hooksPath .githooks`
+  and `chmod +x .githooks/pre-commit`.
 - **CI failure**: Use `gh run view`, logs, and (if needed) `gh` GraphQL/API to
   find root cause, flakiness, or breaking commit.
 - **Dangerous commands**: Audit approved commands periodically (e.g. patterns
