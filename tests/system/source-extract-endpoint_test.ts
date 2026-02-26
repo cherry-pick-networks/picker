@@ -81,7 +81,7 @@ Deno.test(
       assertEquals(body.ok, true);
       assertEquals(Array.isArray(body.concept_ids), true);
       assertEquals(body.concept_ids, ["mock-concept-1"]);
-      assertEquals(body.subject_id, "reading");
+      assertEquals(body.subject_id, "iscedf-02");
       assertEquals(typeof body.extracted_at, "string");
     } finally {
       Deno.env.delete("SOURCE_EXTRACT_LLM_MOCK");
