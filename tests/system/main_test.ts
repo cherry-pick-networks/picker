@@ -1,6 +1,7 @@
 import { assertEquals } from "@std/assert";
 import { add } from "#system/app/add.config.ts";
 import { app } from "../../main.ts";
+import { hasDbEnv } from "./db-env_test.ts";
 
 Deno.test(function addTest() {
   assertEquals(add(2, 3), 5);
@@ -8,6 +9,7 @@ Deno.test(function addTest() {
 
 const handler = (req: Request) => app.fetch(req);
 const handlerTestOpts = { sanitizeResources: false };
+const dbTestOpts = () => ({ ...handlerTestOpts, ignore: !hasDbEnv() });
 
 Deno.test("GET / returns 200 and { ok: true }", handlerTestOpts, async () => {
   const res = await handler(new Request("http://localhost/"));
@@ -18,7 +20,7 @@ Deno.test("GET / returns 200 and { ok: true }", handlerTestOpts, async () => {
 
 Deno.test(
   "GET /kv returns 200 and { keys: string[] }",
-  handlerTestOpts,
+  dbTestOpts(),
   async () => {
     const res = await handler(new Request("http://localhost/kv"));
     assertEquals(res.status, 200);
@@ -29,7 +31,7 @@ Deno.test(
 
 Deno.test(
   "GET /kv includes key after POST /kv",
-  handlerTestOpts,
+  dbTestOpts(),
   async () => {
     const key = `list-${Date.now()}`;
     await handler(
@@ -48,7 +50,7 @@ Deno.test(
 
 Deno.test(
   "GET /kv?prefix= filters keys by prefix",
-  handlerTestOpts,
+  dbTestOpts(),
   async () => {
     const prefix = `pfx-${Date.now()}`;
     const key1 = `${prefix}-a`;

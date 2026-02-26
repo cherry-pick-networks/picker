@@ -1,9 +1,11 @@
 import { assert, assertEquals } from "@std/assert";
 import { app } from "../../main.ts";
+import { hasDbEnv } from "./db-env_test.ts";
 import { withTempScriptsStore } from "./with_temp_scripts_store.ts";
 
 const handler = (req: Request) => app.fetch(req);
 const handlerTestOpts = { sanitizeResources: false };
+const dbTestOpts = () => ({ ...handlerTestOpts, ignore: !hasDbEnv() });
 
 async function withServer(
   fn: (base: string) => Promise<void>,
@@ -29,7 +31,7 @@ async function withServer(
   }
 }
 
-Deno.test("E2E POST /kv over real HTTP", handlerTestOpts, async () => {
+Deno.test("E2E POST /kv over real HTTP", dbTestOpts(), async () => {
   await withServer(async (base) => {
     const key = `e2e-${Date.now()}`;
     const value = { e2e: true };
@@ -69,7 +71,7 @@ Deno.test("E2E GET / over real HTTP", handlerTestOpts, async () => {
   });
 });
 
-Deno.test("E2E GET /kv over real HTTP", handlerTestOpts, async () => {
+Deno.test("E2E GET /kv over real HTTP", dbTestOpts(), async () => {
   await withServer(async (base) => {
     const res = await fetch(`${base}/kv`);
     assertEquals(res.status, 200);
@@ -96,7 +98,7 @@ Deno.test(
   },
 );
 
-Deno.test("E2E DELETE /kv/:key over real HTTP", handlerTestOpts, async () => {
+Deno.test("E2E DELETE /kv/:key over real HTTP", dbTestOpts(), async () => {
   await withServer(async (base) => {
     const key = `e2e-del-${Date.now()}`;
     const postRes = await fetch(`${base}/kv`, {
