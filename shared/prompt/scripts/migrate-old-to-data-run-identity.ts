@@ -1,13 +1,12 @@
 /**
- * Identity migration runner.
+ * Identity migration runner (legacy .old/identity -> index only; no store).
  */
 
 import { generate as uuidV7 } from "@std/uuid/v7";
 import type {
-  IdentityIndex,
   IdentityIndexEntry,
+  LegacyIdentityIndex,
 } from "#system/record/data.store.ts";
-import { writeTomlFile } from "#system/record/toml.service.ts";
 import {
   deriveIdentityName,
   isMeaninglessFilename,
@@ -35,43 +34,21 @@ function kindFromRel(rel: string): "student-profile" | "identity" {
   return isStudent ? "student-profile" : "identity";
 }
 
-async function writeFileAndBuildEntry(
-  rel: string,
-  parsed: unknown,
-  identityDir: string,
-  uuid: string,
-  _raw: string,
-  now: string,
-): Promise<IdentityIndexEntry> {
-  const path = `${identityDir}${uuid}.toml`;
-  await writeTomlFile(path, parsed as Record<string, unknown>);
-  return buildEntry(rel, parsed, kindFromRel(rel), now);
-}
-
 async function processOneFile(
   rel: string,
   oldDir: string,
-  identityDir: string,
-  identityIndex: IdentityIndex,
+  identityIndex: LegacyIdentityIndex,
   now: string,
 ): Promise<void> {
   const abs = `${oldDir}${rel}`;
-  const { raw, parsed } = await readAndParse(abs);
+  const { parsed } = await readAndParse(abs);
   const uuid = uuidV7();
-  identityIndex[uuid] = await writeFileAndBuildEntry(
-    rel,
-    parsed,
-    identityDir,
-    uuid,
-    raw,
-    now,
-  );
+  identityIndex[uuid] = buildEntry(rel, parsed, kindFromRel(rel), now);
 }
 
 export async function runIdentityMigration(
   oldDir: string,
-  identityDir: string,
-  identityIndex: IdentityIndex,
+  identityIndex: LegacyIdentityIndex,
   now: string,
 ): Promise<void> {
   let identityFiles: string[] = [];
@@ -82,6 +59,6 @@ export async function runIdentityMigration(
     // skip if no identity dir
   }
   for (const rel of identityFiles) {
-    await processOneFile(rel, oldDir, identityDir, identityIndex, now);
+    await processOneFile(rel, oldDir, identityIndex, now);
   }
 }

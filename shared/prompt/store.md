@@ -52,8 +52,8 @@ tool-specific configs.
 - **Test**: Add and run tests via `deno test`; keep commands in `deno.json`
   tasks if needed. Tests that use storage require Postgres: run
   `deno task db:schema` once when the DB is up. For local runs, use the same DB
-  env as dev (e.g. `deno task test:with-db` or `./scripts/dev.sh test`, which
-  set `PG_PASSWORD` from `pass show picker/postgres`).
+  env as dev (e.g. `deno task test` or `./scripts/dev.sh test`, which set
+  `PG_PASSWORD` from `pass show picker/postgres`).
 - **Lint/format**: Use project lint/format config if present; otherwise
   `deno lint`, `deno fmt`.
 
@@ -93,9 +93,9 @@ tool-specific configs.
 - `deno task sql-filename-check` — verify shared/infra/schema/*.sql per
   reference.md (Schema DDL file naming) (optional; run in pre-commit or CI)
 - `deno task pre-push` — run before push; same as CI (lint, fmt, line-length,
-  ts-filename-check, sql-filename-check, test:with-db, todo-check,
-  boundary-check, dependency-check, type-check-policy, audit). Uses same DB env
-  as dev (pass and picker/postgres) when run locally.
+  ts-filename-check, sql-filename-check, test, todo-check, boundary-check,
+  dependency-check, type-check-policy, audit). Uses same DB env as dev (pass and
+  picker/postgres) when run locally.
 - `deno task todo-discovery -- <entry-file>` — list direct imports for AI
   session todo (see shared/prompt/documentation/strategy.md)
 - `deno task rules:summary -- <task-type>` — list applicable store.md § for task

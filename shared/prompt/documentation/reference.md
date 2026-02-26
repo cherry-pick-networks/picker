@@ -27,7 +27,7 @@ with store.md §E/§F and modular monolith.
 | concept | Concept scheme, concept, concept_relation (ontology)                   |
 | content | Items, worksheets, prompt building                                     |
 | kv      | Generic key-value HTTP API; Postgres-backed, client from shared/infra. |
-| record  | Record store (extracted/identity data)                                 |
+| record  | Identity index (shared/record/reference)                               |
 | script  | Scripts store, AST apply, Governance                                   |
 | source  | Source collection and read                                             |
 
@@ -130,22 +130,19 @@ name satisfying `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. Run:
 | system/content/schema/*.ts         | system/content/*.schema.ts         |
 | system/source/endpoint             | service                            |
 | system/script/endpoint             | service                            |
-| system/record/endpoint             | store/data.ts                      |
+| system/record/endpoint             | data.store.ts                      |
 | system/kv/endpoint                 | store/kv.ts                        |
 | system/audit/log/log.ts            | system/audit/audit.log.ts          |
 | system/app/config/*.ts             | system/app/*.config.ts             |
 
 ### Data file locations (TOML)
 
-| Path                                                | Purpose                                        |
-| --------------------------------------------------- | ---------------------------------------------- |
-| `shared/record/reference/extracted-data-index.toml` | Extracted-data index (UUID → entry)            |
-| `shared/record/reference/identity-index.toml`       | Identity index (UUID → entry)                  |
-| `shared/record/store/<uuid>.toml`                   | Single record (UUID v7)                        |
-| `system/audit/e2e-runs.toml`                        | E2E run log (schemaVersion + runs[])           |
-| `shared/infra/seed/ontology/seed.sql`               | Ontology seed (DDC scheme).                    |
-| `shared/infra/seed/csat-ontology.toml`              | Ontology seed (csat-type, cog, ctx).           |
-| `shared/infra/seed/ontology/csat-subjects.toml`     | Ontology seed: csat-subjects (all exam areas). |
+| Path                                               | Purpose                                             |
+| -------------------------------------------------- | --------------------------------------------------- |
+| `shared/record/reference/identity-index.toml`      | Identity index (version, description, students)     |
+| `system/audit/e2e-runs.toml`                       | E2E run log (schemaVersion + runs[])                |
+| `shared/infra/seed/ontology/seed.sql`              | Ontology seed (DDC scheme).                         |
+| `shared/infra/seed/ontology/global-standards.toml` | Ontology seed: isced, iscedf, bloom (no CEFR/PISA). |
 
 ### Ontology and facet policy
 
@@ -153,10 +150,10 @@ name satisfying `^[a-z][a-z0-9]*(-[a-z0-9]+)*$`. Run:
   cycles for any `relation_type` (e.g. broader, narrower, requires, depends-on).
   Run `deno task ontology-acyclic-check` to verify (e.g. after applying schema
   and seed).
-- **Facet schemes**: Subject IDs use allowed schemes (e.g. csat-subjects, ddc).
-  Content type, cognitive level, and context IDs use their respective allowed
-  schemes only (see system/concept/concept.config.ts). Content and worksheet
-  APIs validate concept IDs per facet and cap at 500 per request.
+- **Facet schemes**: Subject IDs use allowed schemes (ddc, isced, iscedf).
+  Content type, cognitive level, and context use their respective allowed
+  schemes (see system/concept/concept.config.ts). Content and worksheet APIs
+  validate concept IDs per facet and cap at 500 per request.
 - **CI**: `deno task pre-push` does not run `ontology-acyclic-check`. After
   running `deno task seed:ontology`, run `deno task ontology-acyclic-check`
   manually when changing ontology seed or relations.

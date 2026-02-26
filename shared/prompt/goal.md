@@ -52,7 +52,7 @@ format are defined in todo.md and the spec. Add only items inside that todo.
 - Add only modules, routes, and infrastructure listed in todo (todo.md or spec).
 - Mutate only within shared/runtime/store/; use Governance-verified flow.
 - Write to config/ or credentials only via approved mechanisms; file-based
-  record store (shared/record/) only via system/record/store/data.ts (see
+  shared/record/ (identity-index only) only via system/record/data.store.ts (see
   todo.md).
 - Apply type-check policy (store.md §N).
 

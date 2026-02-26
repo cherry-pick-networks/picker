@@ -1,20 +1,31 @@
-/** File-based UUID v7 storage under shared/record/ (store/, reference/). */
+/**
+ * File-based identity data under shared/record/reference/
+ * (identity-index only).
+ */
 
 import { readTomlFile } from "./toml.service.ts";
 
 const DATA_DIR = new URL("../../../shared/record/", import.meta.url).pathname;
-const RECORD_STORE = `${DATA_DIR}store/`;
-const EXTRACTED_INDEX_PATH = `${DATA_DIR}reference/extracted-data-index.toml`;
 const IDENTITY_INDEX_PATH = `${DATA_DIR}reference/identity-index.toml`;
 
-export interface ExtractedIndexEntry {
-  type: string;
+/** One student row in identity-index.toml [[students]]. */
+export interface IdentityStudentEntry {
+  id: string;
   name?: string;
-  source?: string;
-  oldPath?: string;
-  createdAt?: string;
+  school?: string;
+  grade?: string;
+  class?: string;
+  diagnosis_file?: string;
 }
 
+/** Shape of identity-index.toml (version, description, [[students]]). */
+export interface IdentityIndex {
+  version?: number;
+  description?: string;
+  students?: IdentityStudentEntry[];
+}
+
+/** Legacy index entry for migration script only (Record<uuid, entry>). */
 export interface IdentityIndexEntry {
   kind: string;
   name?: string;
@@ -22,26 +33,11 @@ export interface IdentityIndexEntry {
   createdAt?: string;
 }
 
-export type ExtractedIndex = Record<string, ExtractedIndexEntry>;
-export type IdentityIndex = Record<string, IdentityIndexEntry>;
+/** Legacy index type for migration script only. */
+export type LegacyIdentityIndex = Record<string, IdentityIndexEntry>;
 
 export function getDataDir(): string {
   const out = DATA_DIR;
-  return out;
-}
-
-export function getExtractedDir(): string {
-  const out = RECORD_STORE;
-  return out;
-}
-
-export function getIdentityDir(): string {
-  const out = RECORD_STORE;
-  return out;
-}
-
-export function getExtractedIndexPath(): string {
-  const out = EXTRACTED_INDEX_PATH;
   return out;
 }
 
@@ -50,24 +46,16 @@ export function getIdentityIndexPath(): string {
   return out;
 }
 
-const recordPath = (id: string): string => `${RECORD_STORE}${id}.toml`;
-
-export async function readExtractedIndex(): Promise<ExtractedIndex> {
-  const data = await readTomlFile<ExtractedIndex>(EXTRACTED_INDEX_PATH);
-  return data ?? {};
-}
-
 export async function readIdentityIndex(): Promise<IdentityIndex> {
   const data = await readTomlFile<IdentityIndex>(IDENTITY_INDEX_PATH);
   return data ?? {};
 }
 
-export async function readExtractedFile(id: string): Promise<unknown | null> {
-  const data = await readTomlFile<unknown>(recordPath(id));
-  return data ?? null;
-}
-
-export async function readIdentityFile(id: string): Promise<unknown | null> {
-  const data = await readTomlFile<unknown>(recordPath(id));
-  return data ?? null;
+/** Find student by id in identity index (no store files). */
+export async function getIdentityById(
+  id: string,
+): Promise<IdentityStudentEntry | null> {
+  const index = await readIdentityIndex();
+  const student = index.students?.find((s) => s.id === id);
+  return student ?? null;
 }
