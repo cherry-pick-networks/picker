@@ -45,9 +45,10 @@ or CLI, see § Using rules without Cursor.
 | `/create-pr`                 | Create draft PR for current branch                                       | store.md §7               |
 | `/rules-check` [task-type]   | Verify change against applicable §; delegate to rules-subagent if needed | guide Subagents for rules |
 
-For **commit-at-boundary** there is no slash command; use the **commit-boundary**
-skill. Trigger by saying e.g. “commit current changes”, “커밋해줘”, or when a
-logical unit is done; for applicable rules run `deno task rules:summary -- commit`.
+For **commit-at-boundary** there is no slash command; use the
+**commit-boundary** skill. Trigger by saying e.g. “commit current changes”,
+“커밋해줘”, or when a logical unit is done; for applicable rules run
+`deno task rules:summary -- commit`.
 
 Anything you type after the command name (e.g. `/rules-summary refactor`) is
 passed to the model as part of that command’s instruction.
