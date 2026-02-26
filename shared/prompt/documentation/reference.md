@@ -19,25 +19,25 @@ with store.md §E/§F and modular monolith.
 
 ### Allowed infix (domains)
 
-| Infix        | Responsibility                                                         |
-| ------------ | ---------------------------------------------------------------------- |
-| actor        | Profile, progress (identity and state)                                 |
-| app          | Route registration and app wiring                                      |
-| audit        | Change/run log artifacts                                               |
-| batch        | Batch jobs and bulk operations                                         |
-| concept      | Concept scheme, concept, concept_relation (ontology)                   |
-| content      | Items, worksheets, prompt building                                     |
-| data         | Data access / identity index (e.g. record/data)                        |
-| export       | Export and external output                                             |
-| kv           | Generic key-value HTTP API; Postgres-backed, client from shared/infra. |
-| notification | Notifications and alerts                                               |
-| record       | Identity index (shared/record/reference)                               |
-| report       | Reports and aggregations                                               |
+| Infix        | Responsibility                                                                             |
+| ------------ | ------------------------------------------------------------------------------------------ |
+| actor        | Profile, progress (identity and state)                                                     |
+| app          | Route registration and app wiring                                                          |
+| audit        | Change/run log artifacts                                                                   |
+| batch        | Batch jobs and bulk operations                                                             |
+| concept      | Concept scheme, concept, concept_relation (ontology)                                       |
+| content      | Items, worksheets, prompt building                                                         |
+| data         | Data access / identity index (e.g. record/data)                                            |
+| export       | Export and external output                                                                 |
+| kv           | Generic key-value HTTP API; Postgres-backed, client from shared/infra.                     |
+| notification | Notifications and alerts                                                                   |
+| record       | Identity index (shared/record/reference)                                                   |
+| report       | Reports and aggregations                                                                   |
 | schedule     | FSRS schedule (in-house); weekly plan (3 sessions/week) and annual curriculum from grammar |
-| script       | Scripts store, AST apply, Governance                                   |
-| source       | Source collection and read                                             |
-| sync         | Synchronization and replication                                        |
-| workflow     | Workflow and process orchestration                                     |
+| script       | Scripts store, AST apply, Governance                                                       |
+| source       | Source collection and read                                                                 |
+| sync         | Synchronization and replication                                                            |
+| workflow     | Workflow and process orchestration                                                         |
 
 ### Allowed suffix (artifacts)
 
@@ -168,18 +168,22 @@ typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
 
 ### Data file locations (TOML)
 
-| Path                                               | Purpose                                             |
-| -------------------------------------------------- | --------------------------------------------------- |
-| `shared/record/reference/identity-index.toml`      | Identity index (version, description, students)     |
-| `system/audit/e2e-runs.toml`                       | E2E run log (schemaVersion + runs[])                |
-| `shared/infra/seed/ontology/seed.sql`              | Ontology seed (DDC scheme).                         |
-| `shared/infra/seed/ontology/global-standards.toml` | Ontology seed: isced, iscedf, bloom (no CEFR/PISA). |
-| `shared/prompt/documentation/grammar-topics.md`    | Grammar curriculum: 17 major topics, level→unit mapping (schedule/content). |
-| `shared/infra/seed/curriculum-52weeks.json`         | Seed source for 52-week curriculum; runtime data in DB table `curriculum_slot`. |
+| Path                                               | Purpose                                                                         |
+| -------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `shared/record/reference/identity-index.toml`      | Identity index. API: redacted unless X-Client: agent.                           |
+| `system/audit/e2e-runs.toml`                       | E2E run log (schemaVersion + runs[])                                            |
+| `shared/infra/seed/ontology/seed.sql`              | Ontology seed (DDC scheme).                                                     |
+| `shared/infra/seed/ontology/global-standards.toml` | Ontology seed: isced, iscedf, bloom (no CEFR/PISA).                             |
+| `shared/prompt/documentation/grammar-topics.md`    | Grammar curriculum: 17 major topics, level→unit mapping (schedule/content).     |
+| `shared/infra/seed/curriculum-52weeks.json`        | Seed source for 52-week curriculum; runtime data in DB table `curriculum_slot`. |
 
 ### Curriculum (52 weeks)
 
-52-week grid (3 units per week per level) is stored in DB table `curriculum_slot`, seeded from `shared/infra/seed/curriculum-52weeks.json` (`deno task seed:curriculum`). Runtime: GET /schedule/plan/annual (query `level`). Topic mapping: grammar-topics.md. Weekly plan logic: schedule-fsrs-plan.md.
+52-week grid (3 units per week per level) is stored in DB table
+`curriculum_slot`, seeded from `shared/infra/seed/curriculum-52weeks.json`
+(`deno task seed:curriculum`). Runtime: GET /schedule/plan/annual (query
+`level`). Topic mapping: grammar-topics.md. Weekly plan logic:
+schedule-fsrs-plan.md.
 
 ### Ontology and facet policy
 

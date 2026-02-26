@@ -17,11 +17,14 @@ export interface WeeklyPlan {
 
 /** ISO week number (1–53) from date. Week 1 = week containing Jan 4. */
 function getWeekNumber(date: Date): number {
-  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const d = new Date(
+    Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()),
+  );
   const day = d.getUTCDay() || 7;
   d.setUTCDate(d.getUTCDate() + 4 - day);
   const jan1 = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
-  return 1 + Math.floor((d.getTime() - jan1.getTime()) / (7 * 24 * 60 * 60 * 1000));
+  return 1 +
+    Math.floor((d.getTime() - jan1.getTime()) / (7 * 24 * 60 * 60 * 1000));
 }
 
 function weekRange(weekStart: string): { start: string; end: string } {

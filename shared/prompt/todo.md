@@ -17,23 +17,23 @@ Use that document for AI direction and todo decisions.
 
 ## Modules
 
-| Module                    | Role                                                                                                                                                                   |
-| ------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **main.ts**               | Server entry: Hono app; routes registered from system/routes.ts (imports system/app/config).                                                                           |
-| **client.ts**             | Client entry (loaded on every page).                                                                                                                                   |
-| **system/routes.ts**      | Route list (ROUTES) and registerRoutes(app); todo-check reads this.                                                                                                    |
-| **system/app/config/**    | Route registration (home, rest, scripts). Imports domain endpoints only.                                                                                               |
-| **system/actor/**         | Profile, progress: endpoint, service, store, schema.                                                                                                                   |
-| **system/concept/**       | Ontology validation: store (checkIdsInScheme), service (validateFacetSchemes). Facet ID checks capped at 500 per boundary.md.                                          |
-| **system/content/**       | Items, worksheets, prompt: endpoint, service, store, schema.                                                                                                           |
-| **system/source/**        | Source collection and KAG: endpoint, service, store, schema, source-extract.service, source-llm.client.                                                                |
-| **system/script/**        | Scripts store, mutate (LLM offload), Governance: endpoint, service, store, validation.                                                                                 |
-| **system/record/**        | Identity index: endpoint, store (reference/identity-index.toml only).                                                                                                  |
+| Module                    | Role                                                                                                                                                                                         |
+| ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **main.ts**               | Server entry: Hono app; routes registered from system/routes.ts (imports system/app/config).                                                                                                 |
+| **client.ts**             | Client entry (loaded on every page).                                                                                                                                                         |
+| **system/routes.ts**      | Route list (ROUTES) and registerRoutes(app); todo-check reads this.                                                                                                                          |
+| **system/app/config/**    | Route registration (home, rest, scripts). Imports domain endpoints only.                                                                                                                     |
+| **system/actor/**         | Profile, progress: endpoint, service, store, schema.                                                                                                                                         |
+| **system/concept/**       | Ontology validation: store (checkIdsInScheme), service (validateFacetSchemes). Facet ID checks capped at 500 per boundary.md.                                                                |
+| **system/content/**       | Items, worksheets, prompt: endpoint, service, store, schema.                                                                                                                                 |
+| **system/source/**        | Source collection and KAG: endpoint, service, store, schema, source-extract.service, source-llm.client.                                                                                      |
+| **system/script/**        | Scripts store, mutate (LLM offload), Governance: endpoint, service, store, validation.                                                                                                       |
+| **system/record/**        | Identity index: endpoint, store (reference/identity-index.toml only).                                                                                                                        |
 | **system/schedule/**      | FSRS schedule (in-house algo): endpoint, service, store, schema, fsrs.ts, fsrs-adapter. Weekly plan (3 sessions/week, 3 new units/week) and optional annual curriculum from grammar payload. |
-| **system/kv/**            | Generic key-value HTTP API: endpoint, store (Postgres-backed).                                                                                                         |
-| **system/audit/**         | Log artifact storage (e.g. e2e-runs.toml in same dir as audit-e2e-runs.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added. |
-| **shared/runtime/store/** | Target path for self-edit; read and write only via Governance-verified flow.                                                                                           |
-| **shared/infra/**         | Shared infrastructure. Postgres client (`getPg()`) only; no KV, no business logic.                                                                                     |
+| **system/kv/**            | Generic key-value HTTP API: endpoint, store (Postgres-backed).                                                                                                                               |
+| **system/audit/**         | Log artifact storage (e.g. e2e-runs.toml in same dir as audit-e2e-runs.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added.                       |
+| **shared/runtime/store/** | Target path for self-edit; read and write only via Governance-verified flow.                                                                                                                 |
+| **shared/infra/**         | Shared infrastructure. Postgres client (`getPg()`) only; no KV, no business logic.                                                                                                           |
 
 ---
 
@@ -61,18 +61,24 @@ Use that document for AI direction and todo decisions.
 | GET    | `/content/worksheets/:id`          | Read worksheet meta by id. Responds worksheet object or 404.                                                                                                                                                                          |
 | POST   | `/content/worksheets/generate`     | Create worksheet (meta + item_ids from concepts). Body: title, concept_ids, item_count, subject_weights (optional record of subject id → weight), etc. Responds 201 with worksheet.                                                   |
 | POST   | `/content/worksheets/build-prompt` | Build worksheet prompt string from request and profile/context. Body: GenerateWorksheetRequest (includes optional subject_weights). Responds 200 with { prompt }. No LLM call.                                                        |
-| GET    | `/sources`                         | List or query sources (optional query params). Responds `{ "sources": Source[] }`.                                                                                                                                                    |
-| GET    | `/sources/:id`                     | Read source by id. Responds source object or 404.                                                                                                                                                                                     |
+| GET    | `/sources`                         | List sources. External: metadata copyright/author stripped; agent: full Source[].                                                                                                                                                     |
+| GET    | `/sources/:id`                     | Source by id. External: redacted metadata; agent: full source or 404.                                                                                                                                                                 |
 | POST   | `/sources`                         | Collect and store a source. Body: source fields (id optional, body optional). Responds 201 with source.                                                                                                                               |
 | POST   | `/sources/:id/extract`             | Extract subject/concept IDs from source body via LLM; save to source extracted_* and return. Body optional. 200 → { ok, concept_ids, subject_id?, extracted_at }; 4xx/5xx → { ok: false, status, body }. Requires source.body.        |
-| GET    | `/data/identity-index`             | Read identity index (version, description, students). Responds JSON.                                                                                                                                                                  |
-| GET    | `/data/identity/:id`               | Read identity student by id (from index). Responds JSON or 404.                                                                                                                                                                       |
+| GET    | `/data/identity-index`             | Read identity index External: id/class only; agent (X-Client: agent): full JSON.                                                                                                                                                      |
+| GET    | `/data/identity/:id`               | Read identity student by id External: redacted; agent: full JSON or 404.                                                                                                                                                              |
 | GET    | `/schedule/due`                    | List schedule items due in range. Query: actor_id, from, to. Responds { items: ScheduleItem[] }.                                                                                                                                      |
-| GET    | `/schedule/plan/weekly`            | Weekly plan by week number. Query: actor_id, week_start, optional level. Responds { week_number, week_start, week_end, new_units, review_units }. new_units from annual by week (1–52). |
-| GET    | `/schedule/plan/annual`            | Annual curriculum. Query: year, optional level. Responds { weeks: { week_number (1–52), slots: { slot_index, new_unit }[] }[] }. |
+| GET    | `/schedule/plan/weekly`            | Weekly plan by week number. Query: actor_id, week_start, optional level. Responds { week_number, week_start, week_end, new_units, review_units }. new_units from annual by week (1–52).                                               |
+| GET    | `/schedule/plan/annual`            | Annual curriculum. Query: year, optional level. Responds { weeks: { week_number (1–52), slots: { slot_index, new_unit }[] }[] }.                                                                                                      |
 | GET    | `/schedule/items`                  | List schedule items. Query: actor_id, optional source_id. Responds { items: ScheduleItem[] }.                                                                                                                                         |
 | POST   | `/schedule/items`                  | Create schedule item. Body: actor_id, source_id, unit_id. Responds 201 with item.                                                                                                                                                     |
 | POST   | `/schedule/items/:id/review`       | Record review. Body: grade (1–4), optional reviewed_at. Responds 200 with updated item.                                                                                                                                               |
+
+- **Sensitive data**: Identity and source metadata (copyright/author) are
+  redacted for external callers. Send `X-Client: agent` or
+  `Authorization:
+  Bearer <INTERNAL_API_KEY>` for full data (agent/internal
+  only).
 
 ---
 

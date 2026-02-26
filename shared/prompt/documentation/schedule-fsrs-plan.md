@@ -28,7 +28,8 @@ description: Weekly lesson plan via FSRS-rs and source grammar data.
     `shared/prompt/documentation/grammar-topics.md`. Curriculum order follows
     `unit_ids`; topics are for reference and optional filtering.
   - **52-week grid**: DB table `curriculum_slot`, seeded from
-    `shared/infra/seed/curriculum-52weeks.json`; reference.md § Curriculum (52 weeks).
+    `shared/infra/seed/curriculum-52weeks.json`; reference.md § Curriculum (52
+    weeks).
 - **Schedule unit**: (actor_id, source_id, unit_id) = one schedule row.
 - **Terminology**: "schedule item" / "(actor, unit) schedule" (no "card").
 
@@ -57,9 +58,11 @@ description: Weekly lesson plan via FSRS-rs and source grammar data.
 ### 4.2 Table: curriculum_slot
 
 - **level** (TEXT): basic | intermediate | advanced.
-- **week_number** (INT), **slot_index** (INT), **source_id**, **unit_id** (TEXT).
+- **week_number** (INT), **slot_index** (INT), **source_id**, **unit_id**
+  (TEXT).
 - **PK**: (level, week_number, slot_index). Index: (level, week_number).
-- Seeded from `shared/infra/seed/curriculum-52weeks.json` via `deno task seed:curriculum`.
+- Seeded from `shared/infra/seed/curriculum-52weeks.json` via
+  `deno task seed:curriculum`.
 
 **DDL**: `shared/infra/schema/08_curriculum.sql`.
 

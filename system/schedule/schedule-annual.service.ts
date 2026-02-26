@@ -35,7 +35,12 @@ export async function getAnnualCurriculum(options: {
     }));
     for (const row of rows) {
       const w = weeks[row.week_number - 1];
-      if (w) w.slots[row.slot_index].new_unit = { source_id: row.source_id, unit_id: row.unit_id };
+      if (w) {
+        w.slots[row.slot_index].new_unit = {
+          source_id: row.source_id,
+          unit_id: row.unit_id,
+        };
+      }
     }
     return { weeks };
   }

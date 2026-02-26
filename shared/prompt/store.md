@@ -18,6 +18,9 @@ tool-specific configs.
 - **Runtime**: Deno
 - **Stack**: Hono (HTTP), Zod (validation), ts-morph (AST), PostgreSQL (storage)
 - **Entry**: `main.ts` (Hono app, routes from system/routes.ts)
+- **Sensitive data**: Identity PII and source copyright metadata are redacted
+  for external API callers; agent requests (`X-Client: agent` or
+  `INTERNAL_API_KEY`) receive full data. See todo.md API surface.
 
 ---
 
