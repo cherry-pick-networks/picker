@@ -8,8 +8,8 @@ either **branch protection rules** (UI) or **repository rulesets** (API/JSON).
 - **No direct push or force push to main.** All changes must go through a
   **feature branch → Pull Request → merge**.
 - Even when fixing a broken history (e.g. linearising main), use a **separate
-  branch → push → open PR → CI passes → merge** (see “When the graph is
-  broken” below). Do not force-push to main unless an exception applies.
+  branch → push → open PR → CI passes → merge** (see “When the graph is broken”
+  below). Do not force-push to main unless an exception applies.
 
 ## Merge strategy (linear history)
 
@@ -19,12 +19,12 @@ sprawl).
 - **Default:** Use **Rebase and merge** (or, if agreed, **Squash and merge**)
   when merging PRs. This avoids creating merge commits and keeps the graph
   linear.
-- **Avoid:** **Create a merge commit** for normal PRs. Using it repeatedly
-  adds merge commits and breaks the single-line view of main.
-- **Repository setting:** **Settings** → **General** → **Pull Requests** →
-  set the default merge button to **Rebase and merge** (or Squash and merge).
-  You can leave “Allow merge commits” off or use it only when there is a
-  specific reason.
+- **Avoid:** **Create a merge commit** for normal PRs. Using it repeatedly adds
+  merge commits and breaks the single-line view of main.
+- **Repository setting:** **Settings** → **General** → **Pull Requests** → set
+  the default merge button to **Rebase and merge** (or Squash and merge). You
+  can leave “Allow merge commits” off or use it only when there is a specific
+  reason.
 
 ## Option A: Repository ruleset (API)
 
@@ -76,7 +76,7 @@ without force-pushing to main.
 
 ## Exceptions
 
-- **Emergency hotfixes:** Prefer **branch → PR → merge** even for urgent
-  fixes. If someone with admin rights must force-push to main (e.g. to revert
-  a bad merge), do it only after team agreement and document the reason (e.g. in
-  a short handoff or incident note).
+- **Emergency hotfixes:** Prefer **branch → PR → merge** even for urgent fixes.
+  If someone with admin rights must force-push to main (e.g. to revert a bad
+  merge), do it only after team agreement and document the reason (e.g. in a
+  short handoff or incident note).

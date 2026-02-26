@@ -615,17 +615,26 @@ comparison.
 
 ### §P. Format limits (code)
 
-Formatter: use the project formatter (deno fmt, lineWidth 80); prefer Format on
-Save so the machine handles line breaks (Track A) and §P is satisfied. After
-writing or editing code, run `deno fmt` so the machine handles line breaks; do
-not rely on manual 80-char counting. Line length: keep lines to 80 characters or
-fewer (strict); exceptions only where documented (e.g. long URLs in comments).
-One effective line = 80 character units per physical line: ceil(length/80);
-empty line = 0. File length: keep files to 100 effective lines or fewer (sum of
-effective lines over all physical lines); split when longer. Scope: TypeScript
-source (e.g. `**/*.ts`); exclude node_modules, vendor, generated output.
-Exception: file-length check is not applied to test files (paths ending with
-`_test.ts` or under a `tests/` directory); line-length check still applies.
+Formatter vs lint: the formatter (deno fmt) handles style (indentation, quotes,
+line breaks); lint (deno lint) handles rules (function body length, etc.). Run
+order: run `deno lint` then format checks (formatter does not change logic).
+Format options are explicit in deno.json and aligned with lint; use
+`deno task format-check` for fmt --check plus line-length check together.
+Formatter runs on all TypeScript sources; lint excludes test file patterns per
+deno.json.
+
+Formatter: use the project formatter (deno fmt; options in deno.json, lineWidth
+80); prefer Format on Save so the machine handles line breaks (Track A) and §P
+is satisfied. After writing or editing code, run `deno fmt` so the machine
+handles line breaks; do not rely on manual 80-char counting. Line length: keep
+lines to 80 characters or fewer (strict); exceptions only where documented (e.g.
+long URLs in comments). One effective line = 80 character units per physical
+line: ceil(length/80); empty line = 0. File length: keep files to 100 effective
+lines or fewer (sum of effective lines over all physical lines); split when
+longer. Scope: TypeScript source (e.g. `**/*.ts`); exclude node_modules, vendor,
+generated output. Exception: file-length check is not applied to test files
+(paths ending with `_test.ts` or under a `tests/` directory); line-length check
+still applies.
 
 Function body: block body 2–4 statements (AST direct statements in block body
 only); expression body allowed (counts as 1). A single statement is allowed when
@@ -653,8 +662,9 @@ body, write a short comment stating the AST statement count before the code. (3)
 **Self-review**: After writing, check for any function whose block body has 5+
 statements or a single statement that is not the complex-statement exemption
 (try/catch, switch, block-bodied if); fix or extract before committing. Then run
-`deno fmt` and `deno task line-length-check`; if line-length fails (e.g. on
-imports or long strings), apply the line-break patterns in this section.
+`deno fmt` and `deno task format-check` (or `deno task line-length-check`
+alone); if line-length fails (e.g. on imports or long strings), apply the
+line-break patterns in this section.
 
 80-character defense (Track B — architectural extraction): when line length
 would otherwise exceed 80 chars or harm readability, apply these rules. Extract

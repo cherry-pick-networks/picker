@@ -29,17 +29,18 @@ Simplify (Tip 40 → §11).
 ## Cursor chat commands (project)
 
 The list below is for **Cursor** chat: typing `/` shows these project-defined
-commands. For Cursor’s own docs see [Commands](https://cursor.com/docs/context/commands).
-If you use another editor or CLI, see § Using rules without Cursor.
+commands. For Cursor’s own docs see
+[Commands](https://cursor.com/docs/context/commands). If you use another editor
+or CLI, see § Using rules without Cursor.
 
-| Command | Purpose | Reference |
-| ------- | ------- | --------- |
-| `/rules-summary` [task-type] | List applicable store.md § for the task type | §5, guide rules:summary |
-| `/session-goal` | State session goal in one sentence; ensure branch is not default | guide Session start |
-| `/pre-push` | Run pre-push (same as CI); fix and re-run if it fails | store.md §5, §7 |
-| `/commit-boundary` | Commit current changes as one logical unit | store.md §A, §B |
-| `/create-pr` | Create draft PR for current branch | store.md §7 |
-| `/rules-check` [task-type] | Verify change against applicable §; delegate to rules-subagent if needed | guide Subagents for rules |
+| Command                      | Purpose                                                                  | Reference                 |
+| ---------------------------- | ------------------------------------------------------------------------ | ------------------------- |
+| `/rules-summary` [task-type] | List applicable store.md § for the task type                             | §5, guide rules:summary   |
+| `/session-goal`              | State session goal in one sentence; ensure branch is not default         | guide Session start       |
+| `/pre-push`                  | Run pre-push (same as CI); fix and re-run if it fails                    | store.md §5, §7           |
+| `/commit-boundary`           | Commit current changes as one logical unit                               | store.md §A, §B           |
+| `/create-pr`                 | Create draft PR for current branch                                       | store.md §7               |
+| `/rules-check` [task-type]   | Verify change against applicable §; delegate to rules-subagent if needed | guide Subagents for rules |
 
 Anything you type after the command name (e.g. `/rules-summary refactor`) is
 passed to the model as part of that command’s instruction.
@@ -63,8 +64,8 @@ features required.
   then check the diff or path against the cited § (e.g. §P, §N) using store.md
   Part B; no subagent required.
 - **When using Cursor**: Slash commands, `.cursor/rules`, and agents (e.g.
-  rules-subagent) are optional; see § Cursor chat commands (project) and
-  § Subagents for rules.
+  rules-subagent) are optional; see § Cursor chat commands (project) and §
+  Subagents for rules.
 
 ---
 

@@ -87,9 +87,9 @@ Optional tooling (status line, setup script, tips): see
   sections)". Run `deno task rules:summary -- <task-type>` to get the list and
   one-line titles (works from any editor). In Cursor, you can also use the
   matching skill from `.cursor/skills/`.
-- **Heavy verification**: In Cursor, use a subagent; see "Subagents for rules" in
-  guide.md. Elsewhere, run rules:summary and check the change against the cited
-  § using store.md.
+- **Heavy verification**: In Cursor, use a subagent; see "Subagents for rules"
+  in guide.md. Elsewhere, run rules:summary and check the change against the
+  cited § using store.md.
 
 ---
 
