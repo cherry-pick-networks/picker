@@ -21,6 +21,23 @@ async function collectItemIds(
   return item_ids;
 }
 
+async function collectItemIdsBySubjectWeights(
+  subjectWeights: Record<string, number>,
+  itemCount: number,
+): Promise<string[]> {
+  const all: string[] = [];
+  for (const [subjectId, weight] of Object.entries(subjectWeights)) {
+    const target = Math.round(itemCount * weight);
+    if (target <= 0) continue;
+    const items = await contentStore.listItemsByConcept(subjectId);
+    for (let i = 0; i < target && i < items.length; i++) {
+      const id = items[i]?.item_id as string;
+      if (id) all.push(id);
+    }
+  }
+  return all.slice(0, itemCount);
+}
+
 function buildWorksheetMeta(
   request: GenerateWorksheetRequest,
   worksheet_id: string,
@@ -69,7 +86,14 @@ export async function generateWorksheet(
   const { worksheet_id, conceptIds: ids, perConcept } = initWorksheetRequest(
     request,
   );
-  const item_ids = await collectItemIds(ids, perConcept);
+  const item_count = request.item_count ?? 5;
+  const item_ids = request.subject_weights &&
+      Object.keys(request.subject_weights).length > 0
+    ? await collectItemIdsBySubjectWeights(
+      request.subject_weights,
+      item_count,
+    )
+    : await collectItemIds(ids, perConcept);
   const worksheet = buildWorksheetMeta(request, worksheet_id, item_ids);
   return saveWorksheet(worksheet);
 }
