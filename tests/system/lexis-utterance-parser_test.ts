@@ -3,7 +3,10 @@
  */
 
 import { assertEquals } from "@std/assert";
-import { parseUtterance } from "#system/lexis/utterance-parser.service.ts";
+import {
+  parseUtterance,
+  parseUtteranceWithFallback,
+} from "#system/lexis/utterance-parser.service.ts";
 
 const ALLOWED = new Set([
   "lexis-middle-intermediate",
@@ -33,3 +36,42 @@ Deno.test("parseUtterance unknown_source when no keyword match", () => {
   assertEquals(r.ok, false);
   if (!r.ok) assertEquals(r.reason, "unknown_source");
 });
+
+Deno.test(
+  "parseUtteranceWithFallback returns regex result without calling LLM",
+  async () => {
+    const hadKey = Deno.env.get("OPENAI_API_KEY");
+    Deno.env.delete("OPENAI_API_KEY");
+    Deno.env.delete("LEXIS_UTTERANCE_LLM_MOCK");
+    try {
+      const r = await parseUtteranceWithFallback(
+        "워드마스터 중등 실력 1일차",
+        ALLOWED,
+      );
+      assertEquals(r.ok, true);
+      if (r.ok) {
+        assertEquals(r.source_id, "lexis-middle-intermediate");
+        assertEquals(r.days, [1]);
+      }
+    } finally {
+      if (hadKey !== undefined) Deno.env.set("OPENAI_API_KEY", hadKey);
+    }
+  },
+);
+
+Deno.test(
+  "parseUtteranceWithFallback uses LLM mock when regex fails",
+  async () => {
+    Deno.env.set("LEXIS_UTTERANCE_LLM_MOCK", "1");
+    try {
+      const r = await parseUtteranceWithFallback("그 책 1일차만", ALLOWED);
+      assertEquals(r.ok, true);
+      if (r.ok) {
+        assertEquals(r.source_id, "lexis-middle-intermediate");
+        assertEquals(r.days, [1]);
+      }
+    } finally {
+      Deno.env.delete("LEXIS_UTTERANCE_LLM_MOCK");
+    }
+  },
+);
