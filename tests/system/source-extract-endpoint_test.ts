@@ -80,7 +80,7 @@ Deno.test(
       const body = await res.json();
       assertEquals(body.ok, true);
       assertEquals(Array.isArray(body.concept_ids), true);
-      assertEquals(body.concept_ids, ["mock-concept-1"]);
+      assertEquals(body.concept_ids, ["bloom-1"]);
       assertEquals(body.subject_id, "iscedf-02");
       assertEquals(typeof body.extracted_at, "string");
     } finally {

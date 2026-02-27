@@ -1,7 +1,11 @@
 /**
- * Source extract service: load source → LLM extract → save extracted_*.
+ * Source extract service: load source → LLM extract → validate → save.
  */
 
+import {
+  ID_COUNT_LIMIT,
+  validateFacetSchemes,
+} from "#system/concept/concept.service.ts";
 import type { Source } from "#system/source/source.schema.ts";
 import { extractConcepts } from "#system/source/source-llm.client.ts";
 import { getSource } from "#system/source/source.service.ts";
@@ -47,6 +51,22 @@ function validateForExtract(source: Source | null): ExtractFail | null {
   return null;
 }
 
+async function validateExtractConceptIds(ids: string[]): Promise<void> {
+  if (ids.length > ID_COUNT_LIMIT) {
+    throw new Error(`Too many concept IDs (max ${ID_COUNT_LIMIT})`);
+  }
+  const { invalid } = await validateFacetSchemes("concept", ids);
+  if (invalid.length > 0) {
+    throw new Error(`Invalid concept IDs: ${invalid.join(", ")}`);
+  }
+}
+
+async function validateExtractSubjectId(id: string | undefined): Promise<void> {
+  if (id == null || id === "") return;
+  const { invalid } = await validateFacetSchemes("subject", [id]);
+  if (invalid.length > 0) throw new Error(`Invalid subject_id: ${id}`);
+}
+
 function persistExtract(
   source: Source,
   concept_ids: string[],
@@ -72,6 +92,8 @@ function persistExtract(
 async function runExtractAndSave(source: Source): Promise<ExtractOk> {
   const llm = await extractConcepts(source.body as string);
   if (!llm.ok) return Promise.reject(new Error(llm.error));
+  await validateExtractConceptIds(llm.output.concept_ids);
+  await validateExtractSubjectId(llm.output.subject_id);
   return persistExtract(
     source,
     llm.output.concept_ids,
@@ -93,6 +115,7 @@ export async function extractConceptsFromSource(
     return await runExtractAndSave(source!);
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
-    return { ok: false, status: 502, message: msg };
+    const status = msg.startsWith("Invalid ") ? 400 : 502;
+    return { ok: false, status, message: msg };
   }
 }

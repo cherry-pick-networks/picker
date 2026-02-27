@@ -72,9 +72,9 @@ async function callChat(
   return parseChatContent(res);
 }
 
-/** Fixed mock output when SOURCE_EXTRACT_LLM_MOCK is set. */
+/** Fixed mock output when SOURCE_EXTRACT_LLM_MOCK is set (allowlist codes). */
 const MOCK_OUTPUT: SourceExtractOutput = {
-  concept_ids: ["mock-concept-1"],
+  concept_ids: ["bloom-1"],
   subject_id: "iscedf-02",
 };
 

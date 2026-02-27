@@ -13,7 +13,7 @@ Deno.test(
       const result = await extractConcepts("any passage text");
       assertEquals(result.ok, true);
       if (result.ok) {
-        assertEquals(result.output.concept_ids, ["mock-concept-1"]);
+        assertEquals(result.output.concept_ids, ["bloom-1"]);
         assertEquals(result.output.subject_id, "iscedf-02");
       }
     } finally {
