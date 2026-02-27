@@ -15,14 +15,13 @@ const OUT_FILE = "temp/generated-grammar-item.md";
 const CHOICE_MARKERS = ["①", "②", "③", "④", "⑤"] as const;
 
 function itemToMarkdown(item: Item, index: number): string {
-  const topic =
-    (item.parameters?.topic_label as string) ?? "Grammar";
+  const topic = (item.parameters?.topic_label as string) ?? "Grammar";
   const difficulty = item.difficulty ?? "Medium";
-  const explanation =
-    (item.parameters?.explanation as string) ?? "";
+  const explanation = (item.parameters?.explanation as string) ?? "";
   const parts = (item.stem ?? "").split("\n\n");
   const passage = parts[0] ?? "";
-  const question = parts[1] ?? "Which of the underlined parts is grammatically incorrect?";
+  const question = parts[1] ??
+    "Which of the underlined parts is grammatically incorrect?";
   const options = item.options ?? [];
   const correct = Math.min(5, Math.max(1, item.correct ?? 1));
   const answerMarker = CHOICE_MARKERS[correct - 1];

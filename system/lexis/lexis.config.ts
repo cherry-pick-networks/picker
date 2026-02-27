@@ -2,6 +2,7 @@
 
 const LEXIS_ALLOWED_SOURCE_IDS = new Set<string>([
   "lexis-high-basic",
+  "lexis-middle-basic",
   "lexis-middle-intermediate",
 ]);
 

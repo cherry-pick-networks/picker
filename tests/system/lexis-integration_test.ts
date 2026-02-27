@@ -13,7 +13,7 @@ const dbOpts = () => ({ sanitizeResources: false, ignore: !hasDbEnv() });
 
 function url(path: string, q?: Record<string, string>): string {
   const u = new URL(path, "http://localhost");
-  if (q) for (const [k, v] of Object.entries(q)) u.searchParams.set(k, v);
+  if (q) { for (const [k, v] of Object.entries(q)) u.searchParams.set(k, v); }
   return u.toString();
 }
 

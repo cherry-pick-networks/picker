@@ -36,7 +36,7 @@ description: Source data parsing and KAG build (system/source/).
 | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Source**     | One source record. Meta (existing) + **body**.                                                                                               |
 | **Body**       | Long text (e.g. exam/course passage). Storage and transfer unit.                                                                             |
-| **Subject ID** | Subject facet: isced/iscedf code only (e.g. `iscedf-02`, `isced-3`). See global-standards.toml. Optional.                                   |
+| **Subject ID** | Subject facet: isced/iscedf code only (e.g. `iscedf-02`, `isced-3`). See global-standards.toml. Optional.                                    |
 | **Concept ID** | Exam/course concept identifier. Align with content domain `concept_id` where possible.                                                       |
 | **KAG**        | Knowledge Attribute Graph. **Source ↔ subject/concept ID mapping**. Here: store and query extracted concept_ids (and subject_id) per Source. |
 

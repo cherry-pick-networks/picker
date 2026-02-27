@@ -8,12 +8,18 @@ import { parseDays } from "./days-parser.ts";
 import { parseUtteranceWithLlm } from "./lexis-llm.client.ts";
 import { matchSourceIdByKeyword } from "./source-matcher.config.ts";
 
-const CACHE = new Map<string, { value: LexisUtteranceLlmOutput; expiresAt: number }>();
+const CACHE = new Map<
+  string,
+  { value: LexisUtteranceLlmOutput; expiresAt: number }
+>();
 let cacheHits = 0;
 let cacheMisses = 0;
 
 // function-length-ignore — getter (store.md §P)
-export function getLexisUtteranceCacheStats(): { hits: number; misses: number } {
+export function getLexisUtteranceCacheStats(): {
+  hits: number;
+  misses: number;
+} {
   return { hits: cacheHits, misses: cacheMisses };
 }
 

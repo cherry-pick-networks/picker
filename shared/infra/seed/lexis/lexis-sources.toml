@@ -3,6 +3,10 @@
 # per store.md §V. Env var = JSON object for payload: source_id, type, metadata.
 
 [[source]]
+source_id = "lexis-middle-basic"
+env_var = "LEXIS_SOURCE_META_MIDDLE_BASIC"
+
+[[source]]
 source_id = "lexis-middle-intermediate"
 env_var = "LEXIS_SOURCE_META_MIDDLE_INTERMEDIATE"
 

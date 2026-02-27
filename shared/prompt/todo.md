@@ -32,7 +32,7 @@ Use that document for AI direction and todo decisions.
 | **system/schedule/**      | FSRS schedule (in-house algo): endpoint, service, store, schema, fsrs.ts, fsrs-adapter. Weekly plan (3 sessions/week, 3 new units/week) and optional annual curriculum from grammar payload. |
 | **system/kv/**            | Generic key-value HTTP API: endpoint, store (Postgres-backed).                                                                                                                               |
 | **system/audit/**         | Log artifact storage (e.g. e2e-runs.toml in same dir as audit-e2e-runs.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added.                       |
-| **system/lexis/**         | Lexis entries: store, endpoint. GET /lexis/entries (query: source_id, days). Utterance parser (hybrid regex + LLM) in same module.                                                          |
+| **system/lexis/**         | Lexis entries: store, endpoint. GET /lexis/entries (query: source_id, days). Utterance parser (hybrid regex + LLM) in same module.                                                           |
 | **shared/runtime/store/** | Target path for self-edit; read and write only via Governance-verified flow.                                                                                                                 |
 | **shared/infra/**         | Shared infrastructure. Postgres client (`getPg()`) only; no KV, no business logic.                                                                                                           |
 
@@ -75,7 +75,7 @@ Use that document for AI direction and todo decisions.
 | GET    | `/schedule/items`                  | List schedule items. Query: actor_id, optional source_id. Responds { items: ScheduleItem[] }.                                                                                                                                         |
 | POST   | `/schedule/items`                  | Create schedule item. Body: actor_id, source_id, unit_id. Responds 201 with item.                                                                                                                                                     |
 | POST   | `/schedule/items/:id/review`       | Record review. Body: grade (1–4), optional reviewed_at. Responds 200 with updated item.                                                                                                                                               |
-| GET    | `/lexis/entries`                   | List lexis entries. Query: source_id + days (required), or q (utterance; regex then LLM fallback). Responds { entries: LexisEntry[] } or 400.                                                                                    |
+| GET    | `/lexis/entries`                   | List lexis entries. Query: source_id + days (required), or q (utterance; regex then LLM fallback). Responds { entries: LexisEntry[] } or 400.                                                                                         |
 
 - **Sensitive data**: Identity and source metadata (copyright/author) are
   redacted for external callers. Send `X-Client: agent` or

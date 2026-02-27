@@ -1,26 +1,27 @@
 /**
- * Keyword → source_id mapping for utterance parsing.
- * Longest match wins. Load allowed list from sources; this is static overlay.
+ * Keyword → source_id from .env (lexis-sources.toml + LEXIS_SOURCE_META_*).
+ * Longest match wins. Allowed list passed at match time.
  */
 
-const PAIRS: [string, string][] = [
-  ["워드마스터 중등 실력", "lexis-middle-intermediate"],
-  ["워드마스터 중등 Basic", "lexis-high-basic"],
-  ["중등 실력", "lexis-middle-intermediate"],
-  ["중등 Basic", "lexis-high-basic"],
-  ["lexis-middle-intermediate", "lexis-middle-intermediate"],
-  ["lexis-high-basic", "lexis-high-basic"],
-];
-export const KEYWORD_TO_SOURCE_ID: [string, string][] = PAIRS.slice().sort(
-  (a, b) => b[0].length - a[0].length,
-);
+import { getLexisSourceKeywordPairs } from "#shared/infra/lexis-source-keywords.ts";
+
+let cached: [string, string][] | null = null;
+
+function getPairs(): [string, string][] {
+  if (cached == null) cached = getLexisSourceKeywordPairs();
+  return cached;
+}
+
+export function clearLexisSourceKeywordCache(): void {
+  cached = null;
+}
 
 export function matchSourceIdByKeyword(
   utterance: string,
   allowedIds: Set<string>,
 ): string | null {
   const trimmed = utterance.trim();
-  for (const [keyword, sourceId] of KEYWORD_TO_SOURCE_ID) {
+  for (const [keyword, sourceId] of getPairs()) {
     if (!trimmed.includes(keyword)) continue;
     if (allowedIds.has(sourceId)) return sourceId;
   }
