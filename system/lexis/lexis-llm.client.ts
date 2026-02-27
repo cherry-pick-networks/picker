@@ -20,6 +20,7 @@ const PROMPT =
   "Return JSON only: source_id (English ID, e.g. lexis-middle-intermediate), " +
   "days (array of integers >= 1).";
 
+// function-length-ignore — getter (store.md §P)
 function getApiKey(): string | undefined {
   return Deno.env.get("OPENAI_API_KEY");
 }
@@ -29,6 +30,7 @@ function getModel(): string {
   return m ?? DEFAULT_MODEL;
 }
 
+// function-length-ignore — single return (store.md §P)
 function buildMessages(utterance: string): { role: string; content: string }[] {
   return [
     { role: "system", content: PROMPT },

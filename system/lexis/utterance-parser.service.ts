@@ -12,6 +12,7 @@ const CACHE = new Map<string, { value: LexisUtteranceLlmOutput; expiresAt: numbe
 let cacheHits = 0;
 let cacheMisses = 0;
 
+// function-length-ignore — getter (store.md §P)
 export function getLexisUtteranceCacheStats(): { hits: number; misses: number } {
   return { hits: cacheHits, misses: cacheMisses };
 }
@@ -29,6 +30,7 @@ function cacheTtlSec(): number {
   return Number.isInteger(n) && n >= 0 ? n : 60;
 }
 
+// function-length-ignore — one-liner (store.md §P)
 function cacheKey(utterance: string): string {
   return utterance.trim().replace(/\s+/g, " ");
 }
