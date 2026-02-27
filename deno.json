@@ -15,7 +15,7 @@
   "tasks": {
     "dev": "./scripts/dev.sh",
     "build": "deno run -A npm:vite build",
-    "start": "deno run -A main.ts",
+    "start": "deno run -A --env main.ts",
     "test": "deno test -A",
     "test:with-db": "./scripts/dev.sh test",
     "test:e2e-record": "deno run -A shared/prompt/scripts/run-e2e-record.ts",
@@ -39,10 +39,11 @@
     "boundary-check": "deno run --allow-read shared/prompt/scripts/check-domain-boundary.ts",
     "dependency-check": "deno run --allow-read shared/prompt/scripts/check-domain-deps.ts",
     "pre-push": "./scripts/dev.sh deno task pre-push-inner",
-    "pre-push-inner": "deno lint && deno task format-check && deno task ts-filename-check && deno task sql-filename-check && deno test -A && deno task todo-check && deno task boundary-check && deno task dependency-check && deno task type-check-policy && deno audit",
+    "pre-push-inner": "deno lint && deno task format-check && deno task ts-filename-check && deno task sql-filename-check && deno task ontology-schemes-check && deno test -A && deno task todo-check && deno task boundary-check && deno task dependency-check && deno task type-check-policy && deno audit",
     "todo-check": "deno run --allow-read shared/prompt/scripts/check-todo.ts",
     "todo-discovery": "deno run --allow-read shared/prompt/scripts/todo-discovery.ts",
     "ontology-acyclic-check": "deno run -A shared/prompt/scripts/check-ontology-acyclic.ts",
+    "ontology-schemes-check": "deno run --allow-read shared/prompt/scripts/check-ontology-schemes.ts",
     "rules:summary": "deno run -A shared/prompt/scripts/rules-summary.ts",
     "sql-filename-check": "deno run --allow-read shared/prompt/scripts/check-sql-filename.ts",
     "clean-branches": "sh shared/prompt/scripts/clean-local-branches.sh"

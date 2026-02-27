@@ -10,9 +10,8 @@ description: |
 Apply store.md **§R, §D, §E, §F, §K, §L, §M**. Full text in
 shared/prompt/store.md Part B only; this skill gives a short checklist.
 
-**Before editing**: Run `deno task rules:summary -- docs` (or use
-/rules-summary docs) and apply the listed § for this session. Keep the output
-in context.
+**Before editing**: Run `deno task rules:summary -- docs` (or use /rules-summary
+docs) and apply the listed § for this session. Keep the output in context.
 
 ## §R — AI document writing
 

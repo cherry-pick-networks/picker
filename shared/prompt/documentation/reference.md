@@ -194,16 +194,21 @@ typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
 
 ### Data file locations (TOML)
 
-| Path                                               | Purpose                                                                                                          |
-| -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `shared/record/reference/identity-index.toml`      | Identity index. API: redacted unless X-Client: agent.                                                            |
-| `system/audit/e2e-runs.toml`                       | E2E run log (schemaVersion + runs[])                                                                             |
-| `shared/infra/seed/ontology/seed.sql`              | Ontology seed (DDC scheme).                                                                                      |
-| `shared/infra/seed/ontology/global-standards.toml` | Ontology seed: isced, iscedf, bloom (no CEFR/PISA).                                                              |
-| `shared/prompt/documentation/grammar-topics.md`    | Grammar curriculum: 17 major topics, level→unit mapping (schedule/content).                                      |
-| `shared/infra/seed/grammar-unit-topics.toml`       | unit_id → topic_label for grammar item generation (POST /content/items/generate). Synced with grammar-topics.md. |
-| `shared/infra/seed/curriculum-52weeks.json`        | Seed source for 52-week curriculum; runtime data in DB table `curriculum_slot`.                                  |
-| `shared/infra/seed/lexis/lexis-sources.toml`       | Lexis source list (source_id, env_var). Actual metadata from .env (store.md §V); `deno task seed:lexis`.         |
+| Path                                               | Purpose                                                                                                                               |
+| -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| `shared/record/reference/identity-index.toml`      | Identity index. API: redacted unless X-Client: agent.                                                                                 |
+| `system/audit/e2e-runs.toml`                       | E2E run log (schemaVersion + runs[])                                                                                                  |
+| `shared/infra/seed/ontology/seed.sql`              | Ontology seed (reserved).                                                                                                             |
+| `shared/infra/seed/ontology/global-standards.toml` | **Single definition** for concept schemes and concepts (isced, iscedf, bloom, cefr, actfl, doctype). Seed: `deno task seed:ontology`. |
+| `shared/prompt/documentation/grammar-topics.md`    | Grammar curriculum: 17 major topics, level→unit mapping (schedule/content).                                                           |
+| `shared/infra/seed/grammar-unit-topics.toml`       | unit_id → topic_label for grammar item generation (POST /content/items/generate). Synced with grammar-topics.md.                      |
+| `shared/infra/seed/curriculum-52weeks.json`        | Seed source for 52-week curriculum; runtime data in DB table `curriculum_slot`.                                                       |
+| `shared/infra/seed/lexis/lexis-sources.toml`       | Lexis source list (source_id, env_var). Actual metadata from .env (store.md §V); `deno task seed:lexis`.                              |
+
+**Not ontology**: Identity index, lexis sources, curriculum slots (52-week),
+grammar-unit-topics.toml, and client identity are **not** concept schemes; they
+are reference or runtime data. Only `global-standards.toml` (and any future
+concept_relation TOML) defines the ontology.
 
 ### Curriculum (52 weeks)
 
@@ -215,24 +220,28 @@ schedule-fsrs-plan.md.
 
 ### Ontology and facet policy
 
+- **Single definition**: All concept schemes and concepts are defined only in
+  `shared/infra/seed/ontology/global-standards.toml`. Code and docs derive from
+  it; `deno task seed:ontology` loads into DB. Code must match TOML (CI:
+  `deno task ontology-schemes-check`).
 - **DAG**: The whole of `concept_relation` must form a DAG; there must be no
   cycles for any `relation_type` (e.g. broader, narrower, requires, depends-on).
   Run `deno task ontology-acyclic-check` to verify (e.g. after applying schema
   and seed).
-- **Facet schemes**: Subject IDs use allowed schemes (ddc, isced, iscedf).
-  Content type, cognitive level, and context use their respective allowed
-  schemes (see system/concept/concept-schemes.ts). Content and worksheet APIs
-  validate concept IDs per facet and cap at 500 per request.
-- **CI**: `deno task pre-push` does not run `ontology-acyclic-check`. After
-  running `deno task seed:ontology`, run `deno task ontology-acyclic-check`
-  manually when changing ontology seed or relations.
+- **Facet schemes**: Subject IDs use isced, iscedf. Content type, cognitive
+  level, and context use their respective allowed schemes (see
+  system/concept/concept-schemes.ts). Content and worksheet APIs validate
+  concept IDs per facet and cap at 500 per request.
+- **CI**: `deno task pre-push` runs `ontology-schemes-check`. It does not run
+  `ontology-acyclic-check`; after changing ontology seed or relations, run
+  `deno task ontology-acyclic-check` manually.
 
 ### Classification allowlists (4 facets)
 
-Single source for allowed concept codes:
-`shared/infra/seed/ontology/global-standards.toml`. Runtime validation:
-`system/concept/concept-schemes.ts` maps each facet to scheme(s); content and
-(when implemented) source APIs reject values not in the allowlist.
+**Canonical source**: `shared/infra/seed/ontology/global-standards.toml`. The
+lists below are a summary; the TOML (and DB after seed) is the authority.
+Runtime: `system/concept/concept-schemes.ts` maps each facet to scheme(s);
+content and (when implemented) source APIs reject values not in the allowlist.
 
 **Facet → scheme mapping**
 
@@ -241,7 +250,7 @@ Single source for allowed concept codes:
 | Subject               | isced, iscedf | ISCED 2011 (level), ISCED-F 2013 (field) |
 | DocType (contentType) | doctype       | Schema.org / BibTeX                      |
 | Cognitive             | bloom         | Bloom's taxonomy (revised)               |
-| Proficiency (context) | cefr          | CEFR                                     |
+| Proficiency (context) | cefr, actfl   | CEFR, ACTFL                              |
 
 **Allowed codes per scheme (canonical list in global-standards.toml)**
 

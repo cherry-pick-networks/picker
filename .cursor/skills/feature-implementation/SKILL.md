@@ -12,8 +12,8 @@ Apply store.md **§Q, §P, §B, §S, §T, §N**. Full text in shared/prompt/stor
 Part B only; this skill gives a short checklist.
 
 **Before editing**: Run `deno task rules:summary -- feature` (or use
-/rules-summary feature) and apply the listed § for this session. Keep the
-output in context.
+/rules-summary feature) and apply the listed § for this session. Keep the output
+in context.
 
 ## §Q — Phase-gated cycle
 

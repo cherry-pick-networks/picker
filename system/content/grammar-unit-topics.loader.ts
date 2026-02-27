@@ -28,4 +28,3 @@ export function getTopicLabel(
   const out = topics[unitId];
   return out;
 }
-

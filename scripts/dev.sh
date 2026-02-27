@@ -9,7 +9,7 @@ export PG_PORT=${PG_PORT:-5432}
 export PG_USER=${PG_USER:-postgres}
 export PG_DATABASE=${PG_DATABASE:-picker}
 if [[ $# -eq 0 ]]; then
-  exec deno run -A --watch main.ts
+  exec deno run -A --env --watch main.ts
 elif [[ "${1:-}" == "test" ]]; then
   exec deno test -A
 else
