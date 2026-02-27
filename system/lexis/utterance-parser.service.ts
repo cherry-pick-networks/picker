@@ -1,11 +1,37 @@
 /**
  * Orchestrator: utterance → { source_id, days }. Regex first; LLM fallback
- * when regex fails.
+ * when regex fails. Optional short-TTL cache for LLM output.
  */
 
+import type { LexisUtteranceLlmOutput } from "./lexis-llm.schema.ts";
 import { parseDays } from "./days-parser.ts";
 import { parseUtteranceWithLlm } from "./lexis-llm.client.ts";
 import { matchSourceIdByKeyword } from "./source-matcher.config.ts";
+
+const CACHE = new Map<string, { value: LexisUtteranceLlmOutput; expiresAt: number }>();
+let cacheHits = 0;
+let cacheMisses = 0;
+
+export function getLexisUtteranceCacheStats(): { hits: number; misses: number } {
+  return { hits: cacheHits, misses: cacheMisses };
+}
+
+export function resetLexisUtteranceCacheStats(): void {
+  CACHE.clear();
+  cacheHits = 0;
+  cacheMisses = 0;
+}
+
+function cacheTtlSec(): number {
+  const s = Deno.env.get("LEXIS_UTTERANCE_CACHE_TTL_SEC");
+  if (s == null || s === "") return 60;
+  const n = parseInt(s, 10);
+  return Number.isInteger(n) && n >= 0 ? n : 60;
+}
+
+function cacheKey(utterance: string): string {
+  return utterance.trim().replace(/\s+/g, " ");
+}
 
 export type ParseSuccess = {
   ok: true;
@@ -37,19 +63,41 @@ function normalizeDays(days: number[]): number[] {
   return [...new Set(valid)].sort((a, b) => a - b);
 }
 
-/** Async: regex first; on failure call LLM and validate source_id, normalize days. */
+function fromLlmOutput(
+  out: LexisUtteranceLlmOutput,
+  allowedSourceIds: Set<string>,
+): UtteranceParseResult {
+  if (!allowedSourceIds.has(out.source_id)) {
+    return { ok: false, reason: "unknown_source" };
+  }
+  const days = normalizeDays(out.days);
+  if (days.length === 0) return { ok: false, reason: "no_days" };
+  return { ok: true, source_id: out.source_id, days };
+}
+
+/** Async: regex first; on failure call LLM (or cache) and validate, normalize days. */
 export async function parseUtteranceWithFallback(
   utterance: string,
   allowedSourceIds: Set<string>,
 ): Promise<UtteranceParseResult> {
   const sync = parseUtterance(utterance, allowedSourceIds);
   if (sync.ok) return sync;
+  const key = cacheKey(utterance);
+  const now = Date.now();
+  const entry = CACHE.get(key);
+  if (entry && entry.expiresAt > now) {
+    cacheHits++;
+    return fromLlmOutput(entry.value, allowedSourceIds);
+  }
+  cacheMisses++;
   const llm = await parseUtteranceWithLlm(utterance);
   if (!llm.ok) return { ok: false, reason: "parse_error" };
-  if (!allowedSourceIds.has(llm.output.source_id)) {
-    return { ok: false, reason: "unknown_source" };
+  const ttl = cacheTtlSec();
+  if (ttl > 0) {
+    CACHE.set(key, {
+      value: llm.output,
+      expiresAt: now + ttl * 1000,
+    });
   }
-  const days = normalizeDays(llm.output.days);
-  if (days.length === 0) return { ok: false, reason: "no_days" };
-  return { ok: true, source_id: llm.output.source_id, days };
+  return fromLlmOutput(llm.output, allowedSourceIds);
 }

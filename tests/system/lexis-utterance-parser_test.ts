@@ -4,8 +4,10 @@
 
 import { assertEquals } from "@std/assert";
 import {
+  getLexisUtteranceCacheStats,
   parseUtterance,
   parseUtteranceWithFallback,
+  resetLexisUtteranceCacheStats,
 } from "#system/lexis/utterance-parser.service.ts";
 
 const ALLOWED = new Set([
@@ -70,6 +72,26 @@ Deno.test(
         assertEquals(r.source_id, "lexis-middle-intermediate");
         assertEquals(r.days, [1]);
       }
+    } finally {
+      Deno.env.delete("LEXIS_UTTERANCE_LLM_MOCK");
+    }
+  },
+);
+
+Deno.test(
+  "parseUtteranceWithFallback second call uses cache (no extra LLM call)",
+  async () => {
+    Deno.env.set("LEXIS_UTTERANCE_LLM_MOCK", "1");
+    resetLexisUtteranceCacheStats();
+    try {
+      await parseUtteranceWithFallback("그 책 1일차만", ALLOWED);
+      const statsAfterFirst = getLexisUtteranceCacheStats();
+      assertEquals(statsAfterFirst.misses, 1);
+      assertEquals(statsAfterFirst.hits, 0);
+      await parseUtteranceWithFallback("그 책 1일차만", ALLOWED);
+      const statsAfterSecond = getLexisUtteranceCacheStats();
+      assertEquals(statsAfterSecond.misses, 1);
+      assertEquals(statsAfterSecond.hits, 1);
     } finally {
       Deno.env.delete("LEXIS_UTTERANCE_LLM_MOCK");
     }
