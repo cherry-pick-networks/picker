@@ -39,6 +39,7 @@ export const ROUTES: { method: string; path: string }[] = [
   { method: "GET", path: "/schedule/items" },
   { method: "POST", path: "/schedule/items" },
   { method: "POST", path: "/schedule/items/:id/review" },
+  { method: "GET", path: "/lexis/entries" },
   { method: "GET", path: "/scripts" },
   { method: "GET", path: "/scripts/:path*" },
   { method: "POST", path: "/scripts/:path*" },

@@ -9,6 +9,7 @@ import * as data from "#system/record/identity-index.endpoint.ts";
 import * as home from "./home.handler.ts";
 import * as kv from "#system/kv/kv.endpoint.ts";
 import * as profile from "#system/actor/profile.endpoint.ts";
+import * as lexis from "#system/lexis/lexis.endpoint.ts";
 import * as schedule from "#system/schedule/schedule.endpoint.ts";
 import * as source from "#system/source/source.endpoint.ts";
 
@@ -61,6 +62,10 @@ function registerSource(app: Hono) {
   app.post("/sources/:id/extract", source.postSourceExtract);
 }
 
+function registerLexis(app: Hono) {
+  app.get("/lexis/entries", lexis.getEntries);
+}
+
 function registerData(app: Hono) {
   app.get("/data/identity-index", data.getIdentityIndex);
   app.get("/data/identity/:id", data.getIdentityById);
@@ -87,6 +92,7 @@ const REST_HANDLERS = [
   registerProgress,
   registerContent,
   registerSource,
+  registerLexis,
   registerData,
   registerSchedule,
   registerKvMutate,

@@ -32,6 +32,7 @@ Use that document for AI direction and todo decisions.
 | **system/schedule/**      | FSRS schedule (in-house algo): endpoint, service, store, schema, fsrs.ts, fsrs-adapter. Weekly plan (3 sessions/week, 3 new units/week) and optional annual curriculum from grammar payload. |
 | **system/kv/**            | Generic key-value HTTP API: endpoint, store (Postgres-backed).                                                                                                                               |
 | **system/audit/**         | Log artifact storage (e.g. e2e-runs.toml in same dir as audit-e2e-runs.ts). Test/tooling writes run history. Not served by API unless an audit read endpoint is added.                       |
+| **system/lexis/**         | Lexis entries: store, endpoint. GET /lexis/entries (query: source_id, days). Utterance parser (hybrid regex + LLM) in same module.                                                          |
 | **shared/runtime/store/** | Target path for self-edit; read and write only via Governance-verified flow.                                                                                                                 |
 | **shared/infra/**         | Shared infrastructure. Postgres client (`getPg()`) only; no KV, no business logic.                                                                                                           |
 
@@ -74,6 +75,7 @@ Use that document for AI direction and todo decisions.
 | GET    | `/schedule/items`                  | List schedule items. Query: actor_id, optional source_id. Responds { items: ScheduleItem[] }.                                                                                                                                         |
 | POST   | `/schedule/items`                  | Create schedule item. Body: actor_id, source_id, unit_id. Responds 201 with item.                                                                                                                                                     |
 | POST   | `/schedule/items/:id/review`       | Record review. Body: grade (1–4), optional reviewed_at. Responds 200 with updated item.                                                                                                                                               |
+| GET    | `/lexis/entries`                   | List lexis entries by source and days. Query: source_id (required), days (comma-separated or repeated; 1-based day indices). Responds { entries: LexisEntry[] } or 400.                                                              |
 
 - **Sensitive data**: Identity and source metadata (copyright/author) are
   redacted for external callers. Send `X-Client: agent` or
@@ -103,9 +105,9 @@ Use that document for AI direction and todo decisions.
 ## Infrastructure
 
 - **PostgreSQL** — single storage backend. Client: `shared/infra/pg.client.ts`
-  (`getPg()`). Domain stores (actor, source, kv, content, schedule) and
+  (`getPg()`). Domain stores (actor, source, kv, content, schedule, lexis) and
   system/kv use it. Tables: `actor_profile`, `actor_progress`, `source`, `kv`,
-  `content_item`, `content_worksheet`, `schedule_item`. DDL under
+  `content_item`, `content_worksheet`, `schedule_item`, `lexis_entry`. DDL under
   `shared/infra/schema/` (e.g. `01_actor.sql`, `02_source.sql`,
   `07_schedule.sql`; see reference.md Schema DDL file naming).
 - **File-based data** — under `shared/record/reference/`: single file
