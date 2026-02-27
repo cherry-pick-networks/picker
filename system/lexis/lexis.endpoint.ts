@@ -1,7 +1,9 @@
-/** Lexis HTTP endpoints. */
+/** Lexis HTTP endpoints. Query: source_id+days, or q (utterance) for fallback. */
 
 import type { Context } from "hono";
+import { getLexisAllowedSourceIds } from "./lexis.config.ts";
 import { listEntriesBySourceAndDays } from "./lexis.store.ts";
+import { parseUtteranceWithFallback } from "./utterance-parser.service.ts";
 
 function validateQuery(
   sourceId: string,
@@ -16,6 +18,19 @@ function validateQuery(
 
 // function-length-ignore — endpoint: query read, validate, fetch, respond
 export async function getEntries(c: Context) {
+  const q = c.req.query("q")?.trim();
+  if (q) {
+    const parsed = await parseUtteranceWithFallback(
+      q,
+      getLexisAllowedSourceIds(),
+    );
+    if (!parsed.ok) return c.json({ error: parsed.reason }, 400);
+    const entries = await listEntriesBySourceAndDays(
+      parsed.source_id,
+      parsed.days,
+    );
+    return c.json({ entries });
+  }
   const sourceId = c.req.query("source_id") ?? "";
   const days = parseDaysQuery(c.req.query("days") ?? "");
   const err = validateQuery(sourceId, days);

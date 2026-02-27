@@ -75,7 +75,7 @@ Use that document for AI direction and todo decisions.
 | GET    | `/schedule/items`                  | List schedule items. Query: actor_id, optional source_id. Responds { items: ScheduleItem[] }.                                                                                                                                         |
 | POST   | `/schedule/items`                  | Create schedule item. Body: actor_id, source_id, unit_id. Responds 201 with item.                                                                                                                                                     |
 | POST   | `/schedule/items/:id/review`       | Record review. Body: grade (1–4), optional reviewed_at. Responds 200 with updated item.                                                                                                                                               |
-| GET    | `/lexis/entries`                   | List lexis entries by source and days. Query: source_id (required), days (comma-separated or repeated; 1-based day indices). Responds { entries: LexisEntry[] } or 400.                                                              |
+| GET    | `/lexis/entries`                   | List lexis entries. Query: source_id + days (required), or q (utterance; regex then LLM fallback). Responds { entries: LexisEntry[] } or 400.                                                                                    |
 
 - **Sensitive data**: Identity and source metadata (copyright/author) are
   redacted for external callers. Send `X-Client: agent` or
