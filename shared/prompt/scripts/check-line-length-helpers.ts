@@ -3,23 +3,19 @@
  * Used by check-line-length.ts.
  */
 
-export const MAX_LINE_LENGTH = 80;
+export const MAX_LINE_LENGTH = 100;
 export const MAX_EFFECTIVE_LINES_PER_FILE = 100;
 
-/** Comment on previous line: this line may exceed 80 chars (store.md §P). */
-export const LINE_LENGTH_IGNORE_PATTERN =
-  /\/\/.*\bline-length-ignore(-next-line)?(?:\s*:\s*\S.*)?\b/;
-
 export const SKIP_DIRS = new Set([
-  ".cache",
-  ".git",
-  ".cursor",
-  "node_modules",
-  "dist",
-  "build",
-  "coverage",
-  "vendor",
-  "temp",
+  '.cache',
+  '.git',
+  '.cursor',
+  'node_modules',
+  'dist',
+  'build',
+  'coverage',
+  'vendor',
+  'temp',
 ]);
 
 export async function walkTsFiles(
@@ -34,7 +30,7 @@ export async function walkTsFiles(
     if (e.isDirectory) {
       if (SKIP_DIRS.has(e.name)) continue;
       await walkTsFiles(root, full, out);
-    } else if (e.isFile && e.name.endsWith(".ts")) {
+    } else if (e.isFile && e.name.endsWith('.ts')) {
       out.push(rel);
     }
   }
@@ -70,17 +66,10 @@ export type ViolationsResult = {
   fileLength: FileLengthViolation[];
 };
 
-export function isLineLengthIgnored(lines: string[], index: number): boolean {
-  if (index <= 0) return false;
-  const prev = lines[index - 1]!.trim();
-  return LINE_LENGTH_IGNORE_PATTERN.test(prev);
-}
-
 export async function collectViolations(
   root: string,
   files: string[],
   isFileLengthExempt?: (rel: string) => boolean,
-  isLineLengthExemptFile?: (rel: string) => boolean,
 ): Promise<ViolationsResult> {
   const lineLength: LineLengthViolation[] = [];
   const fileLength: FileLengthViolation[] = [];
@@ -88,13 +77,9 @@ export async function collectViolations(
     const path = `${root}/${rel}`;
     const content = await Deno.readTextFile(path);
     const lines = content.split(/\r?\n/);
-    const skipLineLength = isLineLengthExemptFile?.(rel) ?? false;
     for (let i = 0; i < lines.length; i++) {
       const len = lines[i]!.length;
-      if (
-        len > MAX_LINE_LENGTH && !skipLineLength &&
-        !isLineLengthIgnored(lines, i)
-      ) {
+      if (len > MAX_LINE_LENGTH) {
         lineLength.push({ file: rel, line: i + 1, length: len });
       }
     }

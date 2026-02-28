@@ -1,12 +1,13 @@
 /**
- * TS filename check: system/ and shared/infra use [name].[suffix].ts per
- * store.md §E and reference.md. Run from repo root:
+ * TS filename check: system/, shared/infra, shared/contract, tests/ use
+ * camelCase or PascalCase base name (no dot or hyphen) per store.md §E and
+ * reference.md (Airbnb style). Run from repo root:
  *   deno run --allow-read shared/prompt/scripts/check-ts-filename.ts
  * Or: deno task ts-filename-check
  */
 
-import { walkTsFiles } from "./check-ts-filename-helpers.ts";
-import { validate } from "./check-ts-filename-validate.ts";
+import { walkTsFiles } from './check-ts-filename-helpers.ts';
+import { validate } from './check-ts-filename-validate.ts';
 
 async function collectFiles(root: string): Promise<string[]> {
   const files: string[] = [];
@@ -23,13 +24,13 @@ function collectErrors(files: string[]): [string, string][] {
 
 function reportAndExit(errors: [string, string][]): void {
   if (errors.length > 0) {
-    console.error("TS filename check failed (store.md §E, reference.md):");
+    console.error('TS filename check failed (store.md §E, reference.md):');
     for (const [file, msg] of errors) console.error(`  ${file}: ${msg}`);
     Deno.exit(1);
   }
   console.log(
-    "TS filename check passed: system/, shared/infra, and tests/ " +
-      "follow naming rules.",
+    'TS filename check passed: system/, shared/infra, shared/contract, tests/ ' +
+      'follow naming rules.',
   );
 }
 

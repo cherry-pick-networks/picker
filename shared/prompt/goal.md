@@ -54,7 +54,7 @@ format are defined in to-do.md and the spec. Add only items inside that todo.
 - Mutate only within shared/runtime/store/; use Governance-verified flow.
 - Write to config/ or credentials only via approved mechanisms; file-based
   shared/record/ (identity-index only) only via
-  system/record/identity-index.store.ts (see to-do.md).
+  system/record/identityIndexStore.ts (see to-do.md).
 - Apply type-check policy (store.md §N).
 
 Concretes: spec §44–§48 and store.md.

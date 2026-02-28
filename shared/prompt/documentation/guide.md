@@ -184,7 +184,7 @@ rules:summary and verify the change against the cited § yourself using store.md
 
 **Scenario 1 — Rule compliance check**: "Does this change satisfy §P and §N?" →
 Have the subagent check the diff or path against store.md §P, §N (function body
-2–4 statements, line length 80, no type-check bypass). Return a short list of
+2–4 statements, line length 100, no type-check bypass). Return a short list of
 violations or OK.
 
 **Scenario 2 — Applicable § list**: For the current path or task type, which §
@@ -196,7 +196,7 @@ skills; only delegate verification or deep exploration to subagents.
 
 **Verification task example** (for pre-push or "check this patch"): Give the
 subagent a task description like: "Given store.md §P and §N, check that the
-changes in <path> satisfy function body 2–4 statements, line length 80, and no
+changes in <path> satisfy function body 2–4 statements, line length 100, and no
 type-check bypass. Return a short list of violations or OK."
 
 ---
@@ -215,7 +215,7 @@ type-check bypass. Return a short list of violations or OK."
   - Analysis: `[symptom/error] + find cause` — e.g.
     `Find why type-check-policy fails`
   - Refactor: `[target] + [direction]` — e.g.
-    `Split content service functions over 80 lines`
+    `Split content service functions over 100 lines`
 - **Procedure**: Open new chat → state goal in one sentence → send; optionally
   rename the tab later in chat history if the auto-title is not ideal. If the
   task involves code changes, the agent should create a branch from the default

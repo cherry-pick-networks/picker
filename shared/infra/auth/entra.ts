@@ -3,9 +3,9 @@
  * Fetches JWKS from OpenID discovery, verifies signature and aud/exp/iss.
  */
 
-import { decode, verify } from "djwt";
+import { decode, verify } from 'djwt';
 
-const OPENID_PATH = "/v2.0/.well-known/openid-configuration";
+const OPENID_PATH = '/v2.0/.well-known/openid-configuration';
 
 export interface EntraClaims {
   aud?: string | string[];
@@ -57,11 +57,11 @@ function findKeyByKid(keys: JsonWebKey[], kid: string): JsonWebKey | null {
 
 async function importJwkToVerifyKey(jwk: JsonWebKey): Promise<CryptoKey> {
   const key = await crypto.subtle.importKey(
-    "jwk",
+    'jwk',
     jwk,
-    { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
+    { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' },
     false,
-    ["verify"],
+    ['verify'],
   );
   return key;
 }
@@ -76,11 +76,11 @@ export async function verifyEntraAccessToken(
 ): Promise<EntraClaims> {
   const [header] = decode(token);
   const kid = (header as { kid?: string }).kid;
-  if (!kid) throw new Error("JWT header missing kid");
+  if (!kid) throw new Error('JWT header missing kid');
 
   const config = await fetchOpenIdConfig(tenantId);
   const jwksUri = config.jwks_uri;
-  if (!jwksUri) throw new Error("OpenID config missing jwks_uri");
+  if (!jwksUri) throw new Error('OpenID config missing jwks_uri');
 
   const { keys } = await fetchJwks(jwksUri);
   const jwk = findKeyByKid(keys, kid);
@@ -93,7 +93,7 @@ export async function verifyEntraAccessToken(
   const expectedIssuer = issuer ??
     `https://login.microsoftonline.com/${tenantId}/v2.0`;
   if (payload.iss !== expectedIssuer) {
-    throw new Error("JWT iss claim does not match expected issuer");
+    throw new Error('JWT iss claim does not match expected issuer');
   }
   return payload as EntraClaims;
 }

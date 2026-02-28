@@ -50,10 +50,10 @@ Current todo and implementation state: [to-do.md](to-do.md).
 - API tests and todo-check in CI are done; E2E and script-store tests use temp
   dir; AST apply and log artifact storage implemented (see boundary for modules
   and routes).
-- S5 done: mutate.service and mutate.endpoint tests (Governance, readScript,
+- S5 done: mutateService and mutateEndpoint tests (Governance, readScript,
   blocks, mock LLM), E2E POST /script/mutate with withTempScriptsStore; legacy
   AST tests already removed; MAB·DAG local principle in to-do.md and
-  mutate.service comment; pre-push passes.
+  mutateService comment; pre-push passes.
 - Rule compliance (store.md §P and lint): Removed `shared/prompt/scripts/` from
   lint exclude so function-length applies to scripts. Split
   `system/service/content.ts` (271 lines) into content-schema, content-parse,
@@ -63,7 +63,7 @@ Current todo and implementation state: [to-do.md](to-do.md).
   naturally one statement (e.g. async generator) or many (e.g. main); no
   file-level exclude. Lint, type-check-policy, todo-check, naming-layer-check
   pass. Remaining §P: files still >100 lines (routes 135, profile 132, scripts
-  103, migrate-old-to-data 205, check-naming-layer 106); optional 80-char line
+  103, migrate-old-to-data 205, check-naming-layer 106); optional 100-char line
   pass.
 
 ---
@@ -170,8 +170,8 @@ approves this design. After approval, proceed to Phase 3 (S3a–S3e).
 
 - Mutate flow and tests (S5) are in place; pre-push passes.
 - Optional: Split remaining §P >100-line files (system/routes.ts,
-  system/actor/profile.service.ts, system/script/scripts.store.ts,
-  shared/prompt/scripts/check-naming-layer.ts) and run 80-char line check.
+  system/actor/profileService.ts, system/script/scriptsStore.ts,
+  shared/prompt/scripts/check-naming-layer.ts) and run 100-char line check.
 - Deferred: Spec summary (e.g. current phase in goal.md or documentation/guide);
   then extend patch format (e.g. ts-morph-based edits) or Thompson Sampling MAB.
 - Optional: Add more E2E or integration tests for other routes or edge cases as

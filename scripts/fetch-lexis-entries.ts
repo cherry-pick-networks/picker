@@ -4,7 +4,7 @@
  * Example: deno run -A ... lexis-middle-intermediate 17 18
  */
 
-import { listEntriesBySourceAndDays } from "#system/lexis/lexis.store.ts";
+import { listEntriesBySourceAndDays } from '#system/lexis/lexisStore.ts';
 
 const sourceId = Deno.args[0];
 const days = Deno.args.slice(1).map((s) => parseInt(s, 10)).filter((n) =>
@@ -13,7 +13,7 @@ const days = Deno.args.slice(1).map((s) => parseInt(s, 10)).filter((n) =>
 
 if (!sourceId || days.length === 0) {
   console.error(
-    "Usage: deno run -A scripts/fetch-lexis-entries.ts <sid> <d1> [d2..]",
+    'Usage: deno run -A scripts/fetch-lexis-entries.ts <sid> <d1> [d2..]',
   );
   Deno.exit(1);
 }

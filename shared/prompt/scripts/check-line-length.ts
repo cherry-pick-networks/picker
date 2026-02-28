@@ -1,15 +1,12 @@
 /**
  * Line-length and file-length check (store.md §P).
- * - No physical line may exceed 80 chars.
- * - File effective line count (sum of ceil(len/80) per line, empty=0) ≤ 100.
+ * - No physical line may exceed 100 chars.
+ * - File effective line count (sum of ceil(len/100) per line, empty=0) ≤ 100.
  * Run: deno run --allow-read shared/prompt/scripts/check-line-length.ts
  * Or: deno task line-length-check
  */
 
-import {
-  isFileLengthExempt,
-  isLineLengthExemptFile,
-} from "./check-line-length-config.ts";
+import { isFileLengthExempt } from './check-line-length-config.ts';
 import {
   collectTsFiles,
   collectViolations,
@@ -17,7 +14,7 @@ import {
   LineLengthViolation,
   MAX_EFFECTIVE_LINES_PER_FILE,
   MAX_LINE_LENGTH,
-} from "./check-line-length-helpers.ts";
+} from './check-line-length-helpers.ts';
 
 function logViolationsAndExit(
   lineLength: LineLengthViolation[],
@@ -31,13 +28,13 @@ function logViolationsAndExit(
       console.error(`  ${v.file}:${v.line}: ${v.length} chars`);
     }
     console.error(
-      "  Run `deno fmt` to fix most issues; long strings split manually (§P).",
+      '  Run `deno fmt` to fix most issues; long strings split manually (§P).',
     );
   }
   if (fileLength.length > 0) {
     console.error(
       `File length check failed (§P: max ${MAX_EFFECTIVE_LINES_PER_FILE} ` +
-        "effective lines, 80-char units):",
+        'effective lines, 100-char units):',
     );
     for (const v of fileLength) {
       console.error(
@@ -57,8 +54,8 @@ function reportResult(
   if (hasFail) logViolationsAndExit(lineLength, fileLength);
   if (!hasFail) {
     console.log(
-      "Line length check passed: all lines ≤ 80 chars, " +
-        "all files ≤ 100 effective lines (test files exempt).",
+      'Line length check passed: all lines ≤ 100 chars, ' +
+        'all files ≤ 100 effective lines (test files exempt).',
     );
   }
 }
@@ -70,7 +67,6 @@ async function main(): Promise<void> {
     root,
     files,
     isFileLengthExempt,
-    isLineLengthExemptFile,
   );
   reportResult(lineLength, fileLength);
 }

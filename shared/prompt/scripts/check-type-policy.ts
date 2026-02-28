@@ -8,8 +8,8 @@
 import {
   checkCompilerOptions,
   checkDenoJsonTasks,
-} from "./check-type-policy-config.ts";
-import { checkSourceFile, walkSourceFiles } from "./check-type-policy-lib.ts";
+} from './check-type-policy-config.ts';
+import { checkSourceFile, walkSourceFiles } from './check-type-policy-lib.ts';
 
 async function collectSourceErrors(root: string): Promise<string[]> {
   const sourceFiles = await walkSourceFiles(root, root);
@@ -35,12 +35,12 @@ async function main(): Promise<void> {
   const allErrors = await runChecks();
   if (allErrors.length > 0) {
     console.error(
-      "Type-check policy violation(s). See §N in shared/prompt/store.md.",
+      'Type-check policy violation(s). See §N in shared/prompt/store.md.',
     );
-    for (const e of allErrors) console.error("  " + e);
+    for (const e of allErrors) console.error('  ' + e);
     Deno.exit(1);
   }
-  console.log("Type-check policy passed: no bypass or disable detected.");
+  console.log('Type-check policy passed: no bypass or disable detected.');
 }
 
 main();

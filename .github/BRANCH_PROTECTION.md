@@ -1,7 +1,8 @@
 # Branch protection (maintainers)
 
-To prevent merging PRs when CI fails (e.g. lint, line-length, or tests), use
-either **branch protection rules** (UI) or **repository rulesets** (API/JSON).
+To prevent merging PRs when CI fails (e.g. lint, line-length (100-char), or
+tests), use either **branch protection rules** (UI) or **repository rulesets**
+(API/JSON).
 
 ## Getting changes onto main
 
@@ -55,7 +56,7 @@ JSON. List rulesets: `gh ruleset list`.
 6. Save the rule.
 
 After this, PRs cannot be merged until the **check** workflow succeeds. That
-ensures lint (including function-length), format, line-length,
+ensures lint (including function-length), format, line-length (100-char),
 ts-filename-check, tests, todo-check, boundary-check, dependency-check,
 type-check-policy, and audit all pass before merge.
 

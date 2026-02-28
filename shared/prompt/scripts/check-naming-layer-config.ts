@@ -3,25 +3,25 @@
  */
 
 export const LAYERS = [
-  "presentation",
-  "application",
-  "domain",
-  "infrastructure",
+  'presentation',
+  'application',
+  'domain',
+  'infrastructure',
 ] as const;
 
-export { LAYER_INFIX } from "./check-naming-layer-config-infix.ts";
-export { LAYER_SUFFIX } from "./check-naming-layer-config-suffix.ts";
+export { LAYER_INFIX } from './check-naming-layer-config-infix.ts';
+export { LAYER_SUFFIX } from './check-naming-layer-config-suffix.ts';
 
 export const SKIP_DIRS = new Set([
-  ".git",
-  ".cursor",
-  "node_modules",
-  "dist",
-  "build",
-  "coverage",
-  "vendor",
-  ".cache",
-  "temp",
-  "tests",
-  "data",
+  '.git',
+  '.cursor',
+  'node_modules',
+  'dist',
+  'build',
+  'coverage',
+  'vendor',
+  '.cache',
+  'temp',
+  'tests',
+  'data',
 ]);

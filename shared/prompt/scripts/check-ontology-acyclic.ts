@@ -10,13 +10,13 @@
  * relation_type = 'requires' only.
  */
 
-import { getPg } from "#shared/infra/pg.client.ts";
-import { loadSql } from "#shared/infra/sql-loader.ts";
+import { getPg } from '#shared/infra/pgClient.ts';
+import { loadSql } from '#shared/infra/sqlLoader.ts';
 
-const REQUIRES = "requires";
+const REQUIRES = 'requires';
 
-const sqlDir = new URL("./sql/", import.meta.url);
-const EDGES_QUERY = await loadSql(sqlDir, "edges_concept_relation.sql");
+const sqlDir = new URL('./sql/', import.meta.url);
+const EDGES_QUERY = await loadSql(sqlDir, 'edges_concept_relation.sql');
 
 function nodeKey(scheme: string, code: string): string {
   return `${scheme}:${code}`;

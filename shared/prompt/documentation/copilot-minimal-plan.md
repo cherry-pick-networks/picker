@@ -7,18 +7,20 @@ Align to-do.md API surface and openapi.yaml with this plan.
 
 ## 0. Recent changes reflected
 
-- **Auth unified**: **Entra ID OAuth 2.0** only. `X-Client: agent` /
-  `INTERNAL_API_KEY`, `request-context.ts`, and `sensitive-redact.ts` removed.
-  All routes except `GET /` require
-  `Authorization: Bearer <Entra access
-  token>`; valid token yields full data.
-- **OpenAPI**: `shared/prompt/documentation/openapi.yaml` added. Entra Bearer
-  documented; Copilot Studio OAuth 2.0 + Microsoft Entra ID usage noted.
-- **Lexis**: `GET /lexis/entries?q=` (utterance), regex + LLM fallback, TTL
-  cache, source metadata, fetch script, and integration tests added.
-- **Source extract**: ontology allowlist validates `concept_ids` and
-  `subject_id`.
-- **Docs/scripts**: `todo.md` → `to-do.md` unified; reference paths updated.
+- **Auth unified**: **Entra ID OAuth 2.0** only. All routes except `GET /`
+  require `Authorization: Bearer <Entra access token>`; valid token yields full
+  data.
+- **Domain consolidation**: Six domains + App (Identity, Governance, Source,
+  Mirror, Storage, Audit). See
+  `shared/prompt/documentation/system-domain-identity-mirror-spec.md`.
+  - **Identity**: Actors API (`/identity/actors`, `/identity/actors/:id`).
+    Server stores actor_id, display_name, level, progress; list/search by name.
+  - **Mirror**: Client-owned data backup/sync only. Content, lexis, schedule
+    under `/mirror/*`. build-prompt removed; atomic worksheet API only.
+  - **Governance**: Scripts + allowlist (data only). Source/Mirror use allowlist
+    data, not Governance module.
+- **OpenAPI**: Paths and schemas aligned with to-do.md API surface.
+- **Source extract**: Allowlist validates concept_ids and subject_id.
 
 ---
 
@@ -142,7 +144,7 @@ Removed: content items generation (was composite; use build-prompt + local LLM +
 
 | Keep                                                                    | Reason                                        |
 | ----------------------------------------------------------------------- | --------------------------------------------- |
-| **Entra ID OAuth 2.0** (Bearer, auth.middleware, entra)                 | Single auth; copilot and Studio use the same. |
+| **Entra ID OAuth 2.0** (Bearer, authMiddleware, entra)                  | Single auth; copilot and Studio use the same. |
 | Atomic CRUD (profile, progress, content, sources, schedule, kv, record) | Data the copilot reads and writes.            |
 | Governance + script mutate, source extract                              | Validation and audit on server.               |
 | FSRS · schedule, ontology · seed                                        | Consistent algorithm and contract.            |

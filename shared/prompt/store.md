@@ -47,7 +47,7 @@ tool-specific configs.
   parse with `@std/front-matter`. Data file paths: see `shared/prompt/to-do.md`.
 - **SQL only in .sql files**: Write all SQL in `.sql` files only; do not embed
   SQL strings in TypeScript, JavaScript, or other code. Load at runtime via
-  `shared/infra/sql-loader.ts` (`loadSql(baseUrl, filename)`).
+  `shared/infra/sqlLoader.ts` (`loadSql(baseUrl, filename)`).
 - **DML SQL**: Keep application DML (SELECT, INSERT, UPDATE, DELETE) in
   `system/<module>/sql/*.sql` (one statement per file, snake_case filenames).
   Use `$1, $2, ...` for parameters; document parameter order in the file or
@@ -103,7 +103,7 @@ tool-specific configs.
   filenames per §E and reference.md (optional; run in pre-commit or CI)
 - `deno task sql-filename-check` — verify all .sql (DDL in shared/infra/schema,
   DML in system/*/sql) per reference.md (optional; run in pre-commit or CI)
-- `deno task ontology-schemes-check` — verify concept-schemes.ts matches
+- `deno task ontology-schemes-check` — verify conceptSchemes.ts matches
   global-standards.toml (runs in pre-push).
 - `deno task pre-push` — run before push; same as CI. Runs via dev.sh (so same
   DB env as dev: pass and picker/postgres). Runs lint, format-check,
@@ -471,6 +471,12 @@ Examples: payment-infra-redis-config (Context + Layer + Entity + Artifact);
 security-application-guard-policy (Context + Layer + Actor + Policy);
 global-config (Todo + Artifact).
 
+TypeScript source files (system/, shared/infra, tests/): Base filename (before
+.ts) must match the default export name. Use camelCase for functions and
+modules, PascalCase for class/constructor/singleton; no dot or hyphen in the
+filename (e.g. profileEndpoint.ts, identityIndexStore.ts). Validated by
+ts-filename-check; see reference.md.
+
 Layer-specific allowed Infix and Suffix (when tier 1 is Layer): When the first
 tier is one of presentation, application, domain, infrastructure, tier 2 and
 tier 3 names must use only that layer's allowed sets below. Presentation —
@@ -504,7 +510,9 @@ Rule content — naming: Each tier name must use only approved values for that
 axis (prefix / infix / suffix); see §E. When prefix is a Layer value, infix and
 suffix are restricted to that layer's allowed sets in §E. That same §E
 vocabulary applies to names within that tier (files, subfolders, modules,
-symbols). Lowercase; one hyphen between words; no underscores or spaces.
+symbols). Directory and document segment names: lowercase; one hyphen between
+words; no underscores or spaces. TypeScript filenames: see §E (camelCase or
+PascalCase, no dot; reference.md).
 
 Exceptions: Maintain an explicit exception list; same list for docs and tooling.
 Typical entries: .git, .cursor, node_modules, dist, build, coverage, vendor,
@@ -575,7 +583,7 @@ layout). Phrasing: prefer positive phrasing in docs and specs ("Do X" over "Do
 not do Y"). Rule file format: one rule per block; no blank line between rules;
 wrap with indent so continuation is clearly the same rule. Rule file line wrap:
 break only at punctuation (;, ,) or after a complete phrase; never split a noun
-phrase or parenthetical mid-phrase; meaning per line over 80 chars in rule
+phrase or parenthetical mid-phrase; meaning per line over 100 chars in rule
 files. Clear rules (when adding from docs): only add to rules what satisfies all
 three: (1) stateable as must/do not/only in one sentence, no prefer/recommended;
 (2) concrete todo (files, symbols, or patterns named); (3) violation detectable
@@ -657,27 +665,26 @@ Formatter runs on all TypeScript sources; lint excludes test file patterns per
 deno.json.
 
 Formatter: use the project formatter (deno fmt; options in deno.json, lineWidth
-80); prefer Format on Save so the machine handles line breaks (Track A) and §P
-is satisfied. After writing or editing code, run `deno fmt` so the machine
-handles line breaks; do not rely on manual 80-char counting. Line length: keep
-lines to 80 characters or fewer (strict); exceptions only where documented (e.g.
-long URLs in comments). One effective line = 80 character units per physical
-line: ceil(length/80); empty line = 0. File length: keep files to 100 effective
-lines or fewer (sum of effective lines over all physical lines); split when
-longer. Scope: TypeScript source (e.g. `**/*.ts`); exclude node_modules, vendor,
-generated output. Exception: file-length check is not applied to test files
-(paths ending with `_test.ts` or under a `tests/` directory); line-length check
-still applies.
+100; Airbnb style: single quotes, 100-char line). Prefer Format on Save so the
+machine handles line breaks (Track A) and §P is satisfied. After writing or
+editing code, run `deno fmt` so the machine handles line breaks; do not rely on
+manual 100-char counting. Line length: keep lines to 100 characters or fewer
+(strict); exceptions only where documented (e.g. long URLs in comments). One
+effective line = 100 character units per physical line: ceil(length/100); empty
+line = 0. File length: keep files to 100 effective lines or fewer (sum of
+effective lines over all physical lines); split when longer. Scope: TypeScript
+source (e.g. `**/*.ts`); exclude node_modules, vendor, generated output.
+Exception: file-length check is not applied to test files (paths ending with
+`_test.ts` or under a `tests/` directory); line-length check still applies.
 
 Line-length and file-length exceptions: Single source of truth for exemptions is
-shared/prompt/scripts/check-line-length-config.ts (and this doc). Line-length
-exceptions: allow only where documented (e.g. long URLs in comments, generated
-snippet). Put `// line-length-ignore` or `// line-length-ignore: <reason>` on
-the line immediately above the long line; prefer splitting the string or URL to
-stay under 80 chars. File-length exceptions: list path patterns and exact paths
-in the config; add only when splitting the file is not feasible (e.g. ported
-algorithm); document the reason in a comment in the config. Do not add
-file-length exempt to avoid splitting; split into sibling modules instead.
+shared/prompt/scripts/check-line-length-config.ts (and this doc). Line-length:
+no per-line exemptions; any line over 100 chars is a violation. Split long
+strings or URLs across lines to stay under 100 chars. File-length exceptions:
+list path patterns and exact paths in the config; add only when splitting the
+file is not feasible (e.g. ported algorithm); document the reason in a comment
+in the config. Do not add file-length exempt to avoid splitting; split into
+sibling modules instead.
 
 Function body: block body 2–4 statements (AST direct statements in block body
 only); expression body allowed (counts as 1). A single statement is allowed when
@@ -709,8 +716,8 @@ statements or a single statement that is not the complex-statement exemption
 alone); if line-length fails (e.g. on imports or long strings), apply the
 line-break patterns in this section.
 
-80-character defense (Track B — architectural extraction): when line length
-would otherwise exceed 80 chars or harm readability, apply these rules. Extract
+100-character defense (Track B — architectural extraction): when line length
+would otherwise exceed 100 chars or harm readability, apply these rules. Extract
 types early: when a function parameter or return type is complex (generics,
 nested objects), do not write it inline; extract a named `type` or `interface`
 above the function and reference it in the signature; in phase-gated work
@@ -718,16 +725,16 @@ complete this in Phase 2 (interface design). Extract magic strings: when a
 string literal exceeds 30 characters (error messages, headers, long regex),
 extract it to a constant (UPPER_SNAKE_CASE) at file top or in a dedicated
 constants module. Separate assignment and evaluation: when destructuring the
-result of a complex call would exceed 80 chars, introduce an intermediate
+result of a complex call would exceed 100 chars, introduce an intermediate
 variable or break the right-hand side across lines for clarity.
 
 Line-break patterns (formatter does not split these; apply manually): (1)
-**Import**: if a single import line exceeds 80 chars, split across lines with
+**Import**: if a single import line exceeds 100 chars, split across lines with
 opening brace on same line as `import`, one symbol per line, closing brace and
 `from "..."` on their own line. (2) **Long strings / test names**: if
-`Deno.test("...", ...)` or any string literal exceeds 80 chars, split the string
-with `+` concatenation across lines or use a template literal across lines; keep
-each line under 80 chars.
+`Deno.test("...", ...)` or any string literal exceeds 100 chars, split the
+string with `+` concatenation across lines or use a template literal across
+lines; keep each line under 100 chars.
 
 File-length conflict protocol: when keeping to the function body limit (2–4
 statements) would make a file exceed 100 effective lines, do not add a

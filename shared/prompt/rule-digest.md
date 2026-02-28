@@ -28,7 +28,7 @@ layout). Phrasing: prefer positive phrasing in docs and specs ("Do X" over "Do
 not do Y"). Rule file format: one rule per block; no blank line between rules;
 wrap with indent so continuation is clearly the same rule. Rule file line wrap:
 break only at punctuation (;, ,) or after a complete phrase; never split a noun
-phrase or parenthetical mid-phrase; meaning per line over 80 chars in rule
+phrase or parenthetical mid-phrase; meaning per line over 100 chars in rule
 files. Clear rules (when adding from docs): only add to rules what satisfies all
 three: (1) stateable as must/do not/only in one sentence, no prefer/recommended;
 (2) concrete todo (files, symbols, or patterns named); (3) violation detectable

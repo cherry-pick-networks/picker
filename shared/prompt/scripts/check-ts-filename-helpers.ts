@@ -1,9 +1,9 @@
 /**
- * Helpers for TS filename check: walk and parse [name].[suffix].
+ * Helpers for TS filename check (store.md §E, reference.md, Airbnb style).
  * Used by check-ts-filename.ts and check-ts-filename-validate.ts.
  */
 
-import { ALLOWED_SUFFIX, SKIP_DIRS } from "./check-ts-filename-config.ts";
+import { SKIP_DIRS, TS_BASE_NAME_REGEX } from './check-ts-filename-config.ts';
 
 export async function walkTsFiles(
   root: string,
@@ -17,44 +17,16 @@ export async function walkTsFiles(
     if (e.isDirectory) {
       if (SKIP_DIRS.has(e.name)) continue;
       await walkTsFiles(root, full, out);
-    } else if (e.isFile && e.name.endsWith(".ts")) {
+    } else if (e.isFile && e.name.endsWith('.ts')) {
       out.push(rel);
     }
   }
 }
 
-export function getWithoutExt(base: string): string | null {
-  if (!base.endsWith(".ts")) return null;
-  return base.slice(0, base.length - 3);
-}
-
-export function parseDotSuffix(
-  withoutExt: string,
-): { name: string; suffix: string } | null {
-  const lastDot = withoutExt.lastIndexOf(".");
-  if (lastDot <= 0 || lastDot === withoutExt.length - 1) return null;
-  return {
-    name: withoutExt.slice(0, lastDot),
-    suffix: withoutExt.slice(lastDot + 1),
-  };
-}
-
-export function checkSuffixAndName(
-  p: { name: string; suffix: string },
-): string | null {
-  if (!ALLOWED_SUFFIX.has(p.suffix)) {
-    return `suffix "${p.suffix}" not in allowed set`;
-  }
-  if (!/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(p.name)) {
-    return "name must be lowercase with optional hyphens";
-  }
-  return null;
-}
-
-export function parseDotSuffixBase(
-  base: string,
-): { name: string; suffix: string } | null {
-  const w = getWithoutExt(base);
-  if (!w) return null;
-  return parseDotSuffix(w);
+/** Base name (without .ts) must be camelCase or PascalCase; no dot or hyphen. */
+export function checkTsBaseName(base: string): string | null {
+  if (!base.endsWith('.ts')) return null;
+  const name = base.slice(0, base.length - 3);
+  if (TS_BASE_NAME_REGEX.test(name)) return null;
+  return 'TS filename base must be camelCase or PascalCase (no dot or hyphen)';
 }

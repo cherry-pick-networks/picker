@@ -1,19 +1,19 @@
 /**
- * Verify concept-schemes.ts allowed schemes match global-standards.toml.
+ * Verify conceptSchemes.ts allowed schemes match global-standards.toml.
  * Run: deno run --allow-read shared/prompt/scripts/check-ontology-schemes.ts
  * Or: deno task ontology-schemes-check
  */
 
-import { parse } from "@std/toml";
+import { parse } from '@std/toml';
 import {
   COGNITIVE_LEVEL_SCHEMES,
   CONTENT_TYPE_SCHEMES,
   CONTEXT_SCHEMES,
   SUBJECT_SCHEMES,
-} from "#system/concept/concept-schemes.ts";
+} from '#system/concept/conceptSchemes.ts';
 
 const TOML_PATH = new URL(
-  "../../infra/seed/ontology/global-standards.toml",
+  '../../infra/seed/ontology/global-standards.toml',
   import.meta.url,
 );
 
@@ -61,16 +61,16 @@ function getSchemeDiff(): SchemeDiff {
 
 function logMismatch(diff: SchemeDiff): void {
   console.error(
-    "ontology-schemes-check: concept-schemes.ts and global-standards.toml " +
-      "must list the same scheme IDs.",
+    'ontology-schemes-check: conceptSchemes.ts and global-standards.toml ' +
+      'must list the same scheme IDs.',
   );
   if (diff.inCodeNotToml.length > 0) {
-    console.error("  In code but not in TOML:", diff.inCodeNotToml.join(", "));
+    console.error('  In code but not in TOML:', diff.inCodeNotToml.join(', '));
   }
   if (diff.inTomlNotCode.length > 0) {
     console.error(
-      "  In TOML but not in concept-schemes (add to a facet or remove):",
-      diff.inTomlNotCode.join(", "),
+      '  In TOML but not in conceptSchemes (add to a facet or remove):',
+      diff.inTomlNotCode.join(', '),
     );
   }
 }
@@ -86,7 +86,7 @@ function main(): void {
     diff.inTomlNotCode.length > 0;
   if (hasMismatch) reportMismatchAndExit(diff);
   console.log(
-    "ontology-schemes-check passed: schemes match global-standards.toml.",
+    'ontology-schemes-check passed: schemes match global-standards.toml.',
   );
 }
 

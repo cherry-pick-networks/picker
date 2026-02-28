@@ -11,19 +11,19 @@
  *     imports.
  */
 
-import { getPg } from "../shared/infra/pg.client.ts";
-import { loadSql } from "../shared/infra/sql-loader.ts";
+import { getPg } from '../shared/infra/pgClient.ts';
+import { loadSql } from '../shared/infra/sqlLoader.ts';
 
-const lexisSqlDir = new URL("../system/lexis/sql/", import.meta.url);
+const lexisSqlDir = new URL('../system/lexis/sql/', import.meta.url);
 const SQL_UPSERT_LEXIS_ENTRY = await loadSql(
   lexisSqlDir,
-  "upsert_lexis_entry.sql",
+  'upsert_lexis_entry.sql',
 );
 
-const SOURCE_ID = "lexis-high-basic";
+const SOURCE_ID = 'lexis-high-basic';
 const WORDS_PER_DAY = 40;
-const DEFAULT_HEADWORDS_PATH = "temp/lexis/lexis-high-basic-headwords.json";
-const DATA_HEADWORDS_PATH = "scripts/data/lexis-high-basic-headwords.json";
+const DEFAULT_HEADWORDS_PATH = 'temp/lexis/lexis-high-basic-headwords.json';
+const DATA_HEADWORDS_PATH = 'scripts/data/lexis-high-basic-headwords.json';
 
 function dayIndex(entryIndex: number): number {
   const d = Math.ceil(entryIndex / WORDS_PER_DAY);
@@ -31,9 +31,9 @@ function dayIndex(entryIndex: number): number {
 }
 
 function reportMissingHeadwords(): void {
-  console.error("Missing or invalid headwords file:", DEFAULT_HEADWORDS_PATH);
+  console.error('Missing or invalid headwords file:', DEFAULT_HEADWORDS_PATH);
   console.error(
-    "Run with --write-headwords to copy from " + DATA_HEADWORDS_PATH + ".",
+    'Run with --write-headwords to copy from ' + DATA_HEADWORDS_PATH + '.',
   );
 }
 
@@ -43,9 +43,9 @@ async function loadDataHeadwords(): Promise<string[]> {
 }
 
 async function writeJsonToTemp(path: string, data: string[]): Promise<void> {
-  await Deno.mkdir("temp/lexis", { recursive: true });
+  await Deno.mkdir('temp/lexis', { recursive: true });
   await Deno.writeTextFile(path, JSON.stringify(data, null, 2));
-  console.log("Wrote", path);
+  console.log('Wrote', path);
 }
 
 async function writeHeadwordsFile(): Promise<string[]> {
@@ -65,13 +65,13 @@ async function readHeadwordsFile(): Promise<string[]> {
 }
 
 async function loadHeadwords(): Promise<string[]> {
-  const write = Deno.args.includes("--write-headwords");
+  const write = Deno.args.includes('--write-headwords');
   const headwords = write
     ? await writeHeadwordsFile()
     : await readHeadwordsFile();
   if (headwords.length !== 1200) {
     const msg = `Expected 1200 headwords, got ${headwords.length}. Check ` +
-      DEFAULT_HEADWORDS_PATH + ".";
+      DEFAULT_HEADWORDS_PATH + '.';
     throw new Error(msg);
   }
   return headwords;
@@ -92,7 +92,7 @@ async function importHeadwordsToPg(
       headword,
     ]);
   }
-  console.log("Imported", headwords.length, "entries for", SOURCE_ID);
+  console.log('Imported', headwords.length, 'entries for', SOURCE_ID);
 }
 
 async function main(): Promise<void> {

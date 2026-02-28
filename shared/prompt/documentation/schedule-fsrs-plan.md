@@ -73,7 +73,7 @@ description: Weekly lesson plan via FSRS-rs and source grammar data.
 ## 5. FSRS-rs
 
 - Library: e.g. `@squeakyrobot/fsrs` (or project-chosen TS package).
-- **Adapter**: `system/schedule/fsrs-adapter.ts` — map schedule item state +
+- **Adapter**: `system/schedule/fsrsAdapter.ts` — map schedule item state +
   review event to library input; write back next_due_at, D, S.
 - **Parameters**: 21 default; optional tuning later.
 
@@ -102,8 +102,8 @@ description: Weekly lesson plan via FSRS-rs and source grammar data.
 
 ## 8. Code layout (system/schedule/)
 
-- schedule.endpoint.ts, schedule.service.ts, schedule.store.ts,
-  schedule.schema.ts, fsrs-adapter.ts.
+- scheduleEndpoint.ts, scheduleService.ts, scheduleStore.ts, scheduleSchema.ts,
+  fsrsAdapter.ts.
 - App config: register schedule routes; add to system/routes.ts ROUTES.
 
 ## 9. Phases

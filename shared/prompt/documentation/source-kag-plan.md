@@ -117,17 +117,17 @@ extracted concept/subject. A `source_concept` relation table can be Phase 2 if
 
 ### 6.3 File layout (reference.md)
 
-- `system/source/source.schema.ts` — existing schema +
+- `system/source/sourceSchema.ts` — existing schema +
   `SourceExtractOutputSchema`, extended `SourceSchema`.
-- `system/source/source-extract.service.ts` —
+- `system/source/sourceExtractService.ts` —
   `extractConceptsFromSource(sourceId: string)` (or similar). Load from store →
   LLM → Zod → store update.
-- `system/source/source-llm.client.ts` — Source-only LLM client.
+- `system/source/source-llmClient.ts` — Source-only LLM client.
   `extractConcepts(body: string): Promise<SourceExtractLlmResult>`. Separate
   from script LLM client.
-- `system/source/source.endpoint.ts` — add `postSourceExtract(c)`. Read `:id`,
+- `system/source/sourceEndpoint.ts` — add `postSourceExtract(c)`. Read `:id`,
   call `extractConceptsFromSource(id)`, map response.
-- `system/source/source.store.ts` — existing `getSource`/`setSource` for full
+- `system/source/sourceStore.ts` — existing `getSource`/`setSource` for full
   payload; `extracted_*` are payload fields only.
 
 ---
@@ -145,10 +145,9 @@ extracted concept/subject. A `source_concept` relation table can be Phase 2 if
 
 ## 8. Tests
 
-- **Unit**: `source-extract.service` — mock via `SOURCE_EXTRACT_LLM_MOCK`; “body
+- **Unit**: `sourceExtractService` — mock via `SOURCE_EXTRACT_LLM_MOCK`; “body
   in → fixed concept_ids/subject_id out”.
-- **Unit**: `source-llm.client` — when mocked, validate schema only; no real
-  API.
+- **Unit**: `source-llmClient` — when mocked, validate schema only; no real API.
 - **Integration/endpoint**: `POST /sources/:id/extract` 200/400/404/5xx.
 - **E2E (optional)**: Create one Source, call extract, assert
   `extracted_concept_ids` persisted.
@@ -170,10 +169,10 @@ extracted concept/subject. A `source_concept` relation table can be Phase 2 if
 | Phase  | Content                                                                                                     |
 | ------ | ----------------------------------------------------------------------------------------------------------- |
 | **S1** | to-do.md and reference: Source extended fields, `POST /sources/:id/extract`, new service/client file names. |
-| **S2** | Extend `SourceSchema`, add `SourceExtractOutputSchema` (source.schema.ts).                                  |
-| **S3** | Implement `source-llm.client.ts` (prompt, fetch, Zod parse, mock).                                          |
-| **S4** | Implement `source-extract.service.ts` (getSource → extract → setSource).                                    |
-| **S5** | Add `postSourceExtract` in source.endpoint.ts and register route.                                           |
+| **S2** | Extend `SourceSchema`, add `SourceExtractOutputSchema` (sourceSchema.ts).                                   |
+| **S3** | Implement `source-llmClient.ts` (prompt, fetch, Zod parse, mock).                                           |
+| **S4** | Implement `sourceExtractService.ts` (getSource → extract → setSource).                                      |
+| **S5** | Add `postSourceExtract` in sourceEndpoint.ts and register route.                                            |
 | **S6** | Add tests; pre-push/CI green.                                                                               |
 
 No extra DDL if KAG is only “extracted_* on Source payload”. Add
