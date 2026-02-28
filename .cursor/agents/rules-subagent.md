@@ -21,7 +21,7 @@ task.
 2. **Perform the requested work**
    - **Compliance check**: Given a diff or path and cited § (e.g. §P, §N), check the change against
      those sections. Use store.md Part B for the exact criteria (e.g. §P: function body 2–4
-     statements, line length 100, file length; §N: no type-check bypass). Return a short list of
+     statements, line length 80, file length; §N: no type-check bypass). Return a short list of
      violations or "OK".
    - **Applicable § list**: Prefer the output of `rules:summary`; if the main agent asked for
      exploration, summarize which § apply for the given path or task type and cite the Rule index.

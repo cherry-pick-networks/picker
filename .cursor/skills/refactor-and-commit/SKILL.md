@@ -15,7 +15,7 @@ apply the listed § for this session. Keep the output in context.
 
 ## §P — Format
 
-- Function body: 2–4 statements; file ≤100 effective lines; line length ≤100.
+- Function body: 2–4 statements; file ≤100 effective lines; line length ≤80.
 - Run `deno fmt`, then `deno task format-check` after edits.
 
 ## §B — Commit boundary

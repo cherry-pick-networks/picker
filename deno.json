@@ -10,7 +10,7 @@
     "indentWidth": 2,
     "semiColons": true,
     "singleQuote": true,
-    "lineWidth": 100
+    "lineWidth": 80
   },
   "tasks": {
     "dev": "./scripts/dev.sh",
