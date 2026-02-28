@@ -119,7 +119,8 @@ later" (dual auth already removed).
 6. **Phase 5 – Docs · verification**\
    Finalize API list, openapi, and scenarios in docs. Use todo-check etc. to
    keep **docs–code** in sync. Verify "no legacy": no dual auth, no unused entry
-   points.
+   points. *(Reflected: run `deno task todo-check`, `deno task type-check-policy`;
+   see Verification below.)*
 
 ---
 
@@ -175,3 +176,13 @@ Removed: content items generation (was composite; use build-prompt + local LLM +
 
 For the current API list and modules, see **shared/prompt/to-do.md**. For route
 contract and Copilot Studio, see **shared/prompt/documentation/openapi.yaml**.
+
+---
+
+## 8. Verification (docs–code sync)
+
+- **todo-check**: `deno task todo-check` — all routes in system/routes.ts are
+  listed in to-do.md API surface.
+- **type-check-policy**: `deno task type-check-policy` — no type-check bypass.
+- **No legacy**: Single auth (Entra Bearer); no unused entry points; composite
+  endpoints removed in favour of atomic APIs (see Phase 2).
