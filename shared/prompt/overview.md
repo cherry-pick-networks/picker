@@ -73,7 +73,7 @@ Optional tooling (status line, setup script, tips): see
   `shared/prompt/documentation/guide.md` § Cursor chat commands (project). For
   other editors: § Using rules without Cursor.
 - **Handoff**: `shared/prompt/handoff.md` (linked from README)
-- **Todo** (modules, API, infra): `shared/prompt/todo.md`
+- **Todo** (modules, API, infra): `shared/prompt/to-do.md`
 - **Final goal** (for AI): `shared/prompt/goal.md`
 - **AI/tool single source**: `shared/prompt/store.md`
 

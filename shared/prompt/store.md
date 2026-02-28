@@ -20,7 +20,7 @@ tool-specific configs.
 - **Entry**: `main.ts` (Hono app, routes from system/routes.ts)
 - **Sensitive data**: Identity PII and source copyright metadata are redacted
   for external API callers; agent requests (`X-Client: agent` or
-  `INTERNAL_API_KEY`) receive full data. See todo.md API surface.
+  `INTERNAL_API_KEY`) receive full data. See to-do.md API surface.
 
 ---
 
@@ -43,7 +43,7 @@ tool-specific configs.
 - **Data and document format**: Data files use TOML (`.toml`), UTF-8; parse with
   `@std/toml`. File names follow §E; record files are `{uuid}.toml`. Documents
   use Markdown (`.md`) or Cursor rules (`.mdc`) with optional YAML front matter;
-  parse with `@std/front-matter`. Data file paths: see `shared/prompt/todo.md`.
+  parse with `@std/front-matter`. Data file paths: see `shared/prompt/to-do.md`.
 - **SQL only in .sql files**: Write all SQL in `.sql` files only; do not embed
   SQL strings in TypeScript, JavaScript, or other code. Load at runtime via
   `shared/infra/sql-loader.ts` (`loadSql(baseUrl, filename)`).
@@ -91,7 +91,7 @@ tool-specific configs.
 - `deno task dev` — start dev server with watch
 - `deno run -A main.ts` — run server once (Postgres required)
 - `deno test` — run tests
-- `deno task todo-check` — verify API routes are listed in shared/prompt/todo.md
+- `deno task todo-check` — verify API routes are listed in shared/prompt/to-do.md
   (runs in CI)
 - `deno task type-check-policy` — verify no type-check bypass (runs in CI)
 - `deno task dependency-check` — verify acyclic domain deps and allowed matrix
@@ -581,7 +581,7 @@ three: (1) stateable as must/do not/only in one sentence, no prefer/recommended;
 by static check or simple heuristic; otherwise keep in docs or as guidance only.
 No speculative implementation: do not add modules, endpoints, or infrastructure
 for a future phase; add only when the feature is in current todo
-(shared/prompt/todo.md).
+(shared/prompt/to-do.md).
 
 ### §J. Migration boundary
 
@@ -596,7 +596,7 @@ content first; only after that delete the old files; one logical migration (one
 plan) per commit. Naming: new rule file names must follow §D and §E; use infix
 from Actor/Action/Entity where it clarifies focus (e.g. document, event, agent).
 No todo doc change: adding or refactoring .cursor/rules does not require
-shared/prompt/todo.md change; todo doc is for modules, API routes,
+shared/prompt/to-do.md change; todo doc is for modules, API routes,
 infrastructure only. Document renames: when renaming .md under the document tree
 to comply with segment naming, (1) list current files and target names per
 §D/§E, (2) rename (prefer non-referenced files first), (3) update in-tree
@@ -606,10 +606,10 @@ detailed steps in documentation/strategy.md or store §J.
 ### §K. Todo document boundary
 
 Todo document: the single source of truth for in-todo modules, API surface, and
-infrastructure is shared/prompt/todo.md; update that doc before adding.
+infrastructure is shared/prompt/to-do.md; update that doc before adding.
 Todo-bound implementation: do not add new modules, API routes (routers), or
 infrastructure (broker, extra DB, queue, search engine) unless they are listed
-in shared/prompt/todo.md; add them to shared/prompt/todo.md first, then
+in shared/prompt/to-do.md; add them to shared/prompt/to-do.md first, then
 implement.
 
 ### §L. Agent and todo
@@ -900,5 +900,5 @@ identifies textbooks, publishers, or other copyrightable material).
   env-backed secret). Seed runners read them at runtime (e.g.
   `LEXIS_SOURCE_META_<SOURCE_ID>`). `.env` is gitignored; do not commit it.
 - **API redaction unchanged**: Runtime redaction of source metadata for external
-  callers remains per todo.md (X-Client: agent or INTERNAL_API_KEY for full
+  callers remains per to-do.md (X-Client: agent or INTERNAL_API_KEY for full
   data).

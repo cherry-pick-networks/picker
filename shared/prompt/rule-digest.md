@@ -35,7 +35,7 @@ three: (1) stateable as must/do not/only in one sentence, no prefer/recommended;
 by static check or simple heuristic; otherwise keep in docs or as guidance only.
 No speculative implementation: do not add modules, endpoints, or infrastructure
 for a future phase; add only when the feature is in current todo
-(shared/prompt/todo.md).
+(shared/prompt/to-do.md).
 
 ---
 

@@ -21,7 +21,7 @@ output in context.
 - Execute order: create all new rule/files first, then delete old ones; one
   logical migration per commit.
 - New names follow §D and §E. Adding/refactoring .cursor/rules does not require
-  todo.md change.
+  to-do.md change.
 
 ## §D, §E, §F
 

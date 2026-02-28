@@ -211,7 +211,7 @@ type-check bypass. Return a short list of violations or OK."
   one question. Add context in a second message if needed.
 - **Templates**:
   - Task: `[todo/target] + [what to do]` — e.g.
-    `Add routes missing from todo.md to todo-check`
+    `Add routes missing from to-do.md to todo-check`
   - Analysis: `[symptom/error] + find cause` — e.g.
     `Find why type-check-policy fails`
   - Refactor: `[target] + [direction]` — e.g.

@@ -7,7 +7,7 @@
 import { parseScopeApiTable, routeKey } from "./check-todo-lib.ts";
 import { ROUTES } from "#system/routes.ts";
 
-const TODO_PATH = "shared/prompt/todo.md";
+const TODO_PATH = "shared/prompt/to-do.md";
 
 async function loadAllowedRoutes(todoPath: string): Promise<Set<string>> {
   const todoContent = await Deno.readTextFile(todoPath);
@@ -36,7 +36,7 @@ function reportIfFailed(result: {
   }
   if (result.missing.length > 0) {
     console.error(
-      "Routes in code not in todo doc. Add to todo.md first.",
+      "Routes in code not in todo doc. Add to to-do.md first.",
     );
     for (const r of result.missing) console.error(`  ${r.method} ${r.path}`);
     Deno.exit(1);

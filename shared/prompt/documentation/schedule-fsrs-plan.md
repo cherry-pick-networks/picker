@@ -35,7 +35,7 @@ description: Weekly lesson plan via FSRS-rs and source grammar data.
 
 ## 3. Architecture
 
-- **Domain**: `schedule` (reference.md allowed infix, todo.md modules).
+- **Domain**: `schedule` (reference.md allowed infix, to-do.md modules).
 - **Cross-domain**: schedule may call **source service** (grammar source list,
   unit_ids) and **curriculum store** (read curriculum_slot by level).
 - **Dependency**: schedule → source, schedule → curriculum store (read-only).

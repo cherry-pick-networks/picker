@@ -18,7 +18,7 @@ description: Source data parsing and KAG build (system/source/).
 
 ## 2. Scope and constraints
 
-- **Domain**: `system/source/` (existing todo.md todo unchanged).
+- **Domain**: `system/source/` (existing to-do.md todo unchanged).
 - **Allowed changes**: Source schema extension, new service/endpoint,
   Source-only LLM client.
 - **Mutation boundary**: Only Source and KAG data change. No changes to
@@ -169,7 +169,7 @@ extracted concept/subject. A `source_concept` relation table can be Phase 2 if
 
 | Phase  | Content                                                                                                    |
 | ------ | ---------------------------------------------------------------------------------------------------------- |
-| **S1** | todo.md and reference: Source extended fields, `POST /sources/:id/extract`, new service/client file names. |
+| **S1** | to-do.md and reference: Source extended fields, `POST /sources/:id/extract`, new service/client file names. |
 | **S2** | Extend `SourceSchema`, add `SourceExtractOutputSchema` (source.schema.ts).                                 |
 | **S3** | Implement `source-llm.client.ts` (prompt, fetch, Zod parse, mock).                                         |
 | **S4** | Implement `source-extract.service.ts` (getSource → extract → setSource).                                   |

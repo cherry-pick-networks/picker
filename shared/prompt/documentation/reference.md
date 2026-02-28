@@ -135,7 +135,7 @@ between words, no underscores) for the `<name>` part.
 - **Examples**: `01_actor.sql`, `02_source.sql`, `03_kv.sql`, `04_content.sql`,
   `06_ontology.sql` (concept scheme, concept, concept_relation).
 - **Vocabulary**: Prefer names that match project axes (e.g. actor, content,
-  source, kv). New domains: align with todo.md and this reference (allowed
+  source, kv). New domains: align with to-do.md and this reference (allowed
   infix/suffix).
 - **Migration**: When renaming or adding DDL files, follow the migration
   boundary (store.md §J): plan first, then apply renames and reference updates
@@ -156,7 +156,7 @@ rule, change only the name part: underscores → hyphens. Numeric prefix stays.
 | `06_task_queue.sql`          | `06_task-queue.sql`            |
 
 New DDL (e.g. ontology): use `NN_<name>.sql` with an available number and
-§E-compliant name; adjust numbering if needed (see todo.md and §J).
+§E-compliant name; adjust numbering if needed (see to-do.md and §J).
 
 **Validation (optional).** Script `shared/prompt/scripts/check-sql-filename.ts`
 checks all .sql files: (1) `shared/infra/schema/*.sql` must match

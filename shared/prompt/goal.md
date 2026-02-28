@@ -31,9 +31,9 @@ beyond it.
 
 ## 3. Todo source
 
-- **Modules, API, infrastructure**: This repo's `shared/prompt/todo.md`.
+- **Modules, API, infrastructure**: This repo's `shared/prompt/to-do.md`.
 - **Product todo, governance**: the spec.
-- Add only modules, routes, or infrastructure listed in todo.md or specified in
+- Add only modules, routes, or infrastructure listed in to-do.md or specified in
   the spec for the current phase.
 
 ---
@@ -41,19 +41,19 @@ beyond it.
 ## 4. In-todo
 
 In-todo modules, agents, data layout, mutation rules, selection, and output
-format are defined in todo.md and the spec. Add only items inside that todo.
+format are defined in to-do.md and the spec. Add only items inside that todo.
 
 ---
 
 ## 5. Must
 
-- Follow todo.md and the spec for the current phase.
+- Follow to-do.md and the spec for the current phase.
 - Run all autonomous mutations and applies through Governance verification.
-- Add only modules, routes, and infrastructure listed in todo (todo.md or spec).
+- Add only modules, routes, and infrastructure listed in todo (to-do.md or spec).
 - Mutate only within shared/runtime/store/; use Governance-verified flow.
 - Write to config/ or credentials only via approved mechanisms; file-based
   shared/record/ (identity-index only) only via
-  system/record/identity-index.store.ts (see todo.md).
+  system/record/identity-index.store.ts (see to-do.md).
 - Apply type-check policy (store.md §N).
 
 Concretes: spec §44–§48 and store.md.
@@ -64,5 +64,5 @@ Concretes: spec §44–§48 and store.md.
 
 - **The spec**: Overview, governance, agents, data layout, protocol,
   implementation and safety.
-- **This repo**: shared/prompt/todo.md, shared/prompt/store.md.
+- **This repo**: shared/prompt/to-do.md, shared/prompt/store.md.
 - **Other specs**: web_spec, llm_models_spec (when present).

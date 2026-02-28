@@ -44,7 +44,7 @@ use Issues only for bugs and concrete feature requests.
 1. **Tests**: `deno test` must pass.
 2. **Todo check**: `deno task todo-check` must pass. If you add new API routes,
    modules, or infrastructure, add them to
-   [shared/prompt/todo.md](shared/prompt/todo.md) first, then implement.
+   [shared/prompt/to-do.md](shared/prompt/to-do.md) first, then implement.
 3. **Type-check policy**: `deno task type-check-policy` must pass. Do not
    disable or bypass type checking (no `--no-check`, `@ts-ignore`, or
    `@ts-expect-error`); fix type errors in code or types.

@@ -31,4 +31,4 @@ stores. Entry for HTTP is `routes.ts`; domain modules use flat
   [shared/prompt/documentation/reference.md](../shared/prompt/documentation/reference.md)
   (infix/suffix, layout, dependency matrix).
 - **Scope (modules and API)**:
-  [shared/prompt/todo.md](../shared/prompt/todo.md).
+  [shared/prompt/to-do.md](../shared/prompt/to-do.md).

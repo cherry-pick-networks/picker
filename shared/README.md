@@ -27,4 +27,4 @@ for how rules and slash commands are applied.
 - **Strategy** (migration, rules layout):
   [prompt/documentation/strategy.md](prompt/documentation/strategy.md)
 - **Handoff** (multi-session): [prompt/handoff.md](prompt/handoff.md)
-- **Todo** (modules, API, infra): [prompt/todo.md](prompt/todo.md)
+- **Todo** (modules, API, infra): [prompt/to-do.md](prompt/to-do.md)

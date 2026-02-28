@@ -32,7 +32,7 @@ New sessions should attach only this file (and optionally
 CI (`.github/workflows/ci.yml`): lint, format-check, test, todo-check,
 type-check-policy, deno audit; Deno cache enabled. Dependabot
 (`.github/dependabot.yml`): weekly Deno updates. Todo and infrastructure:
-[todo.md](todo.md).
+[to-do.md](to-do.md).
 
 ---
 
@@ -45,14 +45,14 @@ runs in CI so new routes cannot be added without updating the todo document.
 
 ## Progress
 
-Current todo and implementation state: [todo.md](todo.md).
+Current todo and implementation state: [to-do.md](to-do.md).
 
 - API tests and todo-check in CI are done; E2E and script-store tests use temp
   dir; AST apply and log artifact storage implemented (see boundary for modules
   and routes).
 - S5 done: mutate.service and mutate.endpoint tests (Governance, readScript,
   blocks, mock LLM), E2E POST /script/mutate with withTempScriptsStore; legacy
-  AST tests already removed; MAB·DAG local principle in todo.md and
+  AST tests already removed; MAB·DAG local principle in to-do.md and
   mutate.service comment; pre-push passes.
 - Rule compliance (store.md §P and lint): Removed `shared/prompt/scripts/` from
   lint exclude so function-length applies to scripts. Split

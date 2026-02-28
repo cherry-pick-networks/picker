@@ -1,6 +1,6 @@
 /**
  * Single source of route list for todo-check and main.ts registration.
- * Must match shared/prompt/todo.md API surface table.
+ * Must match shared/prompt/to-do.md API surface table.
  */
 
 import type { Hono } from "hono";

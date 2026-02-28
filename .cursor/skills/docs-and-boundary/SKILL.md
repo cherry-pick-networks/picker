@@ -33,12 +33,12 @@ docs) and apply the listed § for this session. Keep the output in context.
 
 ## §K, §L, §M — Todo and system boundary
 
-- Todo: shared/prompt/todo.md is source of truth; do not add modules/routes
+- Todo: shared/prompt/to-do.md is source of truth; do not add modules/routes
   without updating it (§K, §L). Root README: Documentation section lists only
   domain entry points (§M).
 
 ## Checklist
 
 - [ ] Doc names and paths follow §D, §E, §F.
-- [ ] No new modules/routes without todo.md update.
+- [ ] No new modules/routes without to-do.md update.
 - [ ] Root README does not deep-link to individual docs.
