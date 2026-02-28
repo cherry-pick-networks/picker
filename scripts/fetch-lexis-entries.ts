@@ -7,12 +7,19 @@
 import { listEntriesBySourceAndDays } from "#system/lexis/lexis.store.ts";
 
 const sourceId = Deno.args[0];
-const days = Deno.args.slice(1).map((s) => parseInt(s, 10)).filter((n) => n >= 1);
+const days = Deno.args.slice(1).map((s) => parseInt(s, 10)).filter((n) =>
+  n >= 1
+);
 
 if (!sourceId || days.length === 0) {
-  console.error("Usage: deno run -A scripts/fetch-lexis-entries.ts <source_id> <day1> [day2 ...]");
+  console.error(
+    "Usage: deno run -A scripts/fetch-lexis-entries.ts <source_id> <day1> [day2 ...]",
+  );
   Deno.exit(1);
 }
 
-const entries = await listEntriesBySourceAndDays(sourceId, [...new Set(days)].sort((a, b) => a - b));
+const entries = await listEntriesBySourceAndDays(
+  sourceId,
+  [...new Set(days)].sort((a, b) => a - b),
+);
 console.log(JSON.stringify(entries, null, 2));

@@ -167,14 +167,14 @@ extracted concept/subject. A `source_concept` relation table can be Phase 2 if
 
 ## 10. Phases
 
-| Phase  | Content                                                                                                    |
-| ------ | ---------------------------------------------------------------------------------------------------------- |
+| Phase  | Content                                                                                                     |
+| ------ | ----------------------------------------------------------------------------------------------------------- |
 | **S1** | to-do.md and reference: Source extended fields, `POST /sources/:id/extract`, new service/client file names. |
-| **S2** | Extend `SourceSchema`, add `SourceExtractOutputSchema` (source.schema.ts).                                 |
-| **S3** | Implement `source-llm.client.ts` (prompt, fetch, Zod parse, mock).                                         |
-| **S4** | Implement `source-extract.service.ts` (getSource → extract → setSource).                                   |
-| **S5** | Add `postSourceExtract` in source.endpoint.ts and register route.                                          |
-| **S6** | Add tests; pre-push/CI green.                                                                              |
+| **S2** | Extend `SourceSchema`, add `SourceExtractOutputSchema` (source.schema.ts).                                  |
+| **S3** | Implement `source-llm.client.ts` (prompt, fetch, Zod parse, mock).                                          |
+| **S4** | Implement `source-extract.service.ts` (getSource → extract → setSource).                                    |
+| **S5** | Add `postSourceExtract` in source.endpoint.ts and register route.                                           |
+| **S6** | Add tests; pre-push/CI green.                                                                               |
 
 No extra DDL if KAG is only “extracted_* on Source payload”. Add
 `source_concept` table later in Phase 2 if needed.

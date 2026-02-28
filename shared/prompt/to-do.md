@@ -63,12 +63,12 @@ Use that document for AI direction and todo decisions.
 | GET    | `/content/worksheets/:id`          | Read worksheet meta by id. Responds worksheet object or 404.                                                                                                                                                                          |
 | POST   | `/content/worksheets/generate`     | Create worksheet (meta + item_ids from concepts). Body: title, concept_ids, item_count, subject_weights (optional record of subject id → weight), etc. Responds 201 with worksheet.                                                   |
 | POST   | `/content/worksheets/build-prompt` | Build worksheet prompt string from request and profile/context. Body: GenerateWorksheetRequest (includes optional subject_weights). Responds 200 with { prompt }. No LLM call.                                                        |
-| GET    | `/sources`                         | List sources. External: metadata copyright/author stripped; agent: full Source[].                                                                                                                                                     |
-| GET    | `/sources/:id`                     | Source by id. External: redacted metadata; agent: full source or 404.                                                                                                                                                                 |
+| GET    | `/sources`                         | List sources. Requires Entra OAuth; returns full Source[].                                                                                                                                                                            |
+| GET    | `/sources/:id`                     | Source by id. Requires Entra OAuth; returns full source or 404.                                                                                                                                                                       |
 | POST   | `/sources`                         | Collect and store a source. Body: source fields (id optional, body optional). Responds 201 with source.                                                                                                                               |
 | POST   | `/sources/:id/extract`             | Extract subject/concept IDs from source body via LLM; save to source extracted_* and return. Body optional. 200 → { ok, concept_ids, subject_id?, extracted_at }; 4xx/5xx → { ok: false, status, body }. Requires source.body.        |
-| GET    | `/data/identity-index`             | Read identity index External: id/class only; agent (X-Client: agent): full JSON.                                                                                                                                                      |
-| GET    | `/data/identity/:id`               | Read identity student by id External: redacted; agent: full JSON or 404.                                                                                                                                                              |
+| GET    | `/data/identity-index`             | Read identity index. Requires Entra OAuth; returns full JSON.                                                                                                                                                                         |
+| GET    | `/data/identity/:id`               | Read identity student by id. Requires Entra OAuth; returns full JSON or 404.                                                                                                                                                          |
 | GET    | `/schedule/due`                    | List schedule items due in range. Query: actor_id, from, to. Responds { items: ScheduleItem[] }.                                                                                                                                      |
 | GET    | `/schedule/plan/weekly`            | Weekly plan by week number. Query: actor_id, week_start, optional level. Responds { week_number, week_start, week_end, new_units, review_units }. new_units from annual by week (1–52).                                               |
 | GET    | `/schedule/plan/annual`            | Annual curriculum. Query: year, optional level. Responds { weeks: { week_number (1–52), slots: { slot_index, new_unit }[] }[] }.                                                                                                      |
@@ -77,11 +77,10 @@ Use that document for AI direction and todo decisions.
 | POST   | `/schedule/items/:id/review`       | Record review. Body: grade (1–4), optional reviewed_at. Responds 200 with updated item.                                                                                                                                               |
 | GET    | `/lexis/entries`                   | List lexis entries. Query: source_id + days (required), or q (utterance; regex then LLM fallback). Responds { entries: LexisEntry[] } or 400.                                                                                         |
 
-- **Sensitive data**: Identity and source metadata (copyright/author) are
-  redacted for external callers. Send `X-Client: agent` or
-  `Authorization:
-  Bearer <INTERNAL_API_KEY>` for full data (agent/internal
-  only).
+- **Auth**: All routes except `GET /` require
+  `Authorization: Bearer <Entra
+  access token>`. Valid token yields full data;
+  missing/invalid returns 401.
 
 ---
 

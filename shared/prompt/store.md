@@ -18,9 +18,8 @@ tool-specific configs.
 - **Runtime**: Deno
 - **Stack**: Hono (HTTP), Zod (validation), ts-morph (AST), PostgreSQL (storage)
 - **Entry**: `main.ts` (Hono app, routes from system/routes.ts)
-- **Sensitive data**: Identity PII and source copyright metadata are redacted
-  for external API callers; agent requests (`X-Client: agent` or
-  `INTERNAL_API_KEY`) receive full data. See to-do.md API surface.
+- **Auth**: All API routes except `GET /` require Entra ID OAuth 2.0 Bearer
+  token; valid token yields full data. See to-do.md API surface.
 
 ---
 
@@ -91,8 +90,8 @@ tool-specific configs.
 - `deno task dev` — start dev server with watch
 - `deno run -A main.ts` — run server once (Postgres required)
 - `deno test` — run tests
-- `deno task todo-check` — verify API routes are listed in shared/prompt/to-do.md
-  (runs in CI)
+- `deno task todo-check` — verify API routes are listed in
+  shared/prompt/to-do.md (runs in CI)
 - `deno task type-check-policy` — verify no type-check bypass (runs in CI)
 - `deno task dependency-check` — verify acyclic domain deps and allowed matrix
   (runs in CI)
@@ -899,6 +898,5 @@ identifies textbooks, publishers, or other copyrightable material).
 - **Sensitive values in .env**: Store such values in `.env` (or equivalent
   env-backed secret). Seed runners read them at runtime (e.g.
   `LEXIS_SOURCE_META_<SOURCE_ID>`). `.env` is gitignored; do not commit it.
-- **API redaction unchanged**: Runtime redaction of source metadata for external
-  callers remains per to-do.md (X-Client: agent or INTERNAL_API_KEY for full
-  data).
+- **API auth**: Per to-do.md, all routes except `GET /` require Entra Bearer
+  token; valid token yields full data.
