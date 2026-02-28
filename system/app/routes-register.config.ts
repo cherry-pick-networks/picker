@@ -5,10 +5,9 @@
 
 import type { Hono } from "hono";
 import * as content from "#system/content/content.endpoint.ts";
-import * as data from "#system/record/identity-index.endpoint.ts";
 import * as home from "./home.handler.ts";
+import * as identity from "#system/identity/actors.endpoint.ts";
 import * as kv from "#system/kv/kv.endpoint.ts";
-import * as profile from "#system/actor/profile.endpoint.ts";
 import * as lexis from "#system/lexis/lexis.endpoint.ts";
 import * as schedule from "#system/schedule/schedule.endpoint.ts";
 import * as source from "#system/source/source.endpoint.ts";
@@ -19,39 +18,38 @@ function registerHomeAndKv(app: Hono) {
   app.get("/kv/:key", kv.getKvKey);
 }
 
-function registerProfile(app: Hono) {
-  app.get("/profile/:id", profile.getProfile);
-  app.post("/profile", profile.postProfile);
-  app.patch("/profile/:id", profile.patchProfile);
+function registerIdentity(app: Hono) {
+  app.get("/identity/actors", identity.getActorsList);
+  app.get("/identity/actors/:id", identity.getActorById);
+  app.post("/identity/actors", identity.postActor);
+  app.patch("/identity/actors/:id", identity.patchActorById);
 }
 
-function registerProgress(app: Hono) {
-  app.get("/progress/:id", profile.getProgress);
-  app.patch("/progress/:id", profile.patchProgress);
+function registerMirrorContent(app: Hono) {
+  app.get("/mirror/content/items/:id", content.getItem);
+  app.post("/mirror/content/items", content.postItem);
+  app.patch("/mirror/content/items/:id", content.patchItem);
+  app.get("/mirror/content/worksheets/:id", content.getWorksheet);
+  app.post("/mirror/content/worksheets", content.postWorksheets);
 }
 
-function registerContent(app: Hono) {
-  registerContentItems(app);
-  registerContentWorksheets(app);
+function registerMirrorLexis(app: Hono) {
+  app.get("/mirror/lexis/entries", lexis.getEntries);
 }
 
-function registerContentItems(app: Hono) {
-  app.get("/content/items/:id", content.getItem);
-  app.post("/content/items", content.postItem);
-  app.patch("/content/items/:id", content.patchItem);
+function registerMirrorSchedule(app: Hono) {
+  app.get("/mirror/schedule/due", schedule.getDue);
+  app.get("/mirror/schedule/plan/weekly", schedule.getWeekly);
+  app.get("/mirror/schedule/plan/annual", schedule.getAnnual);
+  app.get("/mirror/schedule/items", schedule.getItems);
+  app.post("/mirror/schedule/items", schedule.postItem);
+  app.post("/mirror/schedule/items/:id/review", schedule.postReview);
 }
 
-function registerWorksheetsGetPost(app: Hono) {
-  app.get("/content/worksheets/:id", content.getWorksheet);
-  app.post("/content/worksheets", content.postWorksheets);
-}
-
-function registerContentWorksheets(app: Hono) {
-  registerWorksheetsGetPost(app);
-  app.post(
-    "/content/worksheets/build-prompt",
-    content.postWorksheetsBuildPrompt,
-  );
+function registerMirror(app: Hono) {
+  registerMirrorContent(app);
+  registerMirrorLexis(app);
+  registerMirrorSchedule(app);
 }
 
 function registerSource(app: Hono) {
@@ -61,26 +59,6 @@ function registerSource(app: Hono) {
   app.post("/sources/:id/extract", source.postSourceExtract);
 }
 
-function registerLexis(app: Hono) {
-  app.get("/lexis/entries", lexis.getEntries);
-  return;
-}
-
-function registerData(app: Hono) {
-  app.get("/data/identity-index", data.getIdentityIndex);
-  app.get("/data/identity/:id", data.getIdentityById);
-}
-
-// function-length-ignore
-function registerSchedule(app: Hono) {
-  app.get("/schedule/due", schedule.getDue);
-  app.get("/schedule/plan/weekly", schedule.getWeekly);
-  app.get("/schedule/plan/annual", schedule.getAnnual);
-  app.get("/schedule/items", schedule.getItems);
-  app.post("/schedule/items", schedule.postItem);
-  app.post("/schedule/items/:id/review", schedule.postReview);
-}
-
 function registerKvMutate(app: Hono) {
   app.post("/kv", kv.postKv);
   app.delete("/kv/:key", kv.deleteKvKey);
@@ -88,13 +66,9 @@ function registerKvMutate(app: Hono) {
 
 const REST_HANDLERS = [
   registerHomeAndKv,
-  registerProfile,
-  registerProgress,
-  registerContent,
+  registerIdentity,
+  registerMirror,
   registerSource,
-  registerLexis,
-  registerData,
-  registerSchedule,
   registerKvMutate,
 ];
 

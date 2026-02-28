@@ -6,6 +6,8 @@ import { z } from "zod";
 
 export const ProfileSchema = z.object({
   id: z.string(),
+  display_name: z.string().optional(),
+  level: z.string().optional(),
   createdAt: z.string(),
   updatedAt: z.string(),
   grade: z.string().optional(),

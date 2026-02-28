@@ -3,9 +3,11 @@
  */
 
 import {
-  ID_COUNT_LIMIT,
-  validateFacetSchemes,
-} from "#system/concept/concept.service.ts";
+  ALLOWLIST_ID_COUNT_LIMIT,
+  allowlistHas,
+  type FacetName,
+} from "#shared/contract/allowlist.types.ts";
+import { getAllowlistDataOrLoad } from "#shared/contract/allowlist-data.ts";
 import type { Source } from "#system/source/source.schema.ts";
 import { extractConcepts } from "#system/source/source-llm.client.ts";
 import { getSource } from "#system/source/source.service.ts";
@@ -52,10 +54,13 @@ function validateForExtract(source: Source | null): ExtractFail | null {
 }
 
 async function validateExtractConceptIds(ids: string[]): Promise<void> {
-  if (ids.length > ID_COUNT_LIMIT) {
-    throw new Error(`Too many concept IDs (max ${ID_COUNT_LIMIT})`);
+  if (ids.length > ALLOWLIST_ID_COUNT_LIMIT) {
+    throw new Error(
+      `Too many concept IDs (max ${ALLOWLIST_ID_COUNT_LIMIT})`,
+    );
   }
-  const { invalid } = await validateFacetSchemes("concept", ids);
+  const data = await getAllowlistDataOrLoad();
+  const invalid = ids.filter((id) => !allowlistHas(data, "concept", id));
   if (invalid.length > 0) {
     throw new Error(`Invalid concept IDs: ${invalid.join(", ")}`);
   }
@@ -63,8 +68,10 @@ async function validateExtractConceptIds(ids: string[]): Promise<void> {
 
 async function validateExtractSubjectId(id: string | undefined): Promise<void> {
   if (id == null || id === "") return;
-  const { invalid } = await validateFacetSchemes("subject", [id]);
-  if (invalid.length > 0) throw new Error(`Invalid subject_id: ${id}`);
+  const data = await getAllowlistDataOrLoad();
+  if (!allowlistHas(data, "subject", id)) {
+    throw new Error(`Invalid subject_id: ${id}`);
+  }
 }
 
 function persistExtract(

@@ -19,25 +19,24 @@ with store.md §E/§F and modular monolith.
 
 ### Allowed infix (domains)
 
-| Infix        | Responsibility                                                                             |
-| ------------ | ------------------------------------------------------------------------------------------ |
-| actor        | Profile, progress (identity and state)                                                     |
-| app          | Route registration and app wiring                                                          |
-| audit        | Change/run log artifacts                                                                   |
-| batch        | Batch jobs and bulk operations                                                             |
-| concept      | Concept scheme, concept, concept_relation (ontology)                                       |
-| content      | Items, worksheets, prompt building                                                         |
-| data         | Data access / identity index (e.g. record/data)                                            |
-| export       | Export and external output                                                                 |
-| kv           | Generic key-value HTTP API; Postgres-backed, client from shared/infra.                     |
-| notification | Notifications and alerts                                                                   |
-| record       | Identity index (shared/record/reference)                                                   |
-| report       | Reports and aggregations                                                                   |
-| schedule     | FSRS schedule (in-house); weekly plan (3 sessions/week) and annual curriculum from grammar |
-| script       | Scripts store, AST apply, Governance                                                       |
-| source       | Source collection and read                                                                 |
-| sync         | Synchronization and replication                                                            |
-| workflow     | Workflow and process orchestration                                                         |
+Six domains + App. Spec:
+`shared/prompt/documentation/system-domain-identity-mirror-spec.md`.
+
+| Infix        | Responsibility                                                        |
+| ------------ | --------------------------------------------------------------------- |
+| app          | Route registration and auth                                           |
+| audit        | Event/audit log artifacts                                             |
+| governance   | Scripts store, mutate, allowlist/ontology (data only)                 |
+| identity     | Actors: actor_id, display_name, level, progress; list/search by name  |
+| mirror       | Client-owned data backup/sync: content, lexis, schedule (minimal API) |
+| source       | Source CRUD and extract                                               |
+| storage      | Generic key-value (kv); Postgres-backed                               |
+| batch        | Batch jobs and bulk operations                                        |
+| export       | Export and external output                                            |
+| notification | Notifications and alerts                                              |
+| report       | Reports and aggregations                                              |
+| sync         | Synchronization and replication                                       |
+| workflow     | Workflow and process orchestration                                    |
 
 ### Allowed suffix (artifacts)
 
@@ -68,17 +67,14 @@ with store.md §E/§F and modular monolith.
 
 ```
 system/
-  actor/     *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts, *.parser.ts
-  app/       *.config.ts, *.handler.ts, *.util.ts
-  audit/     audit-e2e-runs.ts
-  concept/   *.service.ts, *.store.ts, concept-schemes.ts
-  content/   *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, *.types.ts
-  kv/        *.endpoint.ts, *.store.ts
-  record/    *.endpoint.ts, *.store.ts
-  schedule/  *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, fsrs.ts, *.grammar.ts, *.mapper.ts, *.weekly.ts, *.adapter.ts, *-annual.service.ts
-  script/    *.endpoint.ts, *.service.ts, *.store.ts, *.types.ts, *.validation.ts
-  source/    *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, source-extract.service.ts, source-llm.client.ts
-  routes.ts  (entry; imports app/routes-register.config.ts)
+  app/         *.config.ts, *.handler.ts, *.util.ts, auth.middleware.ts
+  audit/       audit-e2e-runs.ts
+  governance/  scripts endpoint, mutate, allowlist (concept-schemes); *.validation.ts
+  identity/    actors endpoint, service, store, schema (display_name, level, progress)
+  mirror/      content, lexis, schedule backup/sync endpoints and services
+  source/      *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, source-extract.service.ts
+  storage/     kv *.endpoint.ts, *.store.ts
+  routes.ts    (entry; imports app config)
 ```
 
 ### Test file names (tests/)
@@ -278,41 +274,37 @@ by updating global-standards.toml and re-running `deno task seed:ontology`.
 - Postgres: `shared/infra/pg.client.ts` provides `getPg()`. Domain stores and
   system/kv use it; no KV or other storage client.
 
-### Domain dependency (acyclic; hierarchy)
+### Domain dependency (acyclic; data coupling)
 
-Cross-domain service calls must not form a cycle. Upper domains (orchestration)
-may call support domains; support domains must not call upper domains or each
-other unless the matrix below allows it.
+Cross-domain service calls must not form a cycle. Identity, Storage, Audit do
+not call other domains. Governance provides allowlist **data** only; Source and
+Mirror use that data (no Governance module import).
 
 **Hierarchy**
 
-- **Upper (orchestration)**: content (items, worksheets, prompt building). May
-  call support domains via their service only.
-- **Support**: actor, concept, script, source, record, kv, audit. Do not import
-  content; do not depend on each other unless listed in the matrix. app only
-  imports endpoints and is outside this hierarchy.
+- **App**: Registers routes only; no business logic.
+- **Identity, Storage, Audit**: No outgoing domain service calls.
+- **Governance**: Provides allowlist data (e.g. GET or bootstrap). No calls to
+  Identity/Source/Mirror.
+- **Source, Mirror**: Use allowlist **data** only (shared contract types or
+  injected data). Do not import Governance module.
 
 **Allowed dependency matrix**
 
-Rows = source domain (importer). Columns = target domain (imported). Only
-service (and types/schema where needed) may be imported cross-domain; store
-imports are forbidden (see Modular monolith rules above).
+Rows = importer; columns = imported. Only data/types or explicit allowed
+service; no store cross-import.
 
-| From \\ To | actor | concept | content | schedule | source | script | record | kv | audit |
-| ---------- | ----- | ------- | ------- | -------- | ------ | ------ | ------ | -- | ----- |
-| actor      | —     | no      | no      | no       | no     | no     | no     | no | no    |
-| concept    | no    | —       | no      | no       | no     | no     | no     | no | no    |
-| content    | yes   | yes     | —       | no       | no     | yes    | no     | no | no    |
-| schedule   | no    | no      | no      | —        | yes    | no     | no     | no | no    |
-| source     | no    | yes     | no      | no       | —      | no     | yes    | no | no    |
-| script     | no    | no      | no      | no       | no     | —      | no     | no | no    |
-| record     | no    | no      | no      | no       | no     | no     | —      | no | no    |
-| kv         | no    | no      | no      | no       | no     | no     | no     | —  | no    |
-| audit      | no    | no      | no      | no       | no     | no     | yes    | no | —     |
+| From \\ To | identity | governance | source | mirror | storage | audit |
+| ---------- | -------- | ---------- | ------ | ------ | ------- | ----- |
+| identity   | —        | no         | no     | no     | no      | no    |
+| governance | no       | —          | no     | no     | no      | no    |
+| source     | no       | no (data)  | —      | no     | no      | no    |
+| mirror     | no       | no (data)  | no     | —      | no      | no    |
+| storage    | no       | no         | no     | no     | —       | no    |
+| audit      | no       | no         | no     | no     | no      | —     |
 
-When adding a new cross-domain service dependency: (1) ensure it does not
-introduce a cycle; (2) add the edge to this matrix and to the allowlist in
-`shared/prompt/scripts/check-domain-deps.ts`; (3) then implement.
+When adding a cross-domain dependency: (1) ensure acyclic; (2) update this
+matrix and `shared/prompt/scripts/check-domain-deps.ts`; (3) then implement.
 
 ---
 

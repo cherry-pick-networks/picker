@@ -1,7 +1,9 @@
 import {
-  ID_COUNT_LIMIT,
-  validateFacetSchemes,
-} from "#system/concept/concept.service.ts";
+  ALLOWLIST_ID_COUNT_LIMIT,
+  allowlistHas,
+  type FacetName,
+} from "#shared/contract/allowlist.types.ts";
+import { getAllowlistDataOrLoad } from "#shared/contract/allowlist-data.ts";
 import type { GenerateWorksheetRequest } from "./content.schema.ts";
 
 export function initWorksheetRequest(request: GenerateWorksheetRequest) {
@@ -14,12 +16,15 @@ export function initWorksheetRequest(request: GenerateWorksheetRequest) {
 }
 
 async function assertWorksheetConceptIds(conceptIds: string[]): Promise<void> {
-  if (conceptIds.length > ID_COUNT_LIMIT) {
+  if (conceptIds.length > ALLOWLIST_ID_COUNT_LIMIT) {
     throw new Error(
-      `Too many concept IDs in request (max ${ID_COUNT_LIMIT})`,
+      `Too many concept IDs (max ${ALLOWLIST_ID_COUNT_LIMIT})`,
     );
   }
-  const { invalid } = await validateFacetSchemes("concept", conceptIds);
+  const data = await getAllowlistDataOrLoad();
+  const invalid = conceptIds.filter(
+    (id) => !allowlistHas(data, "concept" as FacetName, id),
+  );
   if (invalid.length > 0) {
     throw new Error(`Invalid concept IDs: ${invalid.join(", ")}`);
   }

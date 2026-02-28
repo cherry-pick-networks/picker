@@ -1,4 +1,8 @@
-import { validateFacetSchemes } from "#system/concept/concept.service.ts";
+import {
+  allowlistHas,
+  type FacetName,
+} from "#shared/contract/allowlist.types.ts";
+import { getAllowlistDataOrLoad } from "#shared/contract/allowlist-data.ts";
 import * as sourceSchema from "./source.schema.ts";
 import * as sourceStore from "./source.store.ts";
 
@@ -42,8 +46,8 @@ export async function createSource(
   body: sourceSchema.CreateSourceRequest,
 ): Promise<sourceSchema.Source> {
   if (body.type != null && body.type !== "") {
-    const { invalid } = await validateFacetSchemes("contentType", [body.type]);
-    if (invalid.length > 0) {
+    const data = await getAllowlistDataOrLoad();
+    if (!allowlistHas(data, "contentType" as FacetName, body.type)) {
       const msg = "Invalid document_type: " + body.type +
         ". Must be a valid Schema.org or BibTeX code.";
       throw new Error(msg);

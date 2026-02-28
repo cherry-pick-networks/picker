@@ -31,6 +31,8 @@ function buildProfileRaw(
   const id = body.id ?? crypto.randomUUID();
   return {
     id,
+    display_name: body.display_name,
+    level: body.level,
     createdAt: body.createdAt ?? now,
     updatedAt: body.updatedAt ?? now,
     grade: body.grade,
