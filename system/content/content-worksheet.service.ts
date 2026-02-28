@@ -9,7 +9,7 @@ async function saveWorksheet(worksheet: Worksheet): Promise<Worksheet> {
   return worksheet;
 }
 
-export async function createWorksheet(
+export function createWorksheet(
   request: CreateWorksheetRequest,
 ): Promise<Worksheet> {
   const worksheet_id = crypto.randomUUID();

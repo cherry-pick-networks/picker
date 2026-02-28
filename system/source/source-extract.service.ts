@@ -89,12 +89,20 @@ function persistExtract(
     }));
 }
 
+async function validateAndPersist(
+  source: Source,
+  concept_ids: string[],
+  subject_id: string | undefined,
+): Promise<ExtractOk> {
+  await validateExtractConceptIds(concept_ids);
+  await validateExtractSubjectId(subject_id);
+  return persistExtract(source, concept_ids, subject_id);
+}
+
 async function runExtractAndSave(source: Source): Promise<ExtractOk> {
   const llm = await extractConcepts(source.body as string);
   if (!llm.ok) return Promise.reject(new Error(llm.error));
-  await validateExtractConceptIds(llm.output.concept_ids);
-  await validateExtractSubjectId(llm.output.subject_id);
-  return persistExtract(
+  return validateAndPersist(
     source,
     llm.output.concept_ids,
     llm.output.subject_id,

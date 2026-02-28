@@ -1,4 +1,4 @@
-/** Lexis HTTP endpoints. Query: source_id+days, or q (utterance) for fallback. */
+/** Lexis HTTP: source_id+days or q (utterance) for fallback. */
 
 import type { Context } from "hono";
 import { getLexisAllowedSourceIds } from "./lexis.config.ts";

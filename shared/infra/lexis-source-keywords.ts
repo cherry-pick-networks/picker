@@ -20,27 +20,41 @@ interface Meta {
   keywords?: string[];
 }
 
-export function getLexisSourceKeywordPairs(): [string, string][] {
+function loadTomlEntries(): SourceEntry[] {
   const raw = Deno.readTextFileSync(LEXIS_SOURCES_TOML);
   const data = parse(raw) as { source?: SourceEntry[] };
-  const entries = data.source ?? [];
-  const pairs: [string, string][] = [];
-  for (const entry of entries) {
-    const json = Deno.env.get(entry.env_var);
-    if (!json?.trim()) continue;
-    try {
-      const payload = JSON.parse(json) as { metadata?: Meta };
-      const meta = payload.metadata ?? {};
-      const title = typeof meta.title === "string" ? meta.title : "";
-      if (title) pairs.push([title, entry.source_id]);
-      const kws = Array.isArray(meta.keywords) ? meta.keywords : [];
-      for (const kw of kws) {
-        if (typeof kw === "string" && kw) pairs.push([kw, entry.source_id]);
-      }
-      pairs.push([entry.source_id, entry.source_id]);
-    } catch {
-      // skip invalid env entry
-    }
+  return data.source ?? [];
+}
+
+function buildPairsForMeta(
+  sourceId: string,
+  title: string,
+  kws: string[],
+): [string, string][] {
+  const out: [string, string][] = title ? [[title, sourceId]] : [];
+  for (const kw of kws) {
+    if (typeof kw === "string" && kw) out.push([kw, sourceId]);
   }
+  out.push([sourceId, sourceId]);
+  return out;
+}
+
+function getPairsForEntry(entry: SourceEntry): [string, string][] {
+  const json = Deno.env.get(entry.env_var);
+  if (!json?.trim()) return [];
+  try {
+    const payload = JSON.parse(json) as { metadata?: Meta };
+    const meta = payload.metadata ?? {};
+    const title = typeof meta.title === "string" ? meta.title : "";
+    const kws = Array.isArray(meta.keywords) ? meta.keywords : [];
+    return buildPairsForMeta(entry.source_id, title, kws);
+  } catch {
+    return [];
+  }
+}
+
+export function getLexisSourceKeywordPairs(): [string, string][] {
+  const entries = loadTomlEntries();
+  const pairs = entries.flatMap((e) => getPairsForEntry(e));
   return pairs.slice().sort((a, b) => b[0].length - a[0].length);
 }

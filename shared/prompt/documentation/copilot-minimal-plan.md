@@ -114,13 +114,13 @@ later" (dual auth already removed).
 5. **Phase 4 – Client · UI**\
    Remove human-facing legacy screens. Keep client/frontend to diagnostics,
    health, and minimal guidance. State "new features = API + docs only" in store
-   or goal. *(Reflected in store.md and to-do.md.)*
+   or goal. _(Reflected in store.md and to-do.md.)_
 
 6. **Phase 5 – Docs · verification**\
    Finalize API list, openapi, and scenarios in docs. Use todo-check etc. to
    keep **docs–code** in sync. Verify "no legacy": no dual auth, no unused entry
-   points. *(Reflected: run `deno task todo-check`, `deno task type-check-policy`;
-   see Verification below.)*
+   points. _(Reflected: run `deno task todo-check`,
+   `deno task type-check-policy`; see Verification below.)_
 
 ---
 
@@ -130,7 +130,8 @@ Server-side LLM is used only where governance or persistence requires it:
 
 - **Script mutate** (Governance): LLM edits under shared/runtime/store/.
 - **Source extract**: LLM extracts concept/subject IDs; result saved to source.
-- **Lexis utterance** (`GET /lexis/entries?q=`): regex first, LLM fallback; TTL cache.
+- **Lexis utterance** (`GET /lexis/entries?q=`): regex first, LLM fallback; TTL
+  cache.
 
 Removed: content items generation (was composite; use build-prompt + local LLM +
 `POST /content/items` per copilot-scenarios.md).

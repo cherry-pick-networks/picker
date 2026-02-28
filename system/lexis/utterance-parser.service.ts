@@ -83,7 +83,7 @@ function fromLlmOutput(
   return { ok: true, source_id: out.source_id, days };
 }
 
-/** Async: regex first; on failure call LLM (or cache) and validate, normalize days. */
+/** Async: regex first; on failure LLM (or cache), validate, normalize days. */
 export async function parseUtteranceWithFallback(
   utterance: string,
   allowedSourceIds: Set<string>,

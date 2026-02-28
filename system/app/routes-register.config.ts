@@ -63,6 +63,7 @@ function registerSource(app: Hono) {
 
 function registerLexis(app: Hono) {
   app.get("/lexis/entries", lexis.getEntries);
+  return;
 }
 
 function registerData(app: Hono) {

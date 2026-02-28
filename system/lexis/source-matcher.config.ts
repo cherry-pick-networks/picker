@@ -2,7 +2,7 @@
  * Keyword → source_id from .env (lexis-sources.toml + LEXIS_SOURCE_META_*).
  * Longest match wins. Allowed list passed at match time.
  */
-
+// line-length-ignore: long shared path
 import { getLexisSourceKeywordPairs } from "#shared/infra/lexis-source-keywords.ts";
 
 let cached: [string, string][] | null = null;
@@ -14,6 +14,7 @@ function getPairs(): [string, string][] {
 
 export function clearLexisSourceKeywordCache(): void {
   cached = null;
+  return;
 }
 
 export function matchSourceIdByKeyword(
