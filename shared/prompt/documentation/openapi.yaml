@@ -1,13 +1,15 @@
-# Minimal OpenAPI 3.0 spec for Picker API auth (Copilot Studio OAuth 2.0).
-# Full route list: shared/prompt/to-do.md API surface.
+# OpenAPI 3.0 for Picker API. Auth: Entra ID OAuth 2.0 (see security).
+# Canonical route list: shared/prompt/to-do.md API surface.
+# Copilot scenarios: shared/prompt/documentation/copilot-scenarios.md.
 
 openapi: "3.0.3"
 info:
   title: Picker API
   version: "1.0.0"
   description: |
-    All routes except GET / require Entra ID (Azure AD) OAuth 2.0 access token
-    in Authorization header. Use OAuth 2.0 + Microsoft Entra ID in Copilot Studio.
+    Backend for copilot-assisted flows. All routes except GET / require
+    Entra ID OAuth 2.0 access token in Authorization header.
+    Use OAuth 2.0 + Microsoft Entra ID in Copilot Studio.
 
 servers:
   - url: /
@@ -30,6 +32,494 @@ paths:
                   ok:
                     type: boolean
 
+  /kv:
+    get:
+      summary: List keys; optional query prefix
+      operationId: listKv
+      parameters:
+        - name: prefix
+          in: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: { keys: string[] }
+    post:
+      summary: Write key-value
+      operationId: postKv
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [key]
+              properties:
+                key: { type: string }
+                value: {}
+      responses:
+        "200":
+          description: { key: string }
+        "400":
+          description: Validation error
+
+  /kv/{key}:
+    get:
+      summary: Read value by key
+      operationId: getKv
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Value or null
+    delete:
+      summary: Delete one key
+      operationId: deleteKv
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "204":
+          description: No Content
+
+  /scripts:
+    get:
+      summary: List store entries (Governance-verified)
+      operationId: listScripts
+      responses:
+        "200":
+          description: { entries: string[] }
+
+  /scripts/{path}:
+    get:
+      summary: Read store file by path
+      operationId: getScript
+      parameters:
+        - name: path
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: File content
+        "404":
+          description: Not found
+    post:
+      summary: Write store file at path
+      operationId: postScript
+      parameters:
+        - name: path
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          text/plain:
+            schema: { type: string }
+      responses:
+        "201":
+          description: Created
+        "400":
+        "403":
+        "500":
+
+  /script/mutate:
+    post:
+      summary: Mutate store file via LLM (Governance)
+      operationId: postScriptMutate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [path]
+              properties:
+                path: { type: string }
+                intent: { type: string }
+                options: { type: object }
+      responses:
+        "200":
+          description: { ok: true, replacements: number }
+        "4xx":
+        "5xx":
+          description: { ok: false, status, body }
+
+  /profile/{id}:
+    get:
+      summary: Read actor profile by id
+      operationId: getProfile
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Profile object
+        "404":
+          description: Not found
+    patch:
+      summary: Update actor profile
+      operationId: patchProfile
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object }
+      responses:
+        "200":
+        "404":
+
+  /profile:
+    post:
+      summary: Create actor profile
+      operationId: postProfile
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object }
+      responses:
+        "201":
+          description: Profile
+        "400":
+
+  /progress/{id}:
+    get:
+      summary: Read progress state by id
+      operationId: getProgress
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+        "404":
+    patch:
+      summary: Update progress state
+      operationId: patchProgress
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object }
+      responses:
+        "200":
+        "404":
+
+  /content/items/{id}:
+    get:
+      summary: Read content item by id
+      operationId: getContentItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+        "404":
+    patch:
+      summary: Update content item
+      operationId: patchContentItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object }
+      responses:
+        "200":
+        "404":
+
+  /content/items:
+    post:
+      summary: Create content item
+      operationId: postContentItem
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object }
+      responses:
+        "201":
+        "400":
+
+  /content/items/generate:
+    post:
+      summary: Generate grammar items by topic (LLM). Prefer build-prompt + POST items.
+      operationId: postContentItemsGenerate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                source_id: { type: string }
+                unit_id: { type: string }
+                topic_label: { type: string }
+                question_type: { type: string }
+                count: { type: integer }
+      responses:
+        "201":
+          description: { items: Item[] }
+        "4xx":
+        "5xx":
+
+  /content/worksheets/{id}:
+    get:
+      summary: Read worksheet meta by id
+      operationId: getWorksheet
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+        "404":
+
+  /content/worksheets/generate:
+    post:
+      summary: Create worksheet from concepts (composite). Prefer POST /worksheets + item_ids.
+      operationId: postWorksheetsGenerate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title: { type: string }
+                concept_ids: { type: array, items: { type: string } }
+                item_count: { type: integer }
+                subject_weights: { type: object }
+      responses:
+        "201":
+        "400":
+
+  /content/worksheets/build-prompt:
+    post:
+      summary: Build worksheet prompt (no LLM). Use with local LLM then POST /worksheets.
+      operationId: postWorksheetsBuildPrompt
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object }
+      responses:
+        "200":
+          description: { prompt: string }
+        "400":
+        "500":
+
+  /sources:
+    get:
+      summary: List sources (full)
+      operationId: listSources
+      responses:
+        "200":
+          description: Source[]
+    post:
+      summary: Collect and store a source
+      operationId: postSource
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object }
+      responses:
+        "201":
+        "400":
+
+  /sources/{id}:
+    get:
+      summary: Source by id
+      operationId: getSource
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+        "404":
+
+  /sources/{id}/extract:
+    post:
+      summary: Extract concept/subject IDs from source body (LLM); save to source
+      operationId: postSourceExtract
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object }
+      responses:
+        "200":
+          description: { ok, concept_ids, subject_id?, extracted_at }
+        "4xx":
+        "5xx":
+
+  /data/identity-index:
+    get:
+      summary: Read identity index
+      operationId: getIdentityIndex
+      responses:
+        "200":
+          description: Full JSON
+
+  /data/identity/{id}:
+    get:
+      summary: Read identity student by id
+      operationId: getIdentity
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+        "404":
+
+  /schedule/due:
+    get:
+      summary: List schedule items due in range
+      operationId: getScheduleDue
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: { items: ScheduleItem[] }
+
+  /schedule/plan/weekly:
+    get:
+      summary: Weekly plan by week number
+      operationId: getSchedulePlanWeekly
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: week_start
+          in: query
+          schema: { type: string }
+        - name: level
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+
+  /schedule/plan/annual:
+    get:
+      summary: Annual curriculum
+      operationId: getSchedulePlanAnnual
+      parameters:
+        - name: year
+          in: query
+          schema: { type: integer }
+        - name: level
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+
+  /schedule/items:
+    get:
+      summary: List schedule items
+      operationId: listScheduleItems
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: source_id
+          in: query
+          schema: { type: string }
+      responses:
+        "200":
+          description: { items: ScheduleItem[] }
+    post:
+      summary: Create schedule item
+      operationId: postScheduleItem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [actor_id, source_id, unit_id]
+              properties:
+                actor_id: { type: string }
+                source_id: { type: string }
+                unit_id: { type: string }
+      responses:
+        "201":
+        "400":
+
+  /schedule/items/{id}/review:
+    post:
+      summary: Record review (grade 1–4)
+      operationId: postScheduleItemReview
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                grade: { type: integer }
+                reviewed_at: { type: string }
+      responses:
+        "200":
+        "404":
+
+  /lexis/entries:
+    get:
+      summary: List lexis entries; query source_id+days or q (utterance)
+      operationId: getLexisEntries
+      parameters:
+        - name: source_id
+          in: query
+          schema: { type: string }
+        - name: days
+          in: query
+          schema: { type: integer }
+        - name: q
+          in: query
+          schema: { type: string }
+          description: Utterance (regex + LLM fallback)
+      responses:
+        "200":
+          description: { entries: LexisEntry[] }
+        "400":
+
 components:
   securitySchemes:
     EntraBearer:
@@ -37,11 +527,9 @@ components:
       scheme: bearer
       bearerFormat: JWT
       description: |
-        Microsoft Entra ID (Azure AD) OAuth 2.0 access token.
-        Obtain via OAuth 2.0 with Identity provider Microsoft Entra ID
+        Microsoft Entra ID OAuth 2.0 access token.
+        In Copilot Studio use OAuth 2.0 with Identity provider Microsoft Entra ID
         (Client ID, Tenant ID from Picker app registration).
 
-# All paths except GET / require EntraBearer. Apply in Copilot Studio as
-# OAuth 2.0 with Microsoft Entra ID.
 security:
   - EntraBearer: []
