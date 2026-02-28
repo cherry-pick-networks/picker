@@ -190,7 +190,9 @@ Deno.test(
       );
       const elapsed = performance.now() - start;
       assert(elapsed < maxMs, `all ${concurrency} requests in < ${maxMs}ms`);
-      results.forEach((status, i) => assertEquals(status, 200, `request ${i + 1} status`));
+      results.forEach((status, i) =>
+        assertEquals(status, 200, `request ${i + 1} status`)
+      );
     });
   },
 );

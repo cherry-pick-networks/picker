@@ -1,4 +1,7 @@
-import { allowlistHas, type FacetName } from '#shared/contract/allowlistTypes.ts';
+import {
+  allowlistHas,
+  type FacetName,
+} from '#shared/contract/allowlistTypes.ts';
 import { getAllowlistDataOrLoad } from '#shared/contract/allowlistData.ts';
 import * as sourceSchema from './sourceSchema.ts';
 import * as sourceStore from './sourceStore.ts';

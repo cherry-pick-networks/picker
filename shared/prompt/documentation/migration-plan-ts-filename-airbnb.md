@@ -1,14 +1,14 @@
 # Migration plan: TS filenames to Airbnb style (Option A)
 
-Per store.md §J. Goal: filename = default export name; camelCase for functions/modules; no dot in
-filename.
+Per store.md §J. Goal: filename = default export name; camelCase for
+functions/modules; no dot in filename.
 
 ## Rule change
 
-- **Before**: `[name].[suffix].ts` (e.g. `profileEndpoint.ts`) or kebab-only (e.g.
-  `contentWorksheetInit.ts`).
-- **After**: Single token camelCase (e.g. `profileEndpoint.ts`, `contentWorksheetInit.ts`). No dot;
-  no hyphen in filename.
+- **Before**: `[name].[suffix].ts` (e.g. `profileEndpoint.ts`) or kebab-only
+  (e.g. `contentWorksheetInit.ts`).
+- **After**: Single token camelCase (e.g. `profileEndpoint.ts`,
+  `contentWorksheetInit.ts`). No dot; no hyphen in filename.
 
 ## File mapping (current → target)
 
@@ -202,5 +202,7 @@ Unchanged (PATH_EXCEPTIONS / fixed name).
 ## Execution order
 
 1. Update store.md §E and reference.md (TS file naming).
-2. Update ts-filename-check: config + validate + helpers (camelCase base name, no dot).
-3. Rename files (git mv) in any order; then replace all import paths and deno.json task paths.
+2. Update ts-filename-check: config + validate + helpers (camelCase base name,
+   no dot).
+3. Rename files (git mv) in any order; then replace all import paths and
+   deno.json task paths.

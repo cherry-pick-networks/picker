@@ -7,11 +7,12 @@ description: |
 
 # Refactor and commit
 
-Apply store.md **§P, §B, §S, §T, §N, §A**. Full text in shared/prompt/store.md Part B only; this
-skill gives a short checklist.
+Apply store.md **§P, §B, §S, §T, §N, §A**. Full text in shared/prompt/store.md
+Part B only; this skill gives a short checklist.
 
-**Before editing**: Run `deno task rules:summary -- refactor` (or use /rules-summary refactor) and
-apply the listed § for this session. Keep the output in context.
+**Before editing**: Run `deno task rules:summary -- refactor` (or use
+/rules-summary refactor) and apply the listed § for this session. Keep the
+output in context.
 
 ## §P — Format
 
@@ -29,7 +30,8 @@ apply the listed § for this session. Keep the output in context.
 
 ## §S, §T, §N
 
-- Comments: only those that help AI (§S). Naming per §T. No type-check bypass (§N).
+- Comments: only those that help AI (§S). Naming per §T. No type-check bypass
+  (§N).
 
 ## Checklist
 

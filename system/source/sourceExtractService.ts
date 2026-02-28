@@ -5,7 +5,7 @@
 import {
   ALLOWLIST_ID_COUNT_LIMIT,
   allowlistHas,
-  type FacetName,
+  type FacetName as _FacetName,
 } from '#shared/contract/allowlistTypes.ts';
 import { getAllowlistDataOrLoad } from '#shared/contract/allowlistData.ts';
 import type { Source } from '#system/source/sourceSchema.ts';

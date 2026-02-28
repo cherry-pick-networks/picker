@@ -3,7 +3,10 @@
  * Structured output shape (MutateOutput) is defined in mutateSchema.
  */
 
-import { type MutateOutput, MutateOutputSchema } from '#system/script/mutateSchema.ts';
+import {
+  type MutateOutput,
+  MutateOutputSchema,
+} from '#system/script/mutateSchema.ts';
 
 const OPENAI_CHAT_URL = 'https://api.openai.com/v1/chat/completions';
 
@@ -24,7 +27,8 @@ function getApiKey(): string | undefined {
 type ChatMessage = { role: string; content: string };
 
 function buildMessages(input: MutateLlmInput): ChatMessage[] {
-  const system = 'You return only valid JSON with keys: original (exact input snippet), ' +
+  const system =
+    'You return only valid JSON with keys: original (exact input snippet), ' +
     'mutated.';
   const user = input.intent
     ? `Intent: ${input.intent}\nSnippet:\n${input.snippet}`

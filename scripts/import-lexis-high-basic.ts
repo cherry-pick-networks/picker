@@ -66,7 +66,9 @@ async function readHeadwordsFile(): Promise<string[]> {
 
 async function loadHeadwords(): Promise<string[]> {
   const write = Deno.args.includes('--write-headwords');
-  const headwords = write ? await writeHeadwordsFile() : await readHeadwordsFile();
+  const headwords = write
+    ? await writeHeadwordsFile()
+    : await readHeadwordsFile();
   if (headwords.length !== 1200) {
     const msg = `Expected 1200 headwords, got ${headwords.length}. Check ` +
       DEFAULT_HEADWORDS_PATH + '.';

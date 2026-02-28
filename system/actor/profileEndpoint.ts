@@ -1,6 +1,9 @@
 import type { Context } from 'hono';
 import { z } from 'zod';
-import { getPatchProfileInput, getPatchProgressInput } from './profilePatchInputParser.ts';
+import {
+  getPatchProfileInput,
+  getPatchProgressInput,
+} from './profilePatchInputParser.ts';
 import {
   createProfile,
   getProfile as svcGetProfile,

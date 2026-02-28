@@ -15,7 +15,9 @@ const SQL_LIST_BY_ACTOR = await loadSql(
 const SQL_LIST_DUE = await loadSql(sqlDir, 'list_due.sql');
 
 function parsePayload(raw: unknown): ScheduleItemPayload {
-  return (typeof raw === 'string' ? JSON.parse(raw) : raw) as ScheduleItemPayload;
+  return (typeof raw === 'string'
+    ? JSON.parse(raw)
+    : raw) as ScheduleItemPayload;
 }
 
 export interface ScheduleItemRow {

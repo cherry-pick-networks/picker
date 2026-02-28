@@ -5,7 +5,12 @@
  *   deno run --allow-read shared/prompt/scripts/check-naming-layer.ts
  * Or: deno task naming-layer-check
  */
-import { LAYER_INFIX, LAYER_SUFFIX, LAYERS, SKIP_DIRS } from './check-naming-layer-config.ts';
+import {
+  LAYER_INFIX,
+  LAYER_SUFFIX,
+  LAYERS,
+  SKIP_DIRS,
+} from './check-naming-layer-config.ts';
 
 async function walkOneDir(
   root: string,

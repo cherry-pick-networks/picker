@@ -27,9 +27,11 @@ function getModel(): string {
 }
 
 function buildMessages(body: string): { role: string; content: string }[] {
-  const system = 'You return only valid JSON with keys: concept_ids (array of concept ' +
+  const system =
+    'You return only valid JSON with keys: concept_ids (array of concept ' +
     'IDs), optional subject_id.';
-  const user = `Passage:\n${body}\n\nReturn the one exam subject ID and array of ` +
+  const user =
+    `Passage:\n${body}\n\nReturn the one exam subject ID and array of ` +
     'concept IDs for the above passage as JSON only.';
   return [
     { role: 'system', content: system },

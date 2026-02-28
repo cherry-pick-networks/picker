@@ -51,7 +51,9 @@ export function checkSourceFile(path: string, content: string): string[] {
     if (DIRECTIVE_RE.test(line)) {
       const match = line.match(/@ts-(ignore|expect-error)/i);
       errors.push(
-        `${path}:${i + 1}: forbidden ${match ? match[0]!.toLowerCase() : 'directive'}`,
+        `${path}:${i + 1}: forbidden ${
+          match ? match[0]!.toLowerCase() : 'directive'
+        }`,
       );
     }
   }

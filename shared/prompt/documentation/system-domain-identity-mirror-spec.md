@@ -5,8 +5,8 @@ description: Final work spec — 6 domains + App, actor (display_name, level, pr
 
 # system/ domain integration and actor model — final spec
 
-See shared/prompt/to-do.md and reference.md for current API and infix list. This file is the
-authoritative work instruction for the consolidation.
+See shared/prompt/to-do.md and reference.md for current API and infix list. This
+file is the authoritative work instruction for the consolidation.
 
 ## Domains (6 + App)
 
@@ -22,23 +22,26 @@ authoritative work instruction for the consolidation.
 
 ## Actor model
 
-- **Server stores**: actor_id (PK), display_name, level, progress (and updated_at).
-- **API**: GET/POST /identity/actors, GET/PATCH /identity/actors/:id. List supports query
-  name/display_name.
+- **Server stores**: actor_id (PK), display_name, level, progress (and
+  updated_at).
+- **API**: GET/POST /identity/actors, GET/PATCH /identity/actors/:id. List
+  supports query name/display_name.
 - **Request target**: Use actor_id (preferred) or resolve name via list/search.
 
 ## Allowlist and coupling
 
-- **Allowlist**: Types in shared contract; Governance loads and provides **data** only.
-- **Source/Mirror**: Use allowlist **data** only; do not import Governance module.
+- **Allowlist**: Types in shared contract; Governance loads and provides
+  **data** only.
+- **Source/Mirror**: Use allowlist **data** only; do not import Governance
+  module.
 
 ## API path summary
 
 - Identity: /identity/actors, /identity/actors/:id
 - Governance: /scripts, /scripts/:path*, /script/mutate
 - Source: /sources, /sources/:id, /sources/:id/extract
-- Mirror: /mirror/content/items, /mirror/content/worksheets; /mirror/lexis/entries;
-  /mirror/schedule/*
+- Mirror: /mirror/content/items, /mirror/content/worksheets;
+  /mirror/lexis/entries; /mirror/schedule/*
 - Storage: /kv (or /storage)
 - No build-prompt; Content under Mirror is atomic only.
 

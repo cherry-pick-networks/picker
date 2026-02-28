@@ -11,9 +11,11 @@ import {
   type TaskType,
 } from './rules-summary-config.ts';
 
-const USAGE = 'Usage: deno run -A shared/prompt/scripts/rules-summary.ts <task-type> ' +
+const USAGE =
+  'Usage: deno run -A shared/prompt/scripts/rules-summary.ts <task-type> ' +
   '[--code|--docs|--system]';
-const TASK_TYPES = 'Task types: feature, refactor, docs, commit, migration, system, ' +
+const TASK_TYPES =
+  'Task types: feature, refactor, docs, commit, migration, system, ' +
   'dependency, sql, directory, all';
 
 function main(): void {

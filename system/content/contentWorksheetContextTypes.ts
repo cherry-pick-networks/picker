@@ -1,4 +1,7 @@
-import { DEFAULT_GOAL_ACCURACY, DEFAULT_VOCABULARY } from './contentPromptLoadService.ts';
+import {
+  DEFAULT_GOAL_ACCURACY,
+  DEFAULT_VOCABULARY,
+} from './contentPromptLoadService.ts';
 
 export type WorksheetContext = {
   student_name: string;

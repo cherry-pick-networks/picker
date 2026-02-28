@@ -6,7 +6,10 @@
 
 import { verifyGovernance } from '#system/script/governanceValidation.ts';
 import { mutateViaLlm } from '#system/script/scriptLlmClient.ts';
-import type { MutateRequest, MutateResponse } from '#system/script/mutateSchema.ts';
+import type {
+  MutateRequest,
+  MutateResponse,
+} from '#system/script/mutateSchema.ts';
 import { readScript, writeScript } from '#system/script/scriptsStore.ts';
 
 const LINES_PER_BLOCK_MIN = 2;

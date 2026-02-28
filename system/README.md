@@ -1,7 +1,8 @@
 # system
 
-Application layer: modular monolith with domain-bounded endpoints, services, and stores. Entry for
-HTTP is `routes.ts`; domain modules use flat `[name].[suffix].ts` layout under `system/<infix>/`.
+Application layer: modular monolith with domain-bounded endpoints, services, and
+stores. Entry for HTTP is `routes.ts`; domain modules use flat
+`[name].[suffix].ts` layout under `system/<infix>/`.
 
 ## Entry points
 
@@ -19,7 +20,8 @@ HTTP is `routes.ts`; domain modules use flat `[name].[suffix].ts` layout under `
 
 ## Cross-domain rules
 
-- Cross-domain: use the other domain’s **service** (or types/schema), not its store.
+- Cross-domain: use the other domain’s **service** (or types/schema), not its
+  store.
 - Dependencies must stay **acyclic** and match the allowed matrix in reference.
 - Storage: use `getPg()` from `shared/infra`; no KV.
 
@@ -28,4 +30,5 @@ HTTP is `routes.ts`; domain modules use flat `[name].[suffix].ts` layout under `
 - **Structure and suffix**:
   [shared/prompt/documentation/reference.md](../shared/prompt/documentation/reference.md)
   (infix/suffix, layout, dependency matrix).
-- **Scope (modules and API)**: [shared/prompt/to-do.md](../shared/prompt/to-do.md).
+- **Scope (modules and API)**:
+  [shared/prompt/to-do.md](../shared/prompt/to-do.md).

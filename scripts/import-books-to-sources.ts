@@ -33,7 +33,9 @@ function deriveUnitIdsAndStudyGuide(
   unitIds: string[];
   studyGuide: { name: string } | undefined;
 } {
-  const unitEntries = entries.filter((e) => e.num != null).sort((a, b) => a.num! - b.num!);
+  const unitEntries = entries.filter((e) => e.num != null).sort((a, b) =>
+    a.num! - b.num!
+  );
   const studyGuide = entries.find((e) => e.name === 'study_guide.md');
   const unitIds = unitEntries.map((e) => e.name.replace(/\.md$/, ''));
   return { unitEntries, unitIds, studyGuide };

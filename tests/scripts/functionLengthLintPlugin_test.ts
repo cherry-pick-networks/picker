@@ -1,7 +1,8 @@
 import { assertEquals } from '@std/assert';
 import plugin from '../../shared/prompt/scripts/function-length-lint-plugin.ts';
 
-const MSG_OK = (n: number) => `Function body must have 2–4 statements (got ${n}).`;
+const MSG_OK = (n: number) =>
+  `Function body must have 2–4 statements (got ${n}).`;
 
 Deno.test('function-length: 2–4 statements ok', () => {
   const code = `

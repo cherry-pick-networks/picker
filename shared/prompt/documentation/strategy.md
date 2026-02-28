@@ -7,26 +7,27 @@ description: Data migration strategy and shared single source.
 
 ## Goal
 
-- **Single source**: All rule text lives in `shared/prompt/store.md` (Part B: Rule definitions).
-- **Cursor Rules**: `.cursor/rules/*.mdc` only reference that file; no duplicate rule text. mdc
-  files are for **when** to apply (always vs on-request).
+- **Single source**: All rule text lives in `shared/prompt/store.md` (Part B:
+  Rule definitions).
+- **Cursor Rules**: `.cursor/rules/*.mdc` only reference that file; no duplicate
+  rule text. mdc files are for **when** to apply (always vs on-request).
 
 ## Current layout (Rule index + 3 .mdc + rules:summary + skills)
 
-- **Rule index**: In store.md, section "Rule index (context → sections)". Maps context (always,
-  feature+code, docs, commit, migration, system, dependency, sql, directory) to § list. Shared by
-  Commands, Skills, and .mdc.
+- **Rule index**: In store.md, section "Rule index (context → sections)". Maps
+  context (always, feature+code, docs, commit, migration, system, dependency,
+  sql, directory) to § list. Shared by Commands, Skills, and .mdc.
 - **.mdc (3 files)**:
-  - `global-core.mdc`: always applied; §C, §I, §O (and §B for handoff). Points to Rule index and
-    `deno task rules:summary`.
+  - `global-core.mdc`: always applied; §C, §I, §O (and §B for handoff). Points
+    to Rule index and `deno task rules:summary`.
   - `global-context.mdc`: on-request; context-based rule index entry.
   - `global-code.mdc`: globs `**/*.ts`; code-related § from Rule index.
-- **rules:summary**: `deno task rules:summary -- <task-type>`. Prints applicable § and one-line
-  title per §. Task types: feature, refactor, docs, commit, migration, system, dependency, sql,
-  directory, all.
-- **Skills** (`.cursor/skills/`): feature-implementation, refactor-and-commit, docs-and-boundary,
-  commit-boundary, migration-and-naming. Each references store.md § and provides a short checklist;
-  full text only in store.md.
+- **rules:summary**: `deno task rules:summary -- <task-type>`. Prints applicable
+  § and one-line title per §. Task types: feature, refactor, docs, commit,
+  migration, system, dependency, sql, directory, all.
+- **Skills** (`.cursor/skills/`): feature-implementation, refactor-and-commit,
+  docs-and-boundary, commit-boundary, migration-and-naming. Each references
+  store.md § and provides a short checklist; full text only in store.md.
 
 ## Todo (historical)
 
@@ -82,17 +83,18 @@ Context → § is in store.md Rule index. .mdc roles:
 - [x] store.md contains full text of all 12 rules (§A–§L).
 - [x] Each .mdc contains only a reference to store.md (no rule body).
 - [x] No duplicate long-form rule content in .mdc.
-- [x] Exactly two .mdc files; one always-applied, one on-request. See cursor-rules-policy.md.
-- [x] Rule index in store.md; 3 .mdc (global-core, global-context, global-code); rules:summary task;
-      project skills in .cursor/skills/.
+- [x] Exactly two .mdc files; one always-applied, one on-request. See
+      cursor-rules-policy.md.
+- [x] Rule index in store.md; 3 .mdc (global-core, global-context, global-code);
+      rules:summary task; project skills in .cursor/skills/.
 
 ---
 
 # 4-layer naming reference
 
-When the first directory tier is a Layer (presentation, application, domain, infrastructure), tier 2
-and tier 3 must use only that layer's allowed Infix and Suffix. Canonical source: store.md §E. Below
-is a quick reference.
+When the first directory tier is a Layer (presentation, application, domain,
+infrastructure), tier 2 and tier 3 must use only that layer's allowed Infix and
+Suffix. Canonical source: store.md §E. Below is a quick reference.
 
 | Layer          | Allowed Infix                                                                                                                                                                             | Allowed Suffix                                                                               |
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
@@ -105,14 +107,16 @@ is a quick reference.
 
 # AI-assisted todo estimation
 
-Guideline for sizing AI-assisted coding sessions in micro-component (small-file, short-function)
-codebases. Use when giving the AI a multi-file task or when defining session boundaries.
+Guideline for sizing AI-assisted coding sessions in micro-component (small-file,
+short-function) codebases. Use when giving the AI a multi-file task or when
+defining session boundaries.
 
 ## Rule (single source)
 
-**One session = one entry file + the files it directly imports.** Do not use a fixed file-count
-limit (e.g. "3–4 files"). Define types/interfaces used in that tree first, then implement. Do not
-combine unrelated trees or project-wide refactors in one session.
+**One session = one entry file + the files it directly imports.** Do not use a
+fixed file-count limit (e.g. "3–4 files"). Define types/interfaces used in that
+tree first, then implement. Do not combine unrelated trees or project-wide
+refactors in one session.
 
 ## When it applies
 
@@ -120,17 +124,19 @@ combine unrelated trees or project-wide refactors in one session.
 - Functions are short (e.g. ≤6 lines); single responsibility.
 - Many small files form a "ravioli" structure.
 
-In that environment the main failure mode is **connection complexity** (imports, props, DI), not
-token count. Todo by dependency tree reduces mistakes.
+In that environment the main failure mode is **connection complexity** (imports,
+props, DI), not token count. Todo by dependency tree reduces mistakes.
 
 ## Recommended workflow
 
-1. Choose or create **one entry file** for the feature (e.g. the route or top-level component).
+1. Choose or create **one entry file** for the feature (e.g. the route or
+   top-level component).
 2. Run the todo-discovery script to list its direct imports (see below).
-3. Prompt the AI with that list as the in-todo set. Between each step (requirement summary →
-   interface proposal → implementation), proceed only after **user approval**; see store.md §Q.
-4. (Optional) Before commit, check that changed files are within entry + script output (manual or
-   via optional check script).
+3. Prompt the AI with that list as the in-todo set. Between each step
+   (requirement summary → interface proposal → implementation), proceed only
+   after **user approval**; see store.md §Q.
+4. (Optional) Before commit, check that changed files are within entry + script
+   output (manual or via optional check script).
 
 ## Todo-discovery script
 
@@ -146,23 +152,25 @@ Example:
 deno run --allow-read shared/prompt/scripts/todo-discovery.ts main.ts
 ```
 
-Output: the entry path plus one path per line for each file it **directly** imports (relative
-imports only; npm/jsr are skipped). Use this list as the "in-todo files" in your prompt. Optional:
-`--oneline` prints a single line for pasting into the prompt.
+Output: the entry path plus one path per line for each file it **directly**
+imports (relative imports only; npm/jsr are skipped). Use this list as the
+"in-todo files" in your prompt. Optional: `--oneline` prints a single line for
+pasting into the prompt.
 
-Task: `deno task todo-discovery -- <entry-file>` (e.g. `deno task todo-discovery -- main.ts`). Add
-`--oneline` for one-line output.
+Task: `deno task todo-discovery -- <entry-file>` (e.g.
+`deno task todo-discovery -- main.ts`). Add `--oneline` for one-line output.
 
 ## Phase flags (explicit prompt flags)
 
-Put one of these at the **first line** (or a clear, fixed position) of the prompt so the agent knows
-the current phase:
+Put one of these at the **first line** (or a clear, fixed position) of the
+prompt so the agent knows the current phase:
 
-- **`[Phase 1]`** — When stating the requirement. AI outputs only a requirement/constraint summary,
-  then asks for approval and waits.
-- **`[Phase 2]`** — After phase 1 is approved. AI proposes only `interface`/`type` for the tree,
-  then asks for approval and waits.
-- **`[Phase 3]`** — After phase 2 is approved. AI implements logic and view per the approved design.
+- **`[Phase 1]`** — When stating the requirement. AI outputs only a
+  requirement/constraint summary, then asks for approval and waits.
+- **`[Phase 2]`** — After phase 1 is approved. AI proposes only
+  `interface`/`type` for the tree, then asks for approval and waits.
+- **`[Phase 3]`** — After phase 2 is approved. AI implements logic and view per
+  the approved design.
 
 ## Prompt template
 
@@ -178,11 +186,13 @@ Order: define types/interfaces used in this tree first, then implement.
 
 ## What to avoid
 
-- "Change all buttons / colors / variable names across the project" in one session.
+- "Change all buttons / colors / variable names across the project" in one
+  session.
 - Editing multiple unrelated feature trees in one session.
 - Omitting the in-todo list so the model infers todo itself (often wrong).
 
 ## Optional: todo-drift check
 
-Before commit you can verify that changed files are a subset of entry + direct dependents. Not
-enforced by default; add a small script or manual checklist if desired.
+Before commit you can verify that changed files are a subset of entry + direct
+dependents. Not enforced by default; add a small script or manual checklist if
+desired.

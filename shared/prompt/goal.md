@@ -5,24 +5,27 @@ description: Final implementation goal for PICKER; todo, phase, and alignment.
 
 # Final implementation goal (for AI)
 
-Single source for PICKER end-state. Use this document to decide todo, phase, and whether a change
-aligns with the target. Details live in the spec (Law) and linked specs.
+Single source for PICKER end-state. Use this document to decide todo, phase, and
+whether a change aligns with the target. Details live in the spec (Law) and
+linked specs.
 
 ---
 
 ## 1. One-line goal
 
-PICKER's final implementation goal is to implement the **self-evolving AI education architect** as a
-single, fully working system within the todo and governance defined in the spec: AST-based self-edit
-of shared/runtime/store/, Thompson Sampling MAB for logic selection, and Governance verification
-before any change is applied.
+PICKER's final implementation goal is to implement the **self-evolving AI
+education architect** as a single, fully working system within the todo and
+governance defined in the spec: AST-based self-edit of shared/runtime/store/,
+Thompson Sampling MAB for logic selection, and Governance verification before
+any change is applied.
 
 ---
 
 ## 2. Target phases
 
-Phases (MVP through full spec) and current target are defined in the spec §49. Implement only up to
-the chosen phase; update the spec before implementing beyond it.
+Phases (MVP through full spec) and current target are defined in the spec §49.
+Implement only up to the chosen phase; update the spec before implementing
+beyond it.
 
 ---
 
@@ -30,15 +33,15 @@ the chosen phase; update the spec before implementing beyond it.
 
 - **Modules, API, infrastructure**: This repo's `shared/prompt/to-do.md`.
 - **Product todo, governance**: the spec.
-- Add only modules, routes, or infrastructure listed in to-do.md or specified in the spec for the
-  current phase.
+- Add only modules, routes, or infrastructure listed in to-do.md or specified in
+  the spec for the current phase.
 
 ---
 
 ## 4. In-todo
 
-In-todo modules, agents, data layout, mutation rules, selection, and output format are defined in
-to-do.md and the spec. Add only items inside that todo.
+In-todo modules, agents, data layout, mutation rules, selection, and output
+format are defined in to-do.md and the spec. Add only items inside that todo.
 
 ---
 
@@ -46,10 +49,12 @@ to-do.md and the spec. Add only items inside that todo.
 
 - Follow to-do.md and the spec for the current phase.
 - Run all autonomous mutations and applies through Governance verification.
-- Add only modules, routes, and infrastructure listed in todo (to-do.md or spec).
+- Add only modules, routes, and infrastructure listed in todo (to-do.md or
+  spec).
 - Mutate only within shared/runtime/store/; use Governance-verified flow.
-- Write to config/ or credentials only via approved mechanisms; file-based shared/record/
-  (identity-index only) only via system/record/identityIndexStore.ts (see to-do.md).
+- Write to config/ or credentials only via approved mechanisms; file-based
+  shared/record/ (identity-index only) only via
+  system/record/identityIndexStore.ts (see to-do.md).
 - Apply type-check policy (store.md §N).
 
 Concretes: spec §44–§48 and store.md.
@@ -58,8 +63,9 @@ Concretes: spec §44–§48 and store.md.
 
 ## 6. References
 
-- **The spec**: Overview, governance, agents, data layout, protocol, implementation and safety.
+- **The spec**: Overview, governance, agents, data layout, protocol,
+  implementation and safety.
 - **This repo**: shared/prompt/to-do.md, shared/prompt/store.md.
-- **Minimal-scope plan**: shared/prompt/documentation/copilot-minimal-plan.md (copilot-assisted
-  only, legacy removal phases).
+- **Minimal-scope plan**: shared/prompt/documentation/copilot-minimal-plan.md
+  (copilot-assisted only, legacy removal phases).
 - **Other specs**: web_spec, llm_models_spec (when present).

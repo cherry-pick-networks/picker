@@ -64,7 +64,8 @@ function checkBody(
     return;
   }
   if (hasIgnoreComment(context, parent)) return;
-  const msg = `Function body must have ${MIN_STATEMENTS}–${MAX_STATEMENTS} statements ` +
+  const msg =
+    `Function body must have ${MIN_STATEMENTS}–${MAX_STATEMENTS} statements ` +
     `(got ${n}).`;
   context.report({ node: block, message: msg });
 }

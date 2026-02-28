@@ -16,12 +16,16 @@ function validateDdlFilename(base: string): string | null {
   if (!m) {
     return 'must match NN_<name>.sql (NN=00-99, name=lowercase+hyphens only)';
   }
-  return DDL_NAME_REGEX.test(m[2]) ? null : 'name must match ^[a-z][a-z0-9]*(-[a-z0-9]+)*$';
+  return DDL_NAME_REGEX.test(m[2])
+    ? null
+    : 'name must match ^[a-z][a-z0-9]*(-[a-z0-9]+)*$';
 }
 
 function validateDmlFilename(base: string): string | null {
   const ok = DML_FILENAME_REGEX.test(base);
-  return ok ? null : 'must be lowercase snake_case (e.g. get_schedule_item.sql)';
+  return ok
+    ? null
+    : 'must be lowercase snake_case (e.g. get_schedule_item.sql)';
 }
 
 async function collectSchemaErrors(): Promise<[string, string][]> {

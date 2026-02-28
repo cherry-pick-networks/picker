@@ -1,4 +1,7 @@
-import type { GenerateWorksheetRequest, WorksheetPromptResponse } from './contentSchema.ts';
+import type {
+  GenerateWorksheetRequest,
+  WorksheetPromptResponse,
+} from './contentSchema.ts';
 import {
   DEFAULT_QUESTION_TYPE,
   DEFAULT_WORKSHEET_CONTEXT,
@@ -24,7 +27,9 @@ export function contextFromProfile(profile: {
     unknown
   >;
   const goal = wg.goal_accuracy as number | undefined;
-  const goalStr = goal != null ? `${Math.round(goal * 100)}%` : DEFAULT_GOAL_ACCURACY;
+  const goalStr = goal != null
+    ? `${Math.round(goal * 100)}%`
+    : DEFAULT_GOAL_ACCURACY;
   return {
     student_name: profile.id,
     goal_accuracy: goalStr,

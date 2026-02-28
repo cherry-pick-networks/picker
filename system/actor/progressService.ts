@@ -1,6 +1,10 @@
 import { z } from 'zod';
 import * as store from './profileStore.ts';
-import { type Progress, ProgressPatchSchema, ProgressSchema } from './profileSchema.ts';
+import {
+  type Progress,
+  ProgressPatchSchema,
+  ProgressSchema,
+} from './profileSchema.ts';
 
 export type { Progress };
 export { ProgressPatchSchema, ProgressSchema };

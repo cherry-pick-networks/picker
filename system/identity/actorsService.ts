@@ -3,8 +3,15 @@
  */
 
 import * as profileStore from '#system/actor/profileStore.ts';
-import { createProfile, getProfile, updateProfile } from '#system/actor/profileService.ts';
-import { getProgress, updateProgress } from '#system/actor/progressService.ts';
+import {
+  createProfile,
+  getProfile as _getProfile,
+  updateProfile,
+} from '#system/actor/profileService.ts';
+import {
+  getProgress as _getProgress,
+  updateProgress,
+} from '#system/actor/progressService.ts';
 import type { Actor, ActorCreate, ActorPatch } from './actorsSchema.ts';
 
 function profileToActor(
@@ -60,24 +67,31 @@ export async function createActor(body: ActorCreate): Promise<Actor> {
   return profileToActor(profile.id, profile, progress);
 }
 
-export async function updateActor(
-  id: string,
-  body: ActorPatch,
-): Promise<Actor | null> {
-  const raw = await profileStore.getProfile(id);
-  if (raw == null) return null;
+async function applyActorPatch(id: string, body: ActorPatch): Promise<void> {
   if (body.display_name != null || body.level != null) {
     await updateProfile(id, {
       display_name: body.display_name,
       level: body.level,
     });
   }
-  if (body.progress != null) {
-    await updateProgress(id, body.progress);
-  }
+  if (body.progress != null) await updateProgress(id, body.progress);
+  return;
+}
+
+async function fetchActorAfterPatch(id: string): Promise<Actor | null> {
   const [profile, progress] = await Promise.all([
     profileStore.getProfile(id),
     profileStore.getProgress(id),
   ]);
   return profile != null ? profileToActor(id, profile, progress) : null;
+}
+
+export async function updateActor(
+  id: string,
+  body: ActorPatch,
+): Promise<Actor | null> {
+  const raw = await profileStore.getProfile(id);
+  if (raw == null) return null;
+  await applyActorPatch(id, body);
+  return fetchActorAfterPatch(id);
 }

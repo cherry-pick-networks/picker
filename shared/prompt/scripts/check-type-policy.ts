@@ -5,7 +5,10 @@
  * Run: deno run --allow-read shared/prompt/scripts/check-type-policy.ts
  * Or: deno task type-check-policy
  */
-import { checkCompilerOptions, checkDenoJsonTasks } from './check-type-policy-config.ts';
+import {
+  checkCompilerOptions,
+  checkDenoJsonTasks,
+} from './check-type-policy-config.ts';
 import { checkSourceFile, walkSourceFiles } from './check-type-policy-lib.ts';
 
 async function collectSourceErrors(root: string): Promise<string[]> {

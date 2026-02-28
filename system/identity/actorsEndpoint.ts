@@ -4,7 +4,12 @@
 
 import type { Context } from 'hono';
 import { ActorCreateSchema, ActorPatchSchema } from './actorsSchema.ts';
-import { createActor, getActor, listActors, updateActor } from './actorsService.ts';
+import {
+  createActor,
+  getActor,
+  listActors,
+  updateActor,
+} from './actorsService.ts';
 
 export async function getActorsList(c: Context) {
   const name = c.req.query('name') ?? c.req.query('display_name');
@@ -33,14 +38,23 @@ export async function postActor(c: Context) {
   }
 }
 
-export async function patchActorById(c: Context) {
+async function getPatchInput(c: Context) {
   const id = c.req.param('id');
   const body = await c.req.json().catch(() => ({}));
-  const parsed = ActorPatchSchema.safeParse(body);
-  if (!parsed.success) {
-    return c.json({ error: parsed.error.flatten() }, 400);
-  }
-  const actor = await updateActor(id, parsed.data);
+  return { id, body };
+}
+
+function returnActorOr404(
+  c: Context,
+  actor: Awaited<ReturnType<typeof updateActor>>,
+) {
   if (actor == null) return c.json({ error: 'Not found' }, 404);
   return c.json(actor);
+}
+
+export async function patchActorById(c: Context) {
+  const input = await getPatchInput(c);
+  const parsed = ActorPatchSchema.safeParse(input.body);
+  if (!parsed.success) return c.json({ error: parsed.error.flatten() }, 400);
+  return returnActorOr404(c, await updateActor(input.id, parsed.data));
 }

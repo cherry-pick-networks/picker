@@ -3,7 +3,10 @@
  * Uses OPENAI_API_KEY; LEXIS_UTTERANCE_LLM_MOCK for tests.
  */
 
-import { type LexisUtteranceLlmOutput, LexisUtteranceLlmOutputSchema } from './lexisLlmSchema.ts';
+import {
+  type LexisUtteranceLlmOutput,
+  LexisUtteranceLlmOutputSchema,
+} from './lexisLlmSchema.ts';
 
 const OPENAI_CHAT_URL = 'https://api.openai.com/v1/chat/completions';
 const DEFAULT_MODEL = 'gpt-4o';
@@ -12,7 +15,8 @@ export type LexisUtteranceLlmResult =
   | { ok: true; output: LexisUtteranceLlmOutput }
   | { ok: false; error: string };
 
-const PROMPT = 'From the utterance extract only the wordbook (source) and day numbers. ' +
+const PROMPT =
+  'From the utterance extract only the wordbook (source) and day numbers. ' +
   'Return JSON only: source_id (English ID, e.g. lexis-middle-intermediate), ' +
   'days (array of integers >= 1).';
 

@@ -25,25 +25,46 @@ function registerIdentity(app: Hono) {
   app.patch('/identity/actors/:id', identity.patchActorById);
 }
 
-function registerMirrorContent(app: Hono) {
+function registerMirrorContentItems(app: Hono) {
   app.get('/mirror/content/items/:id', content.getItem);
   app.post('/mirror/content/items', content.postItem);
   app.patch('/mirror/content/items/:id', content.patchItem);
+  return;
+}
+
+function registerMirrorContentWorksheets(app: Hono) {
   app.get('/mirror/content/worksheets/:id', content.getWorksheet);
   app.post('/mirror/content/worksheets', content.postWorksheets);
+  return;
+}
+
+function registerMirrorContent(app: Hono) {
+  registerMirrorContentItems(app);
+  registerMirrorContentWorksheets(app);
 }
 
 function registerMirrorLexis(app: Hono) {
   app.get('/mirror/lexis/entries', lexis.getEntries);
+  return;
 }
 
-function registerMirrorSchedule(app: Hono) {
+function registerMirrorScheduleDueAndPlan(app: Hono) {
   app.get('/mirror/schedule/due', schedule.getDue);
   app.get('/mirror/schedule/plan/weekly', schedule.getWeekly);
   app.get('/mirror/schedule/plan/annual', schedule.getAnnual);
+  return;
+}
+
+function registerMirrorScheduleItems(app: Hono) {
   app.get('/mirror/schedule/items', schedule.getItems);
   app.post('/mirror/schedule/items', schedule.postItem);
   app.post('/mirror/schedule/items/:id/review', schedule.postReview);
+  return;
+}
+
+function registerMirrorSchedule(app: Hono) {
+  registerMirrorScheduleDueAndPlan(app);
+  registerMirrorScheduleItems(app);
 }
 
 function registerMirror(app: Hono) {

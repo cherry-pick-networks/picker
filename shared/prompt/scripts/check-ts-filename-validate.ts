@@ -54,12 +54,23 @@ function validateSystem(rel: string, base: string): string | null {
   return validateSystemInfix(parts, base);
 }
 
-function validateRest(rel: string, base: string): string | null {
+function validateRestTestsOrSystem(rel: string, base: string): string | null {
   if (rel.startsWith('tests/')) return validateTests(base);
   if (rel.startsWith('system/')) return validateSystem(rel, base);
+  return null;
+}
+
+function validateRestShared(rel: string, base: string): string | null {
   if (rel.startsWith('shared/infra/')) return checkTsBaseName(base);
   if (rel.startsWith('shared/contract/')) return checkTsBaseName(base);
   return null;
+}
+
+function validateRest(rel: string, base: string): string | null {
+  const a = validateRestTestsOrSystem(rel, base);
+  if (a != null) return a;
+  const b = validateRestShared(rel, base);
+  return b;
 }
 
 export function validate(rel: string): string | null {
