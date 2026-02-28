@@ -49,7 +49,8 @@ format are defined in to-do.md and the spec. Add only items inside that todo.
 
 - Follow to-do.md and the spec for the current phase.
 - Run all autonomous mutations and applies through Governance verification.
-- Add only modules, routes, and infrastructure listed in todo (to-do.md or spec).
+- Add only modules, routes, and infrastructure listed in todo (to-do.md or
+  spec).
 - Mutate only within shared/runtime/store/; use Governance-verified flow.
 - Write to config/ or credentials only via approved mechanisms; file-based
   shared/record/ (identity-index only) only via

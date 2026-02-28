@@ -3,6 +3,7 @@ import { app } from "../../main.ts";
 import { hasDbEnv } from "./db-env_test.ts";
 import { withTempScriptsStore } from "./with_temp_scripts_store.ts";
 
+Deno.env.set("TEST_SKIP_ENTRA_AUTH", "1");
 const handler = (req: Request) => app.fetch(req);
 const handlerTestOpts = { sanitizeResources: false };
 const dbTestOpts = () => ({ ...handlerTestOpts, ignore: !hasDbEnv() });

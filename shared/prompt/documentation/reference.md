@@ -196,7 +196,7 @@ typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
 
 | Path                                               | Purpose                                                                                                                               |
 | -------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `shared/record/reference/identity-index.toml`      | Identity index. API: redacted unless X-Client: agent.                                                                                 |
+| `shared/record/reference/identity-index.toml`      | Identity index. API: full data when Entra Bearer token present.                                                                       |
 | `system/audit/e2e-runs.toml`                       | E2E run log (schemaVersion + runs[])                                                                                                  |
 | `shared/infra/seed/ontology/seed.sql`              | Ontology seed (reserved).                                                                                                             |
 | `shared/infra/seed/ontology/global-standards.toml` | **Single definition** for concept schemes and concepts (isced, iscedf, bloom, cefr, actfl, doctype). Seed: `deno task seed:ontology`. |

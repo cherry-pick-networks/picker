@@ -7,6 +7,7 @@ import { app } from "../../main.ts";
 import { writeScript } from "#system/script/scripts.store.ts";
 import { withTempScriptsStore } from "./with_temp_scripts_store.ts";
 
+Deno.env.set("TEST_SKIP_ENTRA_AUTH", "1");
 const handler = (req: Request) => app.fetch(req);
 
 Deno.test("POST /script/mutate returns 400 for invalid body", async () => {

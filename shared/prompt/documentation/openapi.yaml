@@ -1,0 +1,47 @@
+# Minimal OpenAPI 3.0 spec for Picker API auth (Copilot Studio OAuth 2.0).
+# Full route list: shared/prompt/to-do.md API surface.
+
+openapi: "3.0.3"
+info:
+  title: Picker API
+  version: "1.0.0"
+  description: |
+    All routes except GET / require Entra ID (Azure AD) OAuth 2.0 access token
+    in Authorization header. Use OAuth 2.0 + Microsoft Entra ID in Copilot Studio.
+
+servers:
+  - url: /
+    description: API base
+
+paths:
+  /:
+    get:
+      summary: Health check (no auth)
+      operationId: getHome
+      security: []
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+
+components:
+  securitySchemes:
+    EntraBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Microsoft Entra ID (Azure AD) OAuth 2.0 access token.
+        Obtain via OAuth 2.0 with Identity provider Microsoft Entra ID
+        (Client ID, Tenant ID from Picker app registration).
+
+# All paths except GET / require EntraBearer. Apply in Copilot Studio as
+# OAuth 2.0 with Microsoft Entra ID.
+security:
+  - EntraBearer: []

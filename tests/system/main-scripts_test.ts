@@ -2,6 +2,7 @@ import { assertEquals } from "@std/assert";
 import { app } from "../../main.ts";
 import { withTempScriptsStore } from "./with_temp_scripts_store.ts";
 
+Deno.env.set("TEST_SKIP_ENTRA_AUTH", "1");
 const handler = (req: Request) => app.fetch(req);
 
 Deno.test("GET /scripts returns 200 and { entries: string[] }", async () => {

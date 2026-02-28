@@ -4,6 +4,7 @@
  */
 
 import type { Hono } from "hono";
+import { requireEntraAuth } from "#system/app/auth.middleware.ts";
 import {
   registerAstAndScripts,
   registerRestHandlers,
@@ -47,6 +48,10 @@ export const ROUTES: { method: string; path: string }[] = [
 ];
 
 export function registerRoutes(app: Hono): void {
+  app.use("*", (c, next) => {
+    if (c.req.method === "GET" && c.req.path === "/") return next();
+    return requireEntraAuth(c, next);
+  });
   registerRestHandlers(app);
   registerAstAndScripts(app);
 }
