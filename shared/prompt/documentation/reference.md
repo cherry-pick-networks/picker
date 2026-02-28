@@ -11,11 +11,11 @@ Project reference for structure, naming, and migration.
 
 ## System structure (system/ infix/suffix)
 
-Under `system/` the form is `system/<infix>/` (one folder per domain). Artifact
-type is expressed in the **filename** as `[name].[suffix].ts` (e.g.
-`profile.endpoint.ts`, `profile.service.ts`). Infix = domain (bounded context);
-suffix = artifact type. Flat layout improves AI context and discovery. Aligns
-with store.md §E/§F and modular monolith.
+Under `system/` the form is `system/<infix>/` (one folder per domain). **TS
+filename** = default export name: camelCase for functions/modules (e.g.
+`profileEndpoint.ts`, `profileService.ts`), PascalCase for class/singleton; no
+dot or hyphen in the filename. Infix = domain (bounded context). Aligns with
+store.md §E/§F and Airbnb-style naming (filename matches export).
 
 ### Allowed infix (domains)
 
@@ -38,50 +38,32 @@ Six domains + App. Spec:
 | sync         | Synchronization and replication                                       |
 | workflow     | Workflow and process orchestration                                    |
 
-### Allowed suffix (artifacts)
+### Artifact roles (no dot in filename)
 
-| Suffix     | Meaning                               | §E axis  |
-| ---------- | ------------------------------------- | -------- |
-| adapter    | External/system adapter               | Artifact |
-| client     | Client wrapper (e.g. KV, API)         | Artifact |
-| config     | Wiring (e.g. route registration)      | Artifact |
-| endpoint   | HTTP entry (Hono routes)              | Artifact |
-| event      | Domain/application events             | Artifact |
-| format     | Serialization/format handling         | Artifact |
-| grammar    | Parser/grammar rules                  | Artifact |
-| log        | Log artifact storage                  | Meta     |
-| mapper     | Row/DTO mapping                       | Artifact |
-| mapping    | Mapping definitions                   | Artifact |
-| pipeline   | Processing pipeline                   | Artifact |
-| request    | Request DTO/schema                    | Artifact |
-| response   | Response DTO/schema                   | Artifact |
-| schema     | Zod schemas and domain types          | Artifact |
-| service    | Application service (use cases)       | —        |
-| store      | Persistence (KV, file)                | Artifact |
-| transfer   | Request/response or DTO types         | Artifact |
-| types      | Type-only definitions                 | Meta     |
-| validation | Policy/verification (e.g. Governance) | Policy   |
-| weekly     | Weekly view / period-specific logic   | Meta     |
+Role is implied by export; filename = default export name. Common patterns:
+endpoint (HTTP routes), service (use cases), store (persistence), schema (Zod),
+client (API wrapper), config (wiring). Use camelCase (e.g. `profileEndpoint.ts`,
+`sourceExtractService.ts`). See store.md §E.
 
 ### Target layout (flat domain: files under system/<infix>/)
 
 ```
 system/
-  app/         *.config.ts, *.handler.ts, *.util.ts, auth.middleware.ts
-  audit/       audit-e2e-runs.ts
-  governance/  scripts endpoint, mutate, allowlist (concept-schemes); *.validation.ts
-  identity/    actors endpoint, service, store, schema (display_name, level, progress)
+  app/         routesRegisterConfig.ts, homeHandler.ts, authMiddleware.ts, addUtil.ts
+  audit/       auditE2eRuns.ts
+  governance/  scriptsEndpoint, mutateEndpoint, conceptSchemes; governanceValidation.ts
+  identity/    actorsEndpoint.ts, actorsService.ts, actorsSchema.ts
   mirror/      content, lexis, schedule backup/sync endpoints and services
-  source/      *.endpoint.ts, *.service.ts, *.store.ts, *.schema.ts, source-extract.service.ts
-  storage/     kv *.endpoint.ts, *.store.ts
+  source/      sourceEndpoint.ts, sourceService.ts, sourceStore.ts, sourceSchema.ts, sourceExtractService.ts
+  storage/     kvEndpoint.ts, kvStore.ts
   routes.ts    (entry; imports app config)
 ```
 
 ### Test file names (tests/)
 
 Under `tests/`, every `.ts` file must be `[name]_test.ts` (Deno convention). The
-**name** part must use lowercase and hyphens only (§E), e.g.
-`scripts-store_test.ts`. Non-test helpers (e.g. `with_temp_scripts_store.ts`)
+**name** part uses camelCase (e.g. `scriptsStore_test.ts`,
+`sourceExtractEndpoint_test.ts`). Non-test helpers (e.g. `with_temp_scripts_store.ts`)
 are listed in PATH_EXCEPTIONS. Validated by `deno task ts-filename-check`.
 
 ### Naming conventions (content and level)
@@ -166,7 +148,7 @@ see store.md §5).
 Application DML lives under `system/<module>/sql/` (e.g.
 `system/schedule/sql/`). One statement per file; filenames lowercase snake_case
 (e.g. `get_schedule_item.sql`); validated by sql-filename-check. Load with
-`loadSql(baseUrl, filename)` from `shared/infra/sql-loader.ts`; baseUrl
+`loadSql(baseUrl, filename)` from `shared/infra/sqlLoader.ts`; baseUrl
 typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
 `$1, $2, ...`; document order/meaning in the .sql file or store. DDL:
 `shared/infra/schema/*.sql`. Seed: `shared/infra/seed/...`.
@@ -175,17 +157,17 @@ typically `new URL("./sql/", import.meta.url)`. Parameters: PostgreSQL
 
 | Old path (3-layer)                 | New path (flat)                    |
 | ---------------------------------- | ---------------------------------- |
-| system/actor/endpoint/profile.ts   | system/actor/profile.endpoint.ts   |
-| system/actor/service/profile.ts    | system/actor/profile.service.ts    |
-| system/actor/store/profile.ts      | system/actor/profile.store.ts      |
-| system/content/endpoint/content.ts | system/content/content.endpoint.ts |
+| system/actor/endpoint/profile.ts   | system/actor/profileEndpoint.ts   |
+| system/actor/service/profile.ts    | system/actor/profileService.ts    |
+| system/actor/store/profile.ts      | system/actor/profileStore.ts      |
+| system/content/endpoint/content.ts | system/content/contentEndpoint.ts |
 | system/content/service/*.ts        | system/content/*.service.ts        |
 | system/content/schema/*.ts         | system/content/*.schema.ts         |
 | system/source/endpoint             | service                            |
 | system/script/endpoint             | service                            |
-| system/record/endpoint             | identity-index.store.ts            |
+| system/record/endpoint             | identityIndexStore.ts            |
 | system/kv/endpoint                 | store/kv.ts                        |
-| system/audit/log/log.ts            | system/audit/audit-e2e-runs.ts     |
+| system/audit/log/log.ts            | system/audit/auditE2eRuns.ts     |
 | system/app/config/*.ts             | system/app/*.config.ts             |
 
 ### Data file locations (TOML)
@@ -226,7 +208,7 @@ schedule-fsrs-plan.md.
   and seed).
 - **Facet schemes**: Subject IDs use isced, iscedf. Content type, cognitive
   level, and context use their respective allowed schemes (see
-  system/concept/concept-schemes.ts). Content and worksheet APIs validate
+  system/concept/conceptSchemes.ts). Content and worksheet APIs validate
   concept IDs per facet and cap at 500 per request.
 - **CI**: `deno task pre-push` runs `ontology-schemes-check`. It does not run
   `ontology-acyclic-check`; after changing ontology seed or relations, run
@@ -236,7 +218,7 @@ schedule-fsrs-plan.md.
 
 **Canonical source**: `shared/infra/seed/ontology/global-standards.toml`. The
 lists below are a summary; the TOML (and DB after seed) is the authority.
-Runtime: `system/concept/concept-schemes.ts` maps each facet to scheme(s);
+Runtime: `system/concept/conceptSchemes.ts` maps each facet to scheme(s);
 content and (when implemented) source APIs reject values not in the allowlist.
 
 **Facet → scheme mapping**
@@ -271,7 +253,7 @@ by updating global-standards.toml and re-running `deno task seed:ontology`.
   if needed.
 - app/*.config.ts and *.handler.ts only import domain endpoints and register
   routes; no business logic.
-- Postgres: `shared/infra/pg.client.ts` provides `getPg()`. Domain stores and
+- Postgres: `shared/infra/pgClient.ts` provides `getPg()`. Domain stores and
   system/kv use it; no KV or other storage client.
 
 ### Domain dependency (acyclic; data coupling)
@@ -327,10 +309,10 @@ Rules are in store.md §T. This section gives examples and exceptions from
 ### Schema property names (exception)
 
 - **Default**: camelCase for new domains (e.g. `createdAt`, `updatedAt` in
-  `system/actor/profile.schema.ts`).
+  `system/actor/profileSchema.ts`).
 - **Exception**: snake_case when the shape is dictated by an external API or
   persistence contract; document in the file (e.g. "API/DB contract"). Example:
-  `system/content/content.schema.ts` uses `item_id`, `created_at`,
+  `system/content/contentSchema.ts` uses `item_id`, `created_at`,
   `worksheet_id` for stored/API payload shape.
 
 ### §P pattern guide (function body 2–4 statements)

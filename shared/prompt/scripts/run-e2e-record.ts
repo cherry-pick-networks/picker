@@ -4,9 +4,9 @@
  * Or: deno task test:e2e-record
  */
 
-import { appendE2eRun } from "#system/audit/audit-e2e-runs.ts";
+import { appendE2eRun } from "#system/audit/auditE2eRuns.ts";
 
-const E2E_TEST_FILE = "tests/system/main-e2e_test.ts";
+const E2E_TEST_FILE = "tests/system/mainE2e_test.ts";
 
 // function-length-ignore
 function nowIso(): string {

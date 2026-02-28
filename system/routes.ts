@@ -4,11 +4,11 @@
  */
 
 import type { Hono } from "hono";
-import { requireEntraAuth } from "#system/app/auth.middleware.ts";
+import { requireEntraAuth } from "#system/app/authMiddleware.ts";
 import {
   registerAstAndScripts,
   registerRestHandlers,
-} from "#system/app/routes-register.config.ts";
+} from "#system/app/routesRegisterConfig.ts";
 
 export const ROUTES: { method: string; path: string }[] = [
   { method: "GET", path: "/" },

@@ -50,36 +50,10 @@ export const SYSTEM_INFIX = new Set([
   "workflow",
 ]);
 
-/** Allowed suffix for [name].[suffix].ts (reference.md, store.md §E). */
-export const ALLOWED_SUFFIX = new Set([
-  "adapter",
-  "client",
-  "config",
-  "endpoint",
-  "event",
-  "format",
-  "grammar",
-  "handler",
-  "loader",
-  "log",
-  "mapper",
-  "mapping",
-  "middleware",
-  "parser",
-  "pipeline",
-  "request",
-  "response",
-  "schema",
-  "service",
-  "store",
-  "transfer",
-  "types",
-  "util",
-  "validation",
-  "weekly",
-]);
+/** Base filename (no .ts): camelCase or PascalCase, no dot or hyphen (Airbnb / reference.md). */
+export const TS_BASE_NAME_REGEX = /^[a-zA-Z][a-zA-Z0-9]*$/;
 
-/** Paths that are exempt from [name].[suffix].ts rule (exact relative path). */
+/** Paths that are exempt from filename rule (exact relative path). */
 export const PATH_EXCEPTIONS = new Set([
   "shared/infra/auth/entra.ts",
   "system/routes.ts",
@@ -90,5 +64,5 @@ export const PATH_EXCEPTIONS = new Set([
 /** Path prefix: no filename rule (e.g. scripts). */
 export const EXEMPT_PREFIXES = ["shared/prompt/scripts/"];
 
-/** Test file name (before _test.ts) must be lowercase + hyphens only (§E). */
-export const TEST_NAME_REGEX = /^[a-z][a-z0-9]*(-[a-z0-9]+)*$/;
+/** Test file name (before _test.ts): camelCase (reference.md). */
+export const TEST_NAME_REGEX = /^[a-zA-Z][a-zA-Z0-9]*$/;

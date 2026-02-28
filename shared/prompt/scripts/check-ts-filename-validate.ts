@@ -1,5 +1,5 @@
 /**
- * Validation rules for TS filename check (store.md §E, reference.md).
+ * Validation rules for TS filename check (store.md §E, reference.md, Airbnb).
  * Used by check-ts-filename.ts.
  */
 
@@ -10,10 +10,7 @@ import {
   SYSTEM_INFIX,
   TEST_NAME_REGEX,
 } from "./check-ts-filename-config.ts";
-import {
-  checkSuffixAndName,
-  parseDotSuffixBase,
-} from "./check-ts-filename-helpers.ts";
+import { checkTsBaseName } from "./check-ts-filename-helpers.ts";
 
 function isExempt(rel: string): boolean {
   if (PATH_EXCEPTIONS.has(rel)) return true;
@@ -21,13 +18,6 @@ function isExempt(rel: string): boolean {
     if (rel.startsWith(p)) return true;
   }
   return false;
-}
-
-/** [name].[suffix].ts with name lowercase/hyphen, suffix in allowed set. */
-function checkDotSuffixFile(base: string): string | null {
-  const p = parseDotSuffixBase(base);
-  if (!p) return null;
-  return checkSuffixAndName(p);
 }
 
 function validateRoot(base: string): string | null {
@@ -40,8 +30,7 @@ function validateTests(base: string): string | null {
   if (!base.endsWith("_test.ts")) return "tests/ file must end with _test.ts";
   const name = base.slice(0, base.length - 8);
   if (!TEST_NAME_REGEX.test(name)) {
-    return "tests/ name must be lowercase with hyphens " +
-      "(e.g. main-e2e_test.ts)";
+    return "tests/ name must be camelCase (e.g. mainE2e_test.ts)";
   }
   return null;
 }
@@ -56,7 +45,7 @@ function validateSystemInfix(parts: string[], base: string): string | null {
   if (!SYSTEM_INFIX.has(infix ?? "")) {
     return `system infix "${infix}" not in allowed set`;
   }
-  return checkDotSuffixFile(base);
+  return checkTsBaseName(base);
 }
 
 function validateSystem(rel: string, base: string): string | null {
@@ -68,7 +57,8 @@ function validateSystem(rel: string, base: string): string | null {
 function validateRest(rel: string, base: string): string | null {
   if (rel.startsWith("tests/")) return validateTests(base);
   if (rel.startsWith("system/")) return validateSystem(rel, base);
-  if (rel.startsWith("shared/infra/")) return checkDotSuffixFile(base);
+  if (rel.startsWith("shared/infra/")) return checkTsBaseName(base);
+  if (rel.startsWith("shared/contract/")) return checkTsBaseName(base);
   return null;
 }
 

@@ -11,8 +11,8 @@
  *     imports.
  */
 
-import { getPg } from "../shared/infra/pg.client.ts";
-import { loadSql } from "../shared/infra/sql-loader.ts";
+import { getPg } from "../shared/infra/pgClient.ts";
+import { loadSql } from "../shared/infra/sqlLoader.ts";
 
 const lexisSqlDir = new URL("../system/lexis/sql/", import.meta.url);
 const SQL_UPSERT_LEXIS_ENTRY = await loadSql(

@@ -10,8 +10,8 @@
  * relation_type = 'requires' only.
  */
 
-import { getPg } from "#shared/infra/pg.client.ts";
-import { loadSql } from "#shared/infra/sql-loader.ts";
+import { getPg } from "#shared/infra/pgClient.ts";
+import { loadSql } from "#shared/infra/sqlLoader.ts";
 
 const REQUIRES = "requires";
 

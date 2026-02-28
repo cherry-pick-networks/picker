@@ -1,6 +1,7 @@
 /**
- * TS filename check: system/ and shared/infra use [name].[suffix].ts per
- * store.md §E and reference.md. Run from repo root:
+ * TS filename check: system/, shared/infra, shared/contract, tests/ use
+ * camelCase or PascalCase base name (no dot or hyphen) per store.md §E and
+ * reference.md (Airbnb style). Run from repo root:
  *   deno run --allow-read shared/prompt/scripts/check-ts-filename.ts
  * Or: deno task ts-filename-check
  */
@@ -28,7 +29,7 @@ function reportAndExit(errors: [string, string][]): void {
     Deno.exit(1);
   }
   console.log(
-    "TS filename check passed: system/, shared/infra, and tests/ " +
+    "TS filename check passed: system/, shared/infra, shared/contract, tests/ " +
       "follow naming rules.",
   );
 }

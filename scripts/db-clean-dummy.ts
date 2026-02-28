@@ -4,8 +4,8 @@
  *   ./scripts/dev.sh deno run -A scripts/db-clean-dummy.ts        # dry-run
  *   ./scripts/dev.sh deno run -A scripts/db-clean-dummy.ts --execute
  */
-import { getPg } from "../shared/infra/pg.client.ts";
-import { loadSql } from "../shared/infra/sql-loader.ts";
+import { getPg } from "../shared/infra/pgClient.ts";
+import { loadSql } from "../shared/infra/sqlLoader.ts";
 
 const sqlDir = new URL("./sql/", import.meta.url);
 const SQL_DELETE_KV = await loadSql(sqlDir, "delete_kv_by_pattern.sql");
@@ -74,7 +74,7 @@ async function del(
   return await runDelete(label, sql, params);
 }
 
-// KV: test/e2e/del/list/pfx/other prefix keys (main-kv_test, e2e)
+// KV: test/e2e/del/list/pfx/other prefix keys (mainKv_test, e2e)
 const kvPatterns = ["test-%", "e2e-%", "del-%", "list-%", "pfx-%", "other-%"];
 for (const pattern of kvPatterns) {
   await del(`kv (${pattern})`, SQL_DELETE_KV, [pattern]);

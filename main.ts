@@ -1,5 +1,5 @@
-import { setAllowlistLoader } from "#shared/contract/allowlist-data.ts";
-import { loadAllowlistData } from "#system/concept/concept.store.ts";
+import { setAllowlistLoader } from "#shared/contract/allowlistData.ts";
+import { loadAllowlistData } from "#system/concept/conceptStore.ts";
 import { Hono } from "hono";
 import { registerRoutes } from "#system/routes.ts";
 

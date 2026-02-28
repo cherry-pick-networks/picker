@@ -47,7 +47,7 @@ tool-specific configs.
   parse with `@std/front-matter`. Data file paths: see `shared/prompt/to-do.md`.
 - **SQL only in .sql files**: Write all SQL in `.sql` files only; do not embed
   SQL strings in TypeScript, JavaScript, or other code. Load at runtime via
-  `shared/infra/sql-loader.ts` (`loadSql(baseUrl, filename)`).
+  `shared/infra/sqlLoader.ts` (`loadSql(baseUrl, filename)`).
 - **DML SQL**: Keep application DML (SELECT, INSERT, UPDATE, DELETE) in
   `system/<module>/sql/*.sql` (one statement per file, snake_case filenames).
   Use `$1, $2, ...` for parameters; document parameter order in the file or
@@ -103,7 +103,7 @@ tool-specific configs.
   filenames per §E and reference.md (optional; run in pre-commit or CI)
 - `deno task sql-filename-check` — verify all .sql (DDL in shared/infra/schema,
   DML in system/*/sql) per reference.md (optional; run in pre-commit or CI)
-- `deno task ontology-schemes-check` — verify concept-schemes.ts matches
+- `deno task ontology-schemes-check` — verify conceptSchemes.ts matches
   global-standards.toml (runs in pre-push).
 - `deno task pre-push` — run before push; same as CI. Runs via dev.sh (so same
   DB env as dev: pass and picker/postgres). Runs lint, format-check,
@@ -471,6 +471,12 @@ Examples: payment-infra-redis-config (Context + Layer + Entity + Artifact);
 security-application-guard-policy (Context + Layer + Actor + Policy);
 global-config (Todo + Artifact).
 
+TypeScript source files (system/, shared/infra, tests/): Base filename (before
+.ts) must match the default export name. Use camelCase for functions and
+modules, PascalCase for class/constructor/singleton; no dot or hyphen in the
+filename (e.g. profileEndpoint.ts, identityIndexStore.ts). Validated by
+ts-filename-check; see reference.md.
+
 Layer-specific allowed Infix and Suffix (when tier 1 is Layer): When the first
 tier is one of presentation, application, domain, infrastructure, tier 2 and
 tier 3 names must use only that layer's allowed sets below. Presentation —
@@ -504,7 +510,9 @@ Rule content — naming: Each tier name must use only approved values for that
 axis (prefix / infix / suffix); see §E. When prefix is a Layer value, infix and
 suffix are restricted to that layer's allowed sets in §E. That same §E
 vocabulary applies to names within that tier (files, subfolders, modules,
-symbols). Lowercase; one hyphen between words; no underscores or spaces.
+symbols). Directory and document segment names: lowercase; one hyphen between
+words; no underscores or spaces. TypeScript filenames: see §E (camelCase or
+PascalCase, no dot; reference.md).
 
 Exceptions: Maintain an explicit exception list; same list for docs and tooling.
 Typical entries: .git, .cursor, node_modules, dist, build, coverage, vendor,

@@ -4,7 +4,7 @@
  *   deno run -A scripts/import-books-to-sources.ts
  */
 
-import { createSource } from "#system/source/source.service.ts";
+import { createSource } from "#system/source/sourceService.ts";
 
 const BOOKS_ROOT = new URL("../temp/books/", import.meta.url).pathname;
 

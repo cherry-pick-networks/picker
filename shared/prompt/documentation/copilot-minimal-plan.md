@@ -144,7 +144,7 @@ Removed: content items generation (was composite; use build-prompt + local LLM +
 
 | Keep                                                                    | Reason                                        |
 | ----------------------------------------------------------------------- | --------------------------------------------- |
-| **Entra ID OAuth 2.0** (Bearer, auth.middleware, entra)                 | Single auth; copilot and Studio use the same. |
+| **Entra ID OAuth 2.0** (Bearer, authMiddleware, entra)                 | Single auth; copilot and Studio use the same. |
 | Atomic CRUD (profile, progress, content, sources, schedule, kv, record) | Data the copilot reads and writes.            |
 | Governance + script mutate, source extract                              | Validation and audit on server.               |
 | FSRS · schedule, ontology · seed                                        | Consistent algorithm and contract.            |

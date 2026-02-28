@@ -101,13 +101,13 @@ openapi.yaml aligned with that plan when adding or changing routes.
   shared/runtime/store.
 - **Off-limits**: Do not write directly to config/ or credentials; use approved
   mechanisms only. File-based record store (shared/record/) is written only via
-  system/record/identity-index.store.ts (identity-index only).
+  system/record/identityIndexStore.ts (identity-index only).
 
 ---
 
 ## Infrastructure
 
-- **PostgreSQL** — single storage backend. Client: `shared/infra/pg.client.ts`
+- **PostgreSQL** — single storage backend. Client: `shared/infra/pgClient.ts`
   (`getPg()`). Domain stores: identity (actors: actor_id, display_name, level,
   progress), source, storage (kv), mirror (content_item, content_worksheet,
   schedule_item, lexis_entry). DDL under `shared/infra/schema/` (see
