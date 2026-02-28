@@ -1,7 +1,7 @@
-import { setAllowlistLoader } from "#shared/contract/allowlistData.ts";
-import { loadAllowlistData } from "#system/concept/conceptStore.ts";
-import { Hono } from "hono";
-import { registerRoutes } from "#system/routes.ts";
+import { setAllowlistLoader } from '#shared/contract/allowlistData.ts';
+import { loadAllowlistData } from '#system/concept/conceptStore.ts';
+import { Hono } from 'hono';
+import { registerRoutes } from '#system/routes.ts';
 
 setAllowlistLoader(loadAllowlistData);
 const app = new Hono();

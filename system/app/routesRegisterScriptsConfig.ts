@@ -2,15 +2,15 @@
  * Script routes: scripts list/get/post and POST /script/mutate.
  */
 
-import type { Hono } from "hono";
-import * as mutate from "#system/script/mutateEndpoint.ts";
-import * as scripts from "#system/script/scriptsEndpoint.ts";
+import type { Hono } from 'hono';
+import * as mutate from '#system/script/mutateEndpoint.ts';
+import * as scripts from '#system/script/scriptsEndpoint.ts';
 
 function registerScriptsAndMutate(app: Hono) {
-  app.get("/scripts", scripts.getScriptsList);
-  app.get("/scripts/*", scripts.getScriptPath);
-  app.post("/scripts/*", scripts.postScriptPath);
-  app.post("/script/mutate", mutate.postScriptMutate);
+  app.get('/scripts', scripts.getScriptsList);
+  app.get('/scripts/*', scripts.getScriptPath);
+  app.post('/scripts/*', scripts.postScriptPath);
+  app.post('/script/mutate', mutate.postScriptMutate);
 }
 
 // function-length-ignore

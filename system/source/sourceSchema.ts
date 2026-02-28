@@ -1,6 +1,6 @@
 /** Source and extract schemas (Zod). */
 
-import { z } from "zod";
+import { z } from 'zod';
 
 /** type = document type: doctype scheme code (Schema.org or BibTeX). */
 export const SourceSchema = z.object({

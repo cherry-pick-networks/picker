@@ -6,12 +6,12 @@ import {
   ALLOWLIST_ID_COUNT_LIMIT,
   allowlistHas,
   type FacetName,
-} from "#shared/contract/allowlistTypes.ts";
-import { getAllowlistDataOrLoad } from "#shared/contract/allowlistData.ts";
-import type { Source } from "#system/source/sourceSchema.ts";
-import { extractConcepts } from "#system/source/sourceLlmClient.ts";
-import { getSource } from "#system/source/sourceService.ts";
-import * as sourceStore from "#system/source/sourceStore.ts";
+} from '#shared/contract/allowlistTypes.ts';
+import { getAllowlistDataOrLoad } from '#shared/contract/allowlistData.ts';
+import type { Source } from '#system/source/sourceSchema.ts';
+import { extractConcepts } from '#system/source/sourceLlmClient.ts';
+import { getSource } from '#system/source/sourceService.ts';
+import * as sourceStore from '#system/source/sourceStore.ts';
 
 export type ExtractOk = {
   ok: true;
@@ -32,7 +32,7 @@ const BODY_MAX_CHARS = 1_000_000;
 
 function hasBody(source: Source): boolean {
   const s = source.body;
-  return typeof s === "string" && s.length > 0;
+  return typeof s === 'string' && s.length > 0;
 }
 
 function bodyTooLong(source: Source): boolean {
@@ -42,13 +42,13 @@ function bodyTooLong(source: Source): boolean {
 
 function validateForExtract(source: Source | null): ExtractFail | null {
   if (source == null) {
-    return { ok: false, status: 404 as const, message: "Not found" };
+    return { ok: false, status: 404 as const, message: 'Not found' };
   }
   if (!hasBody(source)) {
-    return { ok: false, status: 400 as const, message: "Source has no body" };
+    return { ok: false, status: 400 as const, message: 'Source has no body' };
   }
   if (bodyTooLong(source)) {
-    return { ok: false, status: 400 as const, message: "Body too long" };
+    return { ok: false, status: 400 as const, message: 'Body too long' };
   }
   return null;
 }
@@ -60,16 +60,16 @@ async function validateExtractConceptIds(ids: string[]): Promise<void> {
     );
   }
   const data = await getAllowlistDataOrLoad();
-  const invalid = ids.filter((id) => !allowlistHas(data, "concept", id));
+  const invalid = ids.filter((id) => !allowlistHas(data, 'concept', id));
   if (invalid.length > 0) {
-    throw new Error(`Invalid concept IDs: ${invalid.join(", ")}`);
+    throw new Error(`Invalid concept IDs: ${invalid.join(', ')}`);
   }
 }
 
 async function validateExtractSubjectId(id: string | undefined): Promise<void> {
-  if (id == null || id === "") return;
+  if (id == null || id === '') return;
   const data = await getAllowlistDataOrLoad();
-  if (!allowlistHas(data, "subject", id)) {
+  if (!allowlistHas(data, 'subject', id)) {
     throw new Error(`Invalid subject_id: ${id}`);
   }
 }
@@ -130,7 +130,7 @@ export async function extractConceptsFromSource(
     return await runExtractAndSave(source!);
   } catch (e) {
     const msg = e instanceof Error ? e.message : String(e);
-    const status = msg.startsWith("Invalid ") ? 400 : 502;
+    const status = msg.startsWith('Invalid ') ? 400 : 502;
     return { ok: false, status, message: msg };
   }
 }

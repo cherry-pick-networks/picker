@@ -3,38 +3,34 @@
  * Uses OPENAI_API_KEY; LEXIS_UTTERANCE_LLM_MOCK for tests.
  */
 
-import {
-  type LexisUtteranceLlmOutput,
-  LexisUtteranceLlmOutputSchema,
-} from "./lexisLlmSchema.ts";
+import { type LexisUtteranceLlmOutput, LexisUtteranceLlmOutputSchema } from './lexisLlmSchema.ts';
 
-const OPENAI_CHAT_URL = "https://api.openai.com/v1/chat/completions";
-const DEFAULT_MODEL = "gpt-4o";
+const OPENAI_CHAT_URL = 'https://api.openai.com/v1/chat/completions';
+const DEFAULT_MODEL = 'gpt-4o';
 
 export type LexisUtteranceLlmResult =
   | { ok: true; output: LexisUtteranceLlmOutput }
   | { ok: false; error: string };
 
-const PROMPT =
-  "From the utterance extract only the wordbook (source) and day numbers. " +
-  "Return JSON only: source_id (English ID, e.g. lexis-middle-intermediate), " +
-  "days (array of integers >= 1).";
+const PROMPT = 'From the utterance extract only the wordbook (source) and day numbers. ' +
+  'Return JSON only: source_id (English ID, e.g. lexis-middle-intermediate), ' +
+  'days (array of integers >= 1).';
 
 // function-length-ignore — getter (store.md §P)
 function getApiKey(): string | undefined {
-  return Deno.env.get("OPENAI_API_KEY");
+  return Deno.env.get('OPENAI_API_KEY');
 }
 
 function getModel(): string {
-  const m = Deno.env.get("LEXIS_UTTERANCE_LLM_MODEL");
+  const m = Deno.env.get('LEXIS_UTTERANCE_LLM_MODEL');
   return m ?? DEFAULT_MODEL;
 }
 
 // function-length-ignore — single return (store.md §P)
 function buildMessages(utterance: string): { role: string; content: string }[] {
   return [
-    { role: "system", content: PROMPT },
-    { role: "user", content: utterance },
+    { role: 'system', content: PROMPT },
+    { role: 'user', content: utterance },
   ];
 }
 
@@ -43,21 +39,21 @@ async function parseChatContent(res: Response): Promise<string> {
     choices?: { message?: { content?: string } }[];
   };
   const content = data.choices?.[0]?.message?.content;
-  if (typeof content !== "string") throw new Error("LLM: no content");
+  if (typeof content !== 'string') throw new Error('LLM: no content');
   return content;
 }
 
 async function callChat(apiKey: string, utterance: string): Promise<string> {
   const res = await fetch(OPENAI_CHAT_URL, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       model: getModel(),
       messages: buildMessages(utterance),
-      response_format: { type: "json_object" },
+      response_format: { type: 'json_object' },
     }),
   });
   if (!res.ok) {
@@ -68,7 +64,7 @@ async function callChat(apiKey: string, utterance: string): Promise<string> {
 }
 
 const MOCK_OUTPUT: LexisUtteranceLlmOutput = {
-  source_id: "lexis-middle-intermediate",
+  source_id: 'lexis-middle-intermediate',
   days: [1],
 };
 
@@ -79,11 +75,11 @@ const MOCK_OUTPUT: LexisUtteranceLlmOutput = {
 export async function parseUtteranceWithLlm(
   utterance: string,
 ): Promise<LexisUtteranceLlmResult> {
-  if (Deno.env.get("LEXIS_UTTERANCE_LLM_MOCK")) {
+  if (Deno.env.get('LEXIS_UTTERANCE_LLM_MOCK')) {
     return { ok: true, output: MOCK_OUTPUT };
   }
   const apiKey = getApiKey();
-  if (!apiKey) return { ok: false, error: "OPENAI_API_KEY not set" };
+  if (!apiKey) return { ok: false, error: 'OPENAI_API_KEY not set' };
   try {
     const raw = await callChat(apiKey, utterance);
     const parsed = JSON.parse(raw) as unknown;

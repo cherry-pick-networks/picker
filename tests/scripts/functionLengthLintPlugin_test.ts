@@ -1,28 +1,27 @@
-import { assertEquals } from "@std/assert";
-import plugin from "../../shared/prompt/scripts/function-length-lint-plugin.ts";
+import { assertEquals } from '@std/assert';
+import plugin from '../../shared/prompt/scripts/function-length-lint-plugin.ts';
 
-const MSG_OK = (n: number) =>
-  `Function body must have 2–4 statements (got ${n}).`;
+const MSG_OK = (n: number) => `Function body must have 2–4 statements (got ${n}).`;
 
-Deno.test("function-length: 2–4 statements ok", () => {
+Deno.test('function-length: 2–4 statements ok', () => {
   const code = `
 function ok() {
   const x = 1;
   return x;
 }
 `;
-  const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+  const d = Deno.lint.runPlugin(plugin, 'dummy.ts', code);
   assertEquals(d.length, 0);
 });
 
-Deno.test("function-length: 1 statement block reports", () => {
-  const code = "function short() { x(); }";
-  const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+Deno.test('function-length: 1 statement block reports', () => {
+  const code = 'function short() { x(); }';
+  const d = Deno.lint.runPlugin(plugin, 'dummy.ts', code);
   assertEquals(d.length, 1);
   assertEquals(d[0].message, MSG_OK(1));
 });
 
-Deno.test("function-length: 5 statements reports", () => {
+Deno.test('function-length: 5 statements reports', () => {
   const code = `
 function long() {
   const a = 1;
@@ -32,29 +31,29 @@ function long() {
   return a + b + c + d;
 }
 `;
-  const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+  const d = Deno.lint.runPlugin(plugin, 'dummy.ts', code);
   assertEquals(d.length, 1);
   assertEquals(d[0].message, MSG_OK(5));
 });
 
-Deno.test("function-length: arrow expression body allowed", () => {
-  const code = "const f = () => 42;";
-  const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+Deno.test('function-length: arrow expression body allowed', () => {
+  const code = 'const f = () => 42;';
+  const d = Deno.lint.runPlugin(plugin, 'dummy.ts', code);
   assertEquals(d.length, 0);
 });
 
-Deno.test("function-length: 1 statement (await) reports", () => {
+Deno.test('function-length: 1 statement (await) reports', () => {
   const code = `
 async function get() {
   return await fetch("/api");
 }
 `;
-  const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+  const d = Deno.lint.runPlugin(plugin, 'dummy.ts', code);
   assertEquals(d.length, 1);
   assertEquals(d[0].message, MSG_OK(1));
 });
 
-Deno.test("function-length: 1 statement (chain) reports", () => {
+Deno.test('function-length: 1 statement (chain) reports', () => {
   const code = `
 function get() {
   return fetch("/api")
@@ -62,13 +61,13 @@ function get() {
     .catch(() => null);
 }
 `;
-  const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+  const d = Deno.lint.runPlugin(plugin, 'dummy.ts', code);
   assertEquals(d.length, 1);
   assertEquals(d[0].message, MSG_OK(1));
 });
 
 Deno.test(
-  "function-length: single try/catch exempt (complex statement)",
+  'function-length: single try/catch exempt (complex statement)',
   () => {
     const code = `
 function withTry() {
@@ -79,23 +78,23 @@ function withTry() {
   }
 }
 `;
-    const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+    const d = Deno.lint.runPlugin(plugin, 'dummy.ts', code);
     assertEquals(d.length, 0);
   },
 );
 
-Deno.test("function-length: 2 statements with try/catch ok", () => {
+Deno.test('function-length: 2 statements with try/catch ok', () => {
   const code = `
 function two() {
   const x = 1;
   try { return x; } catch { return 0; }
 }
 `;
-  const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+  const d = Deno.lint.runPlugin(plugin, 'dummy.ts', code);
   assertEquals(d.length, 0);
 });
 
-Deno.test("function-length: single switch exempt (complex statement)", () => {
+Deno.test('function-length: single switch exempt (complex statement)', () => {
   const code = `
 function withSwitch(x: number) {
   switch (x) {
@@ -106,12 +105,12 @@ function withSwitch(x: number) {
   }
 }
 `;
-  const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+  const d = Deno.lint.runPlugin(plugin, 'dummy.ts', code);
   assertEquals(d.length, 0);
 });
 
 Deno.test(
-  "function-length: single block-bodied if exempt (complex statement)",
+  'function-length: single block-bodied if exempt (complex statement)',
   () => {
     const code = `
 function onlyIf(x: boolean) {
@@ -121,7 +120,7 @@ function onlyIf(x: boolean) {
   }
 }
 `;
-    const d = Deno.lint.runPlugin(plugin, "dummy.ts", code);
+    const d = Deno.lint.runPlugin(plugin, 'dummy.ts', code);
     assertEquals(d.length, 0);
   },
 );

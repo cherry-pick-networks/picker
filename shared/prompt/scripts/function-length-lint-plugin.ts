@@ -13,18 +13,18 @@ import {
   IGNORE_PATTERN,
   MAX_STATEMENTS,
   MIN_STATEMENTS,
-} from "./function-length-lint-constants.ts";
+} from './function-length-lint-constants.ts';
 
 function statementCount(block: Deno.lint.BlockStatement): number {
   return block.body?.length ?? 0;
 }
 
 function isComplexStatement(node: Deno.lint.Node): boolean {
-  if (node.type === "TryStatement") return true;
-  if (node.type === "SwitchStatement") return true;
-  if (node.type === "IfStatement") {
+  if (node.type === 'TryStatement') return true;
+  if (node.type === 'SwitchStatement') return true;
+  if (node.type === 'IfStatement') {
     const n = node as Deno.lint.Node & { consequent?: Deno.lint.Node };
-    return n.consequent?.type === "BlockStatement";
+    return n.consequent?.type === 'BlockStatement';
   }
   return false;
 }
@@ -34,7 +34,7 @@ function hasIgnoreComment(
   node: Deno.lint.Node,
 ): boolean {
   const comments = context.sourceCode.getCommentsBefore(node);
-  if (comments.some((c) => "value" in c && IGNORE_PATTERN.test(c.value))) {
+  if (comments.some((c) => 'value' in c && IGNORE_PATTERN.test(c.value))) {
     return true;
   }
   const head = context.sourceCode.getText().slice(0, 400);
@@ -51,7 +51,7 @@ function checkBody(
     | undefined,
 ): void {
   if (!body) return;
-  if (body.type !== "BlockStatement") return;
+  if (body.type !== 'BlockStatement') return;
   const block = body as Deno.lint.BlockStatement;
   const n = statementCount(block);
   if (n >= MIN_STATEMENTS && n <= MAX_STATEMENTS) return;
@@ -64,8 +64,7 @@ function checkBody(
     return;
   }
   if (hasIgnoreComment(context, parent)) return;
-  const msg =
-    `Function body must have ${MIN_STATEMENTS}–${MAX_STATEMENTS} statements ` +
+  const msg = `Function body must have ${MIN_STATEMENTS}–${MAX_STATEMENTS} statements ` +
     `(got ${n}).`;
   context.report({ node: block, message: msg });
 }
@@ -80,9 +79,9 @@ function visitMethodDefinition(
 }
 
 const plugin: Deno.lint.Plugin = {
-  name: "function-length",
+  name: 'function-length',
   rules: {
-    "function-length": {
+    'function-length': {
       create(context: Deno.lint.RuleContext) {
         return {
           FunctionDeclaration(node: Deno.lint.FunctionDeclaration) {

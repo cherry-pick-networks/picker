@@ -10,7 +10,7 @@ export async function* findTsFiles(dir: string): AsyncGenerator<string> {
     const path = `${dir}/${entry.name}`;
     if (entry.isDirectory) {
       yield* findTsFiles(path);
-    } else if (entry.name.endsWith(".ts")) {
+    } else if (entry.name.endsWith('.ts')) {
       yield path;
     }
   }
@@ -30,14 +30,14 @@ export function parseCrossDomainEdge(
   domains: string[],
 ): string | null {
   let rest: string;
-  if (importPath.startsWith("#system/")) {
+  if (importPath.startsWith('#system/')) {
     rest = importPath.slice(8);
-  } else if (importPath.startsWith("../")) {
+  } else if (importPath.startsWith('../')) {
     rest = importPath.slice(3);
   } else {
     return null;
   }
-  const nextSlash = rest.indexOf("/");
+  const nextSlash = rest.indexOf('/');
   const toDomain = nextSlash === -1 ? rest : rest.slice(0, nextSlash);
   if (toDomain === fromDomain || !domains.includes(toDomain)) return null;
   return toDomain;

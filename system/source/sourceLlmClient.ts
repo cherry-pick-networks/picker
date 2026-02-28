@@ -6,36 +6,34 @@
 import {
   type SourceExtractOutput,
   SourceExtractOutputSchema,
-} from "#system/source/sourceSchema.ts";
+} from '#system/source/sourceSchema.ts';
 
-const OPENAI_CHAT_URL = "https://api.openai.com/v1/chat/completions";
+const OPENAI_CHAT_URL = 'https://api.openai.com/v1/chat/completions';
 
-const DEFAULT_MODEL = "gpt-4o";
+const DEFAULT_MODEL = 'gpt-4o';
 
 export type SourceExtractLlmResult =
   | { ok: true; output: SourceExtractOutput }
   | { ok: false; error: string };
 
 function getApiKey(): string | undefined {
-  const k = Deno.env.get("OPENAI_API_KEY");
+  const k = Deno.env.get('OPENAI_API_KEY');
   return k;
 }
 
 function getModel(): string {
-  const m = Deno.env.get("SOURCE_EXTRACT_LLM_MODEL");
+  const m = Deno.env.get('SOURCE_EXTRACT_LLM_MODEL');
   return m ?? DEFAULT_MODEL;
 }
 
 function buildMessages(body: string): { role: string; content: string }[] {
-  const system =
-    "You return only valid JSON with keys: concept_ids (array of concept " +
-    "IDs), optional subject_id.";
-  const user =
-    `Passage:\n${body}\n\nReturn the one exam subject ID and array of ` +
-    "concept IDs for the above passage as JSON only.";
+  const system = 'You return only valid JSON with keys: concept_ids (array of concept ' +
+    'IDs), optional subject_id.';
+  const user = `Passage:\n${body}\n\nReturn the one exam subject ID and array of ` +
+    'concept IDs for the above passage as JSON only.';
   return [
-    { role: "system", content: system },
-    { role: "user", content: user },
+    { role: 'system', content: system },
+    { role: 'user', content: user },
   ];
 }
 
@@ -44,7 +42,7 @@ async function parseChatContent(res: Response): Promise<string> {
     choices?: { message?: { content?: string } }[];
   };
   const content = data.choices?.[0]?.message?.content;
-  if (typeof content !== "string") throw new Error("LLM: no content");
+  if (typeof content !== 'string') throw new Error('LLM: no content');
   return content;
 }
 
@@ -54,15 +52,15 @@ async function callChat(
 ): Promise<string> {
   const messages = buildMessages(body);
   const res = await fetch(OPENAI_CHAT_URL, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
       model: getModel(),
       messages,
-      response_format: { type: "json_object" },
+      response_format: { type: 'json_object' },
     }),
   });
   if (!res.ok) {
@@ -74,8 +72,8 @@ async function callChat(
 
 /** Fixed mock output when SOURCE_EXTRACT_LLM_MOCK is set (allowlist codes). */
 const MOCK_OUTPUT: SourceExtractOutput = {
-  concept_ids: ["bloom-1"],
-  subject_id: "iscedf-02",
+  concept_ids: ['bloom-1'],
+  subject_id: 'iscedf-02',
 };
 
 /**
@@ -85,11 +83,11 @@ const MOCK_OUTPUT: SourceExtractOutput = {
 export async function extractConcepts(
   body: string,
 ): Promise<SourceExtractLlmResult> {
-  if (Deno.env.get("SOURCE_EXTRACT_LLM_MOCK")) {
+  if (Deno.env.get('SOURCE_EXTRACT_LLM_MOCK')) {
     return { ok: true, output: MOCK_OUTPUT };
   }
   const apiKey = getApiKey();
-  if (!apiKey) return { ok: false, error: "OPENAI_API_KEY not set" };
+  if (!apiKey) return { ok: false, error: 'OPENAI_API_KEY not set' };
   try {
     const raw = await callChat(apiKey, body);
     const parsed = JSON.parse(raw) as unknown;

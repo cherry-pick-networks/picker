@@ -1,13 +1,11 @@
-import type { Context } from "hono";
-import {
-  extractConceptsFromSource,
-} from "#system/source/sourceExtractService.ts";
+import type { Context } from 'hono';
+import { extractConceptsFromSource } from '#system/source/sourceExtractService.ts';
 import {
   createSource,
   CreateSourceRequestSchema,
   getSource as svcGetSource,
   listSources,
-} from "./sourceService.ts";
+} from './sourceService.ts';
 
 export async function getSources(c: Context) {
   const sources = await listSources();
@@ -15,9 +13,9 @@ export async function getSources(c: Context) {
 }
 
 export async function getSource(c: Context) {
-  const id = c.req.param("id");
+  const id = c.req.param('id');
   const source = await svcGetSource(id);
-  if (source == null) return c.json({ error: "Not found" }, 404);
+  if (source == null) return c.json({ error: 'Not found' }, 404);
   return c.json(source);
 }
 
@@ -29,7 +27,7 @@ async function doPostSource(
   try {
     return c.json(await createSource(data), 201);
   } catch (err) {
-    const msg = err instanceof Error ? err.message : "Invalid source";
+    const msg = err instanceof Error ? err.message : 'Invalid source';
     return c.json({ error: msg }, 400);
   }
 }
@@ -42,7 +40,7 @@ export async function postSource(c: Context) {
 }
 
 export async function postSourceExtract(c: Context) {
-  const id = c.req.param("id");
+  const id = c.req.param('id');
   const result = await extractConceptsFromSource(id);
   if (!result.ok) {
     const status = result.status;

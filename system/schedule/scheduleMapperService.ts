@@ -1,7 +1,7 @@
 /** Map store row to ScheduleItem. */
 
-import type { ScheduleItem } from "./scheduleSchema.ts";
-import type { ScheduleItemRow } from "./scheduleStore.ts";
+import type { ScheduleItem } from './scheduleSchema.ts';
+import type { ScheduleItemRow } from './scheduleStore.ts';
 
 export function rowToItem(row: ScheduleItemRow): ScheduleItem {
   const item: ScheduleItem = {

@@ -1,21 +1,21 @@
-import { z } from "zod";
-import * as store from "./profileStore.ts";
+import { z } from 'zod';
+import * as store from './profileStore.ts';
 import {
   type Profile,
   ProfileCreateSchema,
   ProfilePatchSchema,
   ProfileSchema,
-} from "./profileSchema.ts";
+} from './profileSchema.ts';
 
-export type { Profile, Progress } from "./profileSchema.ts";
+export type { Profile, Progress } from './profileSchema.ts';
 export {
   ProfileCreateSchema,
   ProfilePatchSchema,
   ProfileSchema,
   ProgressPatchSchema,
   ProgressSchema,
-} from "./profileSchema.ts";
-export { getProgress, updateProgress } from "./progressService.ts";
+} from './profileSchema.ts';
+export { getProgress, updateProgress } from './progressService.ts';
 
 export async function getProfile(id: string): Promise<Profile | null> {
   const raw = await store.getProfile(id);
@@ -43,7 +43,7 @@ function buildProfileRaw(
 
 function parseProfile(raw: Record<string, unknown>): Profile {
   const parsed = ProfileSchema.safeParse(raw);
-  if (!parsed.success) throw new Error("Invalid profile");
+  if (!parsed.success) throw new Error('Invalid profile');
   return parsed.data;
 }
 

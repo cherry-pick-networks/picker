@@ -1,6 +1,6 @@
 /** Lexis entry schema (Zod). */
 
-import { z } from "zod";
+import { z } from 'zod';
 
 export const LexisEntrySchema = z.object({
   source_id: z.string(),

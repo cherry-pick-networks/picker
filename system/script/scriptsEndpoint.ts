@@ -1,5 +1,5 @@
-import type { Context } from "hono";
-import { listScripts, readScript, writeScript } from "./scriptsStore.ts";
+import type { Context } from 'hono';
+import { listScripts, readScript, writeScript } from './scriptsStore.ts';
 
 // function-length-ignore
 function toScriptErrorResponse(
@@ -8,7 +8,7 @@ function toScriptErrorResponse(
 ): Response {
   return new Response(JSON.stringify({ error: body }), {
     status,
-    headers: { "Content-Type": "application/json" },
+    headers: { 'Content-Type': 'application/json' },
   });
 }
 
@@ -19,12 +19,12 @@ export async function getScriptsList(c: Context) {
 }
 
 const scriptPathFromUrl = (url: string): string =>
-  new URL(url).pathname.replace(/^\/scripts\/?/, "") ?? "";
+  new URL(url).pathname.replace(/^\/scripts\/?/, '') ?? '';
 
 // function-length-ignore
 function toScriptContentResponse(content: string): Response {
   return new Response(content, {
-    headers: { "Content-Type": "text/plain; charset=utf-8" },
+    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
   });
 }
 
@@ -37,7 +37,7 @@ export async function getScriptPath(c: Context) {
 
 export function postScriptPath(c: Context) {
   const path = scriptPathFromUrl(c.req.url);
-  if (!path.trim()) return c.json({ error: "path required" }, 400);
+  if (!path.trim()) return c.json({ error: 'path required' }, 400);
   return postScriptPathResponse(c, path);
 }
 

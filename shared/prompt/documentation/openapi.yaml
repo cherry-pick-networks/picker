@@ -2,10 +2,10 @@
 # Canonical route list: shared/prompt/to-do.md API surface.
 # Copilot scenarios: shared/prompt/documentation/copilot-scenarios.md.
 
-openapi: "3.0.3"
+openapi: '3.0.3'
 info:
   title: Picker API
-  version: "1.0.0"
+  version: '1.0.0'
   description: |
     Backend for copilot-assisted flows. All routes except GET / require
     Entra ID OAuth 2.0 access token in Authorization header.
@@ -22,7 +22,7 @@ paths:
       operationId: getHome
       security: []
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -42,7 +42,7 @@ paths:
           schema:
             type: string
       responses:
-        "200":
+        '200':
           description: Returns object with keys array
     post:
       summary: Write key-value
@@ -57,9 +57,9 @@ paths:
                 key: { type: string }
                 value: {}
       responses:
-        "200":
+        '200':
           description: Returns object with key
-        "400":
+        '400':
           description: Validation error
 
   /kv/{key}:
@@ -72,7 +72,7 @@ paths:
           required: true
           schema: { type: string }
       responses:
-        "200":
+        '200':
           description: Value or null
     delete:
       summary: Delete one key
@@ -83,7 +83,7 @@ paths:
           required: true
           schema: { type: string }
       responses:
-        "204":
+        '204':
           description: No Content
 
   /scripts:
@@ -91,7 +91,7 @@ paths:
       summary: List store entries (Governance-verified)
       operationId: listScripts
       responses:
-        "200":
+        '200':
           description: Returns object with entries array
 
   /scripts/{path}:
@@ -104,9 +104,9 @@ paths:
           required: true
           schema: { type: string }
       responses:
-        "200":
+        '200':
           description: File content
-        "404":
+        '404':
           description: Not found
     post:
       summary: Write store file at path
@@ -121,11 +121,11 @@ paths:
           text/plain:
             schema: { type: string }
       responses:
-        "201":
+        '201':
           description: Created
-        "400":
-        "403":
-        "500":
+        '400':
+        '403':
+        '500':
 
   /script/mutate:
     post:
@@ -142,10 +142,10 @@ paths:
                 intent: { type: string }
                 options: { type: object }
       responses:
-        "200":
+        '200':
           description: Returns ok and replacements count
-        "4xx":
-        "5xx":
+        '4xx':
+        '5xx':
           description: Returns ok false with status and body
 
   /identity/actors:
@@ -160,7 +160,7 @@ paths:
           in: query
           schema: { type: string }
       responses:
-        "200":
+        '200':
           description: actor_id, display_name, level, progress[]
     post:
       summary: Create actor (display_name required)
@@ -176,9 +176,9 @@ paths:
                 level: { type: string }
                 progress: {}
       responses:
-        "201":
+        '201':
           description: Actor with actor_id
-        "400":
+        '400':
 
   /identity/actors/{id}:
     get:
@@ -190,9 +190,9 @@ paths:
           required: true
           schema: { type: string }
       responses:
-        "200":
+        '200':
           description: Actor object
-        "404":
+        '404':
     patch:
       summary: Update actor (partial display_name, level, progress)
       operationId: patchActor
@@ -206,8 +206,8 @@ paths:
           application/json:
             schema: { type: object }
       responses:
-        "200":
-        "404":
+        '200':
+        '404':
 
   /mirror/content/items/{id}:
     get:
@@ -219,8 +219,8 @@ paths:
           required: true
           schema: { type: string }
       responses:
-        "200":
-        "404":
+        '200':
+        '404':
     patch:
       summary: Update content item
       operationId: patchMirrorContentItem
@@ -234,8 +234,8 @@ paths:
           application/json:
             schema: { type: object }
       responses:
-        "200":
-        "404":
+        '200':
+        '404':
 
   /mirror/content/items:
     post:
@@ -246,8 +246,8 @@ paths:
           application/json:
             schema: { type: object }
       responses:
-        "201":
-        "400":
+        '201':
+        '400':
 
   /mirror/content/worksheets/{id}:
     get:
@@ -259,8 +259,8 @@ paths:
           required: true
           schema: { type: string }
       responses:
-        "200":
-        "404":
+        '200':
+        '404':
 
   /mirror/content/worksheets:
     post:
@@ -278,16 +278,16 @@ paths:
                   type: array
                   items: { type: string }
       responses:
-        "201":
+        '201':
           description: Worksheet
-        "400":
+        '400':
 
   /sources:
     get:
       summary: List sources (full)
       operationId: listSources
       responses:
-        "200":
+        '200':
           description: Source[]
     post:
       summary: Collect and store a source
@@ -297,8 +297,8 @@ paths:
           application/json:
             schema: { type: object }
       responses:
-        "201":
-        "400":
+        '201':
+        '400':
 
   /sources/{id}:
     get:
@@ -310,8 +310,8 @@ paths:
           required: true
           schema: { type: string }
       responses:
-        "200":
-        "404":
+        '200':
+        '404':
 
   /sources/{id}/extract:
     post:
@@ -327,10 +327,10 @@ paths:
           application/json:
             schema: { type: object }
       responses:
-        "200":
+        '200':
           description: Returns ok, concept_ids, optional subject_id, extracted_at
-        "4xx":
-        "5xx":
+        '4xx':
+        '5xx':
 
   /mirror/schedule/due:
     get:
@@ -348,7 +348,7 @@ paths:
           in: query
           schema: { type: string }
       responses:
-        "200":
+        '200':
           description: Returns object with items array
 
   /mirror/schedule/plan/weekly:
@@ -367,7 +367,7 @@ paths:
           in: query
           schema: { type: string }
       responses:
-        "200":
+        '200':
 
   /mirror/schedule/plan/annual:
     get:
@@ -381,7 +381,7 @@ paths:
           in: query
           schema: { type: string }
       responses:
-        "200":
+        '200':
 
   /mirror/schedule/items:
     get:
@@ -396,7 +396,7 @@ paths:
           in: query
           schema: { type: string }
       responses:
-        "200":
+        '200':
           description: Returns object with items array
     post:
       summary: Create schedule item
@@ -412,8 +412,8 @@ paths:
                 source_id: { type: string }
                 unit_id: { type: string }
       responses:
-        "201":
-        "400":
+        '201':
+        '400':
 
   /mirror/schedule/items/{id}/review:
     post:
@@ -433,8 +433,8 @@ paths:
                 grade: { type: integer }
                 reviewed_at: { type: string }
       responses:
-        "200":
-        "404":
+        '200':
+        '404':
 
   /mirror/lexis/entries:
     get:
@@ -452,9 +452,9 @@ paths:
           schema: { type: string }
           description: Utterance (regex + LLM fallback)
       responses:
-        "200":
+        '200':
           description: Returns object with entries array
-        "400":
+        '400':
 
 components:
   securitySchemes:

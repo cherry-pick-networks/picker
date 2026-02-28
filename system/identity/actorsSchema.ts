@@ -2,7 +2,7 @@
  * Identity actors API: actor_id, display_name, level, progress.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
 export const ActorSchema = z.object({
   actor_id: z.string(),

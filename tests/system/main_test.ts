@@ -1,7 +1,7 @@
-import { assertEquals } from "@std/assert";
-import { add } from "#system/app/addUtil.ts";
-import { app } from "../../main.ts";
-import { hasDbEnv } from "./dbEnv_test.ts";
+import { assertEquals } from '@std/assert';
+import { add } from '#system/app/addUtil.ts';
+import { app } from '../../main.ts';
+import { hasDbEnv } from './dbEnv_test.ts';
 
 Deno.test(function addTest() {
   assertEquals(add(2, 3), 5);
@@ -11,18 +11,18 @@ const handler = (req: Request) => app.fetch(req);
 const handlerTestOpts = { sanitizeResources: false };
 const dbTestOpts = () => ({ ...handlerTestOpts, ignore: !hasDbEnv() });
 
-Deno.test("GET / returns 200 and { ok: true }", handlerTestOpts, async () => {
-  const res = await handler(new Request("http://localhost/"));
+Deno.test('GET / returns 200 and { ok: true }', handlerTestOpts, async () => {
+  const res = await handler(new Request('http://localhost/'));
   assertEquals(res.status, 200);
   const body = await res.json();
   assertEquals(body, { ok: true });
 });
 
 Deno.test(
-  "GET /kv returns 200 and { keys: string[] }",
+  'GET /kv returns 200 and { keys: string[] }',
   dbTestOpts(),
   async () => {
-    const res = await handler(new Request("http://localhost/kv"));
+    const res = await handler(new Request('http://localhost/kv'));
     assertEquals(res.status, 200);
     const body = await res.json();
     assertEquals(Array.isArray(body.keys), true);
@@ -30,18 +30,18 @@ Deno.test(
 );
 
 Deno.test(
-  "GET /kv includes key after POST /kv",
+  'GET /kv includes key after POST /kv',
   dbTestOpts(),
   async () => {
     const key = `list-${Date.now()}`;
     await handler(
-      new Request("http://localhost/kv", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      new Request('http://localhost/kv', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ key, value: 1 }),
       }),
     );
-    const res = await handler(new Request("http://localhost/kv"));
+    const res = await handler(new Request('http://localhost/kv'));
     assertEquals(res.status, 200);
     const body = await res.json();
     assertEquals(body.keys.includes(key), true);
@@ -49,7 +49,7 @@ Deno.test(
 );
 
 Deno.test(
-  "GET /kv?prefix= filters keys by prefix",
+  'GET /kv?prefix= filters keys by prefix',
   dbTestOpts(),
   async () => {
     const prefix = `pfx-${Date.now()}`;
@@ -58,9 +58,9 @@ Deno.test(
     const keyOther = `other-${Date.now()}`;
     for (const k of [key1, key2, keyOther]) {
       await handler(
-        new Request("http://localhost/kv", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
+        new Request('http://localhost/kv', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ key: k, value: 1 }),
         }),
       );

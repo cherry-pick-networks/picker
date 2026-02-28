@@ -1,7 +1,7 @@
 /** Shared TOML read/write for record and audit artifacts. */
 
-import { parse } from "@std/toml/parse";
-import { stringify } from "@std/toml/stringify";
+import { parse } from '@std/toml/parse';
+import { stringify } from '@std/toml/stringify';
 
 export async function readTomlFile<T = Record<string, unknown>>(
   path: string,

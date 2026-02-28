@@ -4,11 +4,11 @@
  * Usage: deno run -A shared/infra/seed/runSeedLexis.ts
  */
 
-import { parse } from "@std/toml";
-import { createSource } from "#system/source/sourceService.ts";
+import { parse } from '@std/toml';
+import { createSource } from '#system/source/sourceService.ts';
 
 const LEXIS_SOURCES_TOML = new URL(
-  "./lexis/lexis-sources.toml",
+  './lexis/lexis-sources.toml',
   import.meta.url,
 );
 
@@ -29,11 +29,11 @@ async function runSeed(): Promise<void> {
     const body = {
       ...payload,
       source_id: entry.source_id,
-      type: (payload.type as string) ?? "book",
+      type: (payload.type as string) ?? 'book',
       metadata: (payload.metadata as Record<string, unknown>) ?? {},
     };
     await createSource(body);
-    console.log("Seeded source:", entry.source_id);
+    console.log('Seeded source:', entry.source_id);
   }
 }
 

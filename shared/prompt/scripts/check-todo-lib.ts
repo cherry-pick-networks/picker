@@ -12,18 +12,18 @@ export function parseScopeApiTable(content: string): Route[] {
   let inTable = false;
 
   for (const line of lines) {
-    if (line.startsWith("## API surface")) {
+    if (line.startsWith('## API surface')) {
       inTable = true;
       continue;
     }
-    if (inTable && line.startsWith("## ")) {
+    if (inTable && line.startsWith('## ')) {
       break;
     }
-    if (!inTable || !line.startsWith("|")) continue;
-    const cells = line.split("|").map((c) => c.trim());
+    if (!inTable || !line.startsWith('|')) continue;
+    const cells = line.split('|').map((c) => c.trim());
     if (cells.length < 3) continue;
-    const method = (cells[1] ?? "").toUpperCase();
-    const path = (cells[2] ?? "").replace(/^`|`$/g, "").trim();
+    const method = (cells[1] ?? '').toUpperCase();
+    const path = (cells[2] ?? '').replace(/^`|`$/g, '').trim();
     if (
       /^[-]+$/.test(method) || !/^(GET|POST|PUT|PATCH|DELETE)$/.test(method)
     ) {
@@ -40,10 +40,10 @@ export function parseScopeApiTable(content: string): Route[] {
  * to a route path (e.g. "/", "/kv", "/kv/:key").
  */
 export function filePathToRoutePath(relativePath: string): string {
-  const withoutExt = relativePath.replace(/\.tsx?$/, "");
-  const segments = withoutExt.split("/").filter(Boolean);
+  const withoutExt = relativePath.replace(/\.tsx?$/, '');
+  const segments = withoutExt.split('/').filter(Boolean);
   const routeSegments = segments.map((seg) => {
-    if (seg === "index") return "";
+    if (seg === 'index') return '';
     const dynamic = seg.match(/^\[\.\.\.([^\]]+)\]$/);
     if (dynamic) return `:${dynamic[1]}*`;
     const optional = seg.match(/^\[\[([^\]]+)\]\]$/);
@@ -52,8 +52,8 @@ export function filePathToRoutePath(relativePath: string): string {
     if (single) return `:${single[1]}`;
     return seg;
   });
-  const path = "/" + routeSegments.filter(Boolean).join("/");
-  return path === "/" ? path : path.replace(/\/$/, "") || "/";
+  const path = '/' + routeSegments.filter(Boolean).join('/');
+  return path === '/' ? path : path.replace(/\/$/, '') || '/';
 }
 
 /** Extract HTTP methods from handler export in file content. */
@@ -62,7 +62,7 @@ export function extractMethodsFromHandler(content: string): string[] {
   const re = /handler\.\s*(GET|POST|PUT|PATCH|DELETE)\s*[\(\{]/g;
   let m: RegExpExecArray | null;
   while ((m = re.exec(content)) !== null) {
-    const method = (m[1] ?? "").toUpperCase();
+    const method = (m[1] ?? '').toUpperCase();
     if (method && !methods.includes(method)) methods.push(method);
   }
   return methods;
@@ -77,12 +77,12 @@ export async function walkRouterFiles(
     const full = `${dir}/${e.name}`;
     const rel = full.slice(root.length + 1);
     if (e.isDirectory) {
-      if (e.name.startsWith("_") || e.name === "node_modules") continue;
+      if (e.name.startsWith('_') || e.name === 'node_modules') continue;
       await walkRouterFiles(root, full, files);
     } else if (
       e.isFile &&
-      (e.name.endsWith(".ts") || e.name.endsWith(".tsx")) &&
-      !e.name.startsWith("_")
+      (e.name.endsWith('.ts') || e.name.endsWith('.tsx')) &&
+      !e.name.startsWith('_')
     ) {
       files.push(rel);
     }

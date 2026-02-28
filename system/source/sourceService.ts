@@ -1,14 +1,11 @@
-import {
-  allowlistHas,
-  type FacetName,
-} from "#shared/contract/allowlistTypes.ts";
-import { getAllowlistDataOrLoad } from "#shared/contract/allowlistData.ts";
-import * as sourceSchema from "./sourceSchema.ts";
-import * as sourceStore from "./sourceStore.ts";
+import { allowlistHas, type FacetName } from '#shared/contract/allowlistTypes.ts';
+import { getAllowlistDataOrLoad } from '#shared/contract/allowlistData.ts';
+import * as sourceSchema from './sourceSchema.ts';
+import * as sourceStore from './sourceStore.ts';
 
 const { SourceSchema } = sourceSchema;
-export type { CreateSourceRequest, Source } from "./sourceSchema.ts";
-export { CreateSourceRequestSchema, SourceSchema } from "./sourceSchema.ts";
+export type { CreateSourceRequest, Source } from './sourceSchema.ts';
+export { CreateSourceRequestSchema, SourceSchema } from './sourceSchema.ts';
 
 function nowIso(): string {
   const s = new Date().toISOString();
@@ -17,7 +14,7 @@ function nowIso(): string {
 
 function parseSource(raw: unknown): sourceSchema.Source {
   const parsed = SourceSchema.safeParse(raw);
-  if (!parsed.success) throw new Error("Invalid source");
+  if (!parsed.success) throw new Error('Invalid source');
   return parsed.data;
 }
 
@@ -45,11 +42,11 @@ function buildSourceRaw(
 export async function createSource(
   body: sourceSchema.CreateSourceRequest,
 ): Promise<sourceSchema.Source> {
-  if (body.type != null && body.type !== "") {
+  if (body.type != null && body.type !== '') {
     const data = await getAllowlistDataOrLoad();
-    if (!allowlistHas(data, "contentType" as FacetName, body.type)) {
-      const msg = "Invalid document_type: " + body.type +
-        ". Must be a valid Schema.org or BibTeX code.";
+    if (!allowlistHas(data, 'contentType' as FacetName, body.type)) {
+      const msg = 'Invalid document_type: ' + body.type +
+        '. Must be a valid Schema.org or BibTeX code.';
       throw new Error(msg);
     }
   }

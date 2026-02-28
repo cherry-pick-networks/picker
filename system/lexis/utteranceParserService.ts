@@ -3,10 +3,10 @@
  * when regex fails. Optional short-TTL cache for LLM output.
  */
 
-import type { LexisUtteranceLlmOutput } from "./lexisLlmSchema.ts";
-import { parseDays } from "./daysParser.ts";
-import { parseUtteranceWithLlm } from "./lexisLlmClient.ts";
-import { matchSourceIdByKeyword } from "./sourceMatcherConfig.ts";
+import type { LexisUtteranceLlmOutput } from './lexisLlmSchema.ts';
+import { parseDays } from './daysParser.ts';
+import { parseUtteranceWithLlm } from './lexisLlmClient.ts';
+import { matchSourceIdByKeyword } from './sourceMatcherConfig.ts';
 
 const CACHE = new Map<
   string,
@@ -30,15 +30,15 @@ export function resetLexisUtteranceCacheStats(): void {
 }
 
 function cacheTtlSec(): number {
-  const s = Deno.env.get("LEXIS_UTTERANCE_CACHE_TTL_SEC");
-  if (s == null || s === "") return 60;
+  const s = Deno.env.get('LEXIS_UTTERANCE_CACHE_TTL_SEC');
+  if (s == null || s === '') return 60;
   const n = parseInt(s, 10);
   return Number.isInteger(n) && n >= 0 ? n : 60;
 }
 
 // function-length-ignore — one-liner (store.md §P)
 function cacheKey(utterance: string): string {
-  return utterance.trim().replace(/\s+/g, " ");
+  return utterance.trim().replace(/\s+/g, ' ');
 }
 
 export type ParseSuccess = {
@@ -49,7 +49,7 @@ export type ParseSuccess = {
 
 export type ParseFailure = {
   ok: false;
-  reason: "no_days" | "unknown_source" | "parse_error";
+  reason: 'no_days' | 'unknown_source' | 'parse_error';
 };
 
 export type UtteranceParseResult = ParseSuccess | ParseFailure;
@@ -60,9 +60,9 @@ export function parseUtterance(
   allowedSourceIds: Set<string>,
 ): UtteranceParseResult {
   const daysResult = parseDays(utterance);
-  if (!daysResult.ok) return { ok: false, reason: "no_days" };
+  if (!daysResult.ok) return { ok: false, reason: 'no_days' };
   const sourceId = matchSourceIdByKeyword(utterance, allowedSourceIds);
-  if (sourceId == null) return { ok: false, reason: "unknown_source" };
+  if (sourceId == null) return { ok: false, reason: 'unknown_source' };
   return { ok: true, source_id: sourceId, days: daysResult.days };
 }
 
@@ -76,10 +76,10 @@ function fromLlmOutput(
   allowedSourceIds: Set<string>,
 ): UtteranceParseResult {
   if (!allowedSourceIds.has(out.source_id)) {
-    return { ok: false, reason: "unknown_source" };
+    return { ok: false, reason: 'unknown_source' };
   }
   const days = normalizeDays(out.days);
-  if (days.length === 0) return { ok: false, reason: "no_days" };
+  if (days.length === 0) return { ok: false, reason: 'no_days' };
   return { ok: true, source_id: out.source_id, days };
 }
 
@@ -99,7 +99,7 @@ export async function parseUtteranceWithFallback(
   }
   cacheMisses++;
   const llm = await parseUtteranceWithLlm(utterance);
-  if (!llm.ok) return { ok: false, reason: "parse_error" };
+  if (!llm.ok) return { ok: false, reason: 'parse_error' };
   const ttl = cacheTtlSec();
   if (ttl > 0) {
     CACHE.set(key, {

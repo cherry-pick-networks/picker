@@ -3,18 +3,18 @@
  * (script/validation).
  */
 
-import { verifyGovernance } from "./governanceValidation.ts";
-import type { ListResult, ReadResult, WriteResult } from "./scriptsTypes.ts";
+import { verifyGovernance } from './governanceValidation.ts';
+import type { ListResult, ReadResult, WriteResult } from './scriptsTypes.ts';
 
-export type { ListResult, ReadResult, WriteResult } from "./scriptsTypes.ts";
+export type { ListResult, ReadResult, WriteResult } from './scriptsTypes.ts';
 
 function getScriptsBase(): string {
-  const base = Deno.env.get("SCRIPTS_BASE") ?? "shared/runtime/store";
+  const base = Deno.env.get('SCRIPTS_BASE') ?? 'shared/runtime/store';
   return base;
 }
 
 function pushEntry(names: string[], e: Deno.DirEntry): void {
-  if (e.name.startsWith(".")) return;
+  if (e.name.startsWith('.')) return;
   names.push(e.isFile ? e.name : `${e.name}/`);
 }
 
@@ -25,7 +25,7 @@ async function listDir(path: string): Promise<string[]> {
 }
 
 function toListError(e: unknown): ListResult {
-  const body = e instanceof Error ? e.message : "list failed";
+  const body = e instanceof Error ? e.message : 'list failed';
   return { ok: false, status: 500, body };
 }
 
@@ -40,7 +40,7 @@ async function listScriptsAllowed(): Promise<ListResult> {
 }
 
 export function listScripts(): Promise<ListResult> {
-  const result = verifyGovernance("read", "");
+  const result = verifyGovernance('read', '');
   if (!result.allowed) {
     return Promise.resolve({ ok: false, status: 403, body: result.reason });
   }
@@ -49,9 +49,9 @@ export function listScripts(): Promise<ListResult> {
 
 function readScriptCatch(e: unknown): ReadResult {
   if (e instanceof Deno.errors.NotFound) {
-    return { ok: false, status: 404, body: "Not found" };
+    return { ok: false, status: 404, body: 'Not found' };
   }
-  const body = e instanceof Error ? e.message : "read failed";
+  const body = e instanceof Error ? e.message : 'read failed';
   return { ok: false, status: 500, body };
 }
 
@@ -59,7 +59,7 @@ async function readFileContent(fullPath: string): Promise<ReadResult> {
   const result = await Deno.readTextFile(fullPath).catch(
     (e): ReadResult => readScriptCatch(e),
   );
-  return typeof result === "string" ? { ok: true, content: result } : result;
+  return typeof result === 'string' ? { ok: true, content: result } : result;
 }
 
 function readScriptAllowed(relativePath: string): Promise<ReadResult> {
@@ -68,7 +68,7 @@ function readScriptAllowed(relativePath: string): Promise<ReadResult> {
 }
 
 export function readScript(relativePath: string): Promise<ReadResult> {
-  const result = verifyGovernance("read", relativePath);
+  const result = verifyGovernance('read', relativePath);
   if (!result.allowed) {
     return Promise.resolve({ ok: false, status: 403, body: result.reason });
   }
@@ -76,13 +76,13 @@ export function readScript(relativePath: string): Promise<ReadResult> {
 }
 
 function ensureParentDir(fullPath: string): Promise<void> {
-  const dir = fullPath.slice(0, fullPath.lastIndexOf("/"));
+  const dir = fullPath.slice(0, fullPath.lastIndexOf('/'));
   if (dir) return Deno.mkdir(dir, { recursive: true });
   return Promise.resolve();
 }
 
 function toWriteError(e: unknown): WriteResult {
-  const body = e instanceof Error ? e.message : "write failed";
+  const body = e instanceof Error ? e.message : 'write failed';
   return { ok: false, status: 500, body };
 }
 
@@ -107,7 +107,7 @@ export function writeScript(
   relativePath: string,
   content: string,
 ): Promise<WriteResult> {
-  const result = verifyGovernance("write", relativePath);
+  const result = verifyGovernance('write', relativePath);
   if (!result.allowed) {
     return Promise.resolve({ ok: false, status: 403, body: result.reason });
   }

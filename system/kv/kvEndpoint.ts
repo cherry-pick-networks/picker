@@ -1,11 +1,11 @@
-import { z } from "zod";
-import type { Context } from "hono";
-import { deleteKey, getKey, listKeys, setKey } from "./kvStore.ts";
+import { z } from 'zod';
+import type { Context } from 'hono';
+import { deleteKey, getKey, listKeys, setKey } from './kvStore.ts';
 
 const KvBodySchema = z.object({ key: z.string(), value: z.unknown() });
 
 export async function getKvList(c: Context) {
-  const prefix = c.req.query("prefix") ?? undefined;
+  const prefix = c.req.query('prefix') ?? undefined;
   const keys = await listKeys(prefix);
   return c.json({ keys });
 }
@@ -26,13 +26,13 @@ async function setKvAndRespond(
 }
 
 export async function getKvKey(c: Context) {
-  const key = c.req.param("key");
+  const key = c.req.param('key');
   const value = await getKey(key);
   return c.json(value ?? null);
 }
 
 export async function deleteKvKey(c: Context) {
-  const key = c.req.param("key");
+  const key = c.req.param('key');
   await deleteKey(key);
   return c.body(null, 204);
 }

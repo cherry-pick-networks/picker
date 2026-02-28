@@ -5,17 +5,17 @@
  *   deno run --allow-read shared/prompt/scripts/check-domain-boundary.ts
  */
 
-const SYSTEM_DIR = "system";
+const SYSTEM_DIR = 'system';
 const DOMAINS = [
-  "actor",
-  "app",
-  "concept",
-  "content",
-  "source",
-  "script",
-  "record",
-  "kv",
-  "audit",
+  'actor',
+  'app',
+  'concept',
+  'content',
+  'source',
+  'script',
+  'record',
+  'kv',
+  'audit',
 ];
 
 const IMPORT_RE = /from\s+["']([^"']+)["']/g;
@@ -26,7 +26,7 @@ async function* findTsFiles(dir: string): AsyncGenerator<string> {
     const path = `${dir}/${entry.name}`;
     if (entry.isDirectory) {
       yield* findTsFiles(path);
-    } else if (entry.name.endsWith(".ts")) {
+    } else if (entry.name.endsWith('.ts')) {
       yield path;
     }
   }
@@ -44,13 +44,13 @@ function isCrossDomainStoreImport(
   importPath: string,
   currentDomain: string,
 ): boolean {
-  if (!importPath.startsWith("../")) return false;
+  if (!importPath.startsWith('../')) return false;
   const rest = importPath.slice(3);
-  const nextSlash = rest.indexOf("/");
+  const nextSlash = rest.indexOf('/');
   const otherDomain = nextSlash === -1 ? rest : rest.slice(0, nextSlash);
   if (otherDomain === currentDomain) return false;
   if (!DOMAINS.includes(otherDomain)) return false;
-  return rest.includes(".store") || rest.endsWith(".store");
+  return rest.includes('.store') || rest.endsWith('.store');
 }
 
 // function-length-ignore
@@ -88,7 +88,7 @@ async function main(): Promise<void> {
     Deno.exit(1);
   }
   console.log(
-    "Domain boundary check passed: no cross-domain store imports.",
+    'Domain boundary check passed: no cross-domain store imports.',
   );
 }
 

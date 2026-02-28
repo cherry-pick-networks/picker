@@ -2,26 +2,22 @@ import {
   ALLOWLIST_ID_COUNT_LIMIT,
   allowlistHas,
   type FacetName,
-} from "#shared/contract/allowlistTypes.ts";
-import { getAllowlistDataOrLoad } from "#shared/contract/allowlistData.ts";
-import type { CreateItemRequest, ItemPatch } from "./contentSchema.ts";
+} from '#shared/contract/allowlistTypes.ts';
+import { getAllowlistDataOrLoad } from '#shared/contract/allowlistData.ts';
+import type { CreateItemRequest, ItemPatch } from './contentSchema.ts';
 
 export type FacetCheck = [
-  "subject" | "contentType" | "cognitiveLevel" | "context" | "concept",
+  'subject' | 'contentType' | 'cognitiveLevel' | 'context' | 'concept',
   string[],
 ];
 
 function buildFacetChecks(body: CreateItemRequest | ItemPatch): FacetCheck[] {
   const raw = [
-    body.subject_ids?.length ? (["subject", body.subject_ids] as const) : null,
-    body.content_type_id
-      ? (["contentType", [body.content_type_id]] as const)
-      : null,
-    body.cognitive_level_id
-      ? (["cognitiveLevel", [body.cognitive_level_id]] as const)
-      : null,
-    body.context_ids?.length ? (["context", body.context_ids] as const) : null,
-    body.concept_id ? (["concept", [body.concept_id]] as const) : null,
+    body.subject_ids?.length ? (['subject', body.subject_ids] as const) : null,
+    body.content_type_id ? (['contentType', [body.content_type_id]] as const) : null,
+    body.cognitive_level_id ? (['cognitiveLevel', [body.cognitive_level_id]] as const) : null,
+    body.context_ids?.length ? (['context', body.context_ids] as const) : null,
+    body.concept_id ? (['concept', [body.concept_id]] as const) : null,
   ].filter((x): x is NonNullable<typeof x> => x != null);
   return raw as FacetCheck[];
 }
@@ -38,12 +34,10 @@ export async function validateItemFacets(
   }
   const data = await getAllowlistDataOrLoad();
   for (const [facet, ids] of checks) {
-    const invalid = ids.filter((id) =>
-      !allowlistHas(data, facet as FacetName, id)
-    );
+    const invalid = ids.filter((id) => !allowlistHas(data, facet as FacetName, id));
     if (invalid.length > 0) {
       throw new Error(
-        `Invalid concept IDs for ${facet}: ${invalid.join(", ")}`,
+        `Invalid concept IDs for ${facet}: ${invalid.join(', ')}`,
       );
     }
   }

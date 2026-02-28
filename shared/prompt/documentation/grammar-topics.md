@@ -5,12 +5,12 @@ description: Grammar curriculum — 17 major topics and level mapping (basic/int
 
 # Grammar topics
 
-Three books (basic, intermediate, advanced) are organized by **study_guide**
-into **17 major topics**. Units in each book map to these topics; the same topic
-may appear across levels with different depth.
+Three books (basic, intermediate, advanced) are organized by **study_guide** into **17 major
+topics**. Units in each book map to these topics; the same topic may appear across levels with
+different depth.
 
-**Unit IDs in data**: `unit_1`, `unit_2`, … (from `metadata.unit_ids`). Ranges
-below use **unit numbers** (e.g. 1–6 = unit_1 … unit_6).
+**Unit IDs in data**: `unit_1`, `unit_2`, … (from `metadata.unit_ids`). Ranges below use **unit
+numbers** (e.g. 1–6 = unit_1 … unit_6).
 
 ---
 
@@ -153,14 +153,12 @@ below use **unit numbers** (e.g. 1–6 = unit_1 … unit_6).
 
 ## Summary by level
 
-- **basic**: Tense & time, modals, questions, comparison, quantifiers,
-  prepositions, time expressions, existential, simple reporting.
-- **intermediate**: Above extended; plus present perfect, conditionals, passive,
-  verb patterns, nouns/articles, pronouns, conjunctions, phrasal verbs.
-- **advanced**: Reporting/modality, S–V agreement, noun phrases,
-  adjectives/adverbs, prepositions with clauses, questions/inversion, advanced
-  sentence structure.
+- **basic**: Tense & time, modals, questions, comparison, quantifiers, prepositions, time
+  expressions, existential, simple reporting.
+- **intermediate**: Above extended; plus present perfect, conditionals, passive, verb patterns,
+  nouns/articles, pronouns, conjunctions, phrasal verbs.
+- **advanced**: Reporting/modality, S–V agreement, noun phrases, adjectives/adverbs, prepositions
+  with clauses, questions/inversion, advanced sentence structure.
 
-Schedule (annual curriculum, weekly plan) and grammar sources use
-`metadata.unit_ids` in curriculum order; topic labels above are for reference
-and optional filtering.
+Schedule (annual curriculum, weekly plan) and grammar sources use `metadata.unit_ids` in curriculum
+order; topic labels above are for reference and optional filtering.

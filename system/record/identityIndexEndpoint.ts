@@ -1,8 +1,8 @@
-import type { Context } from "hono";
+import type { Context } from 'hono';
 import {
   getIdentityById as getIdentityByIdStore,
   readIdentityIndex,
-} from "./identityIndexStore.ts";
+} from './identityIndexStore.ts';
 
 export async function getIdentityIndex(c: Context) {
   const index = await readIdentityIndex();
@@ -10,8 +10,8 @@ export async function getIdentityIndex(c: Context) {
 }
 
 export async function getIdentityById(c: Context) {
-  const id = c.req.param("id");
+  const id = c.req.param('id');
   const student = await getIdentityByIdStore(id);
-  if (student == null) return c.json({ error: "Not found" }, 404);
+  if (student == null) return c.json({ error: 'Not found' }, 404);
   return c.json(student);
 }

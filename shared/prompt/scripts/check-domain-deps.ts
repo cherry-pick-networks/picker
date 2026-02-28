@@ -15,33 +15,33 @@ import {
   findCycle,
   findTsFiles,
   parseCrossDomainEdge,
-} from "./check-domain-deps-helpers.ts";
+} from './check-domain-deps-helpers.ts';
 
-const SYSTEM_DIR = "system";
+const SYSTEM_DIR = 'system';
 
 const DOMAINS = [
-  "actor",
-  "concept",
-  "content",
-  "identity",
-  "schedule",
-  "source",
-  "script",
-  "record",
-  "kv",
-  "audit",
+  'actor',
+  'concept',
+  'content',
+  'identity',
+  'schedule',
+  'source',
+  'script',
+  'record',
+  'kv',
+  'audit',
 ];
 
 /** [from, to] pairs allowed by the dependency matrix. */
 const ALLOWED_EDGES: [string, string][] = [
-  ["content", "actor"],
-  ["content", "concept"],
-  ["content", "script"],
-  ["identity", "actor"],
-  ["audit", "record"],
-  ["schedule", "source"],
-  ["source", "concept"],
-  ["source", "record"],
+  ['content', 'actor'],
+  ['content', 'concept'],
+  ['content', 'script'],
+  ['identity', 'actor'],
+  ['audit', 'record'],
+  ['schedule', 'source'],
+  ['source', 'concept'],
+  ['source', 'record'],
 ];
 
 // function-length-ignore
@@ -80,7 +80,7 @@ async function main(): Promise<void> {
   );
   if (disallowed.length > 0) {
     console.error(
-      "Domain dependency violation: cross-domain edge not in allowed " +
+      'Domain dependency violation: cross-domain edge not in allowed ' +
         "matrix. Update reference.md and this script's ALLOWED_EDGES.",
     );
     for (const [a, b] of disallowed) {
@@ -98,15 +98,15 @@ async function main(): Promise<void> {
   const cycle = findCycle(graph);
   if (cycle !== null) {
     console.error(
-      "Domain dependency violation: cycle detected. " +
-        "Keep domain dependencies acyclic.",
+      'Domain dependency violation: cycle detected. ' +
+        'Keep domain dependencies acyclic.',
     );
-    console.error(`  Cycle: ${cycle.join(" → ")}`);
+    console.error(`  Cycle: ${cycle.join(' → ')}`);
     Deno.exit(1);
   }
 
   console.log(
-    "Dependency check passed: acyclic and all edges in allowed matrix.",
+    'Dependency check passed: acyclic and all edges in allowed matrix.',
   );
 }
 

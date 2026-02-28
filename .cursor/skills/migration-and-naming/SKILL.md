@@ -7,27 +7,23 @@ description: |
 
 # Migration and naming
 
-Apply store.md **§J, §D, §E, §F**. Full text in shared/prompt/store.md Part B
-only.
+Apply store.md **§J, §D, §E, §F**. Full text in shared/prompt/store.md Part B only.
 
-**Before editing**: Run `deno task rules:summary -- migration` (or use
-/rules-summary migration) and apply the listed § for this session. Keep the
-output in context.
+**Before editing**: Run `deno task rules:summary -- migration` (or use /rules-summary migration) and
+apply the listed § for this session. Keep the output in context.
 
 ## §J — Migration boundary
 
-- Plan before execute: write a migration plan (current file → target filename
-  and content responsibility); do not rename or split without this mapping.
-- Execute order: create all new rule/files first, then delete old ones; one
-  logical migration per commit.
-- New names follow §D and §E. Adding/refactoring .cursor/rules does not require
-  to-do.md change.
+- Plan before execute: write a migration plan (current file → target filename and content
+  responsibility); do not rename or split without this mapping.
+- Execute order: create all new rule/files first, then delete old ones; one logical migration per
+  commit.
+- New names follow §D and §E. Adding/refactoring .cursor/rules does not require to-do.md change.
 
 ## §D, §E, §F
 
-- Document and directory format/naming: segment form, axis rule, allowed sets
-  per §E. Directory structure: max 3 tiers, allowed forms only; exceptions list
-  maintained.
+- Document and directory format/naming: segment form, axis rule, allowed sets per §E. Directory
+  structure: max 3 tiers, allowed forms only; exceptions list maintained.
 
 ## Checklist
 

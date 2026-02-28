@@ -2,9 +2,9 @@
  * E2E run artifacts under system/audit/ (e2e-runs.toml); not served.
  */
 
-import { readTomlFile, writeTomlFile } from "#system/record/tomlService.ts";
+import { readTomlFile, writeTomlFile } from '#system/record/tomlService.ts';
 
-const LOG_DIR = new URL(".", import.meta.url).pathname;
+const LOG_DIR = new URL('.', import.meta.url).pathname;
 const E2E_RUNS_PATH = `${LOG_DIR}e2e-runs.toml`;
 const MAX_RUNS = 20;
 

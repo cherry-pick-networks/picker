@@ -1,49 +1,28 @@
 /**
- * Tests for line-length helpers: inline ignore pattern (store.md §P).
+ * Tests for line-length helpers (store.md §P). No line-length-ignore (option B).
  */
-import { assertEquals } from "@std/assert";
+import { assertEquals } from '@std/assert';
 import {
-  isLineLengthIgnored,
-  LINE_LENGTH_IGNORE_PATTERN,
+  effectiveLineCount,
   MAX_LINE_LENGTH,
-} from "../../shared/prompt/scripts/check-line-length-helpers.ts";
+} from '../../shared/prompt/scripts/check-line-length-helpers.ts';
 
-Deno.test("LINE_LENGTH_IGNORE_PATTERN: line-length-ignore matches", () => {
-  assertEquals(LINE_LENGTH_IGNORE_PATTERN.test("// line-length-ignore"), true);
-  assertEquals(
-    LINE_LENGTH_IGNORE_PATTERN.test("  // line-length-ignore  "),
-    true,
-  );
+Deno.test('MAX_LINE_LENGTH is 100', () => {
+  assertEquals(MAX_LINE_LENGTH, 100);
 });
 
-Deno.test("LINE_LENGTH_IGNORE_PATTERN: line-length-ignore with reason", () => {
-  assertEquals(
-    LINE_LENGTH_IGNORE_PATTERN.test("// line-length-ignore: long URL"),
-    true,
-  );
+Deno.test('effectiveLineCount: empty is 0', () => {
+  assertEquals(effectiveLineCount([]), 0);
 });
 
-Deno.test("LINE_LENGTH_IGNORE_PATTERN: no match", () => {
-  assertEquals(LINE_LENGTH_IGNORE_PATTERN.test("// other"), false);
-  assertEquals(LINE_LENGTH_IGNORE_PATTERN.test("line-length-ignore"), false);
+Deno.test('effectiveLineCount: one short line is 1', () => {
+  assertEquals(effectiveLineCount(['x']), 1);
 });
 
-Deno.test("isLineLengthIgnored: previous line has ignore", () => {
-  const lines = ["// line-length-ignore", "x".repeat(MAX_LINE_LENGTH + 1)];
-  assertEquals(isLineLengthIgnored(lines, 1), true);
+Deno.test('effectiveLineCount: one line of 100 chars is 1', () => {
+  assertEquals(effectiveLineCount(['x'.repeat(100)]), 1);
 });
 
-Deno.test("isLineLengthIgnored: first line long not ignored", () => {
-  const lines = ["x".repeat(MAX_LINE_LENGTH + 1)];
-  assertEquals(isLineLengthIgnored(lines, 0), false);
-});
-
-Deno.test("isLineLengthIgnored: no ignore on previous line", () => {
-  const lines = ["// other comment", "x".repeat(MAX_LINE_LENGTH + 1)];
-  assertEquals(isLineLengthIgnored(lines, 1), false);
-});
-
-Deno.test("isLineLengthIgnored: ignore-next-line on previous line", () => {
-  const lines = ["// line-length-ignore-next-line", "y".repeat(81)];
-  assertEquals(isLineLengthIgnored(lines, 1), true);
+Deno.test('effectiveLineCount: one line of 101 chars is 2', () => {
+  assertEquals(effectiveLineCount(['x'.repeat(101)]), 2);
 });

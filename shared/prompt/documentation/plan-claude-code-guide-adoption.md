@@ -7,15 +7,14 @@ description: Planning doc for Claude Code guide adoption (enhancements + adoptio
 
 **Repo:** picker\
 **Refs:** `shared/prompt/store.md`, `shared/prompt/documentation/guide.md`\
-**Goal:** Implement 7 enhancements in guide.md; phase in 6 adoption items by
-priority.
+**Goal:** Implement 7 enhancements in guide.md; phase in 6 adoption items by priority.
 
 ---
 
 ## Part A. Enhancements (implementation)
 
-**Principle:** Keep rule text in store.md; add only **usage, tips, and
-references** to guide.md. Minimize duplication.
+**Principle:** Keep rule text in store.md; add only **usage, tips, and references** to guide.md.
+Minimize duplication.
 
 | #  | Item                                | Where    | What                                                                                                                                                                                                                                                                                                                 |
 | -- | ----------------------------------- | -------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -27,19 +26,19 @@ references** to guide.md. Minimize duplication.
 | A6 | **Named sessions**                  | guide.md | One sentence at end of Session start (first message). Content: (When using Claude Code) use `/rename <name>` to name a session; resume with `--resume <name>`.                                                                                                                                                       |
 | A7 | **! Prefix**                        | guide.md | Add 1–2 sentences to Slash commands (Tip 1). Content: In Claude Code, `!` runs a shell command immediately (e.g. `!git status`, `!deno test`); saves tokens and gives quick status checks.                                                                                                                           |
 
-**Suggested order:** A1 → A3 → A7 → A5 → A6 → A2 → A4 (no dependencies; by
-importance and readability).
+**Suggested order:** A1 → A3 → A7 → A5 → A6 → A2 → A4 (no dependencies; by importance and
+readability).
 
 **Output:** One updated `shared/prompt/documentation/guide.md`.\
-**Check:** Skim guide.md and confirm you can find context check, Plan/YOLO,
-store vs skills, hooks, clone, rename, ! prefix.
+**Check:** Skim guide.md and confirm you can find context check, Plan/YOLO, store vs skills, hooks,
+clone, rename, ! prefix.
 
 ---
 
 ## Part B. Adoption review (implementation)
 
-**Principle:** Whether to adopt is decided by the team. This plan only defines
-what, where, and which options.
+**Principle:** Whether to adopt is decided by the team. This plan only defines what, where, and
+which options.
 
 ### B1. Team setup and shared workflow (top priority)
 
@@ -109,8 +108,7 @@ what, where, and which options.
 
 ## Part D. Where this plan lives
 
-- **This plan:** Stored in
-  `shared/prompt/documentation/plan-claude-code-guide-adoption.md`. Link from
-  guide.md or overview.md as "Claude Code guide adoption".
-- **Single source:** Rule text stays only in store.md; guide.md and this plan
-  hold only methods, procedures, and options (consistent with store.md §12).
+- **This plan:** Stored in `shared/prompt/documentation/plan-claude-code-guide-adoption.md`. Link
+  from guide.md or overview.md as "Claude Code guide adoption".
+- **Single source:** Rule text stays only in store.md; guide.md and this plan hold only methods,
+  procedures, and options (consistent with store.md §12).

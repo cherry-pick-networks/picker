@@ -1,27 +1,27 @@
 /** Concept storage (Postgres): scheme and concept tables. */
 
-import type { AllowlistData } from "#shared/contract/allowlistTypes.ts";
-import { getPg } from "#shared/infra/pgClient.ts";
-import { loadSql } from "#shared/infra/sqlLoader.ts";
+import type { AllowlistData } from '#shared/contract/allowlistTypes.ts';
+import { getPg } from '#shared/infra/pgClient.ts';
+import { loadSql } from '#shared/infra/sqlLoader.ts';
 import {
   COGNITIVE_LEVEL_SCHEMES,
   CONTENT_TYPE_SCHEMES,
   CONTEXT_SCHEMES,
   SUBJECT_SCHEMES,
-} from "./conceptSchemes.ts";
+} from './conceptSchemes.ts';
 
-const sqlDir = new URL("./sql/", import.meta.url);
+const sqlDir = new URL('./sql/', import.meta.url);
 const SQL_CHECK_IDS_IN_SCHEME = await loadSql(
   sqlDir,
-  "check_ids_in_scheme.sql",
+  'check_ids_in_scheme.sql',
 );
 const SQL_GET_EXISTING_CONCEPT_IDS = await loadSql(
   sqlDir,
-  "get_existing_concept_ids_by_schemes.sql",
+  'get_existing_concept_ids_by_schemes.sql',
 );
 const SQL_LIST_CONCEPT_CODES_BY_SCHEME = await loadSql(
   sqlDir,
-  "list_concept_codes_by_scheme.sql",
+  'list_concept_codes_by_scheme.sql',
 );
 
 export async function checkIdsInScheme(

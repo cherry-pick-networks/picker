@@ -1,7 +1,7 @@
 /** Schedule item and request schemas (Zod). */
 // function-length-ignore-file — schema helpers (store.md §P).
 
-import { z } from "zod";
+import { z } from 'zod';
 
 /** FSRS state in payload (stub; use real FSRS types when wired). */
 export const ScheduleItemPayloadSchema = z.object({
@@ -36,7 +36,7 @@ export function scheduleItemId(item: {
 export function parseScheduleItemId(
   id: string,
 ): { actor_id: string; source_id: string; unit_id: string } | null {
-  const parts = id.split(":");
+  const parts = id.split(':');
   if (parts.length !== 3) return null;
   return { actor_id: parts[0], source_id: parts[1], unit_id: parts[2] };
 }

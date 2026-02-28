@@ -2,9 +2,9 @@ import {
   ALLOWLIST_ID_COUNT_LIMIT,
   allowlistHas,
   type FacetName,
-} from "#shared/contract/allowlistTypes.ts";
-import { getAllowlistDataOrLoad } from "#shared/contract/allowlistData.ts";
-import type { GenerateWorksheetRequest } from "./contentSchema.ts";
+} from '#shared/contract/allowlistTypes.ts';
+import { getAllowlistDataOrLoad } from '#shared/contract/allowlistData.ts';
+import type { GenerateWorksheetRequest } from './contentSchema.ts';
 
 export function initWorksheetRequest(request: GenerateWorksheetRequest) {
   const conceptIds = request.concept_ids?.length ? request.concept_ids : [];
@@ -23,10 +23,10 @@ async function assertWorksheetConceptIds(conceptIds: string[]): Promise<void> {
   }
   const data = await getAllowlistDataOrLoad();
   const invalid = conceptIds.filter(
-    (id) => !allowlistHas(data, "concept" as FacetName, id),
+    (id) => !allowlistHas(data, 'concept' as FacetName, id),
   );
   if (invalid.length > 0) {
-    throw new Error(`Invalid concept IDs: ${invalid.join(", ")}`);
+    throw new Error(`Invalid concept IDs: ${invalid.join(', ')}`);
   }
 }
 

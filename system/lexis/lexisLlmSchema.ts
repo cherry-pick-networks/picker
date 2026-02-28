@@ -1,6 +1,6 @@
 /** LLM output schema for utterance parsing (source_id, days). */
 
-import { z } from "zod";
+import { z } from 'zod';
 
 export const LexisUtteranceLlmOutputSchema = z.object({
   source_id: z.string(),

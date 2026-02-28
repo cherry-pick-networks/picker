@@ -9,8 +9,8 @@
     "useTabs": false,
     "indentWidth": 2,
     "semiColons": true,
-    "singleQuote": false,
-    "lineWidth": 80
+    "singleQuote": true,
+    "lineWidth": 100
   },
   "tasks": {
     "dev": "./scripts/dev.sh",

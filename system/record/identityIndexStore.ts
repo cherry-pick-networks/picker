@@ -3,13 +3,13 @@
  * (identity-index only).
  */
 
-import { readTomlFile } from "./tomlService.ts";
+import { readTomlFile } from './tomlService.ts';
 
-const DATA_DIR = new URL("../../../shared/record/", import.meta.url).pathname;
+const DATA_DIR = new URL('../../../shared/record/', import.meta.url).pathname;
 const DEFAULT_IDENTITY_INDEX_PATH = `${DATA_DIR}reference/identity-index.toml`;
 
 function getIdentityIndexPathInternal(): string {
-  const envPath = Deno.env.get("IDENTITY_INDEX_PATH");
+  const envPath = Deno.env.get('IDENTITY_INDEX_PATH');
   return envPath?.trim() ? envPath.trim() : DEFAULT_IDENTITY_INDEX_PATH;
 }
 

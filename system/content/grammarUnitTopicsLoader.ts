@@ -1,9 +1,9 @@
 /** Load unit_id → topic_label from shared seed. Read-only. */
 
-import { parse } from "@std/toml";
+import { parse } from '@std/toml';
 
 const SEED_URL = new URL(
-  "../../../shared/infra/seed/grammar-unit-topics.toml",
+  '../../../shared/infra/seed/grammar-unit-topics.toml',
   import.meta.url,
 );
 

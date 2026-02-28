@@ -1,6 +1,6 @@
 /** Read Markdown documents with optional YAML front matter (attrs + body). */
 
-import { extract } from "@std/front-matter/yaml";
+import { extract } from '@std/front-matter/yaml';
 
 export interface DocumentWithFm {
   attrs: Record<string, unknown>;

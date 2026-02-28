@@ -3,12 +3,8 @@
  */
 // function-length-ignore-file — small adapter (store.md §P).
 
-import {
-  initState as fsrsInitState,
-  scheduleNew,
-  scheduleReview,
-} from "./fsrs.ts";
-import type { ScheduleItemPayload } from "./scheduleSchema.ts";
+import { initState as fsrsInitState, scheduleNew, scheduleReview } from './fsrs.ts';
+import type { ScheduleItemPayload } from './scheduleSchema.ts';
 
 function toState(
   p: ScheduleItemPayload,
@@ -44,14 +40,12 @@ export function applyReview(
   const at = new Date(reviewedAt);
   const state = toState(current);
   const isNew = (current.s ?? 0) <= 0 && !current.last_reviewed_at;
-  const { nextDue, state: nextState } = isNew
-    ? scheduleNew(g, at)
-    : scheduleReview(
-      state,
-      g,
-      new Date(current.last_reviewed_at ?? reviewedAt),
-      at,
-    );
+  const { nextDue, state: nextState } = isNew ? scheduleNew(g, at) : scheduleReview(
+    state,
+    g,
+    new Date(current.last_reviewed_at ?? reviewedAt),
+    at,
+  );
   const intervalDays = Math.round(
     (nextDue.getTime() - at.getTime()) / (24 * 60 * 60 * 1000),
   );

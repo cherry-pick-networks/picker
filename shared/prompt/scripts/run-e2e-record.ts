@@ -4,9 +4,9 @@
  * Or: deno task test:e2e-record
  */
 
-import { appendE2eRun } from "#system/audit/auditE2eRuns.ts";
+import { appendE2eRun } from '#system/audit/auditE2eRuns.ts';
 
-const E2E_TEST_FILE = "tests/system/mainE2e_test.ts";
+const E2E_TEST_FILE = 'tests/system/mainE2e_test.ts';
 
 // function-length-ignore
 function nowIso(): string {
@@ -20,12 +20,12 @@ async function main(): Promise<void> {
 
   const proc = new Deno.Command(Deno.execPath(), {
     args: [
-      "test",
-      "-A",
+      'test',
+      '-A',
       E2E_TEST_FILE,
     ],
-    stdout: "inherit",
-    stderr: "inherit",
+    stdout: 'inherit',
+    stderr: 'inherit',
   });
 
   const child = proc.spawn();
@@ -38,8 +38,8 @@ async function main(): Promise<void> {
     startedAt,
     finishedAt,
     summary: { passed: ok ? 1 : 0, failed: ok ? 0 : 1 },
-    suite: "e2e",
-    env: Deno.env.get("CI") ? "ci" : "local",
+    suite: 'e2e',
+    env: Deno.env.get('CI') ? 'ci' : 'local',
   });
 
   Deno.exit(status.code);

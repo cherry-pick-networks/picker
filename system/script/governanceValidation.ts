@@ -4,7 +4,7 @@
  * escapes (e.g. ..).
  */
 
-const ALLOWED_BASE = "shared/runtime/store";
+const ALLOWED_BASE = 'shared/runtime/store';
 
 export type GovernanceResult =
   | { allowed: true }
@@ -16,27 +16,27 @@ function resolveParts(
 ): string[] | null {
   const resolved: string[] = [...baseParts];
   for (const p of parts) {
-    if (p === "..") {
+    if (p === '..') {
       if (resolved.length <= baseParts.length) return null;
       resolved.pop();
-    } else if (p !== ".") resolved.push(p);
+    } else if (p !== '.') resolved.push(p);
   }
   return resolved;
 }
 
 function underBase(resolved: string, baseParts: string[]): boolean {
-  const basePrefix = baseParts.join("/");
-  return resolved === basePrefix || resolved.startsWith(basePrefix + "/");
+  const basePrefix = baseParts.join('/');
+  return resolved === basePrefix || resolved.startsWith(basePrefix + '/');
 }
 
 /** Normalize relative path and ensure it stays under base (no .. escape). */
 function resolveUnderBase(base: string, relative: string): string | null {
-  const parts = relative.split("/").filter(Boolean);
-  const baseParts = base.split("/").filter(Boolean);
+  const parts = relative.split('/').filter(Boolean);
+  const baseParts = base.split('/').filter(Boolean);
   const resolved = resolveParts(baseParts, parts);
   return resolved === null
     ? null
-    : (underBase(resolved.join("/"), baseParts) ? resolved.join("/") : null);
+    : (underBase(resolved.join('/'), baseParts) ? resolved.join('/') : null);
 }
 
 /**
@@ -44,16 +44,16 @@ function resolveUnderBase(base: string, relative: string): string | null {
  * Path is relative to repo root; must be under shared/runtime/store/.
  */
 export function verifyGovernance(
-  _operation: "read" | "write",
+  _operation: 'read' | 'write',
   path: string,
 ): GovernanceResult {
-  const normalized = path === "" || path === "."
+  const normalized = path === '' || path === '.'
     ? ALLOWED_BASE
     : resolveUnderBase(ALLOWED_BASE, path);
   if (normalized === null) {
     return {
       allowed: false,
-      reason: "Path must be under shared/runtime/store/",
+      reason: 'Path must be under shared/runtime/store/',
     };
   }
   return { allowed: true };

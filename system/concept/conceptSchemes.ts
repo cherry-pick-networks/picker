@@ -4,17 +4,17 @@
  * CI: deno task ontology-schemes-check.
  */
 
-export const SUBJECT_SCHEMES = ["isced", "iscedf"] as const;
-export const CONTENT_TYPE_SCHEMES = ["doctype"] as const;
-export const COGNITIVE_LEVEL_SCHEMES = ["bloom"] as const;
-export const CONTEXT_SCHEMES = ["cefr", "actfl"] as const;
+export const SUBJECT_SCHEMES = ['isced', 'iscedf'] as const;
+export const CONTENT_TYPE_SCHEMES = ['doctype'] as const;
+export const COGNITIVE_LEVEL_SCHEMES = ['bloom'] as const;
+export const CONTEXT_SCHEMES = ['cefr', 'actfl'] as const;
 
 export type FacetName =
-  | "subject"
-  | "contentType"
-  | "cognitiveLevel"
-  | "context"
-  | "concept";
+  | 'subject'
+  | 'contentType'
+  | 'cognitiveLevel'
+  | 'context'
+  | 'concept';
 
 const ALL_SCHEMES: readonly string[] = [
   ...SUBJECT_SCHEMES,
@@ -25,15 +25,15 @@ const ALL_SCHEMES: readonly string[] = [
 
 export function getAllowedSchemeIds(facet: FacetName): string[] {
   switch (facet) {
-    case "subject":
+    case 'subject':
       return [...SUBJECT_SCHEMES];
-    case "contentType":
+    case 'contentType':
       return [...CONTENT_TYPE_SCHEMES];
-    case "cognitiveLevel":
+    case 'cognitiveLevel':
       return [...COGNITIVE_LEVEL_SCHEMES];
-    case "context":
+    case 'context':
       return [...CONTEXT_SCHEMES];
-    case "concept":
+    case 'concept':
       return [...ALL_SCHEMES];
     default:
       return [];

@@ -3,7 +3,7 @@
  * Request/Response for POST /script/mutate; MutateOutputSchema for LLM parse.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
 export const MutateOptionsSchema = z.object({
   maxBlocks: z.number().int().positive().optional(),
@@ -32,7 +32,7 @@ export const MutateErrorResponseSchema = z.object({
 });
 export type MutateErrorResponse = z.infer<typeof MutateErrorResponseSchema>;
 
-export const MutateResponseSchema = z.discriminatedUnion("ok", [
+export const MutateResponseSchema = z.discriminatedUnion('ok', [
   MutateSuccessResponseSchema,
   MutateErrorResponseSchema,
 ]);

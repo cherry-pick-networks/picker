@@ -4,29 +4,29 @@
  * Usage: deno run -A shared/infra/seed/runSeedOntology.ts
  */
 
-import { parse } from "@std/toml";
-import { getPg } from "../pgClient.ts";
-import { loadSql } from "../sqlLoader.ts";
+import { parse } from '@std/toml';
+import { getPg } from '../pgClient.ts';
+import { loadSql } from '../sqlLoader.ts';
 
-const ontologyDir = new URL("./ontology/", import.meta.url);
-const SEED_SQL = new URL("seed.sql", ontologyDir);
+const ontologyDir = new URL('./ontology/', import.meta.url);
+const SEED_SQL = new URL('seed.sql', ontologyDir);
 const SQL_INSERT_CONCEPT_SCHEME = await loadSql(
   ontologyDir,
-  "insert_concept_scheme.sql",
+  'insert_concept_scheme.sql',
 );
-const SQL_INSERT_CONCEPT = await loadSql(ontologyDir, "insert_concept.sql");
+const SQL_INSERT_CONCEPT = await loadSql(ontologyDir, 'insert_concept.sql');
 const SEED_GLOBAL_STANDARDS = new URL(
-  "./ontology/global-standards.toml",
+  './ontology/global-standards.toml',
   import.meta.url,
 );
 
 function stripLeadingComments(block: string): string {
-  const noComments = block.replace(/^\s*(--[^\n]*\n)*/m, "");
+  const noComments = block.replace(/^\s*(--[^\n]*\n)*/m, '');
   return noComments.trim();
 }
 
 function splitStatements(sql: string): string[] {
-  const parts = sql.split(";").map((s) => stripLeadingComments(s.trim()));
+  const parts = sql.split(';').map((s) => stripLeadingComments(s.trim()));
   return parts.filter((s) => s.length > 0 && /^\s*INSERT\s/i.test(s));
 }
 
@@ -70,7 +70,7 @@ async function runSeed(): Promise<void> {
   const pg = await getPg();
   const sql = await Deno.readTextFile(SEED_SQL);
   for (const stmt of splitStatements(sql)) {
-    await pg.queryArray(stmt + ";");
+    await pg.queryArray(stmt + ';');
   }
   await runTomlSeed(pg, SEED_GLOBAL_STANDARDS);
   await pg.end();

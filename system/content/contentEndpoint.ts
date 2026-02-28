@@ -1,4 +1,4 @@
-import type { Context } from "hono";
+import type { Context } from 'hono';
 import {
   buildWorksheetPrompt,
   createItem,
@@ -10,13 +10,13 @@ import {
   getWorksheet as svcGetWorksheet,
   ItemPatchSchema,
   updateItem,
-} from "./contentService.ts";
-import type { ItemPatch } from "./contentSchema.ts";
+} from './contentService.ts';
+import type { ItemPatch } from './contentSchema.ts';
 
 export async function getItem(c: Context) {
-  const id = c.req.param("id");
+  const id = c.req.param('id');
   const item = await svcGetItem(id);
-  if (item == null) return c.json({ error: "Not found" }, 404);
+  if (item == null) return c.json({ error: 'Not found' }, 404);
   return c.json(item);
 }
 
@@ -28,7 +28,7 @@ async function doPostItem(
   try {
     return c.json(await createItem(data), 201);
   } catch {
-    return c.json({ error: "Invalid item" }, 400);
+    return c.json({ error: 'Invalid item' }, 400);
   }
 }
 
@@ -53,21 +53,21 @@ async function patchItemResponse(
   data: ItemPatch,
 ) {
   const item = await updateItem(id, data);
-  if (item == null) return c.json({ error: "Not found" }, 404);
+  if (item == null) return c.json({ error: 'Not found' }, 404);
   return c.json(item);
 }
 
 export async function patchItem(c: Context) {
-  const id = c.req.param("id");
+  const id = c.req.param('id');
   const r = await parsePatchBody(c);
-  if ("err" in r) return r.err;
+  if ('err' in r) return r.err;
   return patchItemResponse(c, id, r.data);
 }
 
 export async function getWorksheet(c: Context) {
-  const id = c.req.param("id");
+  const id = c.req.param('id');
   const worksheet = await svcGetWorksheet(id);
-  if (worksheet == null) return c.json({ error: "Not found" }, 404);
+  if (worksheet == null) return c.json({ error: 'Not found' }, 404);
   return c.json(worksheet);
 }
 
@@ -78,7 +78,7 @@ export async function postWorksheets(c: Context) {
   try {
     return c.json(await createWorksheet(parsed.data), 201);
   } catch {
-    return c.json({ error: "Create worksheet failed" }, 400);
+    return c.json({ error: 'Create worksheet failed' }, 400);
   }
 }
 
@@ -90,7 +90,7 @@ async function doPostWorksheetsBuildPrompt(
   try {
     return c.json(await buildWorksheetPrompt(data));
   } catch {
-    return c.json({ error: "Build prompt failed" }, 500);
+    return c.json({ error: 'Build prompt failed' }, 500);
   }
 }
 

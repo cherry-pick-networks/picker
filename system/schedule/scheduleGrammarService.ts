@@ -1,8 +1,8 @@
 /** Grammar sources: list (source_id, unit_id) from metadata.unit_ids. */
 
-import { listSources } from "#system/source/sourceService.ts";
+import { listSources } from '#system/source/sourceService.ts';
 
-const GRAMMAR_SOURCE_PREFIX = "book-grammar-";
+const GRAMMAR_SOURCE_PREFIX = 'book-grammar-';
 
 export async function listGrammarUnits(level?: string): Promise<
   { source_id: string; unit_id: string; level?: string }[]

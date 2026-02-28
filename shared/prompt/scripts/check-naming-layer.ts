@@ -5,12 +5,7 @@
  *   deno run --allow-read shared/prompt/scripts/check-naming-layer.ts
  * Or: deno task naming-layer-check
  */
-import {
-  LAYER_INFIX,
-  LAYER_SUFFIX,
-  LAYERS,
-  SKIP_DIRS,
-} from "./check-naming-layer-config.ts";
+import { LAYER_INFIX, LAYER_SUFFIX, LAYERS, SKIP_DIRS } from './check-naming-layer-config.ts';
 
 async function walkOneDir(
   root: string,
@@ -31,7 +26,7 @@ async function walkDirs(
   prefix: string,
   out: string[],
 ): Promise<void> {
-  const full = `${root}/${dir}`.replace(/\/+/g, "/");
+  const full = `${root}/${dir}`.replace(/\/+/g, '/');
   let entries: Deno.DirEntry[];
   try {
     entries = Array.from(await Deno.readDir(full));
@@ -56,7 +51,7 @@ function pushInfixSuffixErrors(
 }
 
 function validateOnePath(rel: string, errors: string[]): void {
-  const parts = rel.split("/").filter(Boolean);
+  const parts = rel.split('/').filter(Boolean);
   if (parts.length === 0) return;
   if (!LAYERS.includes(parts[0] as (typeof LAYERS)[number])) return;
   pushInfixSuffixErrors(rel, parts[0], parts, errors);
@@ -71,19 +66,19 @@ function collectPathErrors(allDirs: string[]): string[] {
 async function runCheck(): Promise<{ errors: string[] }> {
   const root = Deno.cwd();
   const allDirs: string[] = [];
-  await walkDirs(root, "", "", allDirs);
+  await walkDirs(root, '', '', allDirs);
   return { errors: collectPathErrors(allDirs) };
 }
 
 async function main(): Promise<void> {
   const { errors } = await runCheck();
   if (errors.length > 0) {
-    console.error("Layer naming check failed (store.md §E):");
-    for (const e of errors) console.error("  ", e);
+    console.error('Layer naming check failed (store.md §E):');
+    for (const e of errors) console.error('  ', e);
     Deno.exit(1);
   }
   console.log(
-    "Naming-layer check passed: layer-prefixed paths use allowed infix/suffix.",
+    'Naming-layer check passed: layer-prefixed paths use allowed infix/suffix.',
   );
 }
 

@@ -1,9 +1,9 @@
 /** Weekly plan: new_units from annual (week 1–52), review_units in range. */
 
-import type { ScheduleItem } from "./scheduleSchema.ts";
-import { getAnnualCurriculum } from "./scheduleAnnualService.ts";
-import { rowToItem } from "./scheduleMapperService.ts";
-import * as scheduleStore from "./scheduleStore.ts";
+import type { ScheduleItem } from './scheduleSchema.ts';
+import { getAnnualCurriculum } from './scheduleAnnualService.ts';
+import { rowToItem } from './scheduleMapperService.ts';
+import * as scheduleStore from './scheduleStore.ts';
 
 const SLOTS_PER_WEEK = 3;
 

@@ -3,10 +3,10 @@
  * Used by system/lexis for utterance matching; no hardcoded book names.
  */
 
-import { parse } from "@std/toml";
+import { parse } from '@std/toml';
 
 const LEXIS_SOURCES_TOML = new URL(
-  "./seed/lexis/lexis-sources.toml",
+  './seed/lexis/lexis-sources.toml',
   import.meta.url,
 );
 
@@ -33,7 +33,7 @@ function buildPairsForMeta(
 ): [string, string][] {
   const out: [string, string][] = title ? [[title, sourceId]] : [];
   for (const kw of kws) {
-    if (typeof kw === "string" && kw) out.push([kw, sourceId]);
+    if (typeof kw === 'string' && kw) out.push([kw, sourceId]);
   }
   out.push([sourceId, sourceId]);
   return out;
@@ -45,7 +45,7 @@ function getPairsForEntry(entry: SourceEntry): [string, string][] {
   try {
     const payload = JSON.parse(json) as { metadata?: Meta };
     const meta = payload.metadata ?? {};
-    const title = typeof meta.title === "string" ? meta.title : "";
+    const title = typeof meta.title === 'string' ? meta.title : '';
     const kws = Array.isArray(meta.keywords) ? meta.keywords : [];
     return buildPairsForMeta(entry.source_id, title, kws);
   } catch {

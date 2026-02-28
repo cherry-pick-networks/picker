@@ -3,7 +3,7 @@
  * Used by check-type-policy.ts.
  */
 
-import { DENO_JSON, DENO_JSONC, TSCONFIG } from "./check-type-policy-lib.ts";
+import { DENO_JSON, DENO_JSONC, TSCONFIG } from './check-type-policy-lib.ts';
 
 async function readDenoJsonContent(
   root: string,
@@ -27,7 +27,7 @@ function validateTasks(data: { tasks?: Record<string, string> }): string[] {
   const errors: string[] = [];
   const tasks = data.tasks ?? {};
   for (const [name, script] of Object.entries(tasks)) {
-    if (typeof script === "string" && script.includes("--no-check")) {
+    if (typeof script === 'string' && script.includes('--no-check')) {
       errors.push(`deno.json task "${name}" must not use --no-check`);
     }
   }
@@ -50,7 +50,7 @@ function checkOneOpts(
   opts: Record<string, unknown> | undefined,
   errors: string[],
 ): void {
-  if (!opts || typeof opts !== "object") return;
+  if (!opts || typeof opts !== 'object') return;
   if (opts.skipLibCheck === true) {
     errors.push(`${path}: compilerOptions.skipLibCheck must not be true`);
   }

@@ -1,7 +1,7 @@
 /** Annual curriculum: 52 weeks × 3 slots; week number (1–52), not weekday. */
 
-import * as curriculumStore from "./curriculumStore.ts";
-import { listGrammarUnits } from "./scheduleGrammarService.ts";
+import * as curriculumStore from './curriculumStore.ts';
+import { listGrammarUnits } from './scheduleGrammarService.ts';
 
 const SLOTS_PER_WEEK = 3;
 

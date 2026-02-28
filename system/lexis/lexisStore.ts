@@ -1,13 +1,13 @@
 /** Lexis entry storage (Postgres). */
 
-import { getPg } from "#shared/infra/pgClient.ts";
-import { loadSql } from "#shared/infra/sqlLoader.ts";
-import type { LexisEntry } from "./lexisSchema.ts";
+import { getPg } from '#shared/infra/pgClient.ts';
+import { loadSql } from '#shared/infra/sqlLoader.ts';
+import type { LexisEntry } from './lexisSchema.ts';
 
-const sqlDir = new URL("./sql/", import.meta.url);
+const sqlDir = new URL('./sql/', import.meta.url);
 const SQL_LIST_ENTRIES = await loadSql(
   sqlDir,
-  "list_entries_by_source_and_days.sql",
+  'list_entries_by_source_and_days.sql',
 );
 
 export interface LexisEntryRow {

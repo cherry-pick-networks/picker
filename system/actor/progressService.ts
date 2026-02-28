@@ -1,10 +1,6 @@
-import { z } from "zod";
-import * as store from "./profileStore.ts";
-import {
-  type Progress,
-  ProgressPatchSchema,
-  ProgressSchema,
-} from "./profileSchema.ts";
+import { z } from 'zod';
+import * as store from './profileStore.ts';
+import { type Progress, ProgressPatchSchema, ProgressSchema } from './profileSchema.ts';
 
 export type { Progress };
 export { ProgressPatchSchema, ProgressSchema };
@@ -18,7 +14,7 @@ export async function getProgress(id: string): Promise<Progress | null> {
 
 function parseProgress(raw: Record<string, unknown>): Progress {
   const parsed = ProgressSchema.safeParse(raw);
-  if (!parsed.success) throw new Error("Invalid progress");
+  if (!parsed.success) throw new Error('Invalid progress');
   return parsed.data;
 }
 

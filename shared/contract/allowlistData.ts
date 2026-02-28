@@ -2,7 +2,7 @@
  * Allowlist data holder. Bootstrap sets loader; Source/Mirror use data only.
  */
 
-import type { AllowlistData } from "./allowlistTypes.ts";
+import type { AllowlistData } from './allowlistTypes.ts';
 
 let data: AllowlistData | null = null;
 let loader: (() => Promise<AllowlistData>) | null = null;
@@ -23,7 +23,7 @@ export function setAllowlistLoader(fn: () => Promise<AllowlistData>): void {
 export async function getAllowlistDataOrLoad(): Promise<AllowlistData> {
   if (data != null) return data;
   if (loader == null) {
-    throw new Error("Allowlist loader not registered");
+    throw new Error('Allowlist loader not registered');
   }
   if (loadPromise == null) loadPromise = loader();
   data = await loadPromise;

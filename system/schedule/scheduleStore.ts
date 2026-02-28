@@ -1,23 +1,21 @@
 /** Schedule item storage (Postgres). */
 // function-length-ignore-file — store CRUD (store.md §P).
 
-import { getPg } from "#shared/infra/pgClient.ts";
-import { loadSql } from "#shared/infra/sqlLoader.ts";
-import type { ScheduleItemPayload } from "./scheduleSchema.ts";
+import { getPg } from '#shared/infra/pgClient.ts';
+import { loadSql } from '#shared/infra/sqlLoader.ts';
+import type { ScheduleItemPayload } from './scheduleSchema.ts';
 
-const sqlDir = new URL("./sql/", import.meta.url);
-const SQL_GET = await loadSql(sqlDir, "get_schedule_item.sql");
-const SQL_SET = await loadSql(sqlDir, "set_schedule_item.sql");
+const sqlDir = new URL('./sql/', import.meta.url);
+const SQL_GET = await loadSql(sqlDir, 'get_schedule_item.sql');
+const SQL_SET = await loadSql(sqlDir, 'set_schedule_item.sql');
 const SQL_LIST_BY_ACTOR = await loadSql(
   sqlDir,
-  "list_schedule_items_by_actor.sql",
+  'list_schedule_items_by_actor.sql',
 );
-const SQL_LIST_DUE = await loadSql(sqlDir, "list_due.sql");
+const SQL_LIST_DUE = await loadSql(sqlDir, 'list_due.sql');
 
 function parsePayload(raw: unknown): ScheduleItemPayload {
-  return (typeof raw === "string"
-    ? JSON.parse(raw)
-    : raw) as ScheduleItemPayload;
+  return (typeof raw === 'string' ? JSON.parse(raw) : raw) as ScheduleItemPayload;
 }
 
 export interface ScheduleItemRow {

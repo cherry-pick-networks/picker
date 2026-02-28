@@ -1,11 +1,11 @@
 /** Schedule service: CRUD, due list, review. */
 // function-length-ignore-file — schedule service orchestration (store.md §P).
 
-import { applyReview, initState } from "./fsrsAdapter.ts";
-import type { ScheduleItem } from "./scheduleSchema.ts";
-import { parseScheduleItemId, scheduleItemId } from "./scheduleSchema.ts";
-import { rowToItem } from "./scheduleMapperService.ts";
-import * as scheduleStore from "./scheduleStore.ts";
+import { applyReview, initState } from './fsrsAdapter.ts';
+import type { ScheduleItem } from './scheduleSchema.ts';
+import { parseScheduleItemId, scheduleItemId } from './scheduleSchema.ts';
+import { rowToItem } from './scheduleMapperService.ts';
+import * as scheduleStore from './scheduleStore.ts';
 
 export { rowToItem };
 

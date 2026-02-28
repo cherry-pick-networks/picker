@@ -2,10 +2,10 @@
  * POST /script/mutate: body validated with mutateSchema, then mutateService.
  */
 
-import type { Context } from "hono";
-import { mutateScript } from "#system/script/mutateService.ts";
-import type { MutateResponse } from "#system/script/mutateSchema.ts";
-import { MutateRequestSchema } from "#system/script/mutateSchema.ts";
+import type { Context } from 'hono';
+import { mutateScript } from '#system/script/mutateService.ts';
+import type { MutateResponse } from '#system/script/mutateSchema.ts';
+import { MutateRequestSchema } from '#system/script/mutateSchema.ts';
 
 async function parseMutateBody(c: Context) {
   const body = await c.req.json().catch(() => ({}));

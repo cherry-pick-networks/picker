@@ -8,28 +8,26 @@ description: |
 
 # Feature implementation
 
-Apply store.md **§Q, §P, §B, §S, §T, §N**. Full text in shared/prompt/store.md
-Part B only; this skill gives a short checklist.
+Apply store.md **§Q, §P, §B, §S, §T, §N**. Full text in shared/prompt/store.md Part B only; this
+skill gives a short checklist.
 
-**Before editing**: Run `deno task rules:summary -- feature` (or use
-/rules-summary feature) and apply the listed § for this session. Keep the output
-in context.
+**Before editing**: Run `deno task rules:summary -- feature` (or use /rules-summary feature) and
+apply the listed § for this session. Keep the output in context.
 
 ## §Q — Phase-gated cycle
 
-1. **Phase 1**: Output only a short requirement/constraint summary. Stop; ask
-   "Do you approve this requirement summary?" Do not proceed until approval.
-2. **Phase 2**: After approval, propose only interfaces/types for the tree.
-   Stop; ask "Do you approve this design?" Do not implement until approval.
+1. **Phase 1**: Output only a short requirement/constraint summary. Stop; ask "Do you approve this
+   requirement summary?" Do not proceed until approval.
+2. **Phase 2**: After approval, propose only interfaces/types for the tree. Stop; ask "Do you
+   approve this design?" Do not implement until approval.
 3. **Phase 3**: Implement per approved design.
 4. **Phase 4**: Add or update tests, then commit per §B.
 
 ## §P — Format
 
-- Function body: 2–4 statements (block body); run `deno fmt`, then
-  `deno task format-check`.
+- Function body: 2–4 statements (block body); run `deno fmt`, then `deno task format-check`.
 - File: ≤100 effective lines; split when longer.
-- Line length: ≤80 characters.
+- Line length: ≤100 characters.
 
 ## §B — Commit boundary
 

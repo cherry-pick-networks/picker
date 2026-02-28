@@ -4,13 +4,10 @@
  * llmClient. MAB·DAG remain local (boundary § Mutation boundary).
  */
 
-import { verifyGovernance } from "#system/script/governanceValidation.ts";
-import { mutateViaLlm } from "#system/script/scriptLlmClient.ts";
-import type {
-  MutateRequest,
-  MutateResponse,
-} from "#system/script/mutateSchema.ts";
-import { readScript, writeScript } from "#system/script/scriptsStore.ts";
+import { verifyGovernance } from '#system/script/governanceValidation.ts';
+import { mutateViaLlm } from '#system/script/scriptLlmClient.ts';
+import type { MutateRequest, MutateResponse } from '#system/script/mutateSchema.ts';
+import { readScript, writeScript } from '#system/script/scriptsStore.ts';
 
 const LINES_PER_BLOCK_MIN = 2;
 const LINES_PER_BLOCK_MAX = 4;
@@ -31,7 +28,7 @@ function sliceBlocks(
       Math.max(LINES_PER_BLOCK_MIN, lines.length - i),
     );
     const slice = lines.slice(i, i + size);
-    blocks.push({ snippet: slice.join("\n") });
+    blocks.push({ snippet: slice.join('\n') });
     i += size;
     if (maxBlocks != null && blocks.length >= maxBlocks) break;
   }
@@ -60,7 +57,7 @@ function processBlocks(
   intent: string | undefined,
   maxBlocks: number | undefined,
 ): Promise<{ content: string; replacements: number }> {
-  const lines = content.split("\n");
+  const lines = content.split('\n');
   const blocks = sliceBlocks(lines, maxBlocks);
   return runBlockLoop(content, blocks, intent);
 }
@@ -70,7 +67,7 @@ type ReadOk = { ready: true; content: string };
 async function ensureCanRead(
   path: string,
 ): Promise<MutateResponse | ReadOk> {
-  const gov = verifyGovernance("read", path);
+  const gov = verifyGovernance('read', path);
   if (!gov.allowed) return toErrorResponse(403, gov.reason);
   const readResult = await readScript(path);
   return readResult.ok
@@ -104,6 +101,6 @@ export async function mutateScript(
   req: MutateRequest,
 ): Promise<MutateResponse> {
   const read = await ensureCanRead(req.path);
-  if (!("ready" in read)) return read;
+  if (!('ready' in read)) return read;
   return runMutateAndWrite(req, read.content);
 }

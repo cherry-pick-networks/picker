@@ -3,17 +3,17 @@
  * PG_* env. Usage: deno run -A shared/infra/applySchema.ts
  */
 
-import { getPg } from "./pgClient.ts";
+import { getPg } from './pgClient.ts';
 
-const SCHEMA_DIR = new URL("./schema/", import.meta.url);
+const SCHEMA_DIR = new URL('./schema/', import.meta.url);
 
 function stripLeadingComments(block: string): string {
-  const noComments = block.replace(/^\s*(--[^\n]*\n)*/m, "");
+  const noComments = block.replace(/^\s*(--[^\n]*\n)*/m, '');
   return noComments.trim();
 }
 
 function splitStatements(sql: string): string[] {
-  const parts = sql.split(";").map((s) => s.trim());
+  const parts = sql.split(';').map((s) => s.trim());
   return parts
     .map(stripLeadingComments)
     .filter((s) => s.length > 0 && /^\s*CREATE\s/i.test(s));
@@ -22,20 +22,20 @@ function splitStatements(sql: string): string[] {
 async function applySchema(): Promise<void> {
   const pg = await getPg();
   const files = [
-    "01_actor.sql",
-    "02_source.sql",
-    "03_kv.sql",
-    "04_content.sql",
-    "06_ontology.sql",
-    "07_schedule.sql",
-    "08_curriculum.sql",
-    "09_lexis-entry.sql",
+    '01_actor.sql',
+    '02_source.sql',
+    '03_kv.sql',
+    '04_content.sql',
+    '06_ontology.sql',
+    '07_schedule.sql',
+    '08_curriculum.sql',
+    '09_lexis-entry.sql',
   ];
   for (const name of files) {
     const url = new URL(name, SCHEMA_DIR);
     const sql = await Deno.readTextFile(url);
     for (const stmt of splitStatements(sql)) {
-      await pg.queryArray(stmt + ";");
+      await pg.queryArray(stmt + ';');
     }
   }
   await pg.end();

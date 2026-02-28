@@ -2,17 +2,14 @@
  * Identity migration runner (legacy .old/identity -> index only; no store).
  */
 
-import { generate as uuidV7 } from "@std/uuid/v7";
-import type {
-  IdentityIndexEntry,
-  LegacyIdentityIndex,
-} from "#system/record/identityIndexStore.ts";
+import { generate as uuidV7 } from '@std/uuid/v7';
+import type { IdentityIndexEntry, LegacyIdentityIndex } from '#system/record/identityIndexStore.ts';
 import {
   deriveIdentityName,
   isMeaninglessFilename,
   walkFiles,
-} from "./migrate-old-to-data-helpers.ts";
-import { readAndParse } from "./migrate-old-to-data-parse.ts";
+} from './migrate-old-to-data-helpers.ts';
+import { readAndParse } from './migrate-old-to-data-parse.ts';
 
 function buildEntry(
   rel: string,
@@ -20,7 +17,7 @@ function buildEntry(
   kind: string,
   now: string,
 ): IdentityIndexEntry {
-  const basename = rel.split("/").pop() ?? "";
+  const basename = rel.split('/').pop() ?? '';
   const entry: IdentityIndexEntry = { kind, oldPath: rel, createdAt: now };
   if (isMeaninglessFilename(basename)) {
     const name = deriveIdentityName(rel, parsed, kind);
@@ -29,9 +26,9 @@ function buildEntry(
   return entry;
 }
 
-function kindFromRel(rel: string): "student-profile" | "identity" {
-  const isStudent = rel.endsWith("student-profile.json");
-  return isStudent ? "student-profile" : "identity";
+function kindFromRel(rel: string): 'student-profile' | 'identity' {
+  const isStudent = rel.endsWith('student-profile.json');
+  return isStudent ? 'student-profile' : 'identity';
 }
 
 async function processOneFile(
@@ -54,7 +51,7 @@ export async function runIdentityMigration(
   let identityFiles: string[] = [];
   try {
     await Deno.stat(`${oldDir}identity/`);
-    identityFiles = await walkFiles(`${oldDir}identity/`, "identity/", ".json");
+    identityFiles = await walkFiles(`${oldDir}identity/`, 'identity/', '.json');
   } catch {
     // skip if no identity dir
   }

@@ -4,9 +4,9 @@
  */
 // function-length-ignore-file
 
-import { stringify } from "@std/toml/stringify";
+import { stringify } from '@std/toml/stringify';
 
-const ROOT = new URL("../../../", import.meta.url).pathname;
+const ROOT = new URL('../../../', import.meta.url).pathname;
 const REF_DIR = `${ROOT}shared/record/reference/`;
 const AUDIT_DIR = `${ROOT}system/audit/`;
 const E2E_RUNS_PATH = `${AUDIT_DIR}e2e-runs.toml`;
@@ -31,7 +31,7 @@ async function migrateIdentityIndex(): Promise<void> {
   const tomlPath = `${REF_DIR}identity-index.toml`;
   await writeToml(tomlPath, obj);
   await Deno.remove(jsonPath);
-  console.log("Migrated identity-index.json -> .toml");
+  console.log('Migrated identity-index.json -> .toml');
 }
 
 async function migrateE2eRuns(): Promise<void> {
@@ -40,13 +40,13 @@ async function migrateE2eRuns(): Promise<void> {
   if (obj === null) return;
   await writeToml(E2E_RUNS_PATH, obj);
   await Deno.remove(jsonPath);
-  console.log("Migrated e2e-runs.json -> .toml");
+  console.log('Migrated e2e-runs.json -> .toml');
 }
 
 async function main(): Promise<void> {
   await migrateIdentityIndex();
   await migrateE2eRuns();
-  console.log("Done.");
+  console.log('Done.');
 }
 
 main();

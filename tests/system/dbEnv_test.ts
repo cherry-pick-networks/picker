@@ -4,16 +4,16 @@
  * DB-dependent tests. Other test files import from this file.
  */
 export function hasDbEnv(): boolean {
-  const url = Deno.env.get("DATABASE_URL");
-  const pw = Deno.env.get("PG_PASSWORD");
+  const url = Deno.env.get('DATABASE_URL');
+  const pw = Deno.env.get('PG_PASSWORD');
   return !!(url ?? pw);
 }
 
-Deno.test("hasDbEnv true when DATABASE_URL set", () => {
-  Deno.env.set("DATABASE_URL", "postgres://x");
+Deno.test('hasDbEnv true when DATABASE_URL set', () => {
+  Deno.env.set('DATABASE_URL', 'postgres://x');
   try {
-    if (!hasDbEnv()) throw new Error("expected true");
+    if (!hasDbEnv()) throw new Error('expected true');
   } finally {
-    Deno.env.delete("DATABASE_URL");
+    Deno.env.delete('DATABASE_URL');
   }
 });

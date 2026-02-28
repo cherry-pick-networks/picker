@@ -3,10 +3,10 @@
  * Source/Mirror use these types and injected data only.
  */
 
-export const SUBJECT_SCHEMES = ["isced", "iscedf"] as const;
-export const CONTENT_TYPE_SCHEMES = ["doctype"] as const;
-export const COGNITIVE_LEVEL_SCHEMES = ["bloom"] as const;
-export const CONTEXT_SCHEMES = ["cefr", "actfl"] as const;
+export const SUBJECT_SCHEMES = ['isced', 'iscedf'] as const;
+export const CONTENT_TYPE_SCHEMES = ['doctype'] as const;
+export const COGNITIVE_LEVEL_SCHEMES = ['bloom'] as const;
+export const CONTEXT_SCHEMES = ['cefr', 'actfl'] as const;
 
 export type SubjectSchemeId = (typeof SUBJECT_SCHEMES)[number];
 export type ContentTypeSchemeId = (typeof CONTENT_TYPE_SCHEMES)[number];
@@ -14,11 +14,11 @@ export type CognitiveLevelSchemeId = (typeof COGNITIVE_LEVEL_SCHEMES)[number];
 export type ContextSchemeId = (typeof CONTEXT_SCHEMES)[number];
 
 export type FacetName =
-  | "subject"
-  | "contentType"
-  | "cognitiveLevel"
-  | "context"
-  | "concept";
+  | 'subject'
+  | 'contentType'
+  | 'cognitiveLevel'
+  | 'context'
+  | 'concept';
 
 /** Per-facet set of allowed concept IDs (e.g. from DB/seed). */
 export type AllowlistData = Partial<Record<FacetName, Set<string>>>;

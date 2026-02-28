@@ -1,4 +1,4 @@
-import { ProfilePatchSchema, ProgressPatchSchema } from "./profileService.ts";
+import { ProfilePatchSchema, ProgressPatchSchema } from './profileService.ts';
 
 export type PatchProfileInput = {
   id: string;

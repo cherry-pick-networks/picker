@@ -4,22 +4,22 @@
  * Usage: deno run -A system/schedule/seedCurriculum.ts
  */
 
-import { getPg } from "#shared/infra/pgClient.ts";
-import { loadSql } from "#shared/infra/sqlLoader.ts";
-import { listGrammarUnits } from "./scheduleGrammarService.ts";
+import { getPg } from '#shared/infra/pgClient.ts';
+import { loadSql } from '#shared/infra/sqlLoader.ts';
+import { listGrammarUnits } from './scheduleGrammarService.ts';
 
-const sqlDir = new URL("./sql/", import.meta.url);
+const sqlDir = new URL('./sql/', import.meta.url);
 const SQL_UPSERT_CURRICULUM_SLOT = await loadSql(
   sqlDir,
-  "upsert_curriculum_slot.sql",
+  'upsert_curriculum_slot.sql',
 );
 
 const CURRICULUM_JSON = new URL(
-  "../../../shared/infra/seed/curriculum-52weeks.json",
+  '../../../shared/infra/seed/curriculum-52weeks.json',
   import.meta.url,
 );
 
-const LEVELS = ["basic", "intermediate", "advanced"] as const;
+const LEVELS = ['basic', 'intermediate', 'advanced'] as const;
 
 interface CurriculumJson {
   basic?: { weeks: number[][] };

@@ -1,9 +1,6 @@
-import type { Context } from "hono";
-import { z } from "zod";
-import {
-  getPatchProfileInput,
-  getPatchProgressInput,
-} from "./profilePatchInputParser.ts";
+import type { Context } from 'hono';
+import { z } from 'zod';
+import { getPatchProfileInput, getPatchProgressInput } from './profilePatchInputParser.ts';
 import {
   createProfile,
   getProfile as svcGetProfile,
@@ -13,12 +10,12 @@ import {
   ProgressPatchSchema,
   updateProfile,
   updateProgress,
-} from "./profileService.ts";
+} from './profileService.ts';
 
 export async function getProfile(c: Context) {
-  const id = c.req.param("id");
+  const id = c.req.param('id');
   const profile = await svcGetProfile(id);
-  if (profile == null) return c.json({ error: "Not found" }, 404);
+  if (profile == null) return c.json({ error: 'Not found' }, 404);
   return c.json(profile);
 }
 
@@ -30,7 +27,7 @@ async function doPostProfile(
   try {
     return c.json(await createProfile(data), 201);
   } catch {
-    return c.json({ error: "Invalid profile" }, 400);
+    return c.json({ error: 'Invalid profile' }, 400);
   }
 }
 
@@ -47,7 +44,7 @@ async function patchProfileApply(
   data: z.infer<typeof ProfilePatchSchema>,
 ): Promise<Response> {
   const profile = await updateProfile(id, data);
-  if (profile == null) return c.json({ error: "Not found" }, 404);
+  if (profile == null) return c.json({ error: 'Not found' }, 404);
   return c.json(profile);
 }
 
@@ -58,7 +55,7 @@ async function doPatchProfile(
   data: z.infer<typeof ProfilePatchSchema>,
 ) {
   return await patchProfileApply(c, id, data).catch(() =>
-    c.json({ error: "Invalid profile" }, 400)
+    c.json({ error: 'Invalid profile' }, 400)
   );
 }
 
@@ -72,9 +69,9 @@ export async function patchProfile(c: Context) {
 }
 
 export async function getProgress(c: Context) {
-  const id = c.req.param("id");
+  const id = c.req.param('id');
   const progress = await svcGetProgress(id);
-  if (progress == null) return c.json({ error: "Not found" }, 404);
+  if (progress == null) return c.json({ error: 'Not found' }, 404);
   return c.json(progress);
 }
 
@@ -94,7 +91,7 @@ async function doPatchProgress(
   data: z.infer<typeof ProgressPatchSchema>,
 ) {
   return await patchProgressApply(c, id, data).catch(() =>
-    c.json({ error: "Invalid progress" }, 400)
+    c.json({ error: 'Invalid progress' }, 400)
   );
 }
 

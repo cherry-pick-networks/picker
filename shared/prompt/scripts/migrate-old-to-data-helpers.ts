@@ -7,19 +7,19 @@ export async function ensureDir(path: string): Promise<void> {
 }
 
 const TYPE_PREFIXES: [string, string][] = [
-  ["knowledge/curriculum/", "curriculum"],
-  ["knowledge/books/", "books"],
-  ["knowledge/plans/", "plans"],
-  ["knowledge/", "knowledge"],
-  ["content/", "content"],
-  ["scout/", "scout"],
+  ['knowledge/curriculum/', 'curriculum'],
+  ['knowledge/books/', 'books'],
+  ['knowledge/plans/', 'plans'],
+  ['knowledge/', 'knowledge'],
+  ['content/', 'content'],
+  ['scout/', 'scout'],
 ];
 
 export function deriveType(relPath: string): string {
   for (const [prefix, type] of TYPE_PREFIXES) {
     if (relPath.startsWith(prefix)) return type;
   }
-  return "extracted";
+  return 'extracted';
 }
 
 /** True when basename is only digits + .json (e.g. 1.json, 12.json). */
@@ -29,7 +29,7 @@ export function isMeaninglessFilename(basename: string): boolean {
 }
 
 function toRecord(obj: unknown): Record<string, unknown> | null {
-  const ok = obj && typeof obj === "object";
+  const ok = obj && typeof obj === 'object';
   return ok ? (obj as Record<string, unknown>) : null;
 }
 
@@ -38,9 +38,9 @@ function gradeName(
   obj: Record<string, unknown>,
 ): string | undefined {
   const g = obj.grade;
-  if (typeof g !== "number") return undefined;
-  if (type === "plans") return `plan-grade-${g}`;
-  return type === "curriculum" ? `curriculum-grade-${g}` : undefined;
+  if (typeof g !== 'number') return undefined;
+  if (type === 'plans') return `plan-grade-${g}`;
+  return type === 'curriculum' ? `curriculum-grade-${g}` : undefined;
 }
 
 function firstStringKey(
@@ -49,13 +49,13 @@ function firstStringKey(
 ): string | undefined {
   for (const key of keys) {
     const v = obj[key];
-    if (typeof v === "string" && v.length > 0) return v;
+    if (typeof v === 'string' && v.length > 0) return v;
   }
   return undefined;
 }
 
 function baseFromPath(relPath: string): string | undefined {
-  const base = relPath.replace(/\.json$/i, "").split("/").pop() ?? "";
+  const base = relPath.replace(/\.json$/i, '').split('/').pop() ?? '';
   return base && !/^\d+$/.test(base) ? base : undefined;
 }
 
@@ -68,7 +68,7 @@ export function deriveExtractedName(
   if (!obj) return undefined;
   return (
     gradeName(type, obj) ??
-      firstStringKey(obj, ["title", "name", "id"]) ??
+      firstStringKey(obj, ['title', 'name', 'id']) ??
       baseFromPath(relPath)
   );
 }
@@ -78,20 +78,20 @@ export function deriveIdentityName(
   parsed: unknown,
   kind: string,
 ): string | undefined {
-  const basename = relPath.split("/").pop() ?? "";
+  const basename = relPath.split('/').pop() ?? '';
   if (!isMeaninglessFilename(basename)) return undefined;
   const obj = toRecord(parsed);
-  return obj ? (firstStringKey(obj, ["name", "title", "id"]) ?? kind) : kind;
+  return obj ? (firstStringKey(obj, ['name', 'title', 'id']) ?? kind) : kind;
 }
 
 async function walkOne(
   dir: string,
   prefix: string,
-  ext: ".json",
+  ext: '.json',
   e: Deno.DirEntry,
 ): Promise<string[]> {
   const rel = `${prefix}${e.name}`;
-  if (e.isFile && rel.toLowerCase().endsWith(".json")) return [rel];
+  if (e.isFile && rel.toLowerCase().endsWith('.json')) return [rel];
   if (!e.isDirectory) return [];
   return await walkFiles(`${dir}${e.name}/`, `${rel}/`, ext);
 }
@@ -99,7 +99,7 @@ async function walkOne(
 export async function walkFiles(
   dir: string,
   prefix: string,
-  ext: ".json",
+  ext: '.json',
 ): Promise<string[]> {
   const out: string[] = [];
   for await (const e of Deno.readDir(dir)) {

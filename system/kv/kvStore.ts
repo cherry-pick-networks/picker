@@ -1,22 +1,22 @@
 /** Generic key-value storage (Postgres). Logical key only (e.g. "foo"). */
 
-import { getPg } from "#shared/infra/pgClient.ts";
-import { loadSql } from "#shared/infra/sqlLoader.ts";
+import { getPg } from '#shared/infra/pgClient.ts';
+import { loadSql } from '#shared/infra/sqlLoader.ts';
 
-const sqlDir = new URL("./sql/", import.meta.url);
+const sqlDir = new URL('./sql/', import.meta.url);
 const SQL_LIST_KEYS_BY_PREFIX = await loadSql(
   sqlDir,
-  "list_keys_by_prefix.sql",
+  'list_keys_by_prefix.sql',
 );
-const SQL_LIST_KEYS = await loadSql(sqlDir, "list_keys.sql");
-const SQL_GET_KEY = await loadSql(sqlDir, "get_key.sql");
-const SQL_SET_KEY = await loadSql(sqlDir, "set_key.sql");
-const SQL_DELETE_KEY = await loadSql(sqlDir, "delete_key.sql");
+const SQL_LIST_KEYS = await loadSql(sqlDir, 'list_keys.sql');
+const SQL_GET_KEY = await loadSql(sqlDir, 'get_key.sql');
+const SQL_SET_KEY = await loadSql(sqlDir, 'set_key.sql');
+const SQL_DELETE_KEY = await loadSql(sqlDir, 'delete_key.sql');
 
 export async function listKeys(prefix?: string): Promise<string[]> {
   const pg = await getPg();
   const [sql, args] = prefix
-    ? [SQL_LIST_KEYS_BY_PREFIX, [prefix + "%"] as string[]]
+    ? [SQL_LIST_KEYS_BY_PREFIX, [prefix + '%'] as string[]]
     : [SQL_LIST_KEYS, [] as string[]];
   const r = await pg.queryObject<{ logical_key: string }>(sql, args);
   return r.rows.map((row) => row.logical_key);

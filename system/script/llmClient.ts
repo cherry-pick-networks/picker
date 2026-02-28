@@ -3,12 +3,9 @@
  * Structured output shape (MutateOutput) is defined in mutateSchema.
  */
 
-import {
-  type MutateOutput,
-  MutateOutputSchema,
-} from "#system/script/mutateSchema.ts";
+import { type MutateOutput, MutateOutputSchema } from '#system/script/mutateSchema.ts';
 
-const OPENAI_CHAT_URL = "https://api.openai.com/v1/chat/completions";
+const OPENAI_CHAT_URL = 'https://api.openai.com/v1/chat/completions';
 
 export type MutateLlmInput = {
   snippet: string;
@@ -21,21 +18,20 @@ export type MutateLlmResult =
 
 // function-length-ignore
 function getApiKey(): string | undefined {
-  return Deno.env.get("OPENAI_API_KEY");
+  return Deno.env.get('OPENAI_API_KEY');
 }
 
 type ChatMessage = { role: string; content: string };
 
 function buildMessages(input: MutateLlmInput): ChatMessage[] {
-  const system =
-    "You return only valid JSON with keys: original (exact input snippet), " +
-    "mutated.";
+  const system = 'You return only valid JSON with keys: original (exact input snippet), ' +
+    'mutated.';
   const user = input.intent
     ? `Intent: ${input.intent}\nSnippet:\n${input.snippet}`
     : `Snippet:\n${input.snippet}`;
   return [
-    { role: "system", content: system },
-    { role: "user", content: user },
+    { role: 'system', content: system },
+    { role: 'user', content: user },
   ];
 }
 
@@ -44,7 +40,7 @@ async function parseChatContent(res: Response): Promise<string> {
     choices?: { message?: { content?: string } }[];
   };
   const content = data.choices?.[0]?.message?.content;
-  if (typeof content !== "string") throw new Error("LLM: no content");
+  if (typeof content !== 'string') throw new Error('LLM: no content');
   return content;
 }
 
@@ -53,15 +49,15 @@ async function callChat(
   messages: ChatMessage[],
 ): Promise<string> {
   const res = await fetch(OPENAI_CHAT_URL, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       Authorization: `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      model: Deno.env.get("OPENAI_MODEL") ?? "gpt-4o-mini",
+      model: Deno.env.get('OPENAI_MODEL') ?? 'gpt-4o-mini',
       messages,
-      response_format: { type: "json_object" },
+      response_format: { type: 'json_object' },
     }),
   });
   if (!res.ok) {
@@ -79,17 +75,17 @@ async function callChat(
 export async function mutateViaLlm(
   input: MutateLlmInput,
 ): Promise<MutateLlmResult> {
-  if (Deno.env.get("MUTATE_LLM_MOCK")) {
+  if (Deno.env.get('MUTATE_LLM_MOCK')) {
     return {
       ok: true,
       output: {
         original: input.snippet,
-        mutated: input.snippet + "\n// mutated",
+        mutated: input.snippet + '\n// mutated',
       },
     };
   }
   const apiKey = getApiKey();
-  if (!apiKey) return { ok: false, error: "OPENAI_API_KEY not set" };
+  if (!apiKey) return { ok: false, error: 'OPENAI_API_KEY not set' };
   const messages = buildMessages(input);
   try {
     const raw = await callChat(apiKey, messages);

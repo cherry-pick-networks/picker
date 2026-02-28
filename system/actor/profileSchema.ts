@@ -2,7 +2,7 @@
  * Zod schemas and inferred types for profile and progress.
  */
 
-import { z } from "zod";
+import { z } from 'zod';
 
 export const ProfileSchema = z.object({
   id: z.string(),

@@ -1,17 +1,17 @@
-import { assertEquals } from "@std/assert";
-import { app } from "../../main.ts";
-import { hasDbEnv } from "./dbEnv_test.ts";
+import { assertEquals } from '@std/assert';
+import { app } from '../../main.ts';
+import { hasDbEnv } from './dbEnv_test.ts';
 
 const handler = (req: Request) => app.fetch(req);
 const handlerTestOpts = { sanitizeResources: false };
 const dbTestOpts = () => ({ ...handlerTestOpts, ignore: !hasDbEnv() });
 
 Deno.test(
-  "GET /kv/:key returns 200 and value or null",
+  'GET /kv/:key returns 200 and value or null',
   dbTestOpts(),
   async () => {
     const res = await handler(
-      new Request("http://localhost/kv/test-key-missing"),
+      new Request('http://localhost/kv/test-key-missing'),
     );
     assertEquals(res.status, 200);
     const body = await res.json();
@@ -20,15 +20,15 @@ Deno.test(
 );
 
 Deno.test(
-  "POST /kv writes and GET /kv/:key reads",
+  'POST /kv writes and GET /kv/:key reads',
   dbTestOpts(),
   async () => {
     const key = `test-${Date.now()}`;
-    const value = { foo: "bar" };
+    const value = { foo: 'bar' };
     const postRes = await handler(
-      new Request("http://localhost/kv", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      new Request('http://localhost/kv', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ key, value }),
       }),
     );
@@ -44,19 +44,19 @@ Deno.test(
 );
 
 Deno.test(
-  "DELETE /kv/:key returns 204 and key is gone",
+  'DELETE /kv/:key returns 204 and key is gone',
   dbTestOpts(),
   async () => {
     const key = `del-${Date.now()}`;
     await handler(
-      new Request("http://localhost/kv", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key, value: "to-delete" }),
+      new Request('http://localhost/kv', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key, value: 'to-delete' }),
       }),
     );
     const delRes = await handler(
-      new Request(`http://localhost/kv/${key}`, { method: "DELETE" }),
+      new Request(`http://localhost/kv/${key}`, { method: 'DELETE' }),
     );
     assertEquals(delRes.status, 204);
     assertEquals(delRes.body, null);
@@ -69,18 +69,18 @@ Deno.test(
 );
 
 Deno.test(
-  "POST /kv with invalid body returns 400",
+  'POST /kv with invalid body returns 400',
   dbTestOpts(),
   async () => {
     const res = await handler(
-      new Request("http://localhost/kv", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ notKey: "x" }),
+      new Request('http://localhost/kv', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ notKey: 'x' }),
       }),
     );
     assertEquals(res.status, 400);
     const body = await res.json();
-    assertEquals(typeof body.error === "object", true);
+    assertEquals(typeof body.error === 'object', true);
   },
 );

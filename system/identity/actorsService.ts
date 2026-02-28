@@ -2,24 +2,20 @@
  * Identity actors: list, get, create, patch. Composes profile + progress.
  */
 
-import * as profileStore from "#system/actor/profileStore.ts";
-import {
-  createProfile,
-  getProfile,
-  updateProfile,
-} from "#system/actor/profileService.ts";
-import { getProgress, updateProgress } from "#system/actor/progressService.ts";
-import type { Actor, ActorCreate, ActorPatch } from "./actorsSchema.ts";
+import * as profileStore from '#system/actor/profileStore.ts';
+import { createProfile, getProfile, updateProfile } from '#system/actor/profileService.ts';
+import { getProgress, updateProgress } from '#system/actor/progressService.ts';
+import type { Actor, ActorCreate, ActorPatch } from './actorsSchema.ts';
 
 function profileToActor(
   id: string,
   raw: unknown,
   progress: unknown,
 ): Actor {
-  const p = raw != null && typeof raw === "object" && "display_name" in raw
+  const p = raw != null && typeof raw === 'object' && 'display_name' in raw
     ? (raw as { display_name?: string; level?: string })
     : {};
-  const prog = progress != null && typeof progress === "object"
+  const prog = progress != null && typeof progress === 'object'
     ? (progress as Record<string, unknown>)
     : null;
   return {
@@ -36,8 +32,8 @@ export async function listActors(name?: string): Promise<Actor[]> {
   for (const row of rows) {
     const progress = await profileStore.getProgress(row.id);
     const actor = profileToActor(row.id, row.payload, progress);
-    if (name != null && name !== "") {
-      const dn = actor.display_name ?? "";
+    if (name != null && name !== '') {
+      const dn = actor.display_name ?? '';
       if (!dn.toLowerCase().includes(name.toLowerCase())) continue;
     }
     out.push(actor);

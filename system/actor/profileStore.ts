@@ -1,17 +1,17 @@
 /** Actor profile and progress storage (Postgres). */
 
-import { getPg } from "#shared/infra/pgClient.ts";
-import { loadSql } from "#shared/infra/sqlLoader.ts";
+import { getPg } from '#shared/infra/pgClient.ts';
+import { loadSql } from '#shared/infra/sqlLoader.ts';
 
-const sqlDir = new URL("./sql/", import.meta.url);
-const SQL_GET_PROFILE = await loadSql(sqlDir, "get_profile.sql");
+const sqlDir = new URL('./sql/', import.meta.url);
+const SQL_GET_PROFILE = await loadSql(sqlDir, 'get_profile.sql');
 const SQL_LIST_ACTOR_PROFILES = await loadSql(
   sqlDir,
-  "list_actor_profiles.sql",
+  'list_actor_profiles.sql',
 );
-const SQL_SET_PROFILE = await loadSql(sqlDir, "set_profile.sql");
-const SQL_GET_PROGRESS = await loadSql(sqlDir, "get_progress.sql");
-const SQL_SET_PROGRESS = await loadSql(sqlDir, "set_progress.sql");
+const SQL_SET_PROFILE = await loadSql(sqlDir, 'set_profile.sql');
+const SQL_GET_PROGRESS = await loadSql(sqlDir, 'get_progress.sql');
+const SQL_SET_PROGRESS = await loadSql(sqlDir, 'set_progress.sql');
 
 export async function getProfile(id: string): Promise<unknown | null> {
   const pg = await getPg();

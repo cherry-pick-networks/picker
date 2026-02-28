@@ -1,10 +1,10 @@
 /** Curriculum slot storage (52-week grid per level). Read-only at runtime. */
 
-import { getPg } from "#shared/infra/pgClient.ts";
-import { loadSql } from "#shared/infra/sqlLoader.ts";
+import { getPg } from '#shared/infra/pgClient.ts';
+import { loadSql } from '#shared/infra/sqlLoader.ts';
 
-const sqlDir = new URL("./sql/", import.meta.url);
-const SQL_LIST_BY_LEVEL = await loadSql(sqlDir, "list_curriculum_slots.sql");
+const sqlDir = new URL('./sql/', import.meta.url);
+const SQL_LIST_BY_LEVEL = await loadSql(sqlDir, 'list_curriculum_slots.sql');
 
 export interface CurriculumSlotRow {
   level: string;

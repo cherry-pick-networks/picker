@@ -1,14 +1,13 @@
 # shared
 
-Todo for project-wide context, conventions, and tooling. Start here for prompts,
-documentation, and scripts.
+Todo for project-wide context, conventions, and tooling. Start here for prompts, documentation, and
+scripts.
 
 ## AI and tooling
 
-Project rules and AI usage live in **`shared/prompt/store.md`** (single source
-of truth). Usage and tips are in **`shared/prompt/documentation/guide.md`**.
-When using Cursor, see `.cursor/rules`, `.cursor/commands`, and `.cursor/skills`
-for how rules and slash commands are applied.
+Project rules and AI usage live in **`shared/prompt/store.md`** (single source of truth). Usage and
+tips are in **`shared/prompt/documentation/guide.md`**. When using Cursor, see `.cursor/rules`,
+`.cursor/commands`, and `.cursor/skills` for how rules and slash commands are applied.
 
 ## Structure
 
@@ -22,8 +21,7 @@ for how rules and slash commands are applied.
 
 - **AI / tooling context**: [prompt/store.md](prompt/store.md)
 - **Project summary & rules**: [prompt/overview.md](prompt/overview.md)
-- **Reference & usage** (tips):
-  [prompt/documentation/guide.md](prompt/documentation/guide.md)
+- **Reference & usage** (tips): [prompt/documentation/guide.md](prompt/documentation/guide.md)
 - **Strategy** (migration, rules layout):
   [prompt/documentation/strategy.md](prompt/documentation/strategy.md)
 - **Handoff** (multi-session): [prompt/handoff.md](prompt/handoff.md)

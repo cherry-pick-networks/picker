@@ -11,13 +11,13 @@ export async function withTempScriptsStore(
     if (options?.seedHello) {
       await Deno.writeTextFile(
         `${tmpDir}/hello.txt`,
-        "hello from shared/runtime/store",
+        'hello from shared/runtime/store',
       );
     }
-    Deno.env.set("SCRIPTS_BASE", tmpDir);
+    Deno.env.set('SCRIPTS_BASE', tmpDir);
     await fn();
   } finally {
-    Deno.env.delete("SCRIPTS_BASE");
+    Deno.env.delete('SCRIPTS_BASE');
     // function-length-ignore
     await Deno.remove(tmpDir, { recursive: true }).catch(() => {});
   }
