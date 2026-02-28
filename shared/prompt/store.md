@@ -686,6 +686,29 @@ file is not feasible (e.g. ported algorithm); document the reason in a comment
 in the config. Do not add file-length exempt to avoid splitting; split into
 sibling modules instead.
 
+Preemptive file split (before or while writing): Use multiple files from the
+start when (1) the feature has more than one use case or operation — one file
+per use case/operation; (2) the module would mix types/constants and
+behavior — separate types (and small pure helpers) from behavior; (3) the
+public surface would have more than 3–5 exports — plan sibling modules so each
+file has one clear responsibility and at most a small set of exports; (4) the
+code spans layers (e.g. endpoint vs service) — one file per layer artifact.
+Each file must be nameable in one phrase (per §E) and aim for under 100
+effective lines; if the planned content would exceed that, split by
+sub-operation or by related helpers before writing.
+
+File split criteria (when file exceeds 100 effective lines): Split by
+cohesion: extract sibling modules (same directory or one level under, per §D/§E)
+so each new file has one clear responsibility (e.g. one use case, one adapter,
+types + helpers). One public surface per file (default or a small set of named
+exports). New file names per §E, reflecting the extracted responsibility; do
+not use generic names (e.g. utils.ts, helpers.ts). Add barrel (index.ts)
+re-export only when callers need more than one of the split modules; do not
+barrel a single file. Do not split into one-function-per-file; keep related
+functions (same domain or caller) in the same file while staying under 100
+effective lines. Full procedure: shared/prompt/documentation/runbook.md (File
+length and split).
+
 Function body: block body 2–4 statements (AST direct statements in block body
 only); expression body allowed (counts as 1). A single statement is allowed when
 it is a try/catch, switch, or block-bodied if (complex statement exemption).
