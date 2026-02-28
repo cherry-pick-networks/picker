@@ -114,7 +114,7 @@ later" (dual auth already removed).
 5. **Phase 4 – Client · UI**\
    Remove human-facing legacy screens. Keep client/frontend to diagnostics,
    health, and minimal guidance. State "new features = API + docs only" in store
-   or goal.
+   or goal. *(Reflected in store.md and to-do.md.)*
 
 6. **Phase 5 – Docs · verification**\
    Finalize API list, openapi, and scenarios in docs. Use todo-check etc. to
