@@ -10,7 +10,6 @@ import { nowIso, parseItem } from "./content-schema-parse.service.ts";
 export {
   CreateItemRequestSchema,
   CreateWorksheetRequestSchema,
-  GenerateItemsRequestSchema,
   GenerateWorksheetRequestSchema,
   ItemPatchSchema,
   ItemSchema,
@@ -20,7 +19,6 @@ export {
 export type {
   CreateItemRequest,
   CreateWorksheetRequest,
-  GenerateItemsRequest,
   Item,
   ItemPatch,
   Worksheet,
