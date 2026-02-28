@@ -66,4 +66,6 @@ Concretes: spec §44–§48 and store.md.
 - **The spec**: Overview, governance, agents, data layout, protocol,
   implementation and safety.
 - **This repo**: shared/prompt/to-do.md, shared/prompt/store.md.
+- **Minimal-scope plan**: shared/prompt/documentation/copilot-minimal-plan.md
+  (copilot-assisted only, legacy removal phases).
 - **Other specs**: web_spec, llm_models_spec (when present).

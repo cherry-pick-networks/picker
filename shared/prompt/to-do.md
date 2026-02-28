@@ -84,6 +84,15 @@ Use that document for AI direction and todo decisions.
 
 ---
 
+## Minimization and legacy removal
+
+Roadmap and phases (copilot-assisted only, composite API decomposition, LLM
+boundary, client/UI trim) are in
+`shared/prompt/documentation/copilot-minimal-plan.md`. Keep API surface and
+openapi.yaml aligned with that plan when adding or changing routes.
+
+---
+
 ## Mutation boundary
 
 - **When mutating**: Use only path `shared/runtime/store/`. Read and write only
