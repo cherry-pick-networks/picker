@@ -35,6 +35,14 @@ export const CreateItemRequestSchema = ItemSchema.omit({
 });
 export type CreateItemRequest = z.infer<typeof CreateItemRequestSchema>;
 
+export const CreateWorksheetRequestSchema = z.object({
+  title: z.string().optional(),
+  item_ids: z.array(z.string()),
+});
+export type CreateWorksheetRequest = z.infer<
+  typeof CreateWorksheetRequestSchema
+>;
+
 export const GenerateWorksheetRequestSchema = z.object({
   title: z.string().optional(),
   concept_ids: z.array(z.string()).default([]),

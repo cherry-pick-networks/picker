@@ -43,7 +43,7 @@ paths:
             type: string
       responses:
         "200":
-          description: { keys: string[] }
+          description: Returns object with keys array
     post:
       summary: Write key-value
       operationId: postKv
@@ -58,7 +58,7 @@ paths:
                 value: {}
       responses:
         "200":
-          description: { key: string }
+          description: Returns object with key
         "400":
           description: Validation error
 
@@ -92,7 +92,7 @@ paths:
       operationId: listScripts
       responses:
         "200":
-          description: { entries: string[] }
+          description: Returns object with entries array
 
   /scripts/{path}:
     get:
@@ -143,10 +143,10 @@ paths:
                 options: { type: object }
       responses:
         "200":
-          description: { ok: true, replacements: number }
+          description: Returns ok and replacements count
         "4xx":
         "5xx":
-          description: { ok: false, status, body }
+          description: Returns ok false with status and body
 
   /profile/{id}:
     get:
@@ -259,27 +259,6 @@ paths:
         "201":
         "400":
 
-  /content/items/generate:
-    post:
-      summary: Generate grammar items by topic (LLM). Prefer build-prompt + POST items.
-      operationId: postContentItemsGenerate
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                source_id: { type: string }
-                unit_id: { type: string }
-                topic_label: { type: string }
-                question_type: { type: string }
-                count: { type: integer }
-      responses:
-        "201":
-          description: { items: Item[] }
-        "4xx":
-        "5xx":
-
   /content/worksheets/{id}:
     get:
       summary: Read worksheet meta by id
@@ -293,22 +272,24 @@ paths:
         "200":
         "404":
 
-  /content/worksheets/generate:
+  /content/worksheets:
     post:
-      summary: Create worksheet from concepts (composite). Prefer POST /worksheets + item_ids.
-      operationId: postWorksheetsGenerate
+      summary: Create worksheet (atomic). Body title, item_ids.
+      operationId: postWorksheets
       requestBody:
         content:
           application/json:
             schema:
               type: object
+              required: [item_ids]
               properties:
                 title: { type: string }
-                concept_ids: { type: array, items: { type: string } }
-                item_count: { type: integer }
-                subject_weights: { type: object }
+                item_ids:
+                  type: array
+                  items: { type: string }
       responses:
         "201":
+          description: Worksheet
         "400":
 
   /content/worksheets/build-prompt:
@@ -321,7 +302,7 @@ paths:
             schema: { type: object }
       responses:
         "200":
-          description: { prompt: string }
+          description: Returns object with prompt string
         "400":
         "500":
 
@@ -371,7 +352,7 @@ paths:
             schema: { type: object }
       responses:
         "200":
-          description: { ok, concept_ids, subject_id?, extracted_at }
+          description: Returns ok, concept_ids, optional subject_id, extracted_at
         "4xx":
         "5xx":
 
@@ -413,7 +394,7 @@ paths:
           schema: { type: string }
       responses:
         "200":
-          description: { items: ScheduleItem[] }
+          description: Returns object with items array
 
   /schedule/plan/weekly:
     get:
@@ -461,7 +442,7 @@ paths:
           schema: { type: string }
       responses:
         "200":
-          description: { items: ScheduleItem[] }
+          description: Returns object with items array
     post:
       summary: Create schedule item
       operationId: postScheduleItem
@@ -517,7 +498,7 @@ paths:
           description: Utterance (regex + LLM fallback)
       responses:
         "200":
-          description: { entries: LexisEntry[] }
+          description: Returns object with entries array
         "400":
 
 components:

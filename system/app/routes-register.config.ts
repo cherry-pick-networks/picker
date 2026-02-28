@@ -38,13 +38,12 @@ function registerContent(app: Hono) {
 function registerContentItems(app: Hono) {
   app.get("/content/items/:id", content.getItem);
   app.post("/content/items", content.postItem);
-  app.post("/content/items/generate", content.postItemsGenerate);
   app.patch("/content/items/:id", content.patchItem);
 }
 
 function registerWorksheetsGetPost(app: Hono) {
   app.get("/content/worksheets/:id", content.getWorksheet);
-  app.post("/content/worksheets/generate", content.postWorksheetsGenerate);
+  app.post("/content/worksheets", content.postWorksheets);
 }
 
 function registerContentWorksheets(app: Hono) {
