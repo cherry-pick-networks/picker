@@ -9,7 +9,7 @@ import { validateItemFacets } from "./content-facet-validation.ts";
 import { nowIso, parseItem } from "./content-schema-parse.service.ts";
 export {
   CreateItemRequestSchema,
-  GenerateItemsRequestSchema,
+  CreateWorksheetRequestSchema,
   GenerateWorksheetRequestSchema,
   ItemPatchSchema,
   ItemSchema,
@@ -18,13 +18,13 @@ export {
 } from "./content.schema.ts";
 export type {
   CreateItemRequest,
-  GenerateItemsRequest,
+  CreateWorksheetRequest,
   Item,
   ItemPatch,
   Worksheet,
 } from "./content.schema.ts";
 export { buildWorksheetPrompt } from "./content-prompt.service.ts";
-export { generateWorksheet } from "./content-worksheet.service.ts";
+export { createWorksheet } from "./content-worksheet.service.ts";
 
 export async function getItem(id: string): Promise<Item | null> {
   const raw = await contentStore.getItem(id);

@@ -1,7 +1,7 @@
 /**
  * One-off: fetch lexis entries by source_id and days, print to stdout.
- * Usage: deno run -A scripts/fetch-lexis-entries.ts <source_id> <day1> [day2 ...]
- * Example: deno run -A scripts/fetch-lexis-entries.ts lexis-middle-intermediate 17 18
+ * Usage: deno run -A scripts/fetch-lexis-entries.ts <sid> <d1> [day2..]
+ * Example: deno run -A ... lexis-middle-intermediate 17 18
  */
 
 import { listEntriesBySourceAndDays } from "#system/lexis/lexis.store.ts";
@@ -13,7 +13,7 @@ const days = Deno.args.slice(1).map((s) => parseInt(s, 10)).filter((n) =>
 
 if (!sourceId || days.length === 0) {
   console.error(
-    "Usage: deno run -A scripts/fetch-lexis-entries.ts <source_id> <day1> [day2 ...]",
+    "Usage: deno run -A scripts/fetch-lexis-entries.ts <sid> <d1> [d2..]",
   );
   Deno.exit(1);
 }

@@ -47,7 +47,8 @@ export function getDataDir(): string {
 }
 
 export function getIdentityIndexPath(): string {
-  return getIdentityIndexPathInternal();
+  const path = getIdentityIndexPathInternal();
+  return path;
 }
 
 export async function readIdentityIndex(): Promise<IdentityIndex> {

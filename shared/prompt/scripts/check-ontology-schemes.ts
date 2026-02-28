@@ -30,35 +30,61 @@ function schemeIdsFromToml(url: URL): string[] {
 }
 
 function sorted(a: readonly string[]): string[] {
-  return [...a].sort();
+  const copy = [...a];
+  return copy.sort();
 }
 
-function main(): void {
-  const tomlIds = sorted(schemeIdsFromToml(TOML_PATH));
-  const codeIds = sorted([
+interface SchemeDiff {
+  inCodeNotToml: string[];
+  inTomlNotCode: string[];
+}
+
+function getCodeIds(): string[] {
+  const ids = sorted([
     ...SUBJECT_SCHEMES,
     ...CONTENT_TYPE_SCHEMES,
     ...COGNITIVE_LEVEL_SCHEMES,
     ...CONTEXT_SCHEMES,
   ]);
+  return ids;
+}
+
+function getSchemeDiff(): SchemeDiff {
+  const tomlIds = sorted(schemeIdsFromToml(TOML_PATH));
+  const codeIds = getCodeIds();
   const inCodeNotToml = codeIds.filter((id) => !tomlIds.includes(id));
-  const inTomlNotCode = tomlIds.filter((id) => !codeIds.includes(id));
-  if (inCodeNotToml.length > 0 || inTomlNotCode.length > 0) {
-    console.error(
-      "ontology-schemes-check: concept-schemes.ts and global-standards.toml " +
-        "must list the same scheme IDs.",
-    );
-    if (inCodeNotToml.length > 0) {
-      console.error("  In code but not in TOML:", inCodeNotToml.join(", "));
-    }
-    if (inTomlNotCode.length > 0) {
-      console.error(
-        "  In TOML but not in concept-schemes (add to a facet or remove):",
-        inTomlNotCode.join(", "),
-      );
-    }
-    Deno.exit(1);
+  return {
+    inCodeNotToml,
+    inTomlNotCode: tomlIds.filter((id) => !codeIds.includes(id)),
+  };
+}
+
+function logMismatch(diff: SchemeDiff): void {
+  console.error(
+    "ontology-schemes-check: concept-schemes.ts and global-standards.toml " +
+      "must list the same scheme IDs.",
+  );
+  if (diff.inCodeNotToml.length > 0) {
+    console.error("  In code but not in TOML:", diff.inCodeNotToml.join(", "));
   }
+  if (diff.inTomlNotCode.length > 0) {
+    console.error(
+      "  In TOML but not in concept-schemes (add to a facet or remove):",
+      diff.inTomlNotCode.join(", "),
+    );
+  }
+}
+
+function reportMismatchAndExit(diff: SchemeDiff): never {
+  logMismatch(diff);
+  Deno.exit(1);
+}
+
+function main(): void {
+  const diff = getSchemeDiff();
+  const hasMismatch = diff.inCodeNotToml.length > 0 ||
+    diff.inTomlNotCode.length > 0;
+  if (hasMismatch) reportMismatchAndExit(diff);
   console.log(
     "ontology-schemes-check passed: schemes match global-standards.toml.",
   );

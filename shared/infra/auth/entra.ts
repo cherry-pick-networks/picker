@@ -30,13 +30,21 @@ async function fetchOpenIdConfig(tenantId: string): Promise<OpenIdConfig> {
   return res.json() as Promise<OpenIdConfig>;
 }
 
-async function fetchJwks(jwksUri: string): Promise<{ keys: JsonWebKey[] }> {
-  if (cachedJwksUri === jwksUri && cachedJwks != null) return cachedJwks;
+async function fetchJwksRaw(jwksUri: string): Promise<{ keys: JsonWebKey[] }> {
   const res = await fetch(jwksUri);
   if (!res.ok) throw new Error(`Entra JWKS fetch failed: ${res.status}`);
-  const data = (await res.json()) as { keys: JsonWebKey[] };
-  cachedJwksUri = jwksUri;
+  return res.json() as Promise<{ keys: JsonWebKey[] }>;
+}
+
+function setCachedJwks(uri: string, data: { keys: JsonWebKey[] }): void {
+  cachedJwksUri = uri;
   cachedJwks = data;
+}
+
+async function fetchJwks(jwksUri: string): Promise<{ keys: JsonWebKey[] }> {
+  if (cachedJwksUri === jwksUri && cachedJwks != null) return cachedJwks;
+  const data = await fetchJwksRaw(jwksUri);
+  setCachedJwks(jwksUri, data);
   return data;
 }
 
@@ -48,13 +56,14 @@ function findKeyByKid(keys: JsonWebKey[], kid: string): JsonWebKey | null {
 }
 
 async function importJwkToVerifyKey(jwk: JsonWebKey): Promise<CryptoKey> {
-  return crypto.subtle.importKey(
+  const key = await crypto.subtle.importKey(
     "jwk",
     jwk,
     { name: "RSASSA-PKCS1-v1_5", hash: "SHA-256" },
     false,
     ["verify"],
   );
+  return key;
 }
 
 /** Verifies an Entra access token and returns claims. Throws on invalid. */

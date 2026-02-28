@@ -1,4 +1,4 @@
-/** Allowed lexis source_ids for utterance parsing (align with lexis-sources.toml). */
+/** Allowed lexis source_ids for parsing (align with lexis-sources.toml). */
 
 const LEXIS_ALLOWED_SOURCE_IDS = new Set<string>([
   "lexis-high-basic",

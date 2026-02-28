@@ -1,6 +1,6 @@
 /**
- * Lexis integration: utterance/query → parse → GET /lexis/entries → 200 + entries.
- * Requires DB (seed lexis source + entries). Skipped when no DATABASE_URL/PG_PASSWORD.
+ * Lexis integration: utterance → parse → GET /lexis/entries → 200 + entries.
+ * Requires DB (seed lexis source + entries). Skipped when no DATABASE_URL.
  */
 
 import { assertEquals } from "@std/assert";

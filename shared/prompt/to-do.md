@@ -20,7 +20,7 @@ Use that document for AI direction and todo decisions.
 | Module                    | Role                                                                                                                                                                                         |
 | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **main.ts**               | Server entry: Hono app; routes registered from system/routes.ts (imports system/app/config).                                                                                                 |
-| **client.ts**             | Client entry (loaded on every page).                                                                                                                                                         |
+| **client.ts**             | Client entry (minimal; diagnostics/health only). New features = API + docs.                                                                                                                  |
 | **system/routes.ts**      | Route list (ROUTES) and registerRoutes(app); todo-check reads this.                                                                                                                          |
 | **system/app/config/**    | Route registration (home, rest, scripts). Imports domain endpoints only.                                                                                                                     |
 | **system/actor/**         | Profile, progress: endpoint, service, store, schema.                                                                                                                                         |
@@ -58,10 +58,9 @@ Use that document for AI direction and todo decisions.
 | PATCH  | `/progress/:id`                    | Update progress state by id. Body: partial progress. Responds 200 or 404.                                                                                                                                                             |
 | GET    | `/content/items/:id`               | Read content item by id. Responds item object or 404.                                                                                                                                                                                 |
 | POST   | `/content/items`                   | Create content item. Body: item fields (id optional). Responds 201 with item.                                                                                                                                                         |
-| POST   | `/content/items/generate`          | Generate grammar items by topic (4o). Body: source_id, unit_id, topic_label?, question_type?, count?. 201 → { items: Item[] }; 4xx/5xx → { error }. topic_label from client or shared grammar-unit-topics map.                        |
 | PATCH  | `/content/items/:id`               | Update content item by id. Body: partial item. Responds 200 or 404.                                                                                                                                                                   |
 | GET    | `/content/worksheets/:id`          | Read worksheet meta by id. Responds worksheet object or 404.                                                                                                                                                                          |
-| POST   | `/content/worksheets/generate`     | Create worksheet (meta + item_ids from concepts). Body: title, concept_ids, item_count, subject_weights (optional record of subject id → weight), etc. Responds 201 with worksheet.                                                   |
+| POST   | `/content/worksheets`              | Create worksheet (atomic). Body: title (optional), item_ids (required). Responds 201 with worksheet. Use with build-prompt + local LLM + POST /content/items then this.                                                               |
 | POST   | `/content/worksheets/build-prompt` | Build worksheet prompt string from request and profile/context. Body: GenerateWorksheetRequest (includes optional subject_weights). Responds 200 with { prompt }. No LLM call.                                                        |
 | GET    | `/sources`                         | List sources. Requires Entra OAuth; returns full Source[].                                                                                                                                                                            |
 | GET    | `/sources/:id`                     | Source by id. Requires Entra OAuth; returns full source or 404.                                                                                                                                                                       |
@@ -81,6 +80,15 @@ Use that document for AI direction and todo decisions.
   `Authorization: Bearer <Entra
   access token>`. Valid token yields full data;
   missing/invalid returns 401.
+
+---
+
+## Minimization and legacy removal
+
+Roadmap and phases (copilot-assisted only, composite API decomposition, LLM
+boundary, client/UI trim) are in
+`shared/prompt/documentation/copilot-minimal-plan.md`. Keep API surface and
+openapi.yaml aligned with that plan when adding or changing routes.
 
 ---
 
