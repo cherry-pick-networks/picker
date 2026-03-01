@@ -69,44 +69,45 @@ RULESET.md §2 (Paths single source).
 - **allowlist**: `config/structure_allowed_dirs.toml` — only
   paths that exist (or are planned); run
   `deno task structure-dir-check` after changes.
-- **structure-tiers-check**: Runs in pre-push and CI; Tier1–Tier5
-  must conform to §E/CAF allowlist (see
-  `shared/context/scripts/structureAddDirConfigSetsData.ts`).
+- **structure-dir-check**: Runs in pre-push and CI; every directory
+  must be in `config/structure_allowed_dirs.toml`. CAF allowlist
+  (structureAddDirConfigSetsData.ts) is for Azure resource naming only.
 - **Optional**: Directory rename per §J — maintain a
   current→target path mapping table before bulk renames.
 
 ---
 
-## System structure (CAF 5-axis · 5-tier)
+## System structure (CAF 5-axis · 5 components)
 
 Directory and resource naming align to the **CAF (Cloud
 Adoption Framework) 5-axis model**: Workload, Resource
 type, Environment, Region, Instance. Project paths use
-Tier1 (Workload) and Tier2 (Resource type); Tier3–Tier5
-apply to CAF-style resource names or to the third directory
-tier (Instance/suffix). Single source for CAF terms and
-abbreviations: `shared/context/documentation/CAF_ALLOWLIST_SPEC.md`.
+Component 1 (Workload) and Component 2 (Resource type);
+Component 3–5 apply to CAF-style resource names or to the
+third directory component (Instance/suffix). Single source
+for CAF terms and abbreviations:
+`shared/context/documentation/CAF_ALLOWLIST_SPEC.md`.
 
 **CAF policy**: CAF document standard only; **non-major
 resource types are spelled out** (no ad-hoc abbreviations).
 Use only the allowlist and mapping in CAF_ALLOWLIST_SPEC.md
 when generating or validating CAF-style names.
 
-**5-tier directory roles (summary)**. Max depth is **5 tiers**
-(Tier1 → Tier2 → Tier3 → Tier4 → Tier5); root is not
-counted. In this project: **Tier1** = scope/workload
-(shared, system). **Tier2** = resource type / domain (e.g.
-context, infra, app, content, identity, report).
-**Tier3** = subdomain or feature group (e.g. assessment,
-actors, seed, documentation). **Tier4** = one more level
-when needed (e.g. seed/ontology, material/sql,
-sql/db_list_all). **Tier5** = optional instance or numeric
-suffix (e.g. 01, 001); rarely used in directory paths
-here. New directories: add only via
+**5-component directory roles (summary)**. Max depth is **5
+components** (Component 1 → Component 2 → … → Component 5);
+root is not counted. In this project: **Component 1** =
+scope/workload (shared, system). **Component 2** = resource
+type / domain (e.g. context, infra, app, content, identity,
+report). **Component 3** = subdomain or feature group (e.g.
+assessment, actors, seed, documentation). **Component 4** =
+one more level when needed (e.g. seed/ontology,
+material/sql, sql/db_list_all). **Component 5** = optional
+instance or numeric suffix (4 digits, e.g. 0001); rarely
+used in directory paths here. New directories: add only via
 `deno task structure:add-dir -- <path>`; path must be in
 `config/structure_allowed_dirs.toml`.
 
-### Tier1 — Workload (scope)
+### Component 1 — Workload (scope)
 
 Top-level directory: scope or workload. Allowed values
 align with RULESET.md §E prefix (Todo/Layer/Context). Under
@@ -114,14 +115,14 @@ this project: **shared**, **system**, **module**, **component**,
 and layer/context names per §E. Example: `system/` = system
 workload.
 
-### Tier2 — Resource type (domain)
+### Component 2 — Resource type (domain)
 
-Under `system/` the form is `system/<Tier2>/` (one folder
-per domain). Tier2 = resource type / bounded context.
+Under `system/` the form is `system/<Component2>/` (one folder
+per domain). Component 2 = resource type / bounded context.
 Consolidated: content (source + core + lexis), governance
 (+ audit), infra (+ storage, batch).
 
-| Tier2 (domain) | Responsibility                                                        |
+| Component 2 (domain) | Responsibility                                                        |
 | -------------- | --------------------------------------------------------------------- |
 | app            | Route registration and auth                                           |
 | content        | Source CRUD, extract; lexis entries; content item CRUD                |
@@ -134,34 +135,34 @@ Consolidated: content (source + core + lexis), governance
 | sync           | Synchronization and replication                                       |
 | workflow       | Workflow and process orchestration                                    |
 
-### Tier3 — Subdomain / environment
+### Component 3 — Subdomain / environment
 
 - **In directory paths**: Subdomain or feature group under
-  Tier2 (e.g. content/assessment, identity/actors,
+  Component 2 (e.g. content/assessment, identity/actors,
   shared/infra/seed, shared/context/documentation). Allowed
   segment names per §E.
 - **In CAF resource names**: Environment (prod, dev, test,
-  qa, stage). See CAF_ALLOWLIST_SPEC.md Tier3. Project
+  qa, stage). See CAF_ALLOWLIST_SPEC.md Component 3. Project
   directory paths do not use environment as a segment.
 
-### Tier4 — Further split / region
+### Component 4 — Further split / region
 
 - **In directory paths**: One more level when needed (e.g.
   shared/infra/seed/ontology, system/content/material/sql,
   system/infra/sql/db_list_all).
 - **In CAF resource names**: Region (eastus, westeurope,
-  etc.). See CAF_ALLOWLIST_SPEC.md Tier4. Not used as a
+  etc.). See CAF_ALLOWLIST_SPEC.md Component 4. Not used as a
   segment in project directory paths.
 
-### Tier5 — Instance
+### Component 5 — Instance
 
 - **In directory paths**: Optional; instance or numeric
-  suffix (2–4 digits per CAF). Rarely used; max depth
-  remains 5 tiers (Tier1 through Tier5).
-- **In CAF resource names**: Numeric instance (2–4 digits).
-  See CAF_ALLOWLIST_SPEC.md Tier5.
+  suffix (4 digits per CAF). Rarely used; max depth remains
+  5 components (Component 1 through Component 5).
+- **In CAF resource names**: Numeric instance (4 digits).
+  See CAF_ALLOWLIST_SPEC.md Component 5.
 - Subdomains under system content/identity: see table
-  below (Tier3/Tier4 in practice).
+  below (Component 3/4 in practice).
 
 **TS filename** = default export name: camelCase for
 functions/modules (e.g. `profileEndpoint.ts`,
@@ -178,13 +179,13 @@ wrapper), config (wiring). Use camelCase (e.g.
 `profileEndpoint.ts`, `sourceExtractService.ts`). See
 RULESET.md §E.
 
-### Subdomains (system/Tier2/Tier3 or Tier4)
+### Subdomains (system/Component2/Component3 or Component4)
 
-Under **content** and **identity**, Tier5 (third directory
-tier) groups files by subdomain. Max depth remains 3
-(Tier1 → Tier2 → Tier5).
+Under **content** and **identity**, Component 5 (third
+directory component) groups files by subdomain. Max depth
+remains 3 (Component 1 → Component 2 → Component 5).
 
-| Tier2 (domain) | Tier5 (subdomains)                                                          |
+| Component 2 (domain) | Component 5 (subdomains)                                                          |
 | -------------- | --------------------------------------------------------------------------- |
 | content        | material, item, instruction, assessment, review, recommend, diagnose       |
 | identity       | actors, schedule, curriculum, achievement, outlook, briefing, analysis     |
@@ -215,16 +216,16 @@ supports query name/display_name. Schedule:
 /sources/:id, /sources/:id/extract, /lexis/entries. Core:
 /core/items, /core/items/:id. Storage: /kv.
 
-### Target layout (Tier1 system — Tier2 domains + Tier5 subdomains)
+### Target layout (Component 1 system — Component 2 domains + Component 5 subdomains)
 
 ```
-system/                    (Tier1 = workload)
-  app/                     (Tier2; routesRegisterConfig.ts, homeHandler.ts, openApiRoutes.ts, ...)
-  content/                 (Tier2; Tier5: material/, item/, instruction/, assessment/, review/, recommend/, diagnose/; plus embeddingClient, utteranceParserService, ...)
-  governance/              (Tier2; scriptsEndpoint, mutateEndpoint, conceptSchemes; ...)
-  identity/                (Tier2; Tier5: actors/, schedule/, curriculum/, achievement/, outlook/, briefing/, analysis/; sql/)
-  infra/                   (Tier2; pgClient, sqlLoader, storageEndpoint, ...)
-  report/                  (Tier2; ...)
+system/                    (Component 1 = workload)
+  app/                     (Component 2; routesRegisterConfig.ts, homeHandler.ts, openApiRoutes.ts, ...)
+  content/                 (Component 2; Component 5: material/, item/, instruction/, assessment/, review/, recommend/, diagnose/; plus embeddingClient, utteranceParserService, ...)
+  governance/              (Component 2; scriptsEndpoint, mutateEndpoint, conceptSchemes; ...)
+  identity/                (Component 2; Component 5: actors/, schedule/, curriculum/, achievement/, outlook/, briefing/, analysis/; sql/)
+  infra/                   (Component 2; pgClient, sqlLoader, storageEndpoint, ...)
+  report/                  (Component 2; ...)
   routes.ts                (entry; imports app config)
 ```
 
@@ -349,7 +350,7 @@ hyphens) for the `<name>` part.
   scheme, concept, concept_relation).
 - **Vocabulary**: Prefer names that match project axes (e.g.
   actor, content, source, kv). New domains: align with
-  BACKLOG.md and this reference (allowed Tier2/Tier5 and §E).
+  BACKLOG.md and this reference (allowed Component 2/5 and §E).
 - **Migration**: When renaming or adding DDL files, follow
   the migration boundary (RULESET.md §J): plan first, then
   apply renames and reference updates in one logical change.
@@ -372,7 +373,7 @@ hyphens → underscores. Numeric prefix stays.
 New DDL (e.g. ontology): use `NN_<name>.sql` with an
 available number and §E-compliant name; adjust numbering if
 needed (see BACKLOG.md, §J, and this reference for allowed
-Tier2/Tier5 and §E segment names).
+Component 2/5 and §E segment names).
 
 **Validation (optional).** Script
 `shared/context/scripts/checkSqlFilename.ts` checks all .sql

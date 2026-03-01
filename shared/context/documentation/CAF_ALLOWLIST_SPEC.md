@@ -13,7 +13,7 @@ This document is the **single reference** for all CAF (Cloud Adoption Framework)
 
 ---
 
-## Tier1 — Allowed words (CAF naming components)
+## Component 1 — Allowed words (CAF naming components)
 
 Allowed terms for workload, application, or project names and general naming components. Use **only** these when generating or validating CAF-style names.
 
@@ -31,7 +31,7 @@ Allowed terms for workload, application, or project names and general naming com
 
 ---
 
-## Tier2 — Resource type abbreviations
+## Component 2 — Resource type abbreviations
 
 ### Major (keep as-is)
 
@@ -108,7 +108,7 @@ Use the **full form** in generated names or in tooling that normalizes names. Ma
 
 ---
 
-## Tier3 — Environment values
+## Component 3 — Environment values
 
 Allowed environment segment values. Use **only** these for the environment component.
 
@@ -122,7 +122,7 @@ Allowed environment segment values. Use **only** these for the environment compo
 
 ---
 
-## Tier4 — Region (CAF example list)
+## Component 4 — Region (CAF example list)
 
 Allowed region segment values for CAF-style names. This list is the **CAF example set**; the full Azure region list is in [Azure regions](https://learn.microsoft.com/en-us/azure/reliability/regions-list).
 
@@ -153,15 +153,15 @@ Allowed region segment values for CAF-style names. This list is the **CAF exampl
 
 ---
 
-## Tier5 — Numeric pattern
+## Component 5 — Numeric pattern
 
 Instance or identifier suffix in resource names.
 
 | Pattern | Description | Example |
 |---------|-------------|---------|
-| 2–4 digits | Instance number | `01`, `001`, `0001` |
+| 4 digits | Instance number | `0001`, `0002` |
 
-**Rule**: Only numeric digits; length between 2 and 4 characters. No leading zero requirement; consistent length per workload is recommended (e.g. always 3 digits: `001`, `002`).
+**Rule**: Only numeric digits; exactly 4 characters. Use leading zeros for consistency (e.g. `0001`, `0002`).
 
 ---
 

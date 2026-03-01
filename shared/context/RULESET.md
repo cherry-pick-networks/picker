@@ -32,26 +32,20 @@ duplicate these rules in tool-specific configs.
 
 ## 2. Directory structure and naming
 
-- **Max depth**: 5 tiers from root (Tier1 → Tier2 →
-  Tier3 → Tier4 → Tier5). Root is not counted.
-- **Allowed forms**: `Tier1/`, `Tier1/Tier2/`,
-  `Tier1/Tier2/Tier3/`, `Tier1/Tier2/Tier3/Tier4/`,
-  `Tier1/Tier2/Tier3/Tier4/Tier5/` (1 through 5 tiers).
-- **CAF 5-axis** (Tier1–Tier5; use only approved segment
-  names per §E):
-  - **Tier1**: Naming components (workload, application,
-    project; e.g. shared, client, application)
-  - **Tier2**: Resource type (major abbreviations as-is;
-    non-major spelled out per CAF allowlist)
-  - **Tier3**: Environment (e.g. prod, dev, test, qa, stage)
-  - **Tier4**: Region (e.g. eastus, westeurope; CAF example
-    set)
-  - **Tier5**: Numeric or instance suffix (e.g. 01, 001)
+- **Max depth**: 5 components from root. Root is not counted.
+- **Allowed paths**: Only paths listed in
+  `config/structure_allowed_dirs.toml`; add via
+  `deno task structure:add-dir -- <path>`. Segment form per
+  §D/§F (lowercase, underscore, no hyphens; max 5 segments).
+- **CAF 5-axis** (Component 1–Component 5) applies to **Azure
+  resource naming and document/rule segment naming** per §E;
+  not used to validate repository directory paths. See
+  CAF_ALLOWLIST_SPEC.md; Component 5 numeric = 4 digits (e.g. 0001).
 - **This file**: `shared/context/RULESET.md` (shared =
-  Tier1; context = Tier2; ruleset as artifact in filename)
+  Component 1; context = Component 2; ruleset as artifact in filename)
 - **Exceptions**: .git, .cursor, node_modules, dist, build,
   coverage, vendor, .cache, temp, tests (confirm per repo)
-- Do not add a sixth tier. Do not use forbidden segments
+- Do not add a sixth component. Do not use forbidden segments
   (see §E); CAF document standard only; non-major
   abbreviations must be spelled out (full spelling).
 - **Data and document format**: Data files use TOML
@@ -129,9 +123,6 @@ duplicate these rules in tool-specific configs.
   bypass (runs in CI)
 - `deno task dependency-check` — verify acyclic domain deps
   and allowed matrix (runs in CI)
-- `deno task structure-tiers-check` — verify directory paths
-  conform to Tier1~5 allowlist per §E (optional; run in
-  pre-commit or CI)
 - `deno task structure-dir-check` — verify every directory
   is in config/structure_allowed_dirs.toml (runs in pre-push/CI)
 - `deno task ts-filename-check` — verify system/ and tests/
@@ -390,7 +381,7 @@ duplicate these rules in tool-specific configs.
 configure **when** rules apply (e.g. always vs on-request);
 they do not contain rule content. Keep rule text in this
 file Part B only; each mdc body references § only. Name mdc
-files per §D and §E (Tier1[-Tier2-…]-Tier5; approved axes).
+files per §D and §E (Component1[-Component2-…]-Component5; approved axes).
 Adding or changing rules: add or edit rule content only in
 this file Part B; add one mdc that references the relevant §
 for apply timing; refactor existing mdc per §J (plan first;
@@ -507,127 +498,132 @@ symbol naming).
 
 ### §D. Document and directory format
 
-Pattern: use [Tier1]_[Tier5].mdc or
-[Tier1]_[Tier2]_…_[Tier5].mdc; Tier1 and Tier5 required;
-Tier2–Tier4 optional as needed. Segment form: lowercase;
-separate words with one underscore; no hyphens; Tier5
-singular (except types); descriptive, pronounceable,
-searchable. Axis rule: each segment uses exactly one axis
-from its allowed set (see §E); no axis pollution; one word
-must not appear in two axes. The same §E sets are the
-approved names for that tier and below (files, subfolders,
-modules, symbols). New rule files: pick one Tier1 from
-allowed set; one Tier5 from Artifact/Policy/Meta; add
-Tier2–Tier4 from §E only when the rule applies to a
-specific focus.
+Pattern: use [Component1]_[Component5].mdc or
+[Component1]_[Component2]_…_[Component5].mdc; Component 1 and
+Component 5 required; Component 2–4 optional as needed. Segment
+form: lowercase; separate words with one underscore; no
+hyphens; Component 5 singular (except types); descriptive,
+pronounceable, searchable. Axis rule: each segment uses
+exactly one axis from its allowed set (see §E); no axis
+pollution; one word must not appear in two axes. The same §E
+sets are the approved names for that component and below
+(files, subfolders, modules, symbols). New rule files: pick
+one Component 1 from allowed set; one Component 5 from
+Artifact/Policy/Meta; add Component 2–4 from §E only when
+the rule applies to a specific focus.
 
-Document files under shared/context/: use [Tier5].md only.
-Tier1 and Tier2 are implied by the path (shared = Tier1,
-context = Tier2). Tier5 segment must be from §E allowed
-sets (Artifact, Policy, Meta). Same segment form: lowercase;
-one underscore between words; no hyphens. Exceptions: see §F
-(e.g. README.md at tree root). Todo for document names: the
-segment naming rule applies to exactly one document tree; in
-this project only .md files under shared/context/ are in
-todo. Files outside that tree (e.g. root README.md,
-CONTRIBUTING.md, CHANGELOG.md) are not subject to
-document-name rules.
+Document files under shared/context/: use [Component5].md only.
+Component 1 and Component 2 are implied by the path (shared =
+Component 1, context = Component 2). Component 5 segment must
+be from §E allowed sets (Artifact, Policy, Meta). Same
+segment form: lowercase; one underscore between words; no
+hyphens. Exceptions: see §F (e.g. README.md at tree root).
+Todo for document names: the segment naming rule applies to
+exactly one document tree; in this project only .md files
+under shared/context/ are in todo. Files outside that tree
+(e.g. root README.md, CONTRIBUTING.md, CHANGELOG.md) are not
+subject to document-name rules.
 
-Directory structure (max 5 levels; segment order): Tier1
-(required), then Tier2, Tier3, Tier4, Tier5 (each optional).
-Order: Tier1 / Tier2 / Tier3 / Tier4 / Tier5; do not add a
-sixth level.
+Directory structure (max 5 levels; segment order): Component 1
+(required), then Component 2, 3, 4, 5 (each optional). Order:
+Component 1 / Component 2 / Component 3 / Component 4 /
+Component 5; do not add a sixth level.
 
 ### §E. Document and directory naming
 
-Directory tier names use Tier1 through Tier5 from the
-allowed sets below. **CAF document standard only**; non-major
-resource-type abbreviations must be **spelled out** (full
-spelling; no ad-hoc abbreviations). The same allowed values
-for each tier are the approved names for that tier and its
-subtree: use them for tier names and, within that tier, for
-file names, subfolder names, module/namespace names, and
-public symbol names. When Tier1 is a Layer (presentation,
-application, domain, infrastructure), Tier2 and Tier3 names
-must use only that layer's allowed sets defined below.
-Mandatory todo: directory and rule/document naming per §D
-and §F; other uses apply from new or renamed items (see
-§J). Schema SQL files under shared/infra/schema/ (data only)
-follow MANUAL.md (Schema DDL file naming). Full CAF
-allowlist: shared/context/documentation/CAF_ALLOWLIST_SPEC.md.
+Directory component names use Component 1 through Component 5
+from the allowed sets below. **CAF document standard only**;
+non-major resource-type abbreviations must be **spelled out**
+(full spelling; no ad-hoc abbreviations). The same allowed
+values for each component are the approved names for that
+component and its subtree: use them for component names and,
+within that component, for file names, subfolder names,
+module/namespace names, and public symbol names. When
+Component 1 is a Layer (presentation, application, domain,
+infrastructure), Component 2 and Component 3 names must use
+only that layer's allowed sets defined below. Mandatory todo:
+directory and rule/document naming per §D and §F; other uses
+apply from new or renamed items (see §J). Schema SQL files
+under shared/infra/schema/ (data only) follow MANUAL.md
+(Schema DDL file naming). Full CAF allowlist:
+shared/context/documentation/CAF_ALLOWLIST_SPEC.md.
 
-**Tier1–Tier4 allowed sets (summary)**. Tier1 — CAF naming
-components (e.g. shared, client, application; workload/project
-names); see CAF_ALLOWLIST_SPEC Tier1. Tier2 — Resource type:
-major abbreviations kept as-is (app, redis, sql, config, log,
-etc.); non-major spelled out per CAF_ALLOWLIST_SPEC Tier2.
-Tier3 — Environment: prod, dev, test, qa, stage. Tier4 —
-Region: CAF example set (eastus, westeurope, etc.); see
-CAF_ALLOWLIST_SPEC Tier4. Tier5 — Numeric pattern (2–4
-digits) for directory; for document/rule naming, Tier5 segment
-from Artifact/Policy/Meta (schema, store, config, policy,
-documentation, etc.) per sets below.
+**Component 1–4 allowed sets (summary)**. Component 1 — CAF
+naming components (e.g. shared, client, application;
+workload/project names); see CAF_ALLOWLIST_SPEC Component 1.
+Component 2 — Resource type: major abbreviations kept as-is
+(app, redis, sql, config, log, etc.); non-major spelled out
+per CAF_ALLOWLIST_SPEC Component 2. Component 3 — Environment:
+prod, dev, test, qa, stage. Component 4 — Region: CAF example
+set (eastus, westeurope, etc.); see CAF_ALLOWLIST_SPEC
+Component 4. Component 5 — Numeric pattern (4 digits only,
+e.g. 0001) for directory when used; for document/rule
+naming, Component 5 segment from Artifact/Policy/Meta
+(schema, store, config, policy, documentation, etc.) per sets
+below.
 
 Clean dictionary (one word per concept — overlap
-resolution): middleware: only Tier5 Artifact; never Tier2
-(use interceptor, filter). policy: only Tier5 Policy; never
-Tier2 (use validator, guard). cache: only Tier2 Entity;
-never Tier5 (use store, storage). config: only this
-spelling; never configuration. education: only this
-spelling; never edu. type (TS/classification): use types in
-Tier5 Meta; never type. core: forbidden in Context; use
-shared, base, or domain (layer). context (API): use provider
-in Tier2 Entity; do not use context as segment. record: only
-Entity; stored units of data (e.g. extracted record,
-identity record); one record per file or index entry.
-grammar: as Tier5 = parser/grammar rules (*.grammar.ts); as
-content domain = English grammar data (see MANUAL.md Content
-domain names). lexis, phonology: content domain only (word
-data, pronunciation data); use for domain Tier2, table
+resolution): middleware: only Component 5 Artifact; never
+Component 2 (use interceptor, filter). policy: only Component
+5 Policy; never Component 2 (use validator, guard). cache:
+only Component 2 Entity; never Component 5 (use store,
+storage). config: only this spelling; never configuration.
+education: only this spelling; never edu. type
+(TS/classification): use types in Component 5 Meta; never
+type. core: forbidden in Context; use shared, base, or domain
+(layer). context (API): use provider in Component 2 Entity;
+do not use context as segment. record: only Entity; stored
+units of data (e.g. extracted record, identity record); one
+record per file or index entry. grammar: as Component 5 =
+parser/grammar rules (*.grammar.ts); as content domain =
+English grammar data (see MANUAL.md Content domain names).
+lexis, phonology: content domain only (word data,
+pronunciation data); use for domain Component 2, table
 names, seed paths per MANUAL.md.
 
-Tier1 — one axis only: [ Scope | Layer | Context ]. Rule:
-Tier1 must denote system position only; technical tools
-(cache, redis) or artifact form (config, test) must not be
-Tier1. Axis "Context" = Bounded Context (what it is for);
-Layer value "domain" = DDD domain layer only. Scope (blast
-radius): global, shared, system, module, component. Never
-Tier1: app (use system), config, file, code, architecture.
-Layer (stack position): presentation, application, domain,
-infrastructure. Never Tier1: api, web as layer (refine into
-above if needed); security, observability, compliance (use
-Context instead). Context (bounded context): business:
-payment, order, auth, user, catalog, education, student,
-ticket, bucket, item, economy, scout; system: security,
-observability, compliance. Never Tier1: core (use shared,
-base, or domain); cache, adapter, redis, test (use Tier2/Tier5).
+Component 1 — one axis only: [ Scope | Layer | Context ].
+Rule: Component 1 must denote system position only; technical
+tools (cache, redis) or artifact form (config, test) must not
+be Component 1. Axis "Context" = Bounded Context (what it is
+for); Layer value "domain" = DDD domain layer only. Scope
+(blast radius): global, shared, system, module, component.
+Never Component 1: app (use system), config, file, code,
+architecture. Layer (stack position): presentation,
+application, domain, infrastructure. Never Component 1: api,
+web as layer (refine into above if needed); security,
+observability, compliance (use Context instead). Context
+(bounded context): business: payment, order, auth, user,
+catalog, education, student, ticket, bucket, item, economy,
+scout; system: security, observability, compliance. Never
+Component 1: core (use shared, base, or domain); cache,
+adapter, redis, test (use Component 2/Component 5).
 
-Tier2 — one axis only: [ Actor | Action | Entity ]. Rule:
-Tier2 must not duplicate Scope/Layer/Context meaning.
-Forbidden in Tier2: middleware (use interceptor, filter),
-policy (use validator, guard). Actor (architectural role or
-agent): router, service, repository, entity, interceptor,
-filter, adapter, facade, client, agent, worker, guard,
-validator. Entity (data or medium kind): payload, stream,
-blob, cache, session, document, record, json, sql, redis,
-prompt, provider. Action (lifecycle or operation):
-bootstrap, shutdown, runtime, build, migration, recovery,
-read, write, batch, parse, upload, search, validate.
+Component 2 — one axis only: [ Actor | Action | Entity ].
+Rule: Component 2 must not duplicate Scope/Layer/Context
+meaning. Forbidden in Component 2: middleware (use
+interceptor, filter), policy (use validator, guard). Actor
+(architectural role or agent): router, service, repository,
+entity, interceptor, filter, adapter, facade, client, agent,
+worker, guard, validator. Entity (data or medium kind):
+payload, stream, blob, cache, session, document, record,
+json, sql, redis, prompt, provider. Action (lifecycle or
+operation): bootstrap, shutdown, runtime, build, migration,
+recovery, read, write, batch, parse, upload, search, validate.
 
-Tier5 (document/rule segment) — one axis only: [ Artifact |
-Policy | Meta ]. Rule: Tier5 denotes form of the
-deliverable; context meaning belongs in Tier1, not Tier5.
-Forbidden in Tier5: cache (use store, storage),
-configuration (use config). Artifact (concrete deliverable
-shape): schema, mapping, store, storage, event, endpoint,
-response, middleware, format, exception, config, pipeline,
-metrics, trace, transfer, client. Policy (principle,
-constraint, or policy): boundary, constraint, contract,
-principle, safety, validation, compliance, isolation. Meta
-(documentation, test, or classification): test,
-documentation, naming, style, log, types, language, profile,
-assessment, reference, plan, handoff, strategy, usage, tips,
-overview, goal.
+Component 5 (document/rule segment) — one axis only: [
+Artifact | Policy | Meta ]. Rule: Component 5 denotes form
+of the deliverable; context meaning belongs in Component 1,
+not Component 5. Forbidden in Component 5: cache (use store,
+storage), configuration (use config). Artifact (concrete
+deliverable shape): schema, mapping, store, storage, event,
+endpoint, response, middleware, format, exception, config,
+pipeline, metrics, trace, transfer, client. Policy
+(principle, constraint, or policy): boundary, constraint,
+contract, principle, safety, validation, compliance,
+isolation. Meta (documentation, test, or classification):
+test, documentation, naming, style, log, types, language,
+profile, assessment, reference, plan, handoff, strategy,
+usage, tips, overview, goal.
 
 Examples: payment_infra_redis_config (Context + Layer +
 Entity + Artifact); security_application_guard_policy
@@ -642,53 +638,57 @@ filename (e.g. profileEndpoint.ts, identityIndexStore.ts).
 Validated by ts-filename-check. Detailed To Do / Not To Do:
 MANUAL.md (TypeScript filename).
 
-Layer-specific allowed Tier2 and Tier5 (when Tier1 is
-Layer): When Tier1 is one of presentation, application,
-domain, infrastructure, Tier2 and Tier5 names must use only
-that layer's allowed sets below. Presentation — Tier2:
-router, facade, interceptor, filter, guard, client,
-validator, payload, session, document. Tier5: endpoint,
-response, config, format, middleware, exception, trace,
-boundary, validation. Application — Tier2: service, facade,
-agent, worker, guard, validator, payload, session,
-document, record, read, write, batch, parse, search, validate,
-migration, recovery. Tier5: pipeline, config, event, store,
-metrics, trace, boundary, constraint, validation,
-compliance. Domain — Tier2: entity, repository, service,
-record, document, validate. Tier5: schema, event, boundary,
-constraint, contract, principle, types. Infrastructure —
-Tier2: adapter, client, repository, agent, worker, blob,
-cache, session, record, json, sql, redis, stream, document,
+Layer-specific allowed Component 2 and Component 5 (when
+Component 1 is Layer): When Component 1 is one of
+presentation, application, domain, infrastructure, Component
+2 and Component 5 names must use only that layer's allowed
+sets below. Presentation — Component 2: router, facade,
+interceptor, filter, guard, client, validator, payload,
+session, document. Component 5: endpoint, response, config,
+format, middleware, exception, trace, boundary, validation.
+Application — Component 2: service, facade, agent, worker,
+guard, validator, payload, session, document, record, read,
+write, batch, parse, search, validate, migration, recovery.
+Component 5: pipeline, config, event, store, metrics, trace,
+boundary, constraint, validation, compliance. Domain —
+Component 2: entity, repository, service, record, document,
+validate. Component 5: schema, event, boundary, constraint,
+contract, principle, types. Infrastructure — Component 2:
+adapter, client, repository, agent, worker, blob, cache,
+session, record, json, sql, redis, stream, document,
 bootstrap, shutdown, read, write, batch, migration,
-recovery, parse, upload. Tier5: store, storage, config,
-mapping, pipeline, metrics, trace, log, boundary, isolation.
+recovery, parse, upload. Component 5: store, storage,
+config, mapping, pipeline, metrics, trace, log, boundary,
+isolation.
 
 ### §F. Directory structure and exceptions
 
 Purpose: Apply a single rule to all directory creation
-except exceptions; keep structure as Tier1 → Tier2 →
-Tier3 → Tier4 → Tier5 for discoverability and maintenance.
+except exceptions; keep structure as Component 1 →
+Component 2 → Component 3 → Component 4 → Component 5 for
+discoverability and maintenance.
 
 Scope: All directories not in the exception list (root and
-any depth). "Level" means directory tiers only: Tier1
-through Tier5. Root is not counted as a level; max depth is
-5 tiers (Tier1 / Tier2 / Tier3 / Tier4 / Tier5).
+any depth). "Level" means directory components only:
+Component 1 through Component 5. Root is not counted as a
+level; max depth is 5 components (Component 1 / Component 2 /
+Component 3 / Component 4 / Component 5).
 
 Rule content — structure: Allowed forms (exactly one of 1
-through 5 tiers): Tier1/ Tier1/Tier2/ Tier1/Tier2/Tier3/
-Tier1/Tier2/Tier3/Tier4/ Tier1/Tier2/Tier3/Tier4/Tier5/
-Order fixed: Tier1 then Tier2 then Tier3 then Tier4 then
-Tier5; no sixth tier.
+through 5 components): C1/ C1/C2/ C1/C2/C3/ C1/C2/C3/C4/
+C1/C2/C3/C4/C5/ (C1=Component 1, etc.). Order fixed:
+Component 1 then Component 2 then Component 3 then Component
+4 then Component 5; no sixth component.
 
-Rule content — naming: Each tier name must use only approved
-values for that axis (Tier1–Tier5); see §E. When Tier1 is a
-Layer value, Tier2 and Tier5 are restricted to that layer's
-allowed sets in §E. That same §E vocabulary applies to
-names within that tier (files, subfolders, modules,
-symbols). Directory and document segment names: lowercase;
-one underscore between words; no hyphens or spaces.
-TypeScript filenames: see §E (camelCase or PascalCase, no
-dot; MANUAL.md).
+Rule content — naming: Each component name must use only
+approved values for that axis (Component 1–5); see §E. When
+Component 1 is a Layer value, Component 2 and Component 5
+are restricted to that layer's allowed sets in §E. That same
+§E vocabulary applies to names within that component (files,
+subfolders, modules, symbols). Directory and document segment
+names: lowercase; one underscore between words; no hyphens
+or spaces. TypeScript filenames: see §E (camelCase or
+PascalCase, no dot; MANUAL.md).
 
 Exceptions: Maintain an explicit exception list; same list
 for docs and tooling. Typical entries: .git, .cursor,
@@ -701,46 +701,46 @@ Document exceptions: Maintain a separate explicit list for
 README.md, CHANGELOG.md and similar platform-expected names;
 the document-tree root index README.md may be exempt. Under
 shared/context/, root-level documents use uppercase base
-names and are exempt from [Tier5].md lowercase: RULESET.md,
-CONTEXT.md, HANDOFF.md, BACKLOG.md, SUMMARY.md. Other .md
-under shared/context/ (e.g. in documentation/) follow §D:
-[Tier5].md only. Optional: one path may be listed to keep
-its current name (e.g. during migration). Update this list
-and any document-name validator together.
+names and are exempt from [Component5].md lowercase:
+RULESET.md, CONTEXT.md, HANDOFF.md, BACKLOG.md, SUMMARY.md.
+Other .md under shared/context/ (e.g. in documentation/)
+follow §D: [Component5].md only. Optional: one path may be
+listed to keep its current name (e.g. during migration).
+Update this list and any document-name validator together.
 
 Documentation allowed names: Under
 shared/context/documentation/, the allowed document base
-names ([Tier5] in [Tier5].md) are restricted to: MANUAL,
-FORMAT, POLICY, PRIMER, ACTION. No other segment names; new
-docs in this directory must use one of these five. Exception:
-shared/context/documentation/CAF_ALLOWLIST_SPEC.md (CAF
-allowlist spec; single reference for WP1–WP3).
+names ([Component5] in [Component5].md) are restricted to:
+MANUAL, FORMAT, POLICY, PRIMER, ACTION. No other segment
+names; new docs in this directory must use one of these
+five. Exception: shared/context/documentation/CAF_ALLOWLIST_SPEC.md
+(CAF allowlist spec; single reference for WP1–WP3).
 
 Documentation: Rule text lives only in this file;
 .cursor/rules/*.mdc state todo and when to apply (e.g.
-always vs on-request). In docs, state: todo, "max 5 tiers"
-(Tier1–Tier5 only; root not counted), the five allowed
-forms (1–5 tiers), order fixed, no sixth tier, naming
-reference, exception list.
+always vs on-request). In docs, state: todo, "max 5
+components" (Component 1–5 only; root not counted), the five
+allowed forms (1–5 components), order fixed, no sixth
+component, naming reference, exception list.
 
-Validation (optional): Script: walk directories from root;
-skip exception list; assert remaining paths match
-Tier1/(Tier2/)(Tier3/)(Tier4/)(Tier5/) and tier names in
-allowed sets; exit 1 on failure. Run
-`deno task structure-tiers-check`
-(shared/context/scripts/checkStructureTiers.ts) or
-`deno task structure-dir-check` (checkStructureDirs.ts).
-Run in pre-commit or CI. Document names: optionally walk the
+Validation: Directory allowlist only. Run
+`deno task structure-dir-check`
+(shared/context/scripts/checkStructureDirs.ts); skip
+exception list; assert every directory is in
+config/structure_allowed_dirs.toml; exit 1 on failure. Run
+in pre-push and CI. Document names: optionally walk the
 document tree (e.g. shared/context/), skip document
-exceptions, assert each remaining .md matches [Tier5].md
-and Tier5 is in §E allowed sets (for
+exceptions, assert each remaining .md matches [Component5].md
+and Component 5 is in §E allowed sets (for
 shared/context/documentation/, use the documentation allowed
 list only: MANUAL, FORMAT, POLICY, PRIMER, ACTION); run in
 pre-commit or CI.
 
-Agent / tool behavior: When creating directories, use only
-the 1–5 tier allowed forms for non-excepted paths; use only
-approved axis values per §E.
+Agent / tool behavior: When creating directories, add only
+via `deno task structure:add-dir -- <path>`; path must pass
+format checks and be added to structure_allowed_dirs.toml.
+Component 1–5 allowlists in §E are for Azure resource naming
+and document/rule segments only.
 
 ### §G. Dependency constraint
 
@@ -800,17 +800,17 @@ is in current todo (shared/context/BACKLOG.md).
 ### §J. Migration boundary
 
 When to migrate (diagnosis): rule files that mix axes (e.g.
-two Tier5 segments in one name or one file) or use
-forbidden tier/segment must be refactored; plan first, then execute;
+two Component 5 segments in one name or one file) or use
+forbidden component/segment must be refactored; plan first, then execute;
 do not rename or split without a migration plan. Plan before
 execute: write a migration plan: for each current file, list
-target filename(s) with axis (Tier1, Tier2, …, Tier5),
+target filename(s) with axis (Component 1, Component 2, …, Component 5),
 content responsibility per new file, and which current files
 will be removed; do not execute renames or splits without
 this mapping. Execute order: create all new rule files with
 split content first; only after that delete the old files;
 one logical migration (one plan) per commit. Naming: new
-rule file names must follow §D and §E; use Tier2–Tier4 from
+rule file names must follow §D and §E; use Component 2–4 from
 §E where it clarifies focus (e.g. document,
 event, agent). No todo doc change: adding or refactoring
 .cursor/rules does not require shared/context/BACKLOG.md
@@ -848,7 +848,7 @@ allowlist before adding a new cross-domain dependency.
 Root README (repository root README.md): the Documentation
 section lists only domain entry points; each entry links to
 a todo-level README (e.g. shared/README.md), not to files
-under Tier1/…/Tier5. Deep links: do not add links from
+under Component 1/…/Component 5. Deep links: do not add links from
 root README to individual docs (e.g. RULESET.md, HANDOFF.md,
 CONTEXT.md); those live in each domain's README.
 
@@ -1068,7 +1068,7 @@ do not split a noun phrase or parenthetical mid-phrase (§I
 rule file format). Single source: Keep authoritative rule
 text only in this file (RULESET.md); other AI-facing docs
 reference ruleset sections and do not duplicate rule text.
-Naming: Use [Tier5].md only under shared/context/; Tier5
+Naming: Use [Component5].md only under shared/context/; Component 5
 from §E allowed sets; see §D and §F. Scannability: Use clear
 headings and one concept per bullet or block; state when a
 rule applies (todo, exceptions); include short fixed

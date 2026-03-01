@@ -1,12 +1,12 @@
 //
-// Tier1~4 allowlist data for structure:add-dir per RULESET.md §D, §E (WP4).
-// Consumed by structureAddDirConfigSets.ts and structureAddDirConfig.ts.
+// CAF Component 1–4 allowlist data for Azure resource naming (CAF). See
+// shared/context/documentation/CAF_ALLOWLIST_SPEC.md. Not used for
+// directory path validation; directory allowlist is
+// config/structure_allowed_dirs.toml only.
 //
 
-// --- CAF Tier1~4 allowlists (WP1). See shared/context/documentation/CAF_ALLOWLIST_SPEC.md ---
-
-/** Tier1: Allowed words for workload/application/project names (CAF + project). */
-export const TIER1_WORKLOAD = new Set([
+/** Component 1: CAF workload/application names only. */
+export const COMPONENT1_WORKLOAD = new Set([
   'shared',
   'client',
   'application',
@@ -14,13 +14,10 @@ export const TIER1_WORKLOAD = new Set([
   'emissions',
   'sharepoint',
   'hadoop',
-  'config',
-  'system',
 ]);
 
-/** Tier2: Allowed resource type values — major abbreviations (as-is) + full forms for non-major. */
-export const TIER2_RESOURCE_TYPE = new Set([
-  // Major (keep as-is) — CAF_ALLOWLIST_SPEC § Tier2 Major
+/** Component 2: CAF resource type — major (as-is) + non-major full form. */
+export const COMPONENT2_RESOURCE_TYPE = new Set([
   'app',
   'redis',
   'sql',
@@ -31,7 +28,6 @@ export const TIER2_RESOURCE_TYPE = new Set([
   'stage',
   'config',
   'log',
-  // Non-major (full form only in names) — CAF_ALLOWLIST_SPEC § Tier2 Non-major
   'resourcegroup',
   'storage',
   'virtualmachine',
@@ -79,48 +75,10 @@ export const TIER2_RESOURCE_TYPE = new Set([
   'maps',
   'signalr',
   'webpubsub',
-  // Project Tier2 (non-CAF) per §E
-  'context',
-  'documentation',
-  'scripts',
-  'infra',
-  'schema',
-  'seed',
-  'material',
-  'ontology',
-  'record',
-  'reference',
-  'content',
-  'assessment',
-  'bank',
-  'diagnose',
-  'instruction',
-  'recommend',
-  'review',
-  'governance',
-  'identity',
-  'achievement',
-  'actors',
-  'analysis',
-  'briefing',
-  'curriculum',
-  'outlook',
-  'schedule',
-  'report',
-  'analytics',
-  'plagiarism',
-  'query',
-  'teams',
-  'sql_kv',
-  'db_list_all',
-  'git_hooks',
-  // Project Tier2 (runtime store base)
-  'runtime',
-  'store',
 ]);
 
-/** Tier2: Abbreviation → full form mapping for non-major resource types (normalization). */
-export const TIER2_ABBREV_TO_FULL: Readonly<Record<string, string>> = {
+/** Component 2: Abbreviation → full form (CAF normalization). */
+export const COMPONENT2_ABBREV_TO_FULL: Readonly<Record<string, string>> = {
   rg: 'resourcegroup',
   st: 'storage',
   vm: 'virtualmachine',
@@ -170,48 +128,17 @@ export const TIER2_ABBREV_TO_FULL: Readonly<Record<string, string>> = {
   wps: 'webpubsub',
 } as const;
 
-/** Tier3: Environment (CAF) + project subdomain/feature segment values per §E. */
-export const TIER3_ENVIRONMENT = new Set([
-  // CAF environment
+/** Component 3: CAF environment only. */
+export const COMPONENT3_ENVIRONMENT = new Set([
   'prod',
   'dev',
   'test',
   'qa',
   'stage',
-  // Project Tier3 (subdomain / feature group)
-  'documentation',
-  'mapping',
-  'schema',
-  'seed',
-  'material',
-  'ontology',
-  'reference',
-  'assessment',
-  'bank',
-  'diagnose',
-  'instruction',
-  'recommend',
-  'review',
-  'achievement',
-  'actors',
-  'analysis',
-  'briefing',
-  'curriculum',
-  'outlook',
-  'schedule',
-  'analytics',
-  'plagiarism',
-  'query',
-  'teams',
-  'sql',
-  'sql_kv',
-  'db_list_all',
-  'store',
 ]);
 
-/** Tier4: Region (CAF) + project Tier4 segment values per §E. */
-export const TIER4_REGION = new Set([
-  // CAF region example list
+/** Component 4: CAF region example set only. */
+export const COMPONENT4_REGION = new Set([
   'eastus',
   'eastus2',
   'westus',
@@ -232,9 +159,4 @@ export const TIER4_REGION = new Set([
   'eastasia',
   'japaneast',
   'koreacentral',
-  // Project Tier4 (sub-subdomain)
-  'material',
-  'ontology',
-  'sql',
-  'db_list_all',
 ]);
