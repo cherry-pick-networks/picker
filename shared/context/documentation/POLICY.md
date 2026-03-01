@@ -110,8 +110,8 @@ Context → § is in RULESET.md Rule index. .mdc roles:
 
 # 4-layer naming reference
 
-When the first directory tier is a Layer (presentation,
-application, domain, infrastructure), tier 2 and tier 3 must
+When the first directory component is a Layer (presentation,
+application, domain, infrastructure), component 2 and component 3 must
 use only that layer's allowed Infix and Suffix. Canonical
 source: RULESET.md §E. Below is a quick reference.
 

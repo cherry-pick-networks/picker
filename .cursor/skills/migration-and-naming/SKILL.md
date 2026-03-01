@@ -29,7 +29,7 @@ session. Keep the output in context.
 
 - Document and directory format/naming: segment form, axis
   rule, allowed sets per §E. Directory structure: max 3
-  tiers, allowed forms only; exceptions list maintained.
+  components, allowed forms only; exceptions list maintained.
 
 ## Checklist
 

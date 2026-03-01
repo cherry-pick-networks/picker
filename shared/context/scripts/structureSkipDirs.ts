@@ -1,8 +1,8 @@
 //
-// Skip lists for structure-dir-check and Tier walk (§F). No Layer dependency.
+// Skip lists for structure-dir-check and dir walk (§F). No Layer dependency.
 //
 
-/** Directory names skipped by structure-dir-check and Tier checks (RULESET §F). */
+/** Directory names skipped by structure-dir-check (RULESET §F). */
 export const SKIP_DIRS = new Set([
   '.git',
   '.cursor',

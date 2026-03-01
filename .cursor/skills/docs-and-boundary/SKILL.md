@@ -26,7 +26,7 @@ session. Keep the output in context.
 - Rule/docs: [prefix]-[suffix].mdc or
   [prefix]-[infix]-[suffix].mdc; segment form per §E. Under
   shared/context/: [suffix].md only.
-- Directory: max 3 tiers; prefix → infix → suffix; names
+- Directory: max 5 components; prefix → infix → suffix; names
   from §E allowed sets.
 
 ## §F — Directory structure and exceptions

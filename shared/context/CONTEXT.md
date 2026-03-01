@@ -25,12 +25,12 @@ When writing or editing AI-facing docs in this folder
 
 ## 2. Directory structure (summary)
 
-- **Max depth**: 3 tiers from root (prefix → infix →
+- **Max depth**: 3 components from root (prefix → infix →
   suffix). Root is not counted.
 - **Allowed forms**: `prefix/`, `prefix/infix/`,
   `prefix/infix/suffix/`
 - **Naming**: Use only approved segment names per axis; see
-  RULESET.md §E. When the first tier is a Layer
+  RULESET.md §E. When the first component is a Layer
   (presentation, application, domain, infrastructure), use
   that layer's allowed Infix/Suffix only; see RULESET.md §E.
   Rules summary below references RULESET.md §D–§F.

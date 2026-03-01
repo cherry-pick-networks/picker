@@ -11,5 +11,5 @@ When adding or changing directories (task type directory): apply RULESET.md §F,
 **Todo:** Create new directories only via
 `deno task structure:add-dir -- <path>`. Do not create directories by hand or in
 the editor. Run the command from project root with a root-relative path (e.g.
-`system/app/notifications`). The path must follow prefix/infix/suffix (max 3
-tiers) and §E allowed segment names.
+`system/app/notifications`). The path must follow prefix/infix/suffix (max 5
+components) and §E allowed segment names.

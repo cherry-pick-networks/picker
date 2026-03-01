@@ -1,16 +1,12 @@
 //
-// Path validation for structure:add-dir (§D/§E/§F). Exports validatePath.
-// WP6: runTrimAndParts then Tier1→Tier2→…→Tier5 (+ length caps) only.
+// Path validation for structure:add-dir (§D/§F). Format, segment form,
+// and exception list only; allowlist is config/structure_allowed_dirs.toml.
 //
 import {
   trimPath,
-  validateTier1,
-  validateTier2,
-  validateTier3,
-  validateTier4,
-  validateTier5,
-  validateTierCaps,
   validateTrimmed,
+  validateSegmentsForm,
+  validateNotSkipped,
 } from './structureAddDirValidateChecks.ts';
 
 function checkTrimmed(
@@ -35,23 +31,12 @@ function runTrimAndParts(
   return checkTrimmed(trimmed, parts);
 }
 
-// Tier1 → Tier2 → … → Tier5 then per-tier length caps.
-function runTierChecks(parts: string[]): string | null {
-  return (
-    validateTier1(parts) ??
-    validateTier2(parts) ??
-    validateTier3(parts) ??
-    validateTier4(parts) ??
-    validateTier5(parts) ??
-    validateTierCaps(parts)
-  );
-}
-
 export function validatePath(
   path: string,
 ): { ok: true } | { ok: false; err: string } {
   const step1 = runTrimAndParts(path);
   if (!step1.ok) return step1;
-  const err2 = runTierChecks(step1.parts);
+  const { trimmed, parts } = step1;
+  const err2 = validateSegmentsForm(parts) ?? validateNotSkipped(parts, trimmed);
   return err2 ? { ok: false, err: err2 } : { ok: true };
 }
