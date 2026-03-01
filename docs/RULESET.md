@@ -520,33 +520,36 @@ Component 5; do not add a sixth level.
 
 ### §E. Document and directory naming
 
-Directory and document segment names use Component 1 through
-Component 5 from the **CAF allowlist only**. Single source:
+Directory and document segment names use **Component 1, 2, and 5**
+from the **CAF allowlist only**. Component 3 and 4 word lists are
+**reference only** (not enforced; see MANUAL.md). Single source:
 MANUAL.md § CAF allowlist specification
 (sharepoint/context/config/CAF_ALLOWLIST_SPEC.md).
 Non-major resource-type abbreviations must be spelled out
-(per CAF spec Component 2). Use only allowed values for each
-component; no project-invented axes or term lists.
+(per CAF spec Component 2). Use only allowed values for
+Component 1, 2, and 5; no project-invented axes or term lists.
 
-**Hierarchy (layer) component names**: Every directory or
-document segment at any level (Component 1 through Component 5)
-must use **only** terms from the CAF allowlist for that
-component. No ad-hoc or project-invented names. Allowlist
-source: MANUAL.md § CAF allowlist specification; canonical
-data: `pipeline/config/structureAddDirConfigSetsData.ts`
-(COMPONENT1_WORKLOAD, COMPONENT2_RESOURCE_TYPE,
-COMPONENT3_ENVIRONMENT, COMPONENT4_REGION; Component 5 =
-4-digit numeric).
+**Hierarchy (layer) component names**: Directory or document
+segments at Component 1, 2, or 5 must use **only** terms from
+the CAF allowlist for that component. Component 3 and 4 are
+reference only (not validated). No ad-hoc or project-invented
+names for enforced components. Allowlist source: MANUAL.md § CAF
+allowlist specification; canonical data:
+`pipeline/config/structureAddDirConfigSetsData.ts`
+(COMPONENT1_WORKLOAD, COMPONENT2_RESOURCE_TYPE; Component 5 =
+4-digit numeric. COMPONENT3_ENVIRONMENT, COMPONENT4_REGION are
+reference only. A separate C3 reference list
+(COMPONENT3_REFERENCE_AZURE_RESOURCE_SEGMENTS) holds Azure resource
+type last segments; see MANUAL.md § CAF allowlist specification.).
 
-**Component 1–5 (CAF only)**. Component 1 — CAF workload names
-(shared, client, application, etc.). Component 2 — Resource
-type: major as-is, non-major full form (see CAF spec).
-Component 3 — Environment (prod, dev, test, qa, stage).
-Component 4 — Region (east_us, west_europe, etc.). Component 5 —
-Numeric (4 digits) for directory; for document/rule segments
-use only terms defined in the CAF allowlist or project
-documentation. Schema SQL under sharepoint/infra/schema/ follow
-MANUAL.md (Schema DDL file naming).
+**Component 1, 2, 5 (CAF allowlist)**. Component 1 — CAF workload
+names (shared, client, application, etc.). Component 2 —
+Resource type: major as-is, non-major full form (see CAF spec).
+Component 5 — Numeric (4 digits) for directory; for
+document/rule segments use only terms defined in the CAF
+allowlist or project documentation. Schema SQL under
+sharepoint/infra/schema/ follow MANUAL.md (Schema DDL file
+naming).
 
 TypeScript source files (api/, api/test/, pipeline/test/,
 pipeline/config/): Base filename (before .ts) must
@@ -574,8 +577,9 @@ C1/C2/C3/C4/C5/ (C1=Component 1, etc.). Order fixed:
 Component 1 then Component 2 then Component 3 then Component
 4 then Component 5; no sixth component.
 
-Rule content — naming: Each component name must use only
-values from the CAF allowlist (Component 1–5); see §E. Directory and document segment
+Rule content — naming: Each component name at levels 1, 2, or 5
+must use only values from the CAF allowlist; Component 3 and 4
+are reference only. See §E. Directory and document segment
 names: lowercase; one underscore between words; no hyphens
 or spaces. TypeScript filenames: see §E (camelCase or
 PascalCase, no dot; MANUAL.md).
@@ -607,8 +611,9 @@ component, naming reference, exception list. Document names:
 optionally walk the document tree (e.g. sharepoint/context/),
 skip document exceptions, assert each remaining .md matches
 [Component5].md and Component 5 per §E (CAF allowlist); run
-in pre-commit or CI. Component 1–5 allowlists in §E are for
-Azure resource naming and document/rule segments only.
+in pre-commit or CI. Component 1, 2, and 5 allowlists in §E
+are for Azure resource naming and document/rule segments only;
+Component 3 and 4 are reference only.
 
 ### §G. Dependency constraint
 

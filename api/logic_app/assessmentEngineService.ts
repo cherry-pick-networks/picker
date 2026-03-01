@@ -5,7 +5,7 @@ import {
   generateWrongAnswer,
   getAdaptiveNextItem,
 } from './assessmentEvaluationService.ts';
-import { runMisconceptionDiagnosis } from '#api/search/diagnoseService.ts';
+import { runMisconceptionDiagnosis } from '#api/logic_app/diagnoseService.ts';
 
 export type AssessmentEngineResult =
   | { options: string[] }

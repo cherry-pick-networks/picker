@@ -2,7 +2,7 @@
 
 import type { Context } from 'hono';
 import { getLexisAllowedSourceIds } from './config.ts';
-import { ContentStores } from '#api/search/ContentStores.ts';
+import { ContentStores } from '#api/storage/ContentStores.ts';
 import { parseUtteranceWithFallback } from '#api/search/utteranceParserService.ts';
 
 function validateQuery(

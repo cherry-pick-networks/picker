@@ -4,7 +4,7 @@
 //
 
 import { parse } from '@std/toml';
-import { createSource } from '#api/search/material/service.ts';
+import { createSource } from '#api/storage/catalog/service.ts';
 
 const MATERIAL_SOURCES_TOML = new URL(
   '../../../sharepoint/infra/seed/material/material_sources.toml',

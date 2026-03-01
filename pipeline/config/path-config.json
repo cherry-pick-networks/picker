@@ -34,6 +34,8 @@
     "applicationGovernance": "api/config",
     "applicationIdentity": "identity",
     "applicationInfra": "api/postgresql",
-    "applicationReport": "reporting"
+    "applicationReport": "reporting",
+    "applicationStorage": "api/storage",
+    "applicationLogicApp": "api/logic_app"
   }
 }

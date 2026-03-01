@@ -7,7 +7,7 @@ import {
   allowlistHas,
 } from '#api/config/allowlistTypes.ts';
 import { getAllowlistDataOrLoad } from '#api/config/allowlistData.ts';
-import { ContentLlmService } from '#api/search/ContentLlmService.ts';
+import { ContentLlmService } from '#api/storage/ContentLlmService.ts';
 
 export type ReviewMappingOk = {
   ok: true;

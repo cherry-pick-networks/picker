@@ -4,7 +4,7 @@
 //
 
 import { parseDays } from './daysParser.ts';
-import { matchSourceIdByKeyword } from './material/matcherConfig.ts';
+import { matchSourceIdByKeyword } from '#api/storage/catalog/matcherConfig.ts';
 import { getCachedOrFetch } from './utteranceParserServiceCache.ts';
 import type { UtteranceParseResult } from './utteranceParserServiceTypes.ts';
 

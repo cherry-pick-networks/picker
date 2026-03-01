@@ -10,7 +10,7 @@ import {
   toItem,
   validateAllowlist,
 } from './bankGenerateDynamicHelpers.ts';
-import { ContentLlmService } from '#api/search/ContentLlmService.ts';
+import { ContentLlmService } from '#api/storage/ContentLlmService.ts';
 
 export const MIN_CONCEPTS = 2;
 export const MAX_CONCEPTS = 3;

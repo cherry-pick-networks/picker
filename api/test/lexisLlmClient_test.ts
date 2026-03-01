@@ -3,7 +3,7 @@
 //
 
 import { assertEquals } from '@std/assert';
-import { parseUtteranceWithLlm } from '#api/search/material/lexisLlmClient.ts';
+import { parseUtteranceWithLlm } from '#api/storage/catalog/lexisLlmClient.ts';
 
 Deno.test(
   'parseUtteranceWithLlm with LEXIS_UTTERANCE_LLM_MOCK returns fixed output',

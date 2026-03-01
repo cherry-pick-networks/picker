@@ -79,8 +79,9 @@ Adoption Framework) 5-axis model**, which follows Azure
 Resource Manager (ARM) naming concepts: Workload, resource
 type, Environment, Region, Instance. Project paths use
 Component 1 (Workload) and Component 2 (resource type);
-Component 3–5 (environment, region, instance) use the same
-CAF allowlist when used as directory or resource segments.
+Component 3 and 4 (environment, region) word lists are reference
+only; Component 5 uses the CAF allowlist when used as directory or
+resource segments.
 Single source for CAF terms: this manual § CAF allowlist
 specification.
 
@@ -92,13 +93,13 @@ CAF-style names.
 
 **5-component directory roles (summary)**. Max depth is **5
 components** (Component 1 → Component 2 → … → Component 5);
-root is not counted. Segment names at each level use **only**
-the CAF allowlist for that component (see § CAF allowlist
+root is not counted. Segment names use the CAF allowlist for
+**Component 1, 2, and 5** only (see § CAF allowlist
 specification below). **Component 1** = workload. **Component 2** =
 resource type (major as-is, non-major full form). **Component 3** =
-environment (prod, dev, test, qa, stage). **Component 4** =
-region. **Component 5** = optional instance or numeric suffix
-(4 digits, e.g. 0001).
+environment, **Component 4** = region: word lists are **reference
+only** (not enforced; see reference tables below). **Component 5** =
+optional instance or numeric suffix (4 digits, e.g. 0001).
 
 ### Component 1 — Workload (scope)
 
@@ -114,17 +115,6 @@ allowlist specification (Component 2) only; canonical data:
 `pipeline/config/structureAddDirConfigSetsData.ts`
 COMPONENT2_RESOURCE_TYPE. Non-major types use full form
 (one underscore between words).
-
-### Component 3 — Environment
-
-Allowed values from § CAF allowlist specification (Component 3)
-only (prod, dev, test, qa, stage). Project directory paths
-do not use environment as a segment.
-
-### Component 4 — Region
-
-Allowed values from § CAF allowlist specification (Component 4)
-only. Not used as a segment in project directory paths.
 
 ### Component 5 — Instance
 
@@ -248,9 +238,11 @@ Allowed terms for workload, application, or project names and general naming com
 
 **Rule**: Any CAF abbreviation not listed in **Major (keep as-is)** is treated as non-major and must be spelled out using this table (or added here after review).
 
-#### Component 3 — Environment values
+#### Reference only — Component 3 (Environment), Component 3 reference list, and Component 4 (Region)
 
-Allowed environment segment values. Use **only** these for the environment component.
+The following tables are **reference only**; they are not part of the validated CAF allowlist. Use for CAF-style resource naming when needed; segment validation applies to Component 1, 2, and 5 only.
+
+**Component 3 — Environment values (reference; C3 allowlist)**
 
 | Value | Meaning |
 |-------|---------|
@@ -260,9 +252,13 @@ Allowed environment segment values. Use **only** these for the environment compo
 | qa | Quality assurance |
 | stage | Staging |
 
-#### Component 4 — Region (CAF example list)
+**Component 3 — Reference list (separate)**
 
-Allowed region segment values for CAF-style names. This list is the **CAF example set**; the full Azure region list is in [Azure regions](https://learn.microsoft.com/en-us/azure/reliability/regions-list).
+A **separate reference list** holds Azure resource type last segments (e.g. from paths like `discoveryHubs / applications / members` → `members`). Use for CAF-style naming reference only; not used for directory creation or validation. Source: [Tag support for resources](https://docs.azure.cn/en-us/azure-resource-manager/management/tag-support). Canonical data: `pipeline/config/structureAddDirConfigSetsData.ts` → `COMPONENT3_REFERENCE_AZURE_RESOURCE_SEGMENTS`.
+
+**Component 4 — Region (reference; CAF example set)**
+
+Full Azure region list: [Azure regions](https://learn.microsoft.com/en-us/azure/reliability/regions-list).
 
 | Code | Description |
 |------|-------------|
@@ -289,7 +285,7 @@ Allowed region segment values for CAF-style names. This list is the **CAF exampl
 
 **Note**: CAF docs also mention short forms such as `usva`, `ustx` for some scenarios; if used, add them to this table after team agreement.
 
-#### Component 5 — Numeric pattern
+#### Component 5 — Numeric pattern (allowlist)
 
 Instance or identifier suffix in resource names.
 

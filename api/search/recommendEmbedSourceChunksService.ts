@@ -4,8 +4,8 @@
 
 import { chunkBody } from '#api/search/recommendChunkSource.ts';
 import { ContentEmbeddingService } from '#api/search/ContentEmbeddingService.ts';
-import { ContentStores } from '#api/search/ContentStores.ts';
-import { getSource } from '#api/search/material/service.ts';
+import { ContentStores } from '#api/storage/ContentStores.ts';
+import { getSource } from '#api/storage/catalog/service.ts';
 
 export type EmbedResult =
   | { ok: true }

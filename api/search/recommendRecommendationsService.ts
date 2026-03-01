@@ -8,17 +8,17 @@ import { resolveStrategy } from '#api/search/recommendStrategy.ts';
 import type {
   GetRecommendationsResult,
   QueryPrep,
-} from '#api/search/recommendRecommendationsServiceHelpers.ts';
+} from '#api/search/recommendation/recommendationsServiceHelpers.ts';
 import {
   runRag,
   runSemantic,
   runSemanticAndRag,
   runSemanticItems,
-} from '#api/search/recommendRecommendationsServiceRunners.ts';
+} from '#api/search/recommendation/recommendationsServiceRunners.ts';
 
 const DEFAULT_LIMIT = 10;
 
-export type { GetRecommendationsResult } from '#api/search/recommendRecommendationsServiceHelpers.ts';
+export type { GetRecommendationsResult } from '#api/search/recommendation/recommendationsServiceHelpers.ts';
 
 function prepareQuery(
   query: RecommendationsQuery,

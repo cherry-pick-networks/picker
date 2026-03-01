@@ -1,7 +1,9 @@
 //
+// Deprecated: use flattenRestoreApi.ts and deno task api:flatten-restore.
 // Flatten api/ to root, delete dirs, run c2 structure script, distribute files, delete empty dirs.
-// Run from project root. Usage: deno run -A pipeline/config/apiFlattenRestore.ts
 //
+
+import { join, dirname } from "@std/path";
 
 const API_DIR = "api";
 const FLAT_TEMP = "api_flat_temp";
@@ -21,7 +23,7 @@ async function collectFiles(
   for await (const e of Deno.readDir(dir)) {
     const name = e.name;
     if (name === FLAT_TEMP || name === MAP_FILE) continue;
-    const abs = `${dir}/${name}`;
+    const abs = join(dir, name);
     const rel = prefix ? `${prefix}/${name}` : name;
     const info = await Deno.stat(abs);
     if (info.isDirectory) {
@@ -35,8 +37,8 @@ async function collectFiles(
 
 async function main(): Promise<void> {
   const root = Deno.cwd();
-  const api = `${root}/${API_DIR}`;
-  const tempDir = `${root}/${FLAT_TEMP}`;
+  const api = join(root, API_DIR);
+  const tempDir = join(root, FLAT_TEMP);
 
   // 1. Collect files and build mapping (flat name -> dest path)
   const files = await collectFiles(api, "");
@@ -58,19 +60,19 @@ async function main(): Promise<void> {
       flatName = rel.replace(/\//g, "_").replace(/\\/g, "_");
       mapping[flatName] = destPath(rel);
     }
-    const destFile = `${tempDir}/${flatName}`;
+    const destFile = join(tempDir, flatName);
     await Deno.mkdir(tempDir, { recursive: true });
     await Deno.copyFile(abs, destFile);
   }
   await Deno.writeTextFile(
-    `${root}/${MAP_FILE}`,
+    join(root, MAP_FILE),
     JSON.stringify(mapping, null, 0),
   );
   console.log(`Flattened ${files.length} files to ${FLAT_TEMP}`);
 
   // 2. Delete everything under api/
   for await (const e of Deno.readDir(api)) {
-    const path = `${api}/${e.name}`;
+    const path = join(api, e.name);
     if (e.name === FLAT_TEMP || e.name === MAP_FILE) continue;
     await Deno.remove(path, { recursive: true });
   }
@@ -78,7 +80,7 @@ async function main(): Promise<void> {
 
   // 3. Move flat files into api/
   for await (const e of Deno.readDir(tempDir)) {
-    await Deno.rename(`${tempDir}/${e.name}`, `${api}/${e.name}`);
+    await Deno.rename(join(tempDir, e.name), join(api, e.name));
   }
   await Deno.remove(tempDir, { recursive: true });
   console.log("Moved flat files to api/");
@@ -103,16 +105,16 @@ async function main(): Promise<void> {
 
   // 5. Distribute files using mapping
   const map = JSON.parse(
-    await Deno.readTextFile(`${root}/${MAP_FILE}`),
+    await Deno.readTextFile(join(root, MAP_FILE)),
   ) as Record<string, string>;
   let moved = 0;
   for await (const e of Deno.readDir(api)) {
     if (e.isFile && e.name !== MAP_FILE) {
       const destRel = map[e.name];
       if (!destRel) continue;
-      const dest = `${api}/${destRel}`;
-      await Deno.mkdir(dest.replace(/\/[^/]+$/, ""), { recursive: true });
-      await Deno.rename(`${api}/${e.name}`, dest);
+      const dest = join(api, destRel);
+      await Deno.mkdir(dirname(dest), { recursive: true });
+      await Deno.rename(join(api, e.name), dest);
       moved++;
     }
   }
@@ -123,7 +125,7 @@ async function main(): Promise<void> {
     const list: string[] = [];
     for await (const e of Deno.readDir(dir)) {
       if (!e.isDirectory) continue;
-      const path = `${dir}/${e.name}`;
+      const path = join(dir, e.name);
       list.push(path, ...(await collectDirs(path)));
     }
     return list;
@@ -146,7 +148,7 @@ async function main(): Promise<void> {
   }
   console.log("Removed empty dirs under api/");
 
-  await Deno.remove(`${root}/${MAP_FILE}`);
+  await Deno.remove(join(root, MAP_FILE));
   console.log("Done.");
 }
 

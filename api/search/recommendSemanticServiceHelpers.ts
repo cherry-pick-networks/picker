@@ -1,8 +1,8 @@
 //  Semantic recommend: filter, load sources, search, map. Used by semanticService.
 
-import { ContentStores } from '#api/search/ContentStores.ts';
-import { getSource } from '#api/search/material/service.ts';
-import type { Source } from '#api/search/material/sourceSchema.ts';
+import { ContentStores } from '#api/storage/ContentStores.ts';
+import { getSource } from '#api/storage/catalog/service.ts';
+import type { Source } from '#api/storage/catalog/sourceSchema.ts';
 import {
   chunkToRecommendation,
   sourceToFileDisplayName,

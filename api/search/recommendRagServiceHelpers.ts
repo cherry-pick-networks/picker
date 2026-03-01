@@ -1,7 +1,7 @@
 //  RAG recommend: types, filter, load sources, map. Used by ragService.ts.
 
-import { getSource } from '#api/search/material/service.ts';
-import type { Source } from '#api/search/material/sourceSchema.ts';
+import { getSource } from '#api/storage/catalog/service.ts';
+import type { Source } from '#api/storage/catalog/sourceSchema.ts';
 import {
   chunkToRecommendation,
   sourceToFileDisplayName,
