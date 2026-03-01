@@ -242,7 +242,9 @@ Allowed terms for workload, application, or project names and general naming com
 
 The following tables are **reference only**; they are not part of the validated CAF allowlist. Use for CAF-style resource naming when needed; segment validation applies to Component 1, 2, and 5 only.
 
-**Component 3 — Environment values (reference; C3 allowlist)**
+**Component 3 — Environment allowlist (reference)**
+
+C3 allowlist includes environment values and Azure resource type last segments (e.g. from paths like `discoveryHubs / applications / members` → `members`). Source: [Tag support for resources](https://docs.azure.cn/en-us/azure-resource-manager/management/tag-support). Canonical data: `pipeline/config/structureAddDirConfigSetsData.ts` → `COMPONENT3_ENVIRONMENT`.
 
 | Value | Meaning |
 |-------|---------|
@@ -252,9 +254,7 @@ The following tables are **reference only**; they are not part of the validated 
 | qa | Quality assurance |
 | stage | Staging |
 
-**Component 3 — Reference list (separate)**
-
-A **separate reference list** holds Azure resource type last segments (e.g. from paths like `discoveryHubs / applications / members` → `members`). Use for CAF-style naming reference only; not used for directory creation or validation. Source: [Tag support for resources](https://docs.azure.cn/en-us/azure-resource-manager/management/tag-support). Canonical data: `pipeline/config/structureAddDirConfigSetsData.ts` → `COMPONENT3_REFERENCE_AZURE_RESOURCE_SEGMENTS`.
+(Plus Azure resource type last segments in the same allowlist; see canonical data.)
 
 **Component 4 — Region (reference; CAF example set)**
 
