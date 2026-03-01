@@ -3,8 +3,8 @@
 // Works on a new branch only; current branch is left unchanged.
 // Limitation: uses --first-parent only; side branches merged in are not included.
 // Requires a clean working tree (commit or stash first) unless --dry-run.
-// Run from repo root: deno run -A sharepoint/context/scripts/rewriteMergeAtTagBoundaries.ts
-// [--dry-run] [--all | -n N] [--branch <result-branch>] [--overwrite]
+// Run from repo root: deno run -A pipeline/config/rewriteMergeAtTagBoundaries.ts
+// [--dry-run] [--all | -n N] [--branch <result-branch>] [--overwrite] [--apply-to-main]
 
 function ignoreError(_e: unknown): void {
   void _e;
@@ -85,6 +85,7 @@ function parseArgs(): {
   n: number;
   branch: string | undefined;
   overwrite: boolean;
+  applyToMain: boolean;
 } {
   const o = {
     dryRun: Deno.args.includes('--dry-run'),
@@ -92,6 +93,7 @@ function parseArgs(): {
     n: getN(),
     branch: getBranchArg(),
     overwrite: Deno.args.includes('--overwrite'),
+    applyToMain: Deno.args.includes('--apply-to-main'),
   };
   validateN(o.n, o.all);
   return o;
@@ -234,6 +236,7 @@ function logDryRun(
   segments: { type: string; revs: string[] }[],
   resultBranch: string,
   currentBranch: string,
+  applyToMain: boolean,
 ): void {
   console.log(
     'Dry run: would create branch',
@@ -244,7 +247,11 @@ function logDryRun(
     segments.length,
     'segments with merge commits.',
   );
-  console.log('Current branch', currentBranch, 'would be unchanged.');
+  if (applyToMain) {
+    console.log('Then main would be updated to the result (reset --hard).');
+  } else {
+    console.log('Current branch', currentBranch, 'would be unchanged.');
+  }
   Deno.exit(0);
 }
 
@@ -492,7 +499,7 @@ async function runIfNotDryRun(
   const resultBranch = getResultBranchName(opts.branch);
   const base = await getBase(revs);
   if (opts.dryRun) {
-    logDryRun(base, segments, resultBranch, currentBranch);
+    logDryRun(base, segments, resultBranch, currentBranch, opts.applyToMain);
   } else {
     await requireCleanWorkingTree();
     await runRewrite(
@@ -502,6 +509,7 @@ async function runIfNotDryRun(
       resultBranch,
       base,
       opts.overwrite,
+      opts.applyToMain,
     );
   }
 }
@@ -510,6 +518,7 @@ async function logDone(
   resultBranch: string,
   resultTip: string,
   currentBranch: string,
+  appliedToMain: boolean,
 ): Promise<void> {
   console.log(
     'Done. Branch',
@@ -517,7 +526,11 @@ async function logDone(
     'now has merge commits at type boundaries.',
   );
   console.log('Tip:', resultTip);
-  console.log('Current branch', currentBranch, 'unchanged. To use: git checkout', resultBranch);
+  if (appliedToMain) {
+    console.log('Main has been updated to the rewritten history. Current branch: main.');
+  } else {
+    console.log('Current branch', currentBranch, 'unchanged. To use: git checkout', resultBranch);
+  }
 }
 
 async function branchExists(branch: string): Promise<boolean> {
@@ -593,13 +606,20 @@ async function runRewrite(
   resultBranch: string,
   base: string,
   overwrite: boolean,
+  applyToMain: boolean,
 ): Promise<void> {
   try {
     await createAndCheckoutResultBranch(resultBranch, base, overwrite);
     await doApplyAndLoop(revs, segments, resultBranch, base);
     const resultTip = await git(['rev-parse', 'HEAD']);
-    await git(['checkout', currentBranch]);
-    await logDone(resultBranch, resultTip, currentBranch);
+    if (applyToMain) {
+      await git(['checkout', 'main']);
+      await git(['reset', '--hard', resultTip]);
+      await logDone(resultBranch, resultTip, currentBranch, true);
+    } else {
+      await git(['checkout', currentBranch]);
+      await logDone(resultBranch, resultTip, currentBranch, false);
+    }
   } catch (e) {
     printRecoveryInstructions(currentBranch, resultBranch);
     throw e;
