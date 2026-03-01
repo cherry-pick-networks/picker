@@ -61,6 +61,20 @@ RULESET.md §2 (Paths single source).
 등록된 키는 `config/path-config.json`과 `pathConfig.ts`의 `PathKey`
 유니온에 동일하게 유지한다.
 
+### Next steps (structure)
+
+- **path-config**: Unused path keys removed or directories
+  created and reflected in allowlist; pathConfig.ts PathKey
+  kept in sync.
+- **allowlist**: `config/structure_allowed_dirs.toml` — only
+  paths that exist (or are planned); run
+  `deno task structure-dir-check` after changes.
+- **structure-tiers-check**: Runs in pre-push and CI; Tier1–Tier5
+  must conform to §E/CAF allowlist (see
+  `shared/context/scripts/structureAddDirConfigSetsData.ts`).
+- **Optional**: Directory rename per §J — maintain a
+  current→target path mapping table before bulk renames.
+
 ---
 
 ## System structure (CAF 5-axis · 5-tier)

@@ -193,6 +193,8 @@ approval, proceed to Phase 3 (S3a–S3e).
 
 <!-- Bullet list; one item = one task; if none required, add at least one optional (store §9). -->
 
+- Structure cleanup (path-config, allowlist, structure-tiers-check
+  in pre-push/CI) done; see MANUAL § Next steps (structure).
 - Mutate flow and tests (S5) are in place; pre-push passes.
 - Optional: Split remaining §P >100-line files
   (system/routes.ts, system/actor/profileService.ts,
