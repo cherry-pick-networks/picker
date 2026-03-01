@@ -5,6 +5,7 @@
 // Requires a clean working tree (commit or stash first) unless --dry-run.
 // Run from repo root: deno run -A pipeline/config/rewriteMergeAtTagBoundaries.ts
 // [--dry-run] [--all | -n N] [--branch <result-branch>] [--overwrite] [--apply-to-main]
+// With --apply-to-main: main is reset to the result, then the result branch is deleted.
 
 function ignoreError(_e: unknown): void {
   void _e;
@@ -248,7 +249,7 @@ function logDryRun(
     'segments with merge commits.',
   );
   if (applyToMain) {
-    console.log('Then main would be updated to the result (reset --hard).');
+    console.log('Then main would be updated to the result (reset --hard) and', resultBranch, 'would be deleted.');
   } else {
     console.log('Current branch', currentBranch, 'would be unchanged.');
   }
@@ -527,7 +528,7 @@ async function logDone(
   );
   console.log('Tip:', resultTip);
   if (appliedToMain) {
-    console.log('Main has been updated to the rewritten history. Current branch: main.');
+    console.log('Main has been updated to the rewritten history. Result branch deleted. Current branch: main.');
   } else {
     console.log('Current branch', currentBranch, 'unchanged. To use: git checkout', resultBranch);
   }
@@ -615,6 +616,7 @@ async function runRewrite(
     if (applyToMain) {
       await git(['checkout', 'main']);
       await git(['reset', '--hard', resultTip]);
+      await git(['branch', '-D', resultBranch]);
       await logDone(resultBranch, resultTip, currentBranch, true);
     } else {
       await git(['checkout', currentBranch]);
