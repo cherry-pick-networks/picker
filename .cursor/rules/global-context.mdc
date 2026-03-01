@@ -1,0 +1,30 @@
+---
+description: |
+  Context-based rule index entry. For code/docs/system/commit/migration etc.,
+  which § to apply is defined in RULESET.md Rule index. Use
+  `deno task rules:summary -- <task-type>` or the matching skill for the
+  current context.
+alwaysApply: false
+---
+
+See Rule index in shared/context/RULESET.md. Use
+`deno task rules:summary -- <task-type>` or the matching skill for the current
+context. The "matching" skill is defined by the task-type → skill mapping
+below; request that skill by name when the task type applies.
+
+**Task-type → skill (request this skill by name when applicable):**
+
+| Task type        | Skill name               |
+| ----------------- | ------------------------ |
+| feature + code    | feature-implementation   |
+| refactor + code   | refactor-and-commit      |
+| docs              | docs-and-boundary       |
+| commit            | commit-boundary         |
+| migration         | migration-and-naming   |
+
+For other task types (system, dependency, sql, directory), use
+`deno task rules:summary -- <task-type>`; no dedicated skill is listed here.
+
+When the task is code, docs, commit, or migration: request this Rule
+(global-context) or global-code (when editing .ts) so the applicable § and
+skill are applied.

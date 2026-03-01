@@ -1,0 +1,8 @@
+Project Cursor chat command definitions (Cursor only). For
+the list of commands and when to use each, see
+`shared/context/documentation/PRIMER.md` § Cursor chat
+commands (project). For other editors, see PRIMER § Using
+rules without Cursor.
+
+Commit boundary: use the **commit-boundary** skill (see
+PRIMER.md); no slash command.
