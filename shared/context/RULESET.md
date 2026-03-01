@@ -38,9 +38,11 @@ duplicate these rules in tool-specific configs.
   `deno task structure:add-dir -- <path>`. Segment form per
   §D/§F (lowercase, underscore, no hyphens; max 5 segments).
 - **CAF 5-axis** (Component 1–Component 5) applies to **Azure
-  resource naming and document/rule segment naming** per §E;
-  not used to validate repository directory paths. See
-  CAF_ALLOWLIST_SPEC.md; Component 5 numeric = 4 digits (e.g. 0001).
+  resource naming** (Azure Resource Manager terminology:
+  resource group, resource type, etc.) and document/rule
+  segment naming per §E; not used to validate repository
+  directory paths. See MANUAL.md § CAF allowlist specification; Component 5
+  numeric = 4 digits (e.g. 0001).
 - **This file**: `shared/context/RULESET.md` (shared =
   Component 1; context = Component 2; ruleset as artifact in filename)
 - **Exceptions**: .git, .cursor, node_modules, dist, build,
@@ -546,16 +548,16 @@ directory and rule/document naming per §D and §F; other uses
 apply from new or renamed items (see §J). Schema SQL files
 under shared/infra/schema/ (data only) follow MANUAL.md
 (Schema DDL file naming). Full CAF allowlist:
-shared/context/documentation/CAF_ALLOWLIST_SPEC.md.
+MANUAL.md § CAF allowlist specification.
 
 **Component 1–4 allowed sets (summary)**. Component 1 — CAF
 naming components (e.g. shared, client, application;
-workload/project names); see CAF_ALLOWLIST_SPEC Component 1.
+workload/project names); see MANUAL.md § CAF allowlist specification Component 1.
 Component 2 — Resource type: major abbreviations kept as-is
 (app, redis, sql, config, log, etc.); non-major spelled out
-per CAF_ALLOWLIST_SPEC Component 2. Component 3 — Environment:
+per MANUAL.md § CAF allowlist specification Component 2. Component 3 — Environment:
 prod, dev, test, qa, stage. Component 4 — Region: CAF example
-set (eastus, westeurope, etc.); see CAF_ALLOWLIST_SPEC
+set (eastus, westeurope, etc.); see MANUAL.md § CAF allowlist specification
 Component 4. Component 5 — Numeric pattern (4 digits only,
 e.g. 0001) for directory when used; for document/rule
 naming, Component 5 segment from Artifact/Policy/Meta
@@ -713,8 +715,7 @@ shared/context/documentation/, the allowed document base
 names ([Component5] in [Component5].md) are restricted to:
 MANUAL, FORMAT, POLICY, PRIMER, ACTION. No other segment
 names; new docs in this directory must use one of these
-five. Exception: shared/context/documentation/CAF_ALLOWLIST_SPEC.md
-(CAF allowlist spec; single reference for WP1–WP3).
+five. CAF allowlist spec: MANUAL.md § CAF allowlist specification (single reference for WP1–WP3).
 
 Documentation: Rule text lives only in this file;
 .cursor/rules/*.mdc state todo and when to apply (e.g.
