@@ -1,0 +1,357 @@
+# Global classification standards. ISCED, ISCED-F, Bloom, CEFR, Schema.org DocType.
+# Loaded by run-seed-ontology.ts.
+
+[[concept_scheme]]
+id = "isced"
+name = "ISCED 2011: Education level"
+
+[[concept]]
+scheme_id = "isced"
+code = "isced-0"
+pref_label = "Early childhood education"
+path = "isced.0"
+
+[[concept]]
+scheme_id = "isced"
+code = "isced-1"
+pref_label = "Primary education"
+path = "isced.1"
+
+[[concept]]
+scheme_id = "isced"
+code = "isced-2"
+pref_label = "Lower secondary education"
+path = "isced.2"
+
+[[concept]]
+scheme_id = "isced"
+code = "isced-3"
+pref_label = "Upper secondary education"
+path = "isced.3"
+
+[[concept]]
+scheme_id = "isced"
+code = "isced-4"
+pref_label = "Post-secondary non-tertiary"
+path = "isced.4"
+
+[[concept]]
+scheme_id = "isced"
+code = "isced-5"
+pref_label = "Short-cycle tertiary"
+path = "isced.5"
+
+[[concept]]
+scheme_id = "isced"
+code = "isced-6"
+pref_label = "Bachelor or equivalent"
+path = "isced.6"
+
+[[concept]]
+scheme_id = "isced"
+code = "isced-7"
+pref_label = "Master or equivalent"
+path = "isced.7"
+
+[[concept]]
+scheme_id = "isced"
+code = "isced-8"
+pref_label = "Doctoral or equivalent"
+path = "isced.8"
+
+[[concept_scheme]]
+id = "iscedf"
+name = "ISCED-F 2013: Field of education"
+
+[[concept]]
+scheme_id = "iscedf"
+code = "iscedf-00"
+pref_label = "Generic programmes and qualifications"
+path = "iscedf.00"
+
+[[concept]]
+scheme_id = "iscedf"
+code = "iscedf-01"
+pref_label = "Education"
+path = "iscedf.01"
+
+[[concept]]
+scheme_id = "iscedf"
+code = "iscedf-02"
+pref_label = "Arts and humanities"
+path = "iscedf.02"
+
+[[concept]]
+scheme_id = "iscedf"
+code = "iscedf-03"
+pref_label = "Social sciences, journalism and information"
+path = "iscedf.03"
+
+[[concept]]
+scheme_id = "iscedf"
+code = "iscedf-04"
+pref_label = "Business, administration and law"
+path = "iscedf.04"
+
+[[concept]]
+scheme_id = "iscedf"
+code = "iscedf-05"
+pref_label = "Natural sciences, mathematics and statistics"
+path = "iscedf.05"
+
+[[concept]]
+scheme_id = "iscedf"
+code = "iscedf-06"
+pref_label = "Information and communication technologies"
+path = "iscedf.06"
+
+[[concept]]
+scheme_id = "iscedf"
+code = "iscedf-07"
+pref_label = "Engineering, manufacturing and construction"
+path = "iscedf.07"
+
+[[concept]]
+scheme_id = "iscedf"
+code = "iscedf-08"
+pref_label = "Agriculture, forestry, fisheries and veterinary"
+path = "iscedf.08"
+
+[[concept]]
+scheme_id = "iscedf"
+code = "iscedf-09"
+pref_label = "Health and welfare"
+path = "iscedf.09"
+
+[[concept]]
+scheme_id = "iscedf"
+code = "iscedf-10"
+pref_label = "Services"
+path = "iscedf.10"
+
+[[concept_scheme]]
+id = "bloom"
+name = "Bloom's taxonomy (revised): Cognitive level"
+
+[[concept]]
+scheme_id = "bloom"
+code = "bloom-1"
+pref_label = "Remember (define, list, name)"
+path = "bloom.1"
+
+[[concept]]
+scheme_id = "bloom"
+code = "bloom-2"
+pref_label = "Understand (summarize, classify, explain)"
+path = "bloom.2"
+
+[[concept]]
+scheme_id = "bloom"
+code = "bloom-3"
+pref_label = "Apply (solve, demonstrate, use)"
+path = "bloom.3"
+
+[[concept]]
+scheme_id = "bloom"
+code = "bloom-4"
+pref_label = "Analyze (contrast, examine, organize)"
+path = "bloom.4"
+
+[[concept]]
+scheme_id = "bloom"
+code = "bloom-5"
+pref_label = "Evaluate (judge, critique, assess)"
+path = "bloom.5"
+
+[[concept]]
+scheme_id = "bloom"
+code = "bloom-6"
+pref_label = "Create (design, construct, plan)"
+path = "bloom.6"
+
+[[concept_scheme]]
+id = "cefr"
+name = "CEFR: Common European Framework of Reference for Languages"
+
+[[concept]]
+scheme_id = "cefr"
+code = "cefr-a1"
+pref_label = "A1 (Breakthrough or beginner)"
+path = "cefr.a1"
+
+[[concept]]
+scheme_id = "cefr"
+code = "cefr-a2"
+pref_label = "A2 (Waystage or elementary)"
+path = "cefr.a2"
+
+[[concept]]
+scheme_id = "cefr"
+code = "cefr-b1"
+pref_label = "B1 (Threshold or intermediate)"
+path = "cefr.b1"
+
+[[concept]]
+scheme_id = "cefr"
+code = "cefr-b2"
+pref_label = "B2 (Vantage or upper intermediate)"
+path = "cefr.b2"
+
+[[concept]]
+scheme_id = "cefr"
+code = "cefr-c1"
+pref_label = "C1 (Effective operational proficiency or advanced)"
+path = "cefr.c1"
+
+[[concept]]
+scheme_id = "cefr"
+code = "cefr-c2"
+pref_label = "C2 (Mastery or proficiency)"
+path = "cefr.c2"
+
+[[concept_scheme]]
+id = "doctype"
+name = "Schema.org / document type"
+
+[[concept]]
+scheme_id = "doctype"
+code = "book"
+pref_label = "Book"
+path = "doctype.book"
+
+[[concept]]
+scheme_id = "doctype"
+code = "article"
+pref_label = "Article"
+path = "doctype.article"
+
+[[concept]]
+scheme_id = "doctype"
+code = "news-article"
+pref_label = "NewsArticle"
+path = "doctype.news-article"
+
+[[concept]]
+scheme_id = "doctype"
+code = "video-object"
+pref_label = "VideoObject"
+path = "doctype.video-object"
+
+[[concept]]
+scheme_id = "doctype"
+code = "web-page"
+pref_label = "WebPage"
+path = "doctype.web-page"
+
+# BibTeX document types (Schema.org/doctype scheme)
+[[concept]]
+scheme_id = "doctype"
+code = "inproceedings"
+pref_label = "Conference Paper (InProceedings)"
+path = "doctype.inproceedings"
+
+[[concept]]
+scheme_id = "doctype"
+code = "techreport"
+pref_label = "Technical Report"
+path = "doctype.techreport"
+
+[[concept]]
+scheme_id = "doctype"
+code = "manual"
+pref_label = "Technical Manual"
+path = "doctype.manual"
+
+[[concept]]
+scheme_id = "doctype"
+code = "unpublished"
+pref_label = "Unpublished Manuscript"
+path = "doctype.unpublished"
+
+[[concept]]
+scheme_id = "doctype"
+code = "misc"
+pref_label = "Miscellaneous Content"
+path = "doctype.misc"
+
+[[concept_scheme]]
+id = "actfl"
+name = "ACTFL: American Council on the Teaching of Foreign Languages"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-n"
+pref_label = "Novice"
+path = "actfl.n"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-nl"
+pref_label = "Novice Low"
+path = "actfl.n.nl"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-nm"
+pref_label = "Novice Mid"
+path = "actfl.n.nm"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-nh"
+pref_label = "Novice High"
+path = "actfl.n.nh"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-i"
+pref_label = "Intermediate"
+path = "actfl.i"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-il"
+pref_label = "Intermediate Low"
+path = "actfl.i.il"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-im"
+pref_label = "Intermediate Mid"
+path = "actfl.i.im"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-ih"
+pref_label = "Intermediate High"
+path = "actfl.i.ih"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-a"
+pref_label = "Advanced"
+path = "actfl.a"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-al"
+pref_label = "Advanced Low"
+path = "actfl.a.al"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-am"
+pref_label = "Advanced Mid"
+path = "actfl.a.am"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-ah"
+pref_label = "Advanced High"
+path = "actfl.a.ah"
+
+[[concept]]
+scheme_id = "actfl"
+code = "actfl-s"
+pref_label = "Superior"
+path = "actfl.s"

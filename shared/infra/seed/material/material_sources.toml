@@ -1,0 +1,15 @@
+# Material source seed: serialization rationale only.
+# Actual metadata (title, total_entries, words_per_day, total_days) lives in .env
+# per RULESET.md §V. Env var = JSON object for payload: source_id, type, metadata.
+
+[[source]]
+source_id = "lexis-middle-basic"
+env_var = "SOURCE_META_MIDDLE_BASIC"
+
+[[source]]
+source_id = "lexis-middle-intermediate"
+env_var = "SOURCE_META_MIDDLE_INTERMEDIATE"
+
+[[source]]
+source_id = "lexis-high-basic"
+env_var = "SOURCE_META_HIGH_BASIC"
