@@ -3,7 +3,7 @@
 // SEMANTIC_EMBED_MOCK in llmClient.
 //
 
-import { embed } from '#api/postgresql/llmClient.ts';
+import { embed } from '#api/postgresql/services/llmClient.ts';
 
 export type EmbedResult =
   | { ok: true; embedding: number[] }

@@ -77,11 +77,10 @@ RULESET.md §2 (Paths single source).
 Directory and resource naming align to the **CAF (Cloud
 Adoption Framework) 5-axis model**, which follows Azure
 Resource Manager (ARM) naming concepts: Workload, resource
-type, Environment, Region, Instance. Project paths use
-Component 1 (Workload) and Component 2 (resource type);
-Component 3 and 4 (environment, region) word lists are reference
-only; Component 5 uses the CAF allowlist when used as directory or
-resource segments.
+type, Region, Instance. Project paths use Component 1 (Workload)
+and Component 2 (resource type); Component 3 and 4 word lists
+are reference only; Component 5 uses the CAF allowlist when
+used as directory or resource segments.
 Single source for CAF terms: this manual § CAF allowlist
 specification.
 
@@ -97,9 +96,10 @@ root is not counted. Segment names use the CAF allowlist for
 **Component 1, 2, and 5** only (see § CAF allowlist
 specification below). **Component 1** = workload. **Component 2** =
 resource type (major as-is, non-major full form). **Component 3** =
-environment, **Component 4** = region: word lists are **reference
-only** (not enforced; see reference tables below). **Component 5** =
-optional instance or numeric suffix (4 digits, e.g. 0001).
+C3 allowlist (reference). **Component 4** = region: word lists are
+**reference only** (not enforced; see reference tables below).
+**Component 5** = optional instance or numeric suffix (4 digits,
+e.g. 0001).
 
 ### Component 1 — Workload (scope)
 
@@ -176,7 +176,7 @@ Allowed terms for workload, application, or project names and general naming com
 | app | Web app |
 | redis | Azure Cache for Redis |
 | sql | Azure SQL Database server |
-| test | Environment / test |
+| test | Test |
 | prod | Production |
 | dev | Development |
 | qa | Quality assurance |
@@ -238,23 +238,13 @@ Allowed terms for workload, application, or project names and general naming com
 
 **Rule**: Any CAF abbreviation not listed in **Major (keep as-is)** is treated as non-major and must be spelled out using this table (or added here after review).
 
-#### Reference only — Component 3 (Environment), Component 3 reference list, and Component 4 (Region)
+#### Reference only — Component 3 and Component 4 (Region)
 
-The following tables are **reference only**; they are not part of the validated CAF allowlist. Use for CAF-style resource naming when needed; segment validation applies to Component 1, 2, and 5 only.
+The following are **reference only**; they are not part of the validated CAF allowlist. Use for CAF-style resource naming when needed; segment validation applies to Component 1, 2, and 5 only.
 
-**Component 3 — Environment allowlist (reference)**
+**Component 3 — C3 allowlist (reference)**
 
-C3 allowlist includes environment values and Azure resource type last segments (e.g. from paths like `discoveryHubs / applications / members` → `members`). Source: [Tag support for resources](https://docs.azure.cn/en-us/azure-resource-manager/management/tag-support). Canonical data: `pipeline/config/structureAddDirConfigSetsData.ts` → `COMPONENT3_ENVIRONMENT`.
-
-| Value | Meaning |
-|-------|---------|
-| prod | Production |
-| dev | Development |
-| test | Test |
-| qa | Quality assurance |
-| stage | Staging |
-
-(Plus Azure resource type last segments in the same allowlist; see canonical data.)
+C3 allowlist = Azure resource type last segments (e.g. from paths like `discoveryHubs / applications / members` → `members`). Source: [Tag support for resources](https://docs.azure.cn/en-us/azure-resource-manager/management/tag-support). Canonical data: `pipeline/config/structureAddDirConfigSetsData.ts` → `COMPONENT3_ENVIRONMENT`.
 
 **Component 4 — Region (reference; CAF example set)**
 
@@ -664,7 +654,7 @@ values only by updating global_standards.toml and re-running
   that domain's service if needed.
 - app/*.config.ts and *.handler.ts only import domain
   endpoints and register routes; no business logic.
-- Postgres: `application/infra/pgClient.ts` provides `getPg()`.
+- Postgres: `api/postgresql/connections/pgClient.ts` provides `getPg()`.
   Domain stores and application/kv use it; no KV or other storage
   client.
 
@@ -694,7 +684,7 @@ documented service API.
 | content/recommend    | recommendationsEndpoint.ts, semanticRecommendEndpoint.ts, semanticItemRecommendEndpoint.ts, ragRecommendEndpoint.ts | app                      |
 | content/diagnose     | diagnoseOpenApi.ts                                                                                                  | app (OpenAPI)            |
 | governance           | mutateEndpoint.ts, scriptsEndpoint.ts, governanceAssessmentOpenApi.ts, governanceOntologyOpenApi.ts                 | app                      |
-| infra                | storageEndpoint.ts                                                                                                  | app                      |
+| infra                | keys/storageEndpoint.ts                                                                                             | app                      |
 
 ### Vertical slice and cross-slice rules
 
@@ -708,7 +698,7 @@ documented service API.
   its **service** or public API (see Per-domain public API).
   Do not import another slice's store or internal
   implementation files.
-- **Exceptions**: sharepoint/, application/infra, and governance
+- **Exceptions**: sharepoint/, api/postgresql, and governance
   (allowlist data) follow the existing dependency matrix.
 
 ### Domain dependency (acyclic; data coupling)

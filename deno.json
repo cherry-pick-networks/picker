@@ -36,7 +36,7 @@
     "test": "deno test -A",
     "test:with-db": "./scripts/dev.sh test",
     "test:e2e-record": "deno run -A pipeline/test/runE2eRecord.ts",
-    "db:schema": "deno run -A api/postgresql/applySchema.ts",
+    "db:schema": "deno run -A api/postgresql/scripts/applySchema.ts",
     "seed:ontology": "deno run -A api/config/runSeedOntology.ts",
     "seed:ontology:with-db": "./scripts/dev.sh deno task seed:ontology",
     "seed:curriculum": "deno run -A identity/curriculum/seed.ts",

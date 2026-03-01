@@ -1,7 +1,7 @@
 //  Unit–concept mapping (unit_concept table): query by unit or by concept.
 
-import { getPg } from '#api/postgresql/pgClient.ts';
-import { loadSql } from '#api/postgresql/sqlLoader.ts';
+import { getPg } from '#api/postgresql/connections/pgClient.ts';
+import { loadSql } from '#api/postgresql/connections/sqlLoader.ts';
 
 const sqlDir = new URL('./sql/', import.meta.url);
 const SQL_GET_CODES_BY_UNIT = await loadSql(

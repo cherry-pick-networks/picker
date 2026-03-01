@@ -6,7 +6,7 @@ import {
   type MutateOutput,
   MutateOutputSchema,
 } from './mutateSchema.ts';
-import { chat } from '#api/postgresql/llmClient.ts';
+import { chat } from '#api/postgresql/services/llmClient.ts';
 
 export type MutateLlmInput = {
   snippet: string;

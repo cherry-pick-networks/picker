@@ -537,9 +537,9 @@ names for enforced components. Allowlist source: MANUAL.md § CAF
 allowlist specification; canonical data:
 `pipeline/config/structureAddDirConfigSetsData.ts`
 (COMPONENT1_WORKLOAD, COMPONENT2_RESOURCE_TYPE, COMPONENT3_ENVIRONMENT
-includes environment values and Azure resource type last segments;
-Component 5 = 4-digit numeric. COMPONENT3_ENVIRONMENT, COMPONENT4_REGION
-are reference only. See MANUAL.md § CAF allowlist specification.).
+= Azure resource type last segments; Component 5 = 4-digit numeric.
+COMPONENT3_ENVIRONMENT, COMPONENT4_REGION are reference only. See
+MANUAL.md § CAF allowlist specification.).
 
 **Component 1, 2, 5 (CAF allowlist)**. Component 1 — CAF workload
 names (shared, client, application, etc.). Component 2 —

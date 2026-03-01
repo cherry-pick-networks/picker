@@ -3,7 +3,7 @@
 // CURRICULUM_MAPPING_LLM_MOCK for tests.
 //
 
-import { chat } from '#api/postgresql/llmClient.ts';
+import { chat } from '#api/postgresql/services/llmClient.ts';
 import {
   type CurriculumMappingOutput,
   CurriculumMappingOutputSchema,

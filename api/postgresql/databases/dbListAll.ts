@@ -2,11 +2,11 @@
 // List tables with row counts and sample IDs. Needs DB (e.g. ./scripts/dev.sh).
 // Usage: ./scripts/dev.sh deno run -A application/infra/dbListAll.ts
 //
-import { getPg } from '#api/postgresql/pgClient.ts';
-import { loadSql } from '#api/postgresql/sqlLoader.ts';
+import { getPg } from '#api/postgresql/connections/pgClient.ts';
+import { loadSql } from '#api/postgresql/connections/sqlLoader.ts';
 
 const listAllDir = new URL(
-  './sql/db_list_all/',
+  './',
   import.meta.url,
 );
 const tables: { name: string }[] = [

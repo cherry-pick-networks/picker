@@ -7,7 +7,7 @@ import {
   type DiagnoseOutput,
   DiagnoseOutputSchema,
 } from './diagnoseSchema.ts';
-import { chat } from '#api/postgresql/llmClient.ts';
+import { chat } from '#api/postgresql/services/llmClient.ts';
 
 export type DiagnoseLlmResult =
   | { ok: true; output: DiagnoseOutput }

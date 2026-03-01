@@ -8,7 +8,7 @@ import registerReportRoutes from '#reporting/app/registerReportRoutes.ts';
 import registerIdentityRoutes from '#identity/registerIdentityRoutes.ts';
 import registerContentRoutes from '#api/search/registerContentRoutes.ts';
 import * as home from './homeHandler.ts';
-import * as kv from '#api/postgresql/storageEndpoint.ts';
+import * as kv from '#api/postgresql/keys/storageEndpoint.ts';
 import * as lexis from '#api/storage/catalog/lexisEndpoint.ts';
 import * as source from '#api/storage/catalog/sourceEndpoint.ts';
 import * as sourceDashboardView from '#api/storage/catalog/dashboardViewEndpoint.ts';

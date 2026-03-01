@@ -3,8 +3,8 @@
 // Run: deno task seed:curriculum
 //
 
-import { getPg } from '#api/postgresql/pgClient.ts';
-import { loadSql } from '#api/postgresql/sqlLoader.ts';
+import { getPg } from '#api/postgresql/connections/pgClient.ts';
+import { loadSql } from '#api/postgresql/connections/sqlLoader.ts';
 import { listGrammarUnits } from '#identity/schedule/grammarService.ts';
 
 const sqlDir = new URL('../sql/', import.meta.url);

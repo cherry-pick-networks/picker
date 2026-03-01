@@ -1,7 +1,7 @@
 //  Curriculum slot storage (52-week grid per level). Read-only at runtime.
 
-import { getPg } from '#api/postgresql/pgClient.ts';
-import { loadSql } from '#api/postgresql/sqlLoader.ts';
+import { getPg } from '#api/postgresql/connections/pgClient.ts';
+import { loadSql } from '#api/postgresql/connections/sqlLoader.ts';
 
 const sqlDir = new URL('../sql/', import.meta.url);
 const SQL_LIST_BY_LEVEL = await loadSql(

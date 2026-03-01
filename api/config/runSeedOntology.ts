@@ -3,7 +3,7 @@
 // Run: deno task seed:ontology
 //
 
-import { getPg } from '#api/postgresql/pgClient.ts';
+import { getPg } from '#api/postgresql/connections/pgClient.ts';
 import {
   insertConcepts,
   insertSchemes,

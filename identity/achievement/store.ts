@@ -1,7 +1,7 @@
 //  Achievement storage: concept outcomes and item responses (Postgres).
 
-import { getPg } from '#api/postgresql/pgClient.ts';
-import { loadSql } from '#api/postgresql/sqlLoader.ts';
+import { getPg } from '#api/postgresql/connections/pgClient.ts';
+import { loadSql } from '#api/postgresql/connections/sqlLoader.ts';
 import type {
   ConceptOutcome,
   ItemResponse,

@@ -1,9 +1,9 @@
 //  Generic key-value storage (Postgres). Logical key only (e.g. "foo").
 
-import { getPg } from '#api/postgresql/pgClient.ts';
-import { loadSql } from '#api/postgresql/sqlLoader.ts';
+import { getPg } from '#api/postgresql/connections/pgClient.ts';
+import { loadSql } from '#api/postgresql/connections/sqlLoader.ts';
 
-const sqlDir = new URL('./key_vault/', import.meta.url);
+const sqlDir = new URL('./', import.meta.url);
 const SQL_LIST_KEYS_BY_PREFIX = await loadSql(
   sqlDir,
   'list_keys_by_prefix.sql',

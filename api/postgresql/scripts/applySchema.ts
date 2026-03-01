@@ -1,9 +1,9 @@
 //
-// Apply DDL in sharepoint/infra/schema/*.sql in order. Requires DATABASE_URL or
+// Apply DDL in configurations/*.sql in order. Requires DATABASE_URL or
 // PG_* env. Run: deno task db:schema
 //
 import { getPath } from '#pipeline/config/pathConfig.ts';
-import { getPg } from './pgClient.ts';
+import { getPg } from '#api/postgresql/connections/pgClient.ts';
 
 function stripLeadingComments(block: string): string {
   const noComments = block.replace(
@@ -29,11 +29,11 @@ const SCHEMA_FILES = [
   '06_ontology.sql',
   '07_schedule.sql',
   '08_curriculum.sql',
-  '09_lexis-entry.sql',
-  '10_unit-concept.sql',
-  '11_item-embedding.sql',
+  '09_lexis_entry.sql',
+  '10_unit_concept.sql',
+  '11_item_embedding.sql',
   '12_achievement.sql',
-  '13_content-item-source-index.sql',
+  '13_content_item_source_index.sql',
 ];
 
 async function applySchema(): Promise<void> {

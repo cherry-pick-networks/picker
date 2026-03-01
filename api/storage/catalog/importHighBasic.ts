@@ -8,8 +8,8 @@
 //     Copies data/lexis-high-basic-headwords.json to temp/, then imports.
 //
 
-import { getPg } from '#api/postgresql/pgClient.ts';
-import { loadSql } from '#api/postgresql/sqlLoader.ts';
+import { getPg } from '#api/postgresql/connections/pgClient.ts';
+import { loadSql } from '#api/postgresql/connections/sqlLoader.ts';
 import { loadHeadwords } from './importHighBasicLoad.ts';
 
 const lexisSqlDir = new URL('../sql/', import.meta.url);

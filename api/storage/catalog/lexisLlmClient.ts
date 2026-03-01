@@ -7,7 +7,7 @@ import {
   type LexisUtteranceLlmOutput,
   LexisUtteranceLlmOutputSchema,
 } from './lexisLlmSchema.ts';
-import { chat } from '#api/postgresql/llmClient.ts';
+import { chat } from '#api/postgresql/services/llmClient.ts';
 
 export type LexisUtteranceLlmResult =
   | { ok: true; output: LexisUtteranceLlmOutput }

@@ -71,10 +71,10 @@ adding or changing routes.
 ## Infrastructure
 
 - **PostgreSQL** — single storage backend. Client:
-  `application/infra/pgClient.ts` (`getPg()`). Domain stores:
-  identity, content; KV and batch in infra. DDL data under
-  `sharepoint/infra/schema/` (see MANUAL.md). Apply:
-  `deno task db:schema` (application/infra/applySchema.ts).
+  `api/postgresql/connections/pgClient.ts` (`getPg()`). Domain stores:
+  identity, content; KV and batch in infra. DDL under
+  `api/postgresql/configurations/` (see MANUAL.md). Apply:
+  `deno task db:schema` (api/postgresql/scripts/applySchema.ts).
 - **File-based data** — identity_index.toml under
   `sharepoint/record/reference/` may remain as legacy; Identity
   domain can migrate to DB (actor table).

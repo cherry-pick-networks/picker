@@ -1,7 +1,7 @@
 //  Item storage (Postgres): content_item table only.
 
-import { getPg } from '#api/postgresql/pgClient.ts';
-import { loadSql } from '#api/postgresql/sqlLoader.ts';
+import { getPg } from '#api/postgresql/connections/pgClient.ts';
+import { loadSql } from '#api/postgresql/connections/sqlLoader.ts';
 
 const sqlDir = new URL('./', import.meta.url);
 const SQL_GET_ITEM = await loadSql(sqlDir, 'get_item.sql');

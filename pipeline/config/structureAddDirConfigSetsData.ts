@@ -150,18 +150,12 @@ export const COMPONENT2_ABBREV_TO_FULL: Readonly<Record<string, string>> = {
 } as const;
 
 /**
- * Component 3: CAF environment allowlist. Includes environment values (prod, dev,
- * test, qa, stage) and Azure resource type last segments (e.g. from paths like
- * discoveryHubs / applications / members → members). Source: [Tag support for
- * resources](https://docs.azure.cn/en-us/azure-resource-manager/management/tag-support).
+ * Component 3: CAF allowlist. Azure resource type last segments (e.g. from paths
+ * like discoveryHubs / applications / members → members). Source: [Tag support
+ * for resources](https://docs.azure.cn/en-us/azure-resource-manager/management/tag-support).
  * Reference only for validation; see RULESET.md §E.
  */
 export const COMPONENT3_ENVIRONMENT = new Set([
-  'prod',
-  'dev',
-  'test',
-  'qa',
-  'stage',
   'acknowledge',
   'activate',
   'activated_database',

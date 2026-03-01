@@ -8,7 +8,7 @@ import {
   ItemGenerateLlmOutputSchema,
 } from './bankGenerateLlmSchema.ts';
 import { buildItemGenerateMessages } from './bankGenerateLlmCall.ts';
-import { chat } from '#api/postgresql/llmClient.ts';
+import { chat } from '#api/postgresql/services/llmClient.ts';
 
 export type ItemGenerateLlmResult =
   | { ok: true; output: ItemGenerateLlmOutput }
