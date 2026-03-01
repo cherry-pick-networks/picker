@@ -25,14 +25,13 @@ When writing or editing AI-facing docs in this folder
 
 ## 2. Directory structure (summary)
 
-- **Max depth**: 3 components from root (prefix → infix →
-  suffix). Root is not counted.
-- **Allowed forms**: `prefix/`, `prefix/infix/`,
-  `prefix/infix/suffix/`
+- **Max depth**: 5 components from root. Root is not counted.
+- **Allowed forms**: Component 1 only; C1/C2; C1/C2/C3;
+  C1/C2/C3/C4; C1/C2/C3/C4/C5 (see RULESET.md §F).
 - **Naming**: Use only approved segment names per axis; see
-  RULESET.md §E. When the first component is a Layer
-  (presentation, application, domain, infrastructure), use
-  that layer's allowed Infix/Suffix only; see RULESET.md §E.
+  RULESET.md §E. When Component 1 is a Layer (presentation,
+  application, domain, infrastructure), use that layer's
+  allowed Component 2 and Component 5 only; see RULESET.md §E.
   Rules summary below references RULESET.md §D–§F.
 - **This file**: `shared/context/CONTEXT.md` (shared = Todo,
   context = Entity)

@@ -80,18 +80,20 @@ RULESET.md §2 (Paths single source).
 ## System structure (CAF 5-axis · 5 components)
 
 Directory and resource naming align to the **CAF (Cloud
-Adoption Framework) 5-axis model**: Workload, Resource
+Adoption Framework) 5-axis model**, which follows Azure
+Resource Manager (ARM) naming concepts: Workload, resource
 type, Environment, Region, Instance. Project paths use
-Component 1 (Workload) and Component 2 (Resource type);
+Component 1 (Workload) and Component 2 (resource type);
 Component 3–5 apply to CAF-style resource names or to the
 third directory component (Instance/suffix). Single source
-for CAF terms and abbreviations:
-`shared/context/documentation/CAF_ALLOWLIST_SPEC.md`.
+for CAF terms and abbreviations: this manual § CAF allowlist
+specification.
 
 **CAF policy**: CAF document standard only; **non-major
 resource types are spelled out** (no ad-hoc abbreviations).
-Use only the allowlist and mapping in CAF_ALLOWLIST_SPEC.md
-when generating or validating CAF-style names.
+Use only the allowlist and mapping in this manual § CAF
+allowlist specification when generating or validating
+CAF-style names.
 
 **5-component directory roles (summary)**. Max depth is **5
 components** (Component 1 → Component 2 → … → Component 5);
@@ -142,7 +144,7 @@ Consolidated: content (source + core + lexis), governance
   shared/infra/seed, shared/context/documentation). Allowed
   segment names per §E.
 - **In CAF resource names**: Environment (prod, dev, test,
-  qa, stage). See CAF_ALLOWLIST_SPEC.md Component 3. Project
+  qa, stage). See § CAF allowlist specification (Component 3). Project
   directory paths do not use environment as a segment.
 
 ### Component 4 — Further split / region
@@ -151,7 +153,7 @@ Consolidated: content (source + core + lexis), governance
   shared/infra/seed/ontology, system/content/material/sql,
   system/infra/sql/db_list_all).
 - **In CAF resource names**: Region (eastus, westeurope,
-  etc.). See CAF_ALLOWLIST_SPEC.md Component 4. Not used as a
+  etc.). See § CAF allowlist specification (Component 4). Not used as a
   segment in project directory paths.
 
 ### Component 5 — Instance
@@ -160,9 +162,161 @@ Consolidated: content (source + core + lexis), governance
   suffix (4 digits per CAF). Rarely used; max depth remains
   5 components (Component 1 through Component 5).
 - **In CAF resource names**: Numeric instance (4 digits).
-  See CAF_ALLOWLIST_SPEC.md Component 5.
+  See § CAF allowlist specification (Component 5).
 - Subdomains under system content/identity: see table
   below (Component 3/4 in practice).
+
+### CAF allowlist specification
+
+This subsection is the **single reference** for all CAF (Cloud Adoption Framework) terminology and abbreviations used in this project. WP1, WP2, and WP3 use this spec as input. No other CAF word lists or abbreviation tables should be used.
+
+**Principle**: CAF document standard only; non-major resource types are **spelled out** (no ad-hoc abbreviations).
+
+**Prose terminology**: In documentation, use Azure Resource Manager (ARM) terms: **resource group**, **resource type**, **resource provider**, **management group**, **subscription**, **type segment**. Segment values in this spec (e.g. `resourcegroup`) stay lowercase, no space; they denote the name segment only.
+
+**Source**: [Azure Resource Manager – Resource naming rules](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-name-rules), [Microsoft CAF – Resource naming](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming), [Resource abbreviations](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations).
+
+#### Component 1 — Allowed words (CAF naming components)
+
+Allowed terms for workload, application, or project names and general naming components. Use **only** these when generating or validating CAF-style names.
+
+| Term | Use |
+|------|-----|
+| shared | Shared / common workload |
+| client | Client application or component |
+| application | Application scope |
+| navigator | Example workload (CAF doc) |
+| emissions | Example workload (CAF doc) |
+| sharepoint | Example workload (CAF doc) |
+| hadoop | Example workload (CAF doc) |
+
+**Rule**: To add terms, update this table and get team agreement; then treat as final.
+
+#### Component 2 — Resource type abbreviations
+
+**Major (keep as-is)** — retained in resource names:
+
+| Abbreviation | Meaning |
+|--------------|---------|
+| app | Web app |
+| redis | Azure Cache for Redis |
+| sql | Azure SQL Database server |
+| test | Environment / test |
+| prod | Production |
+| dev | Development |
+| qa | Quality assurance |
+| stage | Staging |
+| config | Configuration |
+| log | Log Analytics workspace |
+
+**Non-major (spell out)** — use full form in generated names; mapping abbreviation → full form:
+
+| Abbreviation | Full form |
+|--------------|-----------|
+| rg | resourcegroup *(prose: resource group)* |
+| st | storage |
+| vm | virtualmachine |
+| vnet | virtualnetwork |
+| func | function |
+| sqldb | sqldatabase |
+| kv | keyvault |
+| nic | networkinterface |
+| nsg | networksecuritygroup |
+| pip | publicip |
+| vgw | virtualnetworkgateway |
+| snet | subnet |
+| cosmos | cosmosdb |
+| adf | datafactory |
+| evh | eventhub |
+| sbns | servicebusnamespace |
+| sbq | servicebusqueue |
+| sbt | servicebustopic |
+| apim | apimanagement |
+| cr | containerregistry |
+| aks | kubernetesservice |
+| mysql | mysqldatabase |
+| psql | postgresql |
+| sqlmi | sqlmanagedinstance |
+| dls | datalakestore |
+| synw | synapseworkspace |
+| mlw | machinelearningworkspace |
+| oai | openai |
+| appi | applicationinsights |
+| ase | appserviceenvironment |
+| asp | appserviceplan |
+| vmss | virtualmachinescaleset |
+| pl | privatelink |
+| pep | privateendpoint |
+| afw | azurefirewall |
+| agw | applicationgateway |
+| rsv | recoveryservicesvault |
+| mg | managementgroup |
+| ts | templatespec |
+| aa | automationaccount |
+| logic | logicapp |
+| ia | integrationaccount |
+| bot | botservice |
+| srch | search |
+| map | maps |
+| sigr | signalr |
+| wps | webpubsub |
+
+**Rule**: Any CAF abbreviation not listed in **Major (keep as-is)** is treated as non-major and must be spelled out using this table (or added here after review).
+
+#### Component 3 — Environment values
+
+Allowed environment segment values. Use **only** these for the environment component.
+
+| Value | Meaning |
+|-------|---------|
+| prod | Production |
+| dev | Development |
+| test | Test |
+| qa | Quality assurance |
+| stage | Staging |
+
+#### Component 4 — Region (CAF example list)
+
+Allowed region segment values for CAF-style names. This list is the **CAF example set**; the full Azure region list is in [Azure regions](https://learn.microsoft.com/en-us/azure/reliability/regions-list).
+
+| Code | Description |
+|------|-------------|
+| eastus | East US |
+| eastus2 | East US 2 |
+| westus | West US |
+| westus2 | West US 2 |
+| westus3 | West US 3 |
+| centralus | Central US |
+| southcentralus | South Central US |
+| northcentralus | North Central US |
+| westeurope | West Europe |
+| northeurope | North Europe |
+| uksouth | UK South |
+| francecentral | France Central |
+| germanywestcentral | Germany West Central |
+| canadacentral | Canada Central |
+| brazilsouth | Brazil South |
+| australiaeast | Australia East |
+| southeastasia | Southeast Asia |
+| eastasia | East Asia |
+| japaneast | Japan East |
+| koreacentral | Korea Central |
+
+**Note**: CAF docs also mention short forms such as `usva`, `ustx` for some scenarios; if used, add them to this table after team agreement.
+
+#### Component 5 — Numeric pattern
+
+Instance or identifier suffix in resource names.
+
+| Pattern | Description | Example |
+|---------|-------------|---------|
+| 4 digits | Instance number | `0001`, `0002` |
+
+**Rule**: Only numeric digits; exactly 4 characters. Use leading zeros for consistency (e.g. `0001`, `0002`).
+
+*CAF allowlist spec version 1.0 (draft until team agreement). WP1–WP3 reference this manual as the single input for CAF allowlist and abbreviation mapping.*
+
+---
 
 **TS filename** = default export name: camelCase for
 functions/modules (e.g. `profileEndpoint.ts`,
