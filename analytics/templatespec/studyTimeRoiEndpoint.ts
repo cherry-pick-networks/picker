@@ -1,11 +1,7 @@
-//  GET /report/cohort-weakness-heatmap.
-
 import type { Context } from 'hono';
-import {
-  buildCohortWeaknessHeatmap,
-} from '#analytics/cohortWeaknessHeatmapService.ts';
+import { buildStudyTimeRoi } from '#analytics/templatespec/studyTimeRoiService.ts';
 
-export function getCohortWeaknessHeatmap(c: Context) {
+export function getStudyTimeRoi(c: Context) {
   const actorIds = c.req.query('actor_ids')?.split(',')
     .filter(Boolean);
   const schemeId = c.req.query('scheme_id');
@@ -14,7 +10,7 @@ export function getCohortWeaknessHeatmap(c: Context) {
       error: 'actor_ids and scheme_id required',
     }, 400);
   }
-  return buildCohortWeaknessHeatmap({
+  return buildStudyTimeRoi({
     actor_ids: actorIds,
     scheme_id: schemeId,
     from: c.req.query('from') ?? undefined,

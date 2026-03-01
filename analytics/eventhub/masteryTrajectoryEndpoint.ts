@@ -1,5 +1,5 @@
 import type { Context } from 'hono';
-import { buildMasteryTrajectory } from '#analytics/masteryTrajectoryService.ts';
+import { buildMasteryTrajectory } from '#analytics/eventhub/masteryTrajectoryService.ts';
 
 export function getMasteryTrajectory(c: Context) {
   const actorId = c.req.query('actor_id');

@@ -1,7 +1,7 @@
 import type { Context } from 'hono';
 import {
   getPeerBenchmarking as buildPeerBenchmarking,
-} from '#analytics/peerBenchmarkingService.ts';
+} from '#analytics/automationaccount/peerBenchmarkingService.ts';
 
 function parseQuery(c: Context) {
   const actor_id = c.req.query('actor_id');

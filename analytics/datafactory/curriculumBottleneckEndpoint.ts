@@ -1,15 +1,9 @@
-//  HTTP handler for bottleneck dashboard API.
+//  GET /report/curriculum-bottleneck: same as bottlenecks for Copilot Excel.
 
 import type { Context } from 'hono';
-import { getBottleneckNodes } from '#analytics/bottleneckService.ts';
+import { getBottleneckNodes } from '#analytics/datafactory/bottleneckService.ts';
 
-function parseMinFailCount(c: Context): number | undefined {
-  const m = c.req.query('min_fail_count');
-  const n = m ? parseInt(m, 10) : undefined;
-  return n != null && Number.isNaN(n) ? undefined : n;
-}
-
-export function getBottlenecks(c: Context) {
+export function getCurriculumBottleneck(c: Context) {
   const actorIds = c.req.query('actor_ids')?.split(',')
     .filter(Boolean);
   const schemeId = c.req.query('scheme_id');
@@ -23,6 +17,5 @@ export function getBottlenecks(c: Context) {
     scheme_id: schemeId,
     from: c.req.query('from') ?? undefined,
     to: c.req.query('to') ?? undefined,
-    min_fail_count: parseMinFailCount(c),
   }).then((nodes) => c.json({ nodes }));
 }

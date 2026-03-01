@@ -1,8 +1,8 @@
 //  HTTP handler for anomaly detection API.
 
 import type { Context } from 'hono';
-import { AnomalyRequestSchema } from '#analytics/anomalySchema.ts';
-import { detectAnomalies } from '#analytics/anomalyService.ts';
+import { AnomalyRequestSchema } from '#analytics/applicationinsights/anomalySchema.ts';
+import { detectAnomalies } from '#analytics/applicationinsights/anomalyService.ts';
 
 export async function postAnomaly(c: Context) {
   const body = await c.req.json().catch(() => ({}));

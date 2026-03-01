@@ -1,7 +1,7 @@
 import type { Context } from 'hono';
 import {
   getTestItemDiscrimination as buildTestItemDiscrimination,
-} from '#analytics/testItemDiscriminationService.ts';
+} from '#analytics/search/testItemDiscriminationService.ts';
 
 export function getTestItemDiscrimination(
   c: Context,

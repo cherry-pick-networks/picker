@@ -145,7 +145,7 @@ Consolidated: content (source + core + lexis), governance
 - **In directory paths**: One more level when needed (e.g.
   sharepoint/infra/seed/ontology, application/content/material/sql,
   application/infra/sql/db_list_all).
-- **In CAF resource names**: Region (eastus, westeurope,
+- **In CAF resource names**: Region (east_us, west_europe,
   etc.). See § CAF allowlist specification (Component 4). Not used as a
   segment in project directory paths.
 
@@ -165,7 +165,7 @@ This subsection is the **single reference** for all CAF (Cloud Adoption Framewor
 
 **Principle**: CAF document standard only; non-major resource types are **spelled out** (no ad-hoc abbreviations).
 
-**Prose terminology**: In documentation, use Azure Resource Manager (ARM) terms: **resource group**, **resource type**, **resource provider**, **management group**, **subscription**, **type segment**. Segment values in this spec (e.g. `resourcegroup`) stay lowercase, no space; they denote the name segment only.
+**Prose terminology**: In documentation, use Azure Resource Manager (ARM) terms: **resource group**, **resource type**, **resource provider**, **management group**, **subscription**, **type segment**. Segment values in this spec (e.g. `resource_group`) stay lowercase; use one underscore between words; they denote the name segment only.
 
 **Source**: [Azure Resource Manager – Resource naming rules](https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/resource-name-rules), [Microsoft CAF – Resource naming](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming), [Resource abbreviations](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-abbreviations).
 
@@ -226,53 +226,53 @@ Allowed terms for workload, application, or project names and general naming com
 
 | Abbreviation | Full form |
 |--------------|-----------|
-| rg | resourcegroup *(prose: resource group)* |
+| rg | resource_group *(prose: resource group)* |
 | st | storage |
-| vm | virtualmachine |
-| vnet | virtualnetwork |
+| vm | virtual_machine |
+| vnet | virtual_network |
 | func | function |
-| sqldb | sqldatabase |
-| kv | keyvault |
-| nic | networkinterface |
-| nsg | networksecuritygroup |
-| pip | publicip |
-| vgw | virtualnetworkgateway |
+| sqldb | sql_database |
+| kv | key_vault |
+| nic | network_interface |
+| nsg | network_security_group |
+| pip | public_ip |
+| vgw | virtual_network_gateway |
 | snet | subnet |
-| cosmos | cosmosdb |
-| adf | datafactory |
-| evh | eventhub |
-| sbns | servicebusnamespace |
-| sbq | servicebusqueue |
-| sbt | servicebustopic |
-| apim | apimanagement |
-| cr | containerregistry |
-| aks | kubernetesservice |
-| mysql | mysqldatabase |
+| cosmos | cosmos_db |
+| adf | data_factory |
+| evh | event_hub |
+| sbns | service_bus_namespace |
+| sbq | service_bus_queue |
+| sbt | service_bus_topic |
+| apim | api_management |
+| cr | container_registry |
+| aks | kubernetes_service |
+| mysql | mysql_database |
 | psql | postgresql |
-| sqlmi | sqlmanagedinstance |
-| dls | datalakestore |
-| synw | synapseworkspace |
-| mlw | machinelearningworkspace |
+| sqlmi | sql_managed_instance |
+| dls | datalake_store |
+| synw | synapse_workspace |
+| mlw | machine_learning_workspace |
 | oai | openai |
-| appi | applicationinsights |
-| ase | appserviceenvironment |
-| asp | appserviceplan |
-| vmss | virtualmachinescaleset |
-| pl | privatelink |
-| pep | privateendpoint |
-| afw | azurefirewall |
-| agw | applicationgateway |
-| rsv | recoveryservicesvault |
-| mg | managementgroup |
-| ts | templatespec |
-| aa | automationaccount |
-| logic | logicapp |
-| ia | integrationaccount |
-| bot | botservice |
+| appi | application_insights |
+| ase | app_service_environment |
+| asp | app_service_plan |
+| vmss | virtual_machine_scale_set |
+| pl | private_link |
+| pep | private_endpoint |
+| afw | azure_firewall |
+| agw | application_gateway |
+| rsv | recovery_services_vault |
+| mg | management_group |
+| ts | template_spec |
+| aa | automation_account |
+| logic | logic_app |
+| ia | integration_account |
+| bot | bot_service |
 | srch | search |
 | map | maps |
 | sigr | signalr |
-| wps | webpubsub |
+| wps | web_pub_sub |
 
 **Rule**: Any CAF abbreviation not listed in **Major (keep as-is)** is treated as non-major and must be spelled out using this table (or added here after review).
 
@@ -294,26 +294,26 @@ Allowed region segment values for CAF-style names. This list is the **CAF exampl
 
 | Code | Description |
 |------|-------------|
-| eastus | East US |
-| eastus2 | East US 2 |
-| westus | West US |
-| westus2 | West US 2 |
-| westus3 | West US 3 |
-| centralus | Central US |
-| southcentralus | South Central US |
-| northcentralus | North Central US |
-| westeurope | West Europe |
-| northeurope | North Europe |
-| uksouth | UK South |
-| francecentral | France Central |
-| germanywestcentral | Germany West Central |
-| canadacentral | Canada Central |
-| brazilsouth | Brazil South |
-| australiaeast | Australia East |
-| southeastasia | Southeast Asia |
-| eastasia | East Asia |
-| japaneast | Japan East |
-| koreacentral | Korea Central |
+| east_us | East US |
+| east_us_2 | East US 2 |
+| west_us | West US |
+| west_us_2 | West US 2 |
+| west_us_3 | West US 3 |
+| central_us | Central US |
+| south_central_us | South Central US |
+| north_central_us | North Central US |
+| west_europe | West Europe |
+| north_europe | North Europe |
+| uk_south | UK South |
+| france_central | France Central |
+| germany_west_central | Germany West Central |
+| canada_central | Canada Central |
+| brazil_south | Brazil South |
+| australia_east | Australia East |
+| southeast_asia | Southeast Asia |
+| east_asia | East Asia |
+| japan_east | Japan East |
+| korea_central | Korea Central |
 
 **Note**: CAF docs also mention short forms such as `usva`, `ustx` for some scenarios; if used, add them to this table after team agreement.
 

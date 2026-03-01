@@ -13,6 +13,7 @@ export type TaskType =
   | 'dependency'
   | 'sql'
   | 'directory'
+  | 'caf'
   | 'seed'
   | 'all';
 
@@ -28,6 +29,7 @@ export const CONTEXT_TO_SECTIONS: Record<string, string> = {
   'dependency': 'G, H',
   'sql': 'U',
   'directory': 'F, D, E',
+  'CAF / layer naming': 'E',
   'seed': 'V, U, E',
 };
 
@@ -42,6 +44,7 @@ export const TASK_TO_CONTEXTS: Record<TaskType, string[]> =
     dependency: ['dependency'],
     sql: ['sql'],
     directory: ['directory'],
+    caf: ['CAF / layer naming'],
     seed: ['seed'],
     all: [
       'always',
@@ -55,6 +58,7 @@ export const TASK_TO_CONTEXTS: Record<TaskType, string[]> =
       'dependency',
       'sql',
       'directory',
+      'caf',
       'seed',
     ],
   };

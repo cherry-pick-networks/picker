@@ -410,6 +410,7 @@ apply the same rules.
 | dependency             | G, H             | deno.json etc.                                                  |
 | sql                    | U                | SQL/DDL                                                         |
 | directory              | F, D, E          | Directory creation                                              |
+| CAF / layer naming     | E                | Hierarchy component names: CAF allowlist only (.mdc: global-caf-layer-naming) |
 | seed                   | V, U, E          | Seed data; serialization rationale only; sensitive data in .env |
 
 ---
@@ -529,11 +530,21 @@ Non-major resource-type abbreviations must be spelled out
 (per CAF spec Component 2). Use only allowed values for each
 component; no project-invented axes or term lists.
 
+**Hierarchy (layer) component names**: Every directory or
+document segment at any level (Component 1 through Component 5)
+must use **only** terms from the CAF allowlist for that
+component. No ad-hoc or project-invented names. Allowlist
+source: MANUAL.md § CAF allowlist specification; canonical
+data: `pipeline/structureAddDirConfigSetsData.ts`
+(COMPONENT1_WORKLOAD, COMPONENT2_RESOURCE_TYPE,
+COMPONENT3_ENVIRONMENT, COMPONENT4_REGION; Component 5 =
+4-digit numeric).
+
 **Component 1–5 (CAF only)**. Component 1 — CAF workload names
 (shared, client, application, etc.). Component 2 — Resource
 type: major as-is, non-major full form (see CAF spec).
 Component 3 — Environment (prod, dev, test, qa, stage).
-Component 4 — Region (eastus, westeurope, etc.). Component 5 —
+Component 4 — Region (east_us, west_europe, etc.). Component 5 —
 Numeric (4 digits) for directory; for document/rule segments
 use only terms defined in the CAF allowlist or project
 documentation. Schema SQL under sharepoint/infra/schema/ follow

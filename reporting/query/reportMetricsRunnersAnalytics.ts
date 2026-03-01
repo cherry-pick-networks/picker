@@ -2,11 +2,11 @@
 
 import type { ReportQueryFilters } from '#reporting/query/reportSchema.ts';
 import { getPlagiarismAnomaly } from '#reporting/plagiarism/service.ts';
-import { getBottleneckNodes } from '#analytics/bottleneckService.ts';
+import { getBottleneckNodes } from '#analytics/datafactory/bottleneckService.ts';
 import {
   buildCohortWeaknessHeatmap,
-} from '#analytics/cohortWeaknessHeatmapService.ts';
-import { buildPacingDeviation } from '#analytics/pacingDeviationService.ts';
+} from '#analytics/config/cohortWeaknessHeatmapService.ts';
+import { buildPacingDeviation } from '#analytics/apimanagement/pacingDeviationService.ts';
 
 export function toActorIds(
   f: ReportQueryFilters,

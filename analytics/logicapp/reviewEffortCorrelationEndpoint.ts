@@ -2,7 +2,7 @@ import type { Context } from 'hono';
 import {
   getReviewEffortCorrelation
     as buildReviewEffortCorrelation,
-} from '#analytics/reviewEffortCorrelationService.ts';
+} from '#analytics/logicapp/reviewEffortCorrelationService.ts';
 
 export async function getReviewEffortCorrelation(
   c: Context,

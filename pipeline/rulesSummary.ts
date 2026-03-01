@@ -15,7 +15,7 @@ const USAGE =
   'Usage: deno task rules:summary -- <task-type> [--code|--docs|--system]';
 const TASK_TYPES =
   'Task types: feature, refactor, docs, commit, migration, system, ' +
-  'dependency, sql, directory, all';
+  'dependency, sql, directory, caf, seed, all';
 
 function main(): void {
   const args = Deno.args.slice(0);

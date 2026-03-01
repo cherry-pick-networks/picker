@@ -1,5 +1,5 @@
 import type { Context } from 'hono';
-import { buildNodeDensityScore } from '#analytics/nodeDensityScoreService.ts';
+import { buildNodeDensityScore } from '#analytics/log/nodeDensityScoreService.ts';
 
 export async function getNodeDensityScore(c: Context) {
   const schemeId = c.req.query('scheme_id');

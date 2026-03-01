@@ -1,5 +1,5 @@
 import type { Context } from 'hono';
-import { buildQuestionBankCoverage } from '#analytics/questionBankCoverageService.ts';
+import { buildQuestionBankCoverage } from '#analytics/function/questionBankCoverageService.ts';
 
 export function getQuestionBankCoverage(c: Context) {
   const schemeId = c.req.query('scheme_id');
