@@ -58,10 +58,7 @@ export async function listItemsByConcept(
     const raw = row.payload;
     return (typeof raw === 'string'
       ? JSON.parse(raw)
-      : raw) as Record<
-        string,
-        unknown
-      >;
+      : raw) as Record<string, unknown>;
   });
 }
 

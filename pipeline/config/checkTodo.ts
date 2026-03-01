@@ -3,6 +3,7 @@
 // Reads route list from application/routes.ts; allowlist from openapi.yaml paths.
 // Run: deno task todo-check
 //
+import { extract } from '@std/front-matter/yaml';
 import {
   parseOpenApiPaths,
   routeKey,
@@ -26,6 +27,24 @@ async function loadAllowedRoutes(
   >[0];
   const routes = parseOpenApiPaths(spec).map(routeKey);
   return new Set(routes);
+}
+
+function getBacklogPath(root: string): string {
+  return `${root}/docs/BACKLOG.md`;
+}
+
+async function loadBacklogTitle(
+  root: string,
+): Promise<string | undefined> {
+  const path = getBacklogPath(root);
+  try {
+    const raw = await Deno.readTextFile(path);
+    const { attrs } = extract(raw);
+    const t = (attrs as Record<string, unknown>)?.title;
+    return typeof t === 'string' ? t : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 async function runTodoCheck(openApiPath: string): Promise<{
@@ -61,7 +80,9 @@ function reportIfFailed(result: {
 }
 
 async function main(): Promise<void> {
+  const root = Deno.cwd();
   const openApiPath = getOpenApiPath();
+  await loadBacklogTitle(root);
   try {
     const result = await runTodoCheck(openApiPath);
     reportIfFailed(result);

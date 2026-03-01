@@ -1,3 +1,4 @@
+import { v7 } from '@std/uuid';
 import {
   allowlistHas,
   type FacetName,
@@ -39,7 +40,7 @@ export async function getSource(
 function buildSourceRaw(
   body: sourceSchema.CreateSourceRequest,
 ): sourceSchema.Source {
-  const id = body.source_id ?? crypto.randomUUID();
+  const id = body.source_id ?? v7.generate();
   const collected_at = body.collected_at ?? nowIso();
   return parseSource({
     ...body,

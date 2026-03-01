@@ -1,11 +1,18 @@
+import { ulid } from '@std/ulid';
 import { ContentStores } from '#api/storage/ContentStores.ts';
-import type { Item, ItemPatch } from '#api/search/configurations/bankSchema.ts';
+import type {
+  Item,
+  ItemPatch,
+} from '#api/search/configurations/bankSchema.ts';
 import {
   type CreateItemRequest as CreateItemRequestType,
   ItemSchema,
 } from '#api/search/configurations/bankSchema.ts';
 import { validateItemFacets } from '#api/search/configurations/bankFacetValidation.ts';
-import { nowIso, parseItem } from './bankSchemaParseService.ts';
+import {
+  nowIso,
+  parseItem,
+} from './bankSchemaParseService.ts';
 
 export {
   CreateItemRequestSchema,
@@ -28,7 +35,7 @@ export async function getItem(
 }
 
 function buildItemRaw(body: CreateItemRequestType): Item {
-  const id = body.item_id ?? crypto.randomUUID();
+  const id = body.item_id ?? ulid();
   const created_at = body.created_at ?? nowIso();
   return parseItem({
     ...body,

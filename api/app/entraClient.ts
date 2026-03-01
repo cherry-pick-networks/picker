@@ -3,8 +3,13 @@
 // Fetches JWKS from OpenID discovery, verifies signature and aud/exp/iss.
 //
 
+import { encodeBase64 } from '@std/encoding/base64';
 import { decode, verify } from 'djwt';
 import { getJwkForKid } from './entraClientJwks.ts';
+
+function maskTokenForLog(token: string): string {
+  return encodeBase64(token.slice(0, 8)) + '…';
+}
 
 export interface EntraClaims {
   aud?: string | string[];
@@ -77,4 +82,8 @@ export async function verifyEntraAccessToken(
   );
   assertIssuer(payload, tenantId, issuer);
   return payload as EntraClaims;
+}
+
+export function maskToken(token: string): string {
+  return maskTokenForLog(token);
 }
