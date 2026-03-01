@@ -6,30 +6,30 @@ import {
   getPath,
   getPaths,
   getRoot,
-} from '../../shared/context/scripts/pathConfig.ts';
+} from '../../sharepoint/context/scripts/pathConfig.ts';
 
 Deno.test('getPath returns expected values from config/path-config.json paths', () => {
   assertEquals(getPath('config'), 'config');
   assertEquals(
     getPath('store'),
-    'shared/context/RULESET.md',
+    'sharepoint/context/RULESET.md',
   );
   assertEquals(
     getPath('todo'),
-    'shared/context/BACKLOG.md',
+    'sharepoint/context/BACKLOG.md',
   );
   assertEquals(
     getPath('contextScripts'),
-    'shared/context/scripts',
+    'sharepoint/context/scripts',
   );
-  assertEquals(getPath('context'), 'shared/context');
+  assertEquals(getPath('context'), 'sharepoint/context');
   assertEquals(
     getPath('infraSchema'),
-    'shared/infra/schema',
+    'sharepoint/infra/schema',
   );
   assertEquals(
     getPath('runtimeStore'),
-    'shared/runtime/store',
+    'sharepoint/runtime/store',
   );
 });
 
@@ -43,7 +43,7 @@ Deno.test('getRoot returns absolute path to project root', () => {
 Deno.test('getPaths returns object with all keys', () => {
   const p = getPaths();
   assertEquals(p.config, 'config');
-  assertEquals(p.store, 'shared/context/RULESET.md');
-  assertEquals(p.contextScripts, 'shared/context/scripts');
+  assertEquals(p.store, 'sharepoint/context/RULESET.md');
+  assertEquals(p.contextScripts, 'sharepoint/context/scripts');
   assertEquals(typeof p.root, 'string');
 });

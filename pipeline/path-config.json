@@ -1,0 +1,39 @@
+{
+  "imports": {
+    "#api/": "./api/",
+    "#identity/": "./identity/",
+    "#analytics/": "./analytics/",
+    "#reporting/": "./reporting/",
+    "#ingest/": "./ingest/",
+    "#pipeline/": "./pipeline/",
+    "#docs/": "./docs/"
+  },
+  "paths": {
+    "root": ".",
+    "config": "config",
+    "application": "api",
+    "sharepoint": "docs",
+    "context": "docs",
+    "contextScripts": "pipeline",
+    "contextDocs": "docs/documentation",
+    "scripts": "scripts",
+    "tests": "tests",
+    "store": "docs/RULESET.md",
+    "todo": "docs/BACKLOG.md",
+    "handoff": "docs/HANDOFF.md",
+    "infra": "api/postgresql",
+    "infraSchema": "api/postgresql/schema",
+    "infraSeed": "api/postgresql/seed",
+    "infraMapping": "api/postgresql/mapping",
+    "infraSeedOntology": "api/postgresql/seed/ontology",
+    "infraSeedMaterial": "api/postgresql/seed/material",
+    "recordReference": "api/record/reference",
+    "runtimeStore": "api/runtime/store",
+    "applicationApp": "api/app",
+    "applicationContent": "api/search",
+    "applicationGovernance": "api/config",
+    "applicationIdentity": "identity",
+    "applicationInfra": "api/postgresql",
+    "applicationReport": "reporting"
+  }
+}

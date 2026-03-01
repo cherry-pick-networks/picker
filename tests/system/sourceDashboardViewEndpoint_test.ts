@@ -5,7 +5,7 @@
 
 import { assertEquals } from '@std/assert';
 import { app } from '../../main.ts';
-import { SourceDashboardViewSchema } from '#system/content/material/dashboardViewSchema.ts';
+import { SourceDashboardViewSchema } from '#api/search/material/dashboardViewSchema.ts';
 import { hasDbEnv } from './dbEnv_test.ts';
 
 const handler = (req: Request) => app.fetch(req);

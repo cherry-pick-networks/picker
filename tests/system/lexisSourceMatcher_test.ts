@@ -6,7 +6,7 @@ import { assertEquals } from '@std/assert';
 import {
   clearLexisSourceKeywordCache,
   matchSourceIdByKeyword,
-} from '#system/content/material/matcherConfig.ts';
+} from '#api/search/material/matcherConfig.ts';
 
 const ALLOWED = new Set([
   'lexis-high-basic',

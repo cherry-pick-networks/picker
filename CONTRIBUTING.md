@@ -44,17 +44,17 @@ feature requests.
 - **Pre-push hook (optional)**: To run
   `deno task todo-check` automatically before every push,
   install the hook from the repo root:
-  `cp shared/context/scripts/git_hooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push`
+  `cp sharepoint/context/scripts/git_hooks/pre-push .git/hooks/pre-push && chmod +x .git/hooks/pre-push`
 
 ## Before submitting a PR
 
 1. **Tests**: `deno test` must pass.
 2. **Todo check**: `deno task todo-check` must pass. If you
    add new API routes, add them to
-   [openapi.yaml](shared/context/documentation/openapi.yaml)
-   and [system/routes.ts](system/routes.ts) first. For new
+   [openapi.yaml](sharepoint/context/documentation/openapi.yaml)
+   and [application/routes.ts](application/routes.ts) first. For new
    modules or infrastructure, add to
-   [BACKLOG.md](shared/context/BACKLOG.md) first. Then
+   [BACKLOG.md](sharepoint/context/BACKLOG.md) first. Then
    implement.
 3. **Type-check policy**: `deno task type-check-policy` must
    pass. Do not disable or bypass type checking (no
@@ -73,8 +73,8 @@ feature requests.
 
 Detailed conventions (directory structure, dependencies,
 workflow) are in the shared docs: start from
-[shared/README.md](shared/README.md) and see
-[shared/context/RULESET.md](shared/context/RULESET.md) for
+[sharepoint/README.md](sharepoint/README.md) and see
+[sharepoint/context/RULESET.md](sharepoint/context/RULESET.md) for
 the single source of truth.
 
 ## Maintainers: branch protection

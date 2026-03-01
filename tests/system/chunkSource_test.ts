@@ -3,7 +3,7 @@
 //
 
 import { assertEquals } from '@std/assert';
-import { chunkBody } from '#system/content/recommend/chunkSource.ts';
+import { chunkBody } from '#api/search/recommend/chunkSource.ts';
 
 Deno.test('chunkBody returns single chunk for short text', () => {
   const out = chunkBody('One paragraph.');

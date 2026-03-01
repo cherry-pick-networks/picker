@@ -6,7 +6,7 @@ import {
   effectiveLineCount,
   isCommentOnlyLine,
   MAX_LINE_LENGTH,
-} from '../../shared/context/scripts/checkLineLengthHelpers.ts';
+} from '../../sharepoint/context/scripts/checkLineLengthHelpers.ts';
 
 Deno.test('MAX_LINE_LENGTH is 100', () => {
   assertEquals(MAX_LINE_LENGTH, 100);

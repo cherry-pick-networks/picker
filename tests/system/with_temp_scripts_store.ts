@@ -1,6 +1,6 @@
 //
 // Runs fn with SCRIPTS_BASE set to a temp dir. Cleans up in finally.
-// Use so tests do not write into shared/runtime/store/.
+// Use so tests do not write into sharepoint/runtime/store/.
 //
 export async function withTempScriptsStore(
   fn: () => Promise<void>,
@@ -11,7 +11,7 @@ export async function withTempScriptsStore(
     if (options?.seedHello) {
       await Deno.writeTextFile(
         `${tmpDir}/hello.txt`,
-        'hello from shared/runtime/store',
+        'hello from sharepoint/runtime/store',
       );
     }
     Deno.env.set('SCRIPTS_BASE', tmpDir);

@@ -24,7 +24,7 @@ Deno.test('GET /scripts/hello.txt returns 200 and file content', async () => {
     assertEquals(res.status, 200);
     const text = await res.text();
     assertEquals(
-      text.includes('hello from shared/runtime/store'),
+      text.includes('hello from sharepoint/runtime/store'),
       true,
     );
   }, { seedHello: true });

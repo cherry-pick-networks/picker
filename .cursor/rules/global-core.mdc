@@ -5,7 +5,7 @@ description: |
 alwaysApply: true
 ---
 
-This rule is defined in `shared/context/RULESET.md`.
+This rule is defined in `sharepoint/context/RULESET.md`.
 Read that file and follow:
 - **§C. Language**
 - **§I. Agent principles**
@@ -13,7 +13,7 @@ Read that file and follow:
 For handoff or long sessions, also follow **§B. Commit and session boundary**.
 Do not duplicate the rule text here.
 
-For other rules, use the Rule index in shared/context/RULESET.md. Run
+For other rules, use the Rule index in sharepoint/context/RULESET.md. Run
 `deno task rules:summary -- <task-type>` to get the list of applicable
 sections for your current task, or use the relevant context skill. For code or
 refactor tasks: run rules:summary for the task type at the start (e.g.

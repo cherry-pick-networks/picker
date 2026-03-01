@@ -118,7 +118,7 @@ Deno.test(
         assertEquals(res.status, 200);
         const text = await res.text();
         assert(
-          text.includes('hello from shared/runtime/store'),
+          text.includes('hello from sharepoint/runtime/store'),
           'file content',
         );
       });

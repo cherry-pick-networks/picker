@@ -8,7 +8,7 @@ description: |
 # Commit and session boundary
 
 Apply RULESET.md **§A, §B**. Full text in
-shared/context/RULESET.md Part B only.
+sharepoint/context/RULESET.md Part B only.
 
 **Before using**: Run `deno task rules:summary -- commit` to
 confirm §A, §B for this session.

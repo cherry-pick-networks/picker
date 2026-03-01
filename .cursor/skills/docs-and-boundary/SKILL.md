@@ -1,14 +1,14 @@
 ---
 name: docs-and-boundary
 description: |
-  Apply when editing docs (.md/.mdc), directory structure, or system/todo
+  Apply when editing docs (.md/.mdc), directory structure, or application/todo
   boundaries. References RULESET.md §R, §D, §E, §F, §K, §L, §M.
 ---
 
 # Docs and boundary
 
 Apply RULESET.md **§R, §D, §E, §F, §K, §L, §M**. Full text
-in shared/context/RULESET.md Part B only; this skill gives a
+in sharepoint/context/RULESET.md Part B only; this skill gives a
 short checklist.
 
 **Before editing**: Run `deno task rules:summary -- docs`
@@ -17,7 +17,7 @@ session. Keep the output in context.
 
 ## §R — AI document writing
 
-- AI-facing docs under shared/context/ (except RULESET.md
+- AI-facing docs under sharepoint/context/ (except RULESET.md
   and documentation/): English, positive phrasing, one idea
   per block; reference store §, do not duplicate rule text.
 
@@ -25,7 +25,7 @@ session. Keep the output in context.
 
 - Rule/docs: [prefix]-[suffix].mdc or
   [prefix]-[infix]-[suffix].mdc; segment form per §E. Under
-  shared/context/: [suffix].md only.
+  sharepoint/context/: [suffix].md only.
 - Directory: max 5 components; prefix → infix → suffix; names
   from §E allowed sets.
 
@@ -39,7 +39,7 @@ session. Keep the output in context.
 ## §K, §L, §M — Todo and system boundary
 
 - Todo: BACKLOG.md for modules/infra; openapi.yaml +
-  system/routes.ts for API routes; do not add without
+  application/routes.ts for API routes; do not add without
   updating the relevant source (§K, §L). Root README:
   Documentation section lists only domain entry points (§M).
 

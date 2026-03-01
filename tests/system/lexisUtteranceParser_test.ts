@@ -3,13 +3,13 @@
 //
 
 import { assertEquals } from '@std/assert';
-import { clearLexisSourceKeywordCache } from '#system/content/material/matcherConfig.ts';
+import { clearLexisSourceKeywordCache } from '#api/search/material/matcherConfig.ts';
 import {
   getLexisUtteranceCacheStats,
   parseUtterance,
   parseUtteranceWithFallback,
   resetLexisUtteranceCacheStats,
-} from '#system/content/utteranceParserService.ts';
+} from '#api/search/utteranceParserService.ts';
 
 const ALLOWED = new Set([
   'lexis-high-basic',
