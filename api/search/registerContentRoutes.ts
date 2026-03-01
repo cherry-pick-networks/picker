@@ -4,20 +4,20 @@
 //
 
 import type { Hono } from 'hono';
-import * as core from '#api/search/bank/endpoint.ts';
-import * as assessment from '#api/search/assessment/promptContextEndpoint.ts';
-import * as reviewMapping from '#api/search/review/mappingEndpoint.ts';
+import * as core from '#api/search/bankEndpoint.ts';
+import * as assessment from '#api/search/assessmentPromptContextEndpoint.ts';
+import * as reviewMapping from '#api/search/reviewMappingEndpoint.ts';
 import registerRoutes from '#api/search/recommend/registerRoutes.ts';
-import * as instrDiff from '#api/search/instruction/differentiatedEndpoint.ts';
-import * as instrBlueprint from '#api/search/instruction/examBlueprintEndpoint.ts';
-import * as instrAnalogy from '#api/search/instruction/conceptAnalogyEndpoint.ts';
-import * as instrScaffold from '#api/search/instruction/stepByStepScaffoldEndpoint.ts';
-import * as instrSlide from '#api/search/instruction/slideDeckContextEndpoint.ts';
-import * as instrFill from '#api/search/instruction/fillInTheBlankTargetsEndpoint.ts';
-import * as instrHandover from '#api/search/instruction/subTeacherHandoverEndpoint.ts';
-import * as instrRubric from '#api/search/instruction/rubricEvaluationDataEndpoint.ts';
-import * as instrReading from '#api/search/instruction/readingMaterialMatchEndpoint.ts';
-import * as instrReviewWk from '#api/search/instruction/reviewWorksheetTargetsEndpoint.ts';
+import * as instrDiff from '#api/search/instructionDifferentiatedEndpoint.ts';
+import * as instrBlueprint from '#api/search/instructionExamBlueprintEndpoint.ts';
+import * as instrAnalogy from '#api/search/instructionConceptAnalogyEndpoint.ts';
+import * as instrScaffold from '#api/search/instructionStepByStepScaffoldEndpoint.ts';
+import * as instrSlide from '#api/search/instructionSlideDeckContextEndpoint.ts';
+import * as instrFill from '#api/search/instructionFillInTheBlankTargetsEndpoint.ts';
+import * as instrHandover from '#api/search/instructionSubTeacherHandoverEndpoint.ts';
+import * as instrRubric from '#api/search/instructionRubricEvaluationDataEndpoint.ts';
+import * as instrReading from '#api/search/instructionReadingMaterialMatchEndpoint.ts';
+import * as instrReviewWk from '#api/search/instructionReviewWorksheetTargetsEndpoint.ts';
 
 function registerContentCoreItems(app: Hono): void {
   app.get('/core/items/:id', core.getItem);

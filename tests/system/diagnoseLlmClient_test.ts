@@ -3,7 +3,7 @@
 //
 
 import { assertEquals } from '@std/assert';
-import { diagnoseMisconception } from '#api/search/diagnose/llmClient.ts';
+import { diagnoseMisconception } from '#api/search/diagnoseLlmClient.ts';
 
 Deno.test(
   'diagnoseMisconception with DIAGNOSE_MISCONCEPTION_LLM_MOCK returns fixed output',

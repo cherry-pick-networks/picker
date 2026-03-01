@@ -62,6 +62,14 @@
     "ontology-schemes-check": "deno run --allow-read pipeline/checkOntologySchemes.ts",
     "rules:summary": "deno run -A pipeline/rulesSummary.ts",
     "sql-filename-check": "deno run --allow-read pipeline/checkSqlFilename.ts",
+    "structure:add-c1-dirs": "deno run -A pipeline/structureAddC2Dirs.ts c1",
+    "structure:add-c1-dirs:reporting": "deno run -A pipeline/structureAddC2Dirs.ts c1 reporting",
+    "structure:add-c2-dirs": "deno run -A pipeline/structureAddC2Dirs.ts",
+    "structure:add-c2-dirs:reporting": "deno run -A pipeline/structureAddC2Dirs.ts reporting",
+    "structure:add-c3-dirs": "deno run -A pipeline/structureAddC2Dirs.ts c3",
+    "structure:add-c3-dirs:reporting": "deno run -A pipeline/structureAddC2Dirs.ts c3 reporting",
+    "structure:add-c4-dirs": "deno run -A pipeline/structureAddC2Dirs.ts c4",
+    "structure:add-c4-dirs:reporting": "deno run -A pipeline/structureAddC2Dirs.ts c4 reporting",
     "clean-branches": "sh pipeline/clean-local-branches.sh"
   },
   "imports": {

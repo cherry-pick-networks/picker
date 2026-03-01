@@ -6,16 +6,16 @@
 import type { OpenAPIHono } from '@hono/zod-openapi';
 import {
   registerAssessmentEngineOpenApi,
-} from '#api/search/assessment/engineOpenApi.ts';
+} from '#api/search/assessmentEngineOpenApi.ts';
 import {
   registerAssessmentEvaluationOpenApi,
-} from '#api/search/assessment/evaluationOpenApi.ts';
+} from '#api/search/assessmentEvaluationOpenApi.ts';
 import {
   registerDiagnoseOpenApi,
-} from '#api/search/diagnose/openApi.ts';
+} from '#api/search/diagnoseOpenApi.ts';
 import {
   registerItemsAutoTagConfidenceOpenApi,
-} from '#api/search/bank/autoTagConfidenceOpenApi.ts';
+} from '#api/search/bankAutoTagConfidenceOpenApi.ts';
 import {
   registerGovernanceAssessmentOpenApi,
 } from '#api/config/governanceAssessmentOpenApi.ts';

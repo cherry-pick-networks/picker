@@ -3,7 +3,7 @@
 //
 
 import { assertEquals } from '@std/assert';
-import { generateItemsViaLlm } from '#api/search/bank/generateLlmClient.ts';
+import { generateItemsViaLlm } from '#api/search/bankGenerateLlmClient.ts';
 
 Deno.test(
   'generateItemsViaLlm with DYNAMIC_ITEM_LLM_MOCK returns fixed output',
