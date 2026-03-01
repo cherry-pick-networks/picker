@@ -1,6 +1,6 @@
 //
 // Component 1–4 allowlists for CAF resource naming per RULESET.md §E (CAF 5-axis).
-// Not used for directory validation; directory allowlist is structure_allowed_dirs.toml.
+// Used for CAF-style resource and document naming only, not directory validation.
 //
 import {
   COMPONENT1_WORKLOAD,

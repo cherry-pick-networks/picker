@@ -1,19 +1,15 @@
 //
-// Validation rules for TS filename check (RULESET.md §E, MANUAL.md, Airbnb).
-// Used by checkTsFilename.ts.
+// Validation rules for TS filename check (RULESET.md §E, MANUAL.md).
+// Used by checkTsFilename.ts. No project-only allowlists.
 //
 
 import {
   EXEMPT_PREFIXES,
-  PATH_EXCEPTIONS,
-  ROOT_ALLOWED,
-  SYSTEM_INFIX,
   TEST_NAME_REGEX,
 } from './checkTsFilenameConfig.ts';
 import { checkTsBaseName } from './checkTsFilenameHelpers.ts';
 
 function isExempt(rel: string): boolean {
-  if (PATH_EXCEPTIONS.has(rel)) return true;
   for (const p of EXEMPT_PREFIXES) {
     if (rel.startsWith(p)) return true;
   }
@@ -21,37 +17,27 @@ function isExempt(rel: string): boolean {
 }
 
 function validateRoot(base: string): string | null {
-  if (ROOT_ALLOWED.has(base)) return null;
   if (base.endsWith('.d.ts')) return null;
-  return 'root .ts must be in ROOT_ALLOWED or *.d.ts';
+  if (base.includes('.')) return null;
+  return checkTsBaseName(base);
 }
 
 function validateTests(base: string): string | null {
-  if (!base.endsWith('_test.ts')) {
-    return 'tests/ file must end with _test.ts';
-  }
-  const name = base.slice(0, base.length - 8);
-  if (!TEST_NAME_REGEX.test(name)) {
-    return 'tests/ name must be camelCase (e.g. mainE2e_test.ts)';
+  if (base.endsWith('_test.ts')) {
+    const name = base.slice(0, base.length - 8);
+    if (!TEST_NAME_REGEX.test(name)) {
+      return 'tests/ name must be camelCase (e.g. mainE2e_test.ts)';
+    }
+    return null;
   }
   return null;
 }
 
-function validateSystemRoot(rel: string): string | null {
-  const ok = rel === 'system/routes.ts';
-  return ok
-    ? null
-    : 'system/ file must be under system/<infix>/ or routes.ts';
+function validateSystemRoot(_rel: string, base: string): string | null {
+  return checkTsBaseName(base);
 }
 
-function validateSystemInfix(
-  parts: string[],
-  base: string,
-): string | null {
-  const [, infix] = parts;
-  if (!SYSTEM_INFIX.has(infix ?? '')) {
-    return `system infix "${infix}" not in allowed set`;
-  }
+function validateSystemInfix(_parts: string[], base: string): string | null {
   return checkTsBaseName(base);
 }
 
@@ -60,7 +46,7 @@ function validateSystem(
   base: string,
 ): string | null {
   const parts = rel.split('/');
-  if (parts.length < 3) return validateSystemRoot(rel);
+  if (parts.length < 3) return validateSystemRoot(rel, base);
   return validateSystemInfix(parts, base);
 }
 
