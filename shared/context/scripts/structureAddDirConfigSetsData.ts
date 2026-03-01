@@ -1,8 +1,7 @@
 //
 // CAF Component 1–4 allowlist data for Azure resource naming (CAF). See
-// MANUAL.md § CAF allowlist specification. Not used for
-// directory path validation; directory allowlist is
-// config/structure_allowed_dirs.toml only.
+// MANUAL.md § CAF allowlist specification. Used for CAF-style resource
+// and document naming only, not for directory path validation.
 // Segment values (e.g. resourcegroup) are CAF name segments; in docs use
 // ARM prose terms (e.g. resource group, resource type).
 //

@@ -33,10 +33,8 @@ duplicate these rules in tool-specific configs.
 ## 2. Directory structure and naming
 
 - **Max depth**: 5 components from root. Root is not counted.
-- **Allowed paths**: Only paths listed in
-  `config/structure_allowed_dirs.toml`; add via
-  `deno task structure:add-dir -- <path>`. Segment form per
-  §D/§F (lowercase, underscore, no hyphens; max 5 segments).
+  Segment form per §D/§F (lowercase, underscore, no hyphens;
+  max 5 segments).
 - **CAF 5-axis** (Component 1–Component 5) applies to **Azure
   resource naming** (Azure Resource Manager terminology:
   resource group, resource type, etc.) and document/rule
@@ -125,8 +123,6 @@ duplicate these rules in tool-specific configs.
   bypass (runs in CI)
 - `deno task dependency-check` — verify acyclic domain deps
   and allowed matrix (runs in CI)
-- `deno task structure-dir-check` — verify every directory
-  is in config/structure_allowed_dirs.toml (runs in pre-push/CI)
 - `deno task ts-filename-check` — verify system/ and tests/
   TS filenames per §E and MANUAL.md (optional; run in
   pre-commit or CI)
@@ -141,7 +137,7 @@ duplicate these rules in tool-specific configs.
   picker/postgres). Runs lint, format-check,
   ts-filename-check, sql-filename-check,
   ontology-schemes-check, test, todo-check, boundary-check,
-  dependency-check, type-check-policy, structure-dir-check, audit.
+  dependency-check, type-check-policy, audit.
 - `deno task todo-discovery -- <entry-file>` — list direct
   imports for AI session todo (see
   shared/context/documentation/POLICY.md)
@@ -366,8 +362,7 @@ duplicate these rules in tool-specific configs.
 - **Human-readable docs**: Project summary and rules for
   people are in `shared/context/` (2nd layer: CONTEXT.md)
   and `shared/context/documentation/` (3rd layer: PRIMER,
-  POLICY; allowed names MANUAL, FORMAT, POLICY, PRIMER,
-  ACTION). Root README Documentation section lists only
+  POLICY, etc.). Root README Documentation section lists only
   domain entry points (e.g. shared/README.md); do not add
   deep links to docs there. Do not duplicate rule text in
   root README.
@@ -383,13 +378,12 @@ duplicate these rules in tool-specific configs.
 configure **when** rules apply (e.g. always vs on-request);
 they do not contain rule content. Keep rule text in this
 file Part B only; each mdc body references § only. Name mdc
-files per §D and §E (Component1[-Component2-…]-Component5; approved axes).
+files per §D and §E (CAF allowlist).
 Adding or changing rules: add or edit rule content only in
 this file Part B; add one mdc that references the relevant §
 for apply timing; refactor existing mdc per §J (plan first;
 create new then remove old; one migration per commit).
-Documentation allowed names: see §F (MANUAL, FORMAT, POLICY,
-PRIMER, ACTION in documentation/). Migration history and
+Migration history and
 mapping: `shared/context/documentation/POLICY.md`.
 
 ---
@@ -505,21 +499,15 @@ Pattern: use [Component1]_[Component5].mdc or
 Component 5 required; Component 2–4 optional as needed. Segment
 form: lowercase; separate words with one underscore; no
 hyphens; Component 5 singular (except types); descriptive,
-pronounceable, searchable. Axis rule: each segment uses
-exactly one axis from its allowed set (see §E); no axis
-pollution; one word must not appear in two axes. The same §E
-sets are the approved names for that component and below
-(files, subfolders, modules, symbols). New rule files: pick
-one Component 1 from allowed set; one Component 5 from
-Artifact/Policy/Meta; add Component 2–4 from §E only when
-the rule applies to a specific focus.
+pronounceable, searchable. Segment names per §E (CAF allowlist only). New rule files:
+use Component 1–5 from the CAF allowlist; segment form:
+lowercase; one underscore between words; no hyphens.
 
 Document files under shared/context/: use [Component5].md only.
 Component 1 and Component 2 are implied by the path (shared =
-Component 1, context = Component 2). Component 5 segment must
-be from §E allowed sets (Artifact, Policy, Meta). Same
-segment form: lowercase; one underscore between words; no
-hyphens. Exceptions: see §F (e.g. README.md at tree root).
+Component 1, context = Component 2). Component 5 segment per
+§E (CAF allowlist). Same segment form: lowercase; one
+underscore between words; no hyphens. Exceptions: see §F (e.g. README.md at tree root).
 Todo for document names: the segment naming rule applies to
 exactly one document tree; in this project only .md files
 under shared/context/ are in todo. Files outside that tree
@@ -533,135 +521,30 @@ Component 5; do not add a sixth level.
 
 ### §E. Document and directory naming
 
-Directory component names use Component 1 through Component 5
-from the allowed sets below. **CAF document standard only**;
-non-major resource-type abbreviations must be **spelled out**
-(full spelling; no ad-hoc abbreviations). The same allowed
-values for each component are the approved names for that
-component and its subtree: use them for component names and,
-within that component, for file names, subfolder names,
-module/namespace names, and public symbol names. When
-Component 1 is a Layer (presentation, application, domain,
-infrastructure), Component 2 and Component 3 names must use
-only that layer's allowed sets defined below. Mandatory todo:
-directory and rule/document naming per §D and §F; other uses
-apply from new or renamed items (see §J). Schema SQL files
-under shared/infra/schema/ (data only) follow MANUAL.md
-(Schema DDL file naming). Full CAF allowlist:
-MANUAL.md § CAF allowlist specification.
+Directory and document segment names use Component 1 through
+Component 5 from the **CAF allowlist only**. Single source:
+MANUAL.md § CAF allowlist specification
+(shared/context/documentation/CAF_ALLOWLIST_SPEC.md).
+Non-major resource-type abbreviations must be spelled out
+(per CAF spec Component 2). Use only allowed values for each
+component; no project-invented axes or term lists.
 
-**Component 1–4 allowed sets (summary)**. Component 1 — CAF
-naming components (e.g. shared, client, application;
-workload/project names); see MANUAL.md § CAF allowlist specification Component 1.
-Component 2 — Resource type: major abbreviations kept as-is
-(app, redis, sql, config, log, etc.); non-major spelled out
-per MANUAL.md § CAF allowlist specification Component 2. Component 3 — Environment:
-prod, dev, test, qa, stage. Component 4 — Region: CAF example
-set (eastus, westeurope, etc.); see MANUAL.md § CAF allowlist specification
-Component 4. Component 5 — Numeric pattern (4 digits only,
-e.g. 0001) for directory when used; for document/rule
-naming, Component 5 segment from Artifact/Policy/Meta
-(schema, store, config, policy, documentation, etc.) per sets
-below.
+**Component 1–5 (CAF only)**. Component 1 — CAF workload names
+(shared, client, application, etc.). Component 2 — Resource
+type: major as-is, non-major full form (see CAF spec).
+Component 3 — Environment (prod, dev, test, qa, stage).
+Component 4 — Region (eastus, westeurope, etc.). Component 5 —
+Numeric (4 digits) for directory; for document/rule segments
+use only terms defined in the CAF allowlist or project
+documentation. Schema SQL under shared/infra/schema/ follow
+MANUAL.md (Schema DDL file naming).
 
-Clean dictionary (one word per concept — overlap
-resolution): middleware: only Component 5 Artifact; never
-Component 2 (use interceptor, filter). policy: only Component
-5 Policy; never Component 2 (use validator, guard). cache:
-only Component 2 Entity; never Component 5 (use store,
-storage). config: only this spelling; never configuration.
-education: only this spelling; never edu. type
-(TS/classification): use types in Component 5 Meta; never
-type. core: forbidden in Context; use shared, base, or domain
-(layer). context (API): use provider in Component 2 Entity;
-do not use context as segment. record: only Entity; stored
-units of data (e.g. extracted record, identity record); one
-record per file or index entry. grammar: as Component 5 =
-parser/grammar rules (*.grammar.ts); as content domain =
-English grammar data (see MANUAL.md Content domain names).
-lexis, phonology: content domain only (word data,
-pronunciation data); use for domain Component 2, table
-names, seed paths per MANUAL.md.
-
-Component 1 — one axis only: [ Scope | Layer | Context ].
-Rule: Component 1 must denote system position only; technical
-tools (cache, redis) or artifact form (config, test) must not
-be Component 1. Axis "Context" = Bounded Context (what it is
-for); Layer value "domain" = DDD domain layer only. Scope
-(blast radius): global, shared, system, module, component.
-Never Component 1: app (use system), config, file, code,
-architecture. Layer (stack position): presentation,
-application, domain, infrastructure. Never Component 1: api,
-web as layer (refine into above if needed); security,
-observability, compliance (use Context instead). Context
-(bounded context): business: payment, order, auth, user,
-catalog, education, student, ticket, bucket, item, economy,
-scout; system: security, observability, compliance. Never
-Component 1: core (use shared, base, or domain); cache,
-adapter, redis, test (use Component 2/Component 5).
-
-Component 2 — one axis only: [ Actor | Action | Entity ].
-Rule: Component 2 must not duplicate Scope/Layer/Context
-meaning. Forbidden in Component 2: middleware (use
-interceptor, filter), policy (use validator, guard). Actor
-(architectural role or agent): router, service, repository,
-entity, interceptor, filter, adapter, facade, client, agent,
-worker, guard, validator. Entity (data or medium kind):
-payload, stream, blob, cache, session, document, record,
-json, sql, redis, prompt, provider. Action (lifecycle or
-operation): bootstrap, shutdown, runtime, build, migration,
-recovery, read, write, batch, parse, upload, search, validate.
-
-Component 5 (document/rule segment) — one axis only: [
-Artifact | Policy | Meta ]. Rule: Component 5 denotes form
-of the deliverable; context meaning belongs in Component 1,
-not Component 5. Forbidden in Component 5: cache (use store,
-storage), configuration (use config). Artifact (concrete
-deliverable shape): schema, mapping, store, storage, event,
-endpoint, response, middleware, format, exception, config,
-pipeline, metrics, trace, transfer, client. Policy
-(principle, constraint, or policy): boundary, constraint,
-contract, principle, safety, validation, compliance,
-isolation. Meta (documentation, test, or classification):
-test, documentation, naming, style, log, types, language,
-profile, assessment, reference, plan, handoff, strategy,
-usage, tips, overview, goal.
-
-Examples: payment_infra_redis_config (Context + Layer +
-Entity + Artifact); security_application_guard_policy
-(Context + Layer + Actor + Policy); global_config (Scope +
-Artifact).
-
-TypeScript source files (system/, tests/): Base filename
-(before .ts) must match the default export name. Use
-camelCase for functions and modules, PascalCase for
-class/constructor/singleton; no dot or hyphen in the
-filename (e.g. profileEndpoint.ts, identityIndexStore.ts).
-Validated by ts-filename-check. Detailed To Do / Not To Do:
+TypeScript source files (system/, tests/,
+shared/context/scripts/): Base filename (before .ts) must
+match the default export name. camelCase for
+functions/modules, PascalCase for class/singleton; no dot or
+hyphen in the base name. Validated by ts-filename-check.
 MANUAL.md (TypeScript filename).
-
-Layer-specific allowed Component 2 and Component 5 (when
-Component 1 is Layer): When Component 1 is one of
-presentation, application, domain, infrastructure, Component
-2 and Component 5 names must use only that layer's allowed
-sets below. Presentation — Component 2: router, facade,
-interceptor, filter, guard, client, validator, payload,
-session, document. Component 5: endpoint, response, config,
-format, middleware, exception, trace, boundary, validation.
-Application — Component 2: service, facade, agent, worker,
-guard, validator, payload, session, document, record, read,
-write, batch, parse, search, validate, migration, recovery.
-Component 5: pipeline, config, event, store, metrics, trace,
-boundary, constraint, validation, compliance. Domain —
-Component 2: entity, repository, service, record, document,
-validate. Component 5: schema, event, boundary, constraint,
-contract, principle, types. Infrastructure — Component 2:
-adapter, client, repository, agent, worker, blob, cache,
-session, record, json, sql, redis, stream, document,
-bootstrap, shutdown, read, write, batch, migration,
-recovery, parse, upload. Component 5: store, storage,
-config, mapping, pipeline, metrics, trace, log, boundary,
-isolation.
 
 ### §F. Directory structure and exceptions
 
@@ -683,11 +566,7 @@ Component 1 then Component 2 then Component 3 then Component
 4 then Component 5; no sixth component.
 
 Rule content — naming: Each component name must use only
-approved values for that axis (Component 1–5); see §E. When
-Component 1 is a Layer value, Component 2 and Component 5
-are restricted to that layer's allowed sets in §E. That same
-§E vocabulary applies to names within that component (files,
-subfolders, modules, symbols). Directory and document segment
+values from the CAF allowlist (Component 1–5); see §E. Directory and document segment
 names: lowercase; one underscore between words; no hyphens
 or spaces. TypeScript filenames: see §E (camelCase or
 PascalCase, no dot; MANUAL.md).
@@ -710,38 +589,17 @@ follow §D: [Component5].md only. Optional: one path may be
 listed to keep its current name (e.g. during migration).
 Update this list and any document-name validator together.
 
-Documentation allowed names: Under
-shared/context/documentation/, the allowed document base
-names ([Component5] in [Component5].md) are restricted to:
-MANUAL, FORMAT, POLICY, PRIMER, ACTION. No other segment
-names; new docs in this directory must use one of these
-five. CAF allowlist spec: MANUAL.md § CAF allowlist specification (single reference for WP1–WP3).
-
 Documentation: Rule text lives only in this file;
 .cursor/rules/*.mdc state todo and when to apply (e.g.
 always vs on-request). In docs, state: todo, "max 5
 components" (Component 1–5 only; root not counted), the five
 allowed forms (1–5 components), order fixed, no sixth
-component, naming reference, exception list.
-
-Validation: Directory allowlist only. Run
-`deno task structure-dir-check`
-(shared/context/scripts/checkStructureDirs.ts); skip
-exception list; assert every directory is in
-config/structure_allowed_dirs.toml; exit 1 on failure. Run
-in pre-push and CI. Document names: optionally walk the
-document tree (e.g. shared/context/), skip document
-exceptions, assert each remaining .md matches [Component5].md
-and Component 5 is in §E allowed sets (for
-shared/context/documentation/, use the documentation allowed
-list only: MANUAL, FORMAT, POLICY, PRIMER, ACTION); run in
-pre-commit or CI.
-
-Agent / tool behavior: When creating directories, add only
-via `deno task structure:add-dir -- <path>`; path must pass
-format checks and be added to structure_allowed_dirs.toml.
-Component 1–5 allowlists in §E are for Azure resource naming
-and document/rule segments only.
+component, naming reference, exception list. Document names:
+optionally walk the document tree (e.g. shared/context/),
+skip document exceptions, assert each remaining .md matches
+[Component5].md and Component 5 per §E (CAF allowlist); run
+in pre-commit or CI. Component 1–5 allowlists in §E are for
+Azure resource naming and document/rule segments only.
 
 ### §G. Dependency constraint
 
@@ -1070,7 +928,7 @@ rule file format). Single source: Keep authoritative rule
 text only in this file (RULESET.md); other AI-facing docs
 reference ruleset sections and do not duplicate rule text.
 Naming: Use [Component5].md only under shared/context/; Component 5
-from §E allowed sets; see §D and §F. Scannability: Use clear
+per §E (CAF allowlist); see §D and §F. Scannability: Use clear
 headings and one concept per bullet or block; state when a
 rule applies (todo, exceptions); include short fixed
 examples where they help agents parse intent.

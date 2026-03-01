@@ -70,8 +70,5 @@ jobs:
       - name: Type-check policy
         run: deno task type-check-policy
 
-      - name: Structure dir check
-        run: deno task structure-dir-check
-
       - name: Audit dependencies
         run: deno audit

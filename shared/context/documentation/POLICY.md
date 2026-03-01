@@ -81,7 +81,6 @@ Context → § is in RULESET.md Rule index. .mdc roles:
 | C | Language                           | global-document-language.mdc   |
 | D | Document and directory format      | global-document-format.mdc     |
 | E | Document and directory naming      | global-document-naming.mdc     |
-| F | Directory structure and exceptions | global-directory-boundary.mdc  |
 | G | Dependency constraint              | global-document-constraint.mdc |
 | H | Validation policy (libraries)      | global-validation-policy.mdc   |
 | I | Agent principles                   | global-agent-principle.mdc     |

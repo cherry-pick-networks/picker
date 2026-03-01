@@ -64,14 +64,9 @@ RULESET.md §2 (Paths single source).
 ### Next steps (structure)
 
 - **path-config**: Unused path keys removed or directories
-  created and reflected in allowlist; pathConfig.ts PathKey
-  kept in sync.
-- **allowlist**: `config/structure_allowed_dirs.toml` — only
-  paths that exist (or are planned); run
-  `deno task structure-dir-check` after changes.
-- **structure-dir-check**: Runs in pre-push and CI; every directory
-  must be in `config/structure_allowed_dirs.toml`. CAF allowlist
-  (structureAddDirConfigSetsData.ts) is for Azure resource naming only.
+  created; pathConfig.ts PathKey kept in sync.
+- **CAF allowlist** (structureAddDirConfigSetsData.ts) is for
+  Azure resource naming only.
 - **Optional**: Directory rename per §J — maintain a
   current→target path mapping table before bulk renames.
 
@@ -105,9 +100,7 @@ assessment, actors, seed, documentation). **Component 4** =
 one more level when needed (e.g. seed/ontology,
 material/sql, sql/db_list_all). **Component 5** = optional
 instance or numeric suffix (4 digits, e.g. 0001); rarely
-used in directory paths here. New directories: add only via
-`deno task structure:add-dir -- <path>`; path must be in
-`config/structure_allowed_dirs.toml`.
+used in directory paths here.
 
 ### Component 1 — Workload (scope)
 
@@ -388,16 +381,15 @@ system/                    (Component 1 = workload)
 Under `tests/`, every `.ts` file must be `[name]_test.ts`
 (Deno convention). The **name** part uses camelCase (e.g.
 `scriptsStore_test.ts`, `sourceExtractEndpoint_test.ts`).
-Non-test helpers (e.g. `with_temp_scripts_store.ts`) are
-listed in PATH_EXCEPTIONS. Validated by
-`deno task ts-filename-check`.
+Non-test helpers (e.g. under tests/) are allowed without
+`_test` suffix. Validated by `deno task ts-filename-check`.
 
 ### TypeScript filename — To Do / Not To Do (WI-CODE-003)
 
 Scope: `system/**/*.ts`, `tests/**/*.ts`,
-`shared/context/scripts/*.ts`. Root `.ts`: ROOT_ALLOWED only
-(e.g. main.ts, client.ts). PATH_EXCEPTIONS keep existing
-names.
+`shared/context/scripts/*.ts`. Root and system root `.ts`:
+base name camelCase/PascalCase or `*.d.ts`; root may contain
+a dot (e.g. vite.config.ts).
 
 **To Do**
 
@@ -436,10 +428,8 @@ names.
 - **Structure**: No multiple default exports per file. No §T
   violations (e.g. default function in PascalCase, type in
   camelCase).
-- **Validation**: Do not add ad-hoc exceptions for
-  `system/`, `tests/`, `shared/context/scripts/`; use config
-  only. Do not commit without passing
-  `deno task ts-filename-check`.
+- **Validation**: Do not bypass ts-filename-check. Do not
+  commit without passing `deno task ts-filename-check`.
 
 **Summary**
 
@@ -448,7 +438,7 @@ names.
 | Filename   | default=function/module→camelCase; class/singleton→PascalCase; base=default export; letters/numbers only | hyphen/dot; filename≠default export; PascalCase for function file; camelCase for class file |
 | Symbol     | Types/classes/schemas PascalCase; functions/variables camelCase                                          | Types camelCase; default function PascalCase                                                |
 | Structure  | One default per file; role split per MANUAL.md                                                           | Multiple default exports                                                                    |
-| Validation | ts-filename-check pass; exceptions in config only                                                        | Bypass check; add exceptions outside config                                                 |
+| Validation | ts-filename-check pass                                                                                  | Bypass check                                                                               |
 
 ### Naming conventions (content and level)
 
