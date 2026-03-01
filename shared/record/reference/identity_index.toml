@@ -1,0 +1,74 @@
+version = 1
+description = "학생 개인정보 일원 관리. 식별자: UUID v7."
+
+[[students]]
+id = "019c51b0-dfa6-7155-b875-3c0251b5fc92"
+name = "박지석"
+school = "배다리 초등학교"
+grade = "6학년"
+class = "mw01"
+diagnosis_file = "019c51b0-dfa6-7155-b875-3c0251b5fc92.md"
+
+[[students]]
+id = "019c51b0-dfa7-7776-9dda-2d49208129da"
+name = "김태경"
+school = "평택 중학교"
+grade = "1학년"
+class = "mw02"
+diagnosis_file = "019c51b0-dfa7-7776-9dda-2d49208129da.md"
+
+[[students]]
+id = "019c51b0-dfa7-7776-9dda-2d4af202b1db"
+name = "윤서현"
+school = "평택 여자 중학교"
+grade = "2학년"
+class = "mw03"
+diagnosis_file = "019c51b0-dfa7-7776-9dda-2d4af202b1db.md"
+
+[[students]]
+id = "019c51b0-dfa7-7776-9dda-2d4baf002512"
+name = "염선우"
+school = "한광 고등학교"
+grade = "1학년"
+class = "mw04"
+diagnosis_file = "019c51b0-dfa7-7776-9dda-2d4baf002512.md"
+
+[[students]]
+id = "019c51b0-dfa7-7776-9dda-2d4c2d2e02db"
+name = "박준기"
+school = "신한 중학교"
+grade = "3학년"
+class = "tt01"
+diagnosis_file = "019c51b0-dfa7-7776-9dda-2d4c2d2e02db.md"
+
+[[students]]
+id = "019c51b0-dfa7-7776-9dda-2d4d9b0110b7"
+name = "박정인"
+school = "용죽 고등학교"
+grade = "1학년"
+class = "tt03"
+diagnosis_file = "019c51b0-dfa7-7776-9dda-2d4d9b0110b7.md"
+
+[[students]]
+id = "019c51b0-dfa7-7776-9dda-2d4ed177d0dc"
+name = "이정후"
+school = "이충 고등학교"
+grade = "1학년"
+class = "tt03"
+diagnosis_file = "019c51b0-dfa7-7776-9dda-2d4ed177d0dc.md"
+
+[[students]]
+id = "019c51b0-dfa7-7776-9dda-2d4f7ffa65e5"
+name = "차정우"
+school = "평택 고등학교"
+grade = "1학년"
+class = "tt03"
+diagnosis_file = "019c51b0-dfa7-7776-9dda-2d4f7ffa65e5.md"
+
+[[students]]
+id = "019c51b0-dfa7-7776-9dda-2d506bf19ad8"
+name = "한성민"
+school = "용죽 고등학교"
+grade = "1학년"
+class = "tt03"
+diagnosis_file = "019c51b0-dfa7-7776-9dda-2d506bf19ad8.md"

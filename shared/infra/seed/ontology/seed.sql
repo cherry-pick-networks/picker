@@ -1,0 +1,1 @@
+-- Ontology seed. Run after db:schema. Schemes and concepts are in global-standards.toml.

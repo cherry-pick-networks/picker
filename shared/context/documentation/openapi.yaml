@@ -1,0 +1,1999 @@
+# OpenAPI 3.0 for Picker API. Auth: Entra ID OAuth 2.0 (see security).
+# Canonical route list: this file (paths). Implemented list: system/routes.ts.
+# Todo-check validates routes.ts against this file. Copilot: PRIMER.md § Copilot API usage.
+
+openapi: '3.0.3'
+info:
+  title: Picker API
+  version: '1.0.0'
+  description: |
+    Backend for copilot-assisted flows. All routes except GET / require
+    Entra ID OAuth 2.0 access token in Authorization header.
+    Use OAuth 2.0 + Microsoft Entra ID in Copilot Studio.
+
+servers:
+  - url: /
+    description: API base
+
+paths:
+  /:
+    get:
+      summary: Health check (no auth)
+      operationId: getHome
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+
+  /kv:
+    get:
+      summary: List keys; optional query prefix
+      operationId: listKv
+      parameters:
+        - name: prefix
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returns object with keys array
+    post:
+      summary: Write key-value
+      operationId: postKv
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [key]
+              properties:
+                key: { type: string }
+                value: {}
+      responses:
+        '200':
+          description: Returns object with key
+        '400':
+          description: Validation error
+
+  /kv/{key}:
+    get:
+      summary: Read value by key
+      operationId: getKv
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Value or null
+    delete:
+      summary: Delete one key
+      operationId: deleteKv
+      parameters:
+        - name: key
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '204':
+          description: No Content
+
+  /scripts:
+    get:
+      summary: List store entries (Governance-verified)
+      operationId: listScripts
+      responses:
+        '200':
+          description: Returns object with entries array
+
+  /scripts/{path}:
+    get:
+      summary: Read store file by path
+      operationId: getScript
+      parameters:
+        - name: path
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: File content
+        '404':
+          description: Not found
+    post:
+      summary: Write store file at path
+      operationId: postScript
+      parameters:
+        - name: path
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          text/plain:
+            schema: { type: string }
+      responses:
+        '201':
+          description: Created
+        '400':
+        '403':
+        '500':
+
+  /script/mutate:
+    post:
+      summary: Mutate store file via LLM (Governance)
+      operationId: postScriptMutate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [path]
+              properties:
+                path: { type: string }
+                intent: { type: string }
+                options: { type: object }
+      responses:
+        '200':
+          description: Returns ok and replacements count
+        '4xx':
+        '5xx':
+          description: Returns ok false with status and body
+
+  /identity/actors:
+    get:
+      summary: List actors; query name or display_name
+      operationId: listActors
+      parameters:
+        - name: name
+          in: query
+          schema: { type: string }
+        - name: display_name
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: actor_id, display_name, level, progress[]
+    post:
+      summary: Create actor (display_name required)
+      operationId: postActor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [display_name]
+              properties:
+                display_name: { type: string }
+                level: { type: string }
+                progress: {}
+      responses:
+        '201':
+          description: Actor with actor_id
+        '400':
+
+  /identity/actors/{id}:
+    get:
+      summary: Read actor by id
+      operationId: getActor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Actor object
+        '404':
+    patch:
+      summary: Update actor (partial display_name, level, progress)
+      operationId: patchActor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object }
+      responses:
+        '200':
+        '404':
+
+  /core/items/{id}:
+    get:
+      summary: Read content item
+      operationId: getCoreItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+        '404':
+    patch:
+      summary: Update content item
+      operationId: patchCoreItem
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object }
+      responses:
+        '200':
+        '404':
+
+  /core/items:
+    post:
+      summary: Create content item
+      operationId: postCoreItem
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object }
+      responses:
+        '201':
+        '400':
+
+  /content/items/generate-dynamic:
+    post:
+      summary: Generate items by concept_ids (2–3), count, optional subject_ids
+      operationId: postContentItemsGenerateDynamic
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [concept_ids, count]
+              properties:
+                concept_ids: {
+                  type: array,
+                  items: { type: string },
+                }
+                count: { type: integer }
+                subject_ids: {
+                  type: array,
+                  items: { type: string },
+                }
+      responses:
+        '200':
+          description: Returns items array (ItemSchema-compatible)
+        '400':
+          description: Validation or allowlist error
+
+  /sources:
+    get:
+      summary: List sources (full)
+      operationId: listSources
+      responses:
+        '200':
+          description: Source[]
+    post:
+      summary: Collect and store a source
+      operationId: postSource
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object }
+      responses:
+        '201':
+        '400':
+
+  /sources/{id}:
+    get:
+      summary: Source by id
+      operationId: getSource
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+        '404':
+
+  /sources/{id}/extract:
+    post:
+      summary: Extract concept/subject IDs from source body (LLM); save to source
+      operationId: postSourceExtract
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema: { type: object }
+      responses:
+        '200':
+          description: Returns ok, concept_ids, optional subject_id, extracted_at
+        '4xx':
+        '5xx':
+
+  /views/source-dashboard/{id}:
+    get:
+      summary: Source dashboard view (source + material lexis summary + related items)
+      operationId: getViewsSourceDashboard
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: source_info, lexis_summary, related_items
+        '404':
+          description: Source not found
+
+  /views/actor-briefing/{id}:
+    get:
+      summary: Actor briefing view (10 Outlook GETs in one response)
+      operationId: getViewsActorBriefing
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: positive_reinforcement, missing_homework_impact, milestone_achievement, parent_faq_context, motivation_drop_alert, weekly_win, intervention_result, next_month_preview, relative_position, custom_goal_tracking
+        '404':
+          description: Actor not found
+
+  /views/team-briefing/{class_id}:
+    get:
+      summary: Team briefing view (10 report/teams GETs in one response)
+      operationId: getViewsTeamBriefing
+      parameters:
+        - name: class_id
+          in: path
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+        - name: actor_ids
+          in: query
+          schema: { type: string }
+        - name: scheme_id
+          in: query
+          schema: { type: string }
+        - name: actor_id
+          in: query
+          schema: { type: string }
+        - name: minutes
+          in: query
+          schema: { type: integer }
+      responses:
+        '200':
+          description: daily_briefing, real_time_intervention, ta_routing, study_group, fatigue, fusion, progress_conflict, isolated_students, resource_shortage, peer_teacher_advice
+        '404':
+          description: class_id missing or blank
+
+  /identity/schedule/due:
+    get:
+      summary: List schedule items due in range
+      operationId: getScheduleDue
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns object with items array
+
+  /identity/schedule/plan/weekly:
+    get:
+      summary: Weekly plan by week number
+      operationId: getSchedulePlanWeekly
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: week_start
+          in: query
+          schema: { type: string }
+        - name: level
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+
+  /identity/schedule/plan/annual:
+    get:
+      summary: Annual curriculum
+      operationId: getSchedulePlanAnnual
+      parameters:
+        - name: year
+          in: query
+          schema: { type: integer }
+        - name: level
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+
+  /identity/curriculum/external-mapping:
+    post:
+      summary: External curriculum mapping (Copilot Stream C)
+      operationId: postCurriculumExternalMapping
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [level, national_standard]
+              properties:
+                level: { type: string }
+                national_standard: { type: string }
+                save_to_file: { type: boolean }
+      responses:
+        '200':
+          description: Returns mappings (my_node, national_standard_code); optional saved.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mappings:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        my_node: { type: string }
+                        national_standard_code: {
+                          type: string,
+                        }
+                  saved: { type: boolean }
+        '400':
+        '404':
+        '502':
+
+  /identity/schedule/items:
+    get:
+      summary: List schedule items
+      operationId: listScheduleItems
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: source_id
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns object with items array
+    post:
+      summary: Create schedule item
+      operationId: postScheduleItem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [actor_id, source_id, unit_id]
+              properties:
+                actor_id: { type: string }
+                source_id: { type: string }
+                unit_id: { type: string }
+      responses:
+        '201':
+        '400':
+
+  /identity/schedule/items/{id}/review:
+    post:
+      summary: Record review (grade 1–4)
+      operationId: postScheduleItemReview
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                grade: { type: integer }
+                reviewed_at: { type: string }
+      responses:
+        '200':
+        '404':
+
+  /content/assessment/prompt-context:
+    get:
+      summary: Dynamic assessment prompt context (Copilot Stream B)
+      operationId: getAssessmentPromptContext
+      parameters:
+        - name: actor_ids
+          in: query
+          required: true
+          schema: { type: string }
+          description: Comma-separated actor IDs (class/group).
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns target_concepts, difficulty, avoid_concepts.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [
+                  target_concepts,
+                  difficulty,
+                  avoid_concepts,
+                ]
+                properties:
+                  target_concepts: {
+                    type: array,
+                    items: { type: string },
+                  }
+                  difficulty: {
+                    type: string,
+                    enum: [Easy, Medium, Hard],
+                  }
+                  avoid_concepts: {
+                    type: array,
+                    items: { type: string },
+                  }
+        '400':
+
+  /content/recommendations:
+    get:
+      summary: Unified recommendations by intent (semantic/rag/semantic-items)
+      operationId: getContentRecommendations
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: intent
+          in: query
+          required: true
+          schema: {
+            type: string,
+            enum: [review, practice, exam_prep],
+          }
+        - name: limit
+          in: query
+          schema: {
+            type: integer,
+            minimum: 1,
+            maximum: 100,
+          }
+        - name: scheme_id
+          in: query
+          schema: { type: string }
+        - name: query
+          in: query
+          description: Search query (or use context.query)
+          schema: { type: string }
+        - name: context
+          in: query
+          description: 'JSON object e.g. { "query": "...", "concept_ids": [], "expand_concepts": false }'
+          schema: { type: string }
+      responses:
+        '200':
+          description: 'recommendations array (UnifiedRecommendation: type content | item, content shape)'
+        '400':
+          description: Missing intent, actor_id, or context.query
+
+  /content/recommend/semantic:
+    post:
+      summary: Semantic learning material match (Copilot Stream A)
+      operationId: postContentRecommendSemantic
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query]
+              properties:
+                query: { type: string }
+                concept_ids:
+                  type: array
+                  items: { type: string }
+                limit: { type: integer }
+      responses:
+        '200':
+          description: Returns recommendations (file_name, page, paragraph).
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recommendations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        file_name: { type: string }
+                        page: {
+                          type: integer,
+                          nullable: true,
+                        }
+                        paragraph: { type: string }
+        '400':
+
+  /content/recommend/rag:
+    post:
+      summary: GraphRAG — concept expansion + semantic search (Stream E)
+      operationId: postContentRecommendRag
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query]
+              properties:
+                query: { type: string }
+                concept_ids:
+                  type: array
+                  items: { type: string }
+                expand_concepts: { type: boolean }
+                limit: { type: integer }
+      responses:
+        '200':
+          description: Returns recommendations (same schema as semantic); optional expanded_concept_ids, expanded_labels.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  recommendations:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        file_name: { type: string }
+                        page: {
+                          type: integer,
+                          nullable: true,
+                        }
+                        paragraph: { type: string }
+                  expanded_concept_ids: {
+                    type: array,
+                    items: { type: string },
+                  }
+                  expanded_labels: {
+                    type: array,
+                    items: { type: string },
+                  }
+        '400':
+
+  /content/diagnose/misconception:
+    post:
+      summary: Misconception root-cause (Copilot Stream D)
+      operationId: postDiagnoseMisconception
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              description: Either response_text OR (item_id + selected_option_index); optional actor_id for student display name.
+              properties:
+                response_text: { type: string }
+                item_id: { type: string }
+                selected_option_index: {
+                  type: integer,
+                  minimum: 0,
+                }
+                actor_id: { type: string }
+      responses:
+        '200':
+          description: Returns student?, error_type, related_ontology_node?.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  student: { type: string }
+                  error_type: { type: string }
+                  related_ontology_node: { type: string }
+        '400':
+        '404':
+        '502':
+
+  /content/review/map-to-ontology:
+    post:
+      summary: Review text → ontology mapping (Copilot Stream 5)
+      operationId: postReviewMapToOntology
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [review_text]
+              properties:
+                review_text: { type: string }
+      responses:
+        '200':
+          description: Returns concept_ids (allowlist-valid), mapped_at.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [concept_ids, mapped_at]
+                properties:
+                  concept_ids:
+                    type: array
+                    items: { type: string }
+                  mapped_at: { type: string }
+        '400':
+        '502':
+
+  /identity/achievement/concept-outcome:
+    post:
+      summary: Record concept pass/fail (Stream 4)
+      operationId: postConceptOutcome
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [actor_id, scheme_id, code, passed]
+              properties:
+                actor_id: { type: string }
+                scheme_id: { type: string }
+                code: { type: string }
+                passed: { type: boolean }
+      responses:
+        '200':
+          description: OK
+        '400':
+
+  /identity/achievement/concept-outcomes:
+    get:
+      summary: List concept outcomes
+      operationId: getConceptOutcomes
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { outcomes }
+        '400':
+
+  /identity/achievement/item-response:
+    post:
+      summary: Record item response
+      operationId: postItemResponse
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [
+                actor_id,
+                item_id,
+                selected_option_index,
+                correct,
+              ]
+              properties:
+                actor_id: { type: string }
+                item_id: { type: string }
+                selected_option_index: { type: integer }
+                correct: { type: boolean }
+      responses:
+        '201':
+          description: Returns created row
+        '400':
+
+  /identity/achievement/item-responses:
+    get:
+      summary: List item responses
+      operationId: getItemResponses
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { responses }
+        '400':
+
+  /identity/analysis/root-cause:
+    post:
+      summary: Root-cause inference (Stream 4)
+      operationId: postRootCause
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [actor_id, scheme_id]
+              properties:
+                actor_id: { type: string }
+                scheme_id: { type: string }
+                from: { type: string }
+                to: { type: string }
+      responses:
+        '200':
+          description: Returns root_cause_codes, details (code, pref_label)
+        '400':
+
+  /identity/actors/cluster:
+    post:
+      summary: Cluster actors by outcome profile (Stream 4)
+      operationId: postCluster
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [actor_ids, scheme_id]
+              properties:
+                actor_ids:
+                  type: array
+                  items: { type: string }
+                scheme_id: { type: string }
+                from: { type: string }
+                to: { type: string }
+      responses:
+        '200':
+          description: 'Returns { clusters: string[][] }'
+        '400':
+
+  /report/bottlenecks:
+    get:
+      summary: Bottleneck nodes dashboard (Stream 4)
+      operationId: getBottlenecks
+      parameters:
+        - name: actor_ids
+          in: query
+          required: true
+          schema: { type: string }
+          description: Comma-separated actor IDs
+        - name: scheme_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+        - name: min_fail_count
+          in: query
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Returns { nodes } (code, pass_rate, pass_count, fail_count, pref_label)
+        '400':
+
+  /report/query:
+    post:
+      summary: Batched report metrics (partial_score, plagiarism, bottlenecks, etc.)
+      operationId: postReportQuery
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [metrics]
+              properties:
+                metrics:
+                  type: array
+                  minItems: 1
+                  items:
+                    type: string
+                    enum:
+                      - partial_score
+                      - formative_summative_gap
+                      - plagiarism
+                      - bottlenecks
+                      - cohort_weakness_heatmap
+                      - pacing_deviation
+                      - curriculum_bottleneck
+                filters:
+                  type: object
+                  properties:
+                    actor_id: { type: string }
+                    actor_ids: {
+                      oneOf: [
+                        {
+                          type: array,
+                          items: { type: string },
+                        },
+                        { type: string },
+                      ],
+                    }
+                    scheme_id: { type: string }
+                    from: { type: string }
+                    to: { type: string }
+                    class_id: { type: string }
+      responses:
+        '200':
+          description: Object keyed by metric name, value per existing report API shape
+        '400':
+          description: Invalid body (e.g. empty metrics or unknown metric)
+
+  /report/anomaly:
+    post:
+      summary: Anomaly detection (Stream 4)
+      operationId: postAnomaly
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [actor_ids, scheme_id]
+              properties:
+                actor_ids:
+                  type: array
+                  items: { type: string }
+                scheme_id: { type: string }
+                recent_days: { type: integer }
+                baseline_days: { type: integer }
+                drop_threshold: { type: number }
+      responses:
+        '200':
+          description: Returns { anomalies } (actor_id, kind, message)
+        '400':
+
+  /report/cohort-weakness-heatmap:
+    get:
+      summary: Cohort weakness heatmap (Stream A Excel)
+      operationId: getCohortWeaknessHeatmap
+      parameters:
+        - name: actor_ids
+          in: query
+          required: true
+          schema: { type: string }
+          description: Comma-separated actor IDs
+        - name: scheme_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { rows } (actor_id, code, pass_rate, pass_count, total)
+        '400':
+
+  /report/pacing-deviation:
+    get:
+      summary: Pacing deviation vs plan (Stream A Excel)
+      operationId: getPacingDeviation
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: scheme_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { deviations } (concept_code, actual_at)
+        '400':
+
+  /report/test-item-discrimination:
+    get:
+      summary: Item discrimination indices (Stream A Excel)
+      operationId: getTestItemDiscrimination
+      parameters:
+        - name: scheme_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+        - name: min_responses
+          in: query
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Returns { items } (item_id, discrimination, high_pass_rate, low_pass_rate)
+        '400':
+
+  /report/mastery-trajectory:
+    get:
+      summary: Mastery trajectory over time (Stream A Excel)
+      operationId: getMasteryTrajectory
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: scheme_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { points } (date, mastery_score, pass_count, total)
+        '400':
+
+  /report/study-time-roi:
+    get:
+      summary: Study time vs outcome (Stream A Excel)
+      operationId: getStudyTimeRoi
+      parameters:
+        - name: actor_ids
+          in: query
+          required: true
+          schema: { type: string }
+        - name: scheme_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { metrics, correlation }
+        '400':
+
+  /report/node-density-score:
+    get:
+      summary: Node density / concept coverage (Stream A Excel)
+      operationId: getNodeDensityScore
+      parameters:
+        - name: actor_id
+          in: query
+          schema: { type: string }
+        - name: scheme_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { score, by_concept }
+        '400':
+
+  /report/peer-benchmarking:
+    get:
+      summary: Peer benchmarking; internal group or stub (Stream A Excel)
+      operationId: getPeerBenchmarking
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: scheme_id
+          in: query
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { comparison, message, metrics }
+        '400':
+
+  /report/question-bank-coverage:
+    get:
+      summary: Question bank coverage by concept (Stream A Excel)
+      operationId: getQuestionBankCoverage
+      parameters:
+        - name: scheme_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: concept_ids
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { coverage } (concept_id, item_count, coverage_pct)
+        '400':
+
+  /report/review-effort-correlation:
+    get:
+      summary: Review effort vs retention correlation (Stream A Excel)
+      operationId: getReviewEffortCorrelation
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { correlation, review_count, outcome_count, pass_rate }
+        '400':
+
+  /report/curriculum-bottleneck:
+    get:
+      summary: Curriculum bottleneck nodes (Stream A Excel)
+      operationId: getCurriculumBottleneck
+      parameters:
+        - name: actor_ids
+          in: query
+          required: true
+          schema: { type: string }
+        - name: scheme_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { nodes } (code, pass_rate, pass_count, fail_count, pref_label)
+        '400':
+
+  /identity/outlook/positive-reinforcement:
+    get:
+      summary: Positive reinforcement suggestions (Stream B Outlook)
+      operationId: getPositiveReinforcement
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { suggestions }
+        '400':
+
+  /identity/outlook/missing-homework-impact:
+    get:
+      summary: Missing homework impact (Stream B Outlook)
+      operationId: getMissingHomeworkImpact
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns impact summary
+        '400':
+
+  /identity/outlook/milestone-achievement:
+    get:
+      summary: Milestone achievement (Stream B Outlook)
+      operationId: getMilestoneAchievement
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { milestones }
+        '400':
+
+  /identity/outlook/parent-faq-context:
+    get:
+      summary: Parent FAQ context; Lexis/store or stub (Stream B Outlook)
+      operationId: getParentFaqContext
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: topic
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { context, stub?, message? }
+        '400':
+
+  /identity/outlook/motivation-drop-alert:
+    get:
+      summary: Motivation drop alert (Stream B Outlook)
+      operationId: getMotivationDropAlert
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { alerts }
+        '400':
+
+  /identity/outlook/weekly-win:
+    get:
+      summary: Weekly win summary (Stream B Outlook)
+      operationId: getWeeklyWin
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: week_start
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { wins }
+        '400':
+
+  /identity/outlook/intervention-result:
+    get:
+      summary: Intervention result (Stream B Outlook)
+      operationId: getInterventionResult
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { results }
+        '400':
+
+  /identity/outlook/next-month-preview:
+    get:
+      summary: Next month preview (Stream B Outlook)
+      operationId: getNextMonthPreview
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: as_of
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { preview }
+        '400':
+
+  /identity/outlook/relative-position:
+    get:
+      summary: Relative position; anonymized/consent (Stream B Outlook)
+      operationId: getRelativePosition
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: scheme_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { position }
+        '400':
+
+  /identity/outlook/custom-goal-tracking:
+    get:
+      summary: Custom goal tracking (Stream B Outlook)
+      operationId: getCustomGoalTracking
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { goals, progress }
+        '400':
+
+  /content/instruction/differentiated:
+    get:
+      summary: Differentiated instruction by level (Stream C Word/PPT)
+      operationId: getDifferentiatedInstruction
+      parameters:
+        - name: level
+          in: query
+          required: true
+          schema: { type: string }
+        - name: concept_ids
+          in: query
+          schema: { type: string }
+        - name: limit
+          in: query
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Returns { instructions }
+        '400':
+
+  /content/instruction/exam-blueprint:
+    get:
+      summary: Exam blueprint (Stream C Word/PPT)
+      operationId: getExamBlueprint
+      parameters:
+        - name: scheme_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: level
+          in: query
+          schema: { type: string }
+        - name: concept_ids
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { concepts, weight, item_count }
+        '400':
+
+  /content/instruction/concept-analogy:
+    get:
+      summary: Concept analogy (Stream C Word/PPT)
+      operationId: getConceptAnalogy
+      parameters:
+        - name: concept_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: limit
+          in: query
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Returns { analogies }
+        '400':
+
+  /content/instruction/step-by-step-scaffold:
+    get:
+      summary: Step-by-step scaffold (Stream C Word/PPT)
+      operationId: getStepByStepScaffold
+      parameters:
+        - name: concept_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: level
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { steps }
+        '400':
+
+  /content/instruction/slide-deck-context:
+    get:
+      summary: Slide deck context (Stream C Word/PPT)
+      operationId: getSlideDeckContext
+      parameters:
+        - name: concept_ids
+          in: query
+          required: true
+          schema: { type: string }
+        - name: level
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { context }
+        '400':
+
+  /content/instruction/fill-in-the-blank-targets:
+    get:
+      summary: Fill-in-the-blank targets (Stream C Word/PPT)
+      operationId: getFillInTheBlankTargets
+      parameters:
+        - name: concept_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: limit
+          in: query
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Returns { targets }
+        '400':
+
+  /content/instruction/sub-teacher-handover:
+    get:
+      summary: Sub teacher handover briefing (Stream C Word/PPT)
+      operationId: getSubTeacherHandover
+      parameters:
+        - name: actor_id
+          in: query
+          schema: { type: string }
+        - name: level
+          in: query
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { briefing }
+        '400':
+
+  /content/instruction/rubric-evaluation-data:
+    get:
+      summary: Rubric evaluation data (Stream C Word/PPT)
+      operationId: getRubricEvaluationData
+      parameters:
+        - name: concept_id
+          in: query
+          schema: { type: string }
+        - name: type
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { rubric }
+        '400':
+
+  /content/instruction/reading-material-match:
+    get:
+      summary: Reading material match (Stream C Word/PPT)
+      operationId: getReadingMaterialMatch
+      parameters:
+        - name: concept_ids
+          in: query
+          required: true
+          schema: { type: string }
+        - name: limit
+          in: query
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Returns { matches }
+        '400':
+
+  /content/instruction/review-worksheet-targets:
+    get:
+      summary: Review worksheet targets (Stream C Word/PPT)
+      operationId: getReviewWorksheetTargets
+      parameters:
+        - name: actor_id
+          in: query
+          schema: { type: string }
+        - name: concept_ids
+          in: query
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns { targets }
+        '400':
+
+  /lexis/entries:
+    get:
+      summary: List lexis entries; query source_id, days, or q
+      operationId: getLexisEntries
+      parameters:
+        - name: source_id
+          in: query
+          schema: { type: string }
+        - name: days
+          in: query
+          schema: { type: integer }
+        - name: q
+          in: query
+          schema: { type: string }
+          description: Utterance (regex + LLM fallback)
+      responses:
+        '200':
+          description: Returns object with entries array
+        '400':
+
+  /identity/schedule/review-warnings:
+    get:
+      summary: Review warnings (forgetting curve)
+      operationId: getReviewWarnings
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+        - name: retention_min
+          in: query
+          schema: { type: number }
+      responses:
+        '200':
+          description: Returns warnings (id, next_due_at, retrievability)
+        '400':
+
+  /content/recommend/semantic-items:
+    post:
+      summary: Semantic alternative item search
+      operationId: postContentRecommendSemanticItems
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [query]
+              properties:
+                query: { type: string }
+                concept_ids:
+                  type: array
+                  items: { type: string }
+                limit: { type: integer }
+      responses:
+        '200':
+          description: Returns item recommendations
+        '400':
+
+  /report/teams/daily-briefing:
+    get:
+      summary: Teams daily briefing
+      operationId: getReportTeamsDailyBriefing
+      parameters:
+        - name: actor_ids
+          in: query
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns briefing
+  /report/teams/real-time-intervention:
+    get:
+      summary: Real-time intervention log
+      operationId: getReportTeamsRealTimeIntervention
+      parameters:
+        - name: actor_id
+          in: query
+          schema: { type: string }
+        - name: minutes
+          in: query
+          schema: { type: integer }
+      responses:
+        '200':
+          description: Returns log
+  /report/teams/ta-routing:
+    get:
+      summary: TA routing (stub)
+      operationId: getReportTeamsTaRouting
+      parameters:
+        - name: scheme_id
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns assignments or stub
+  /report/teams/study-group:
+    get:
+      summary: Study group suggestions
+      operationId: getReportTeamsStudyGroup
+      parameters:
+        - name: actor_ids
+          in: query
+          schema: { type: string }
+        - name: scheme_id
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns groups
+  /report/teams/fatigue:
+    get:
+      summary: Fatigue signals
+      operationId: getReportTeamsFatigue
+      parameters:
+        - name: actor_ids
+          in: query
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns signals
+  /report/teams/fusion:
+    get:
+      summary: Fusion/cross-concept signals
+      operationId: getReportTeamsFusion
+      parameters:
+        - name: actor_ids
+          in: query
+          schema: { type: string }
+        - name: scheme_id
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns signals
+  /report/teams/progress-conflict:
+    get:
+      summary: Progress conflict
+      operationId: getReportTeamsProgressConflict
+      parameters:
+        - name: actor_ids
+          in: query
+          schema: { type: string }
+        - name: scheme_id
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns conflicts
+  /report/teams/isolated-students:
+    get:
+      summary: Isolated students
+      operationId: getReportTeamsIsolatedStudents
+      parameters:
+        - name: actor_ids
+          in: query
+          schema: { type: string }
+        - name: scheme_id
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns actors
+  /report/teams/resource-shortage:
+    get:
+      summary: Resource shortage
+      operationId: getReportTeamsResourceShortage
+      parameters:
+        - name: scheme_id
+          in: query
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns shortages
+  /report/teams/peer-teacher-advice:
+    get:
+      summary: Peer teacher advice (stub)
+      operationId: getReportTeamsPeerTeacherAdvice
+      parameters:
+        - name: actor_id
+          in: query
+          schema: { type: string }
+        - name: scheme_id
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns advice or stub
+
+  /content/assessment/wrong-answer-generate:
+    post:
+      summary: Generate wrong-answer distractors
+      operationId: postWrongAnswerGenerate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                item_id: { type: string }
+                concept_ids:
+                  type: array
+                  items: { type: string }
+                count: { type: integer }
+      responses:
+        '200':
+          description: Returns options
+  /content/assessment/adaptive-next-item:
+    post:
+      summary: Adaptive next item
+      operationId: postAdaptiveNextItem
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [actor_id, scheme_id]
+              properties:
+                actor_id: { type: string }
+                scheme_id: { type: string }
+                exclude_item_ids:
+                  type: array
+                  items: { type: string }
+      responses:
+        '200':
+          description: Returns item
+
+  /content/engines/assessment/generate:
+    post:
+      summary: Unified assessment engine (wrong-answer, next-item, diagnose)
+      operationId: postEnginesAssessmentGenerate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [type, context]
+              properties:
+                type:
+                  type: string
+                  enum: [WRONG_ANSWER, NEXT_ITEM, DIAGNOSE]
+                context: {}
+      responses:
+        '200':
+          description: Options, item, or diagnosis per type
+        '400':
+          description: Invalid request or context
+        '502':
+          description: Engine error
+
+  /report/anomaly/plagiarism:
+    get:
+      summary: Plagiarism anomaly
+      operationId: getReportAnomalyPlagiarism
+      parameters:
+        - name: actor_ids
+          in: query
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns anomalies
+  /report/assessment/partial-score:
+    get:
+      summary: Partial score view
+      operationId: getReportAssessmentPartialScore
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: item_id
+          in: query
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns scores
+  /report/assessment/formative-summative-gap:
+    get:
+      summary: Formative vs summative gap
+      operationId: getReportAssessmentFormativeSummativeGap
+      parameters:
+        - name: actor_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: scheme_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns gap
+
+  /governance/ontology/missing-link-predictor:
+    get:
+      summary: Missing link / edge suggestions
+      operationId: getGovernanceOntologyMissingLinkPredictor
+      parameters:
+        - name: scheme_id
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns suggestions
+  /report/ontology/concept-drift:
+    get:
+      summary: Concept drift
+      operationId: getReportOntologyConceptDrift
+      parameters:
+        - name: scheme_id
+          in: query
+          required: true
+          schema: { type: string }
+        - name: from
+          in: query
+          schema: { type: string }
+        - name: to
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns drift
+  /governance/ontology/versioning:
+    get:
+      summary: Ontology versioning (stub)
+      operationId: getGovernanceOntologyVersioning
+      parameters:
+        - name: scheme_id
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns versions
+  /content/items/auto-tag-confidence:
+    get:
+      summary: Auto-tag confidence
+      operationId: getContentItemsAutoTagConfidence
+      parameters:
+        - name: item_id
+          in: query
+          schema: { type: string }
+        - name: concept_ids
+          in: query
+          schema: { type: string }
+      responses:
+        '200':
+          description: Returns confidence
+  /governance/assessment/mastery-threshold-validation:
+    get:
+      summary: Mastery threshold validation
+      operationId: getGovernanceAssessmentMasteryThresholdValidation
+      parameters:
+        - name: scheme_id
+          in: query
+          schema: { type: string }
+        - name: threshold
+          in: query
+          schema: { type: number }
+      responses:
+        '200':
+          description: Returns validation
+
+components:
+  securitySchemes:
+    EntraBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: |
+        Microsoft Entra ID OAuth 2.0 access token.
+        In Copilot Studio use OAuth 2.0 with Identity provider Microsoft Entra ID
+        (Client ID, Tenant ID from Picker app registration).
+
+security:
+  - EntraBearer: []
