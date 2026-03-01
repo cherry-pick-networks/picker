@@ -4,18 +4,18 @@
 //
 
 import type { Hono } from 'hono';
-import * as report from '#analytics/datafactory/bottleneckEndpoint.ts';
-import * as anomaly from '#analytics/applicationinsights/anomalyEndpoint.ts';
+import * as report from '#analytics/data_factory/bottleneckEndpoint.ts';
+import * as anomaly from '#analytics/application_insights/anomalyEndpoint.ts';
 import * as cohortHeatmap from '#analytics/config/cohortWeaknessHeatmapEndpoint.ts';
-import * as pacingDev from '#analytics/apimanagement/pacingDeviationEndpoint.ts';
+import * as pacingDev from '#analytics/api_management/pacingDeviationEndpoint.ts';
 import * as itemDisc from '#analytics/search/testItemDiscriminationEndpoint.ts';
-import * as masteryTraj from '#analytics/eventhub/masteryTrajectoryEndpoint.ts';
-import * as studyRoi from '#analytics/templatespec/studyTimeRoiEndpoint.ts';
+import * as masteryTraj from '#analytics/event_hub/masteryTrajectoryEndpoint.ts';
+import * as studyRoi from '#analytics/template_spec/studyTimeRoiEndpoint.ts';
 import * as nodeDensity from '#analytics/log/nodeDensityScoreEndpoint.ts';
-import * as peerBench from '#analytics/automationaccount/peerBenchmarkingEndpoint.ts';
+import * as peerBench from '#analytics/automation_account/peerBenchmarkingEndpoint.ts';
 import * as qBankCov from '#analytics/function/questionBankCoverageEndpoint.ts';
-import * as reviewEffort from '#analytics/logicapp/reviewEffortCorrelationEndpoint.ts';
-import * as curriculumBottleneck from '#analytics/datafactory/curriculumBottleneckEndpoint.ts';
+import * as reviewEffort from '#analytics/logic_app/reviewEffortCorrelationEndpoint.ts';
+import * as curriculumBottleneck from '#analytics/data_factory/curriculumBottleneckEndpoint.ts';
 
 function registerReportRoutesPart1(app: Hono): void {
   app.get('/report/bottlenecks', report.getBottlenecks);

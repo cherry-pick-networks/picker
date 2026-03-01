@@ -36,11 +36,9 @@ duplicate these rules in tool-specific configs.
   Segment form per §D/§F (lowercase, underscore, no hyphens;
   max 5 segments).
 - **CAF 5-axis** (Component 1–Component 5) applies to **Azure
-  resource naming** (Azure Resource Manager terminology:
-  resource group, resource type, etc.) and document/rule
-  segment naming per §E; not used to validate repository
-  directory paths. See MANUAL.md § CAF allowlist specification; Component 5
-  numeric = 4 digits (e.g. 0001).
+  resource naming** and to directory and document/rule
+  segment naming per §E. See MANUAL.md § CAF allowlist
+  specification; Component 5 numeric = 4 digits (e.g. 0001).
 - **This file**: `sharepoint/context/RULESET.md` (sharepoint =
   Component 1; context = Component 2; ruleset as artifact in filename)
 - **Exceptions**: .git, .cursor, node_modules, dist, build,

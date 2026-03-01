@@ -1,5 +1,5 @@
 import type { Context } from 'hono';
-import { buildPacingDeviation } from '#analytics/apimanagement/pacingDeviationService.ts';
+import { buildPacingDeviation } from '#analytics/api_management/pacingDeviationService.ts';
 
 export function getPacingDeviation(c: Context) {
   const actorId = c.req.query('actor_id');

@@ -79,9 +79,9 @@ Adoption Framework) 5-axis model**, which follows Azure
 Resource Manager (ARM) naming concepts: Workload, resource
 type, Environment, Region, Instance. Project paths use
 Component 1 (Workload) and Component 2 (resource type);
-Component 3–5 apply to CAF-style resource names or to the
-third directory component (Instance/suffix). Single source
-for CAF terms and abbreviations: this manual § CAF allowlist
+Component 3–5 (environment, region, instance) use the same
+CAF allowlist when used as directory or resource segments.
+Single source for CAF terms: this manual § CAF allowlist
 specification.
 
 **CAF policy**: CAF document standard only; **non-major
@@ -92,72 +92,44 @@ CAF-style names.
 
 **5-component directory roles (summary)**. Max depth is **5
 components** (Component 1 → Component 2 → … → Component 5);
-root is not counted. In this project: **Component 1** =
-scope/workload (shared, system). **Component 2** = resource
-type / domain (e.g. context, infra, app, content, identity,
-report). **Component 3** = subdomain or feature group (e.g.
-assessment, actors, seed, documentation). **Component 4** =
-one more level when needed (e.g. seed/ontology,
-material/sql, sql/db_list_all). **Component 5** = optional
-instance or numeric suffix (4 digits, e.g. 0001); rarely
-used in directory paths here.
+root is not counted. Segment names at each level use **only**
+the CAF allowlist for that component (see § CAF allowlist
+specification below). **Component 1** = workload. **Component 2** =
+resource type (major as-is, non-major full form). **Component 3** =
+environment (prod, dev, test, qa, stage). **Component 4** =
+region. **Component 5** = optional instance or numeric suffix
+(4 digits, e.g. 0001).
 
 ### Component 1 — Workload (scope)
 
-Top-level directory: scope or workload. Allowed values
-align with RULESET.md §E prefix (Todo/Layer/Context). Under
-this project: **shared**, **system**, **module**, **component**,
-and layer/context names per §E. Example: `application/` = system
-workload.
+Top-level directory: scope or workload. Allowed values from
+§ CAF allowlist specification (Component 1) only; canonical
+data: `pipeline/structureAddDirConfigSetsData.ts`
+COMPONENT1_WORKLOAD.
 
-### Component 2 — Resource type (domain)
+### Component 2 — Resource type
 
-Under `application/` the form is `application/<Component2>/` (one folder
-per domain). Component 2 = resource type / bounded context.
-Consolidated: content (source + core + lexis), governance
-(+ audit), infra (+ storage, batch).
+Second segment: resource type. Allowed values from § CAF
+allowlist specification (Component 2) only; canonical data:
+`pipeline/structureAddDirConfigSetsData.ts`
+COMPONENT2_RESOURCE_TYPE. Non-major types use full form
+(one underscore between words).
 
-| Component 2 (domain) | Responsibility                                                        |
-| -------------- | --------------------------------------------------------------------- |
-| app            | Route registration and auth                                           |
-| content        | Source CRUD, extract; lexis entries; content item CRUD                |
-| governance     | Scripts store, mutate, allowlist/ontology; audit log (e.g. e2e_runs)  |
-| identity       | Actors + actor schedule (due, plan, items, review)                    |
-| infra          | Postgres, SQL loader, schema/seed; KV storage; batch (e.g. dbListAll) |
-| export         | Export and external output                                            |
-| notification   | Notifications and alerts                                              |
-| report         | Reports and aggregations                                              |
-| sync           | Synchronization and replication                                       |
-| workflow       | Workflow and process orchestration                                    |
+### Component 3 — Environment
 
-### Component 3 — Subdomain / environment
+Allowed values from § CAF allowlist specification (Component 3)
+only (prod, dev, test, qa, stage). Project directory paths
+do not use environment as a segment.
 
-- **In directory paths**: Subdomain or feature group under
-  Component 2 (e.g. content/assessment, identity/actors,
-  sharepoint/infra/seed, sharepoint/context/documentation). Allowed
-  segment names per §E.
-- **In CAF resource names**: Environment (prod, dev, test,
-  qa, stage). See § CAF allowlist specification (Component 3). Project
-  directory paths do not use environment as a segment.
+### Component 4 — Region
 
-### Component 4 — Further split / region
-
-- **In directory paths**: One more level when needed (e.g.
-  sharepoint/infra/seed/ontology, application/content/material/sql,
-  application/infra/sql/db_list_all).
-- **In CAF resource names**: Region (east_us, west_europe,
-  etc.). See § CAF allowlist specification (Component 4). Not used as a
-  segment in project directory paths.
+Allowed values from § CAF allowlist specification (Component 4)
+only. Not used as a segment in project directory paths.
 
 ### Component 5 — Instance
 
-- **In directory paths**: Optional; instance or numeric
-  suffix (4 digits per CAF). Rarely used; max depth remains
-  5 components (Component 1 through Component 5).
-- **In CAF resource names**: Numeric instance (4 digits).
-  See § CAF allowlist specification (Component 5).
-- Subdomains under system content/identity: see table
-  below (Component 3/4 in practice).
+Optional instance or numeric suffix (4 digits per CAF). See
+§ CAF allowlist specification (Component 5).
 
 ### CAF allowlist specification
 
@@ -346,17 +318,6 @@ wrapper), config (wiring). Use camelCase (e.g.
 `profileEndpoint.ts`, `sourceExtractService.ts`). See
 RULESET.md §E.
 
-### Subdomains (application/Component2/Component3 or Component4)
-
-Under **content** and **identity**, Component 5 (third
-directory component) groups files by subdomain. Max depth
-remains 3 (Component 1 → Component 2 → Component 5).
-
-| Component 2 (domain) | Component 5 (subdomains)                                                          |
-| -------------- | --------------------------------------------------------------------------- |
-| content        | material, item, instruction, assessment, review, recommend, diagnose       |
-| identity       | actors, schedule, curriculum, achievement, outlook, briefing, analysis     |
-
 ### Domains and API paths (6 + App)
 
 | Domain     | Role                                                                                               |
@@ -382,19 +343,6 @@ supports query name/display_name. Schedule:
 /scripts, /scripts/:path_, /script/mutate. Source: /sources,
 /sources/:id, /sources/:id/extract, /lexis/entries. Core:
 /core/items, /core/items/:id. Storage: /kv.
-
-### Target layout (Component 1 system — Component 2 domains + Component 5 subdomains)
-
-```
-application/                    (Component 1 = workload)
-  app/                     (Component 2; routesRegisterConfig.ts, homeHandler.ts, openApiRoutes.ts, ...)
-  content/                 (Component 2; Component 5: material/, item/, instruction/, assessment/, review/, recommend/, diagnose/; plus embeddingClient, utteranceParserService, ...)
-  governance/              (Component 2; scriptsEndpoint, mutateEndpoint, conceptSchemes; ...)
-  identity/                (Component 2; Component 5: actors/, schedule/, curriculum/, achievement/, outlook/, briefing/, analysis/; sql/)
-  infra/                   (Component 2; pgClient, sqlLoader, storageEndpoint, ...)
-  report/                  (Component 2; ...)
-  routes.ts                (entry; imports app config)
-```
 
 ### Test file names (tests/)
 
@@ -514,7 +462,7 @@ hyphens) for the `<name>` part.
   scheme, concept, concept_relation).
 - **Vocabulary**: Prefer names that match project axes (e.g.
   actor, content, source, kv). New domains: align with
-  BACKLOG.md and this reference (allowed Component 2/5 and §E).
+  BACKLOG.md and this reference (CAF allowlist and §E).
 - **Migration**: When renaming or adding DDL files, follow
   the migration boundary (RULESET.md §J): plan first, then
   apply renames and reference updates in one logical change.
@@ -537,7 +485,7 @@ hyphens → underscores. Numeric prefix stays.
 New DDL (e.g. ontology): use `NN_<name>.sql` with an
 available number and §E-compliant name; adjust numbering if
 needed (see BACKLOG.md, §J, and this reference for allowed
-Component 2/5 and §E segment names).
+CAF allowlist and §E segment names).
 
 **Validation (optional).** Script
 `sharepoint/context/scripts/checkSqlFilename.ts` checks all .sql

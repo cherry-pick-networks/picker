@@ -110,9 +110,10 @@ Context → § is in RULESET.md Rule index. .mdc roles:
 # 4-layer naming reference
 
 When the first directory component is a Layer (presentation,
-application, domain, infrastructure), component 2 and component 3 must
-use only that layer's allowed Infix and Suffix. Canonical
-source: RULESET.md §E. Below is a quick reference.
+application, domain, infrastructure), use that layer's
+allowed Infix and Suffix for artifact naming. Directory
+segment names use the CAF allowlist only (RULESET.md §E).
+Below is a quick reference for layer artifact naming.
 
 | Layer          | Allowed Infix                                                                                                                                                                             | Allowed Suffix                                                                               |
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |

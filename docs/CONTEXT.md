@@ -28,11 +28,9 @@ When writing or editing AI-facing docs in this folder
 - **Max depth**: 5 components from root. Root is not counted.
 - **Allowed forms**: Component 1 only; C1/C2; C1/C2/C3;
   C1/C2/C3/C4; C1/C2/C3/C4/C5 (see RULESET.md §F).
-- **Naming**: Use only approved segment names per axis; see
-  RULESET.md §E. When Component 1 is a Layer (presentation,
-  application, domain, infrastructure), use that layer's
-  allowed Component 2 and Component 5 only; see RULESET.md §E.
-  Rules summary below references RULESET.md §D–§F.
+- **Naming**: Use only segment names from the CAF allowlist
+  per RULESET.md §E (Component 1–5). Rules summary below
+  references RULESET.md §D–§F.
 - **This file**: `sharepoint/context/CONTEXT.md` (sharepoint = Todo,
   context = Entity)
 - **Exceptions**: .git, .cursor, node_modules, dist, build,
