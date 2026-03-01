@@ -1,7 +1,7 @@
 //  Report: cohort weakness heatmap rows (concept × actor pass rate).
 
-import { getPg } from '#api/postgresql/pgClient.ts';
-import { loadSql } from '#api/postgresql/sqlLoader.ts';
+import { getPg } from '#api/postgresql/connections/pgClient.ts';
+import { loadSql } from '#api/postgresql/connections/sqlLoader.ts';
 
 const sqlDir = new URL('../sql/', import.meta.url);
 const SQL = await loadSql(

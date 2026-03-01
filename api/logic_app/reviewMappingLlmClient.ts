@@ -7,7 +7,7 @@ import {
   type ReviewMappingLlmOutput,
   ReviewMappingLlmOutputSchema,
 } from './reviewMappingSchema.ts';
-import { chat } from '#api/postgresql/llmClient.ts';
+import { chat } from '#api/postgresql/services/llmClient.ts';
 
 export type ReviewMappingLlmResult =
   | { ok: true; output: ReviewMappingLlmOutput }

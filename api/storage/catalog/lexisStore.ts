@@ -1,7 +1,7 @@
 //  Lexis entry storage (Postgres).
 
-import { getPg } from '#api/postgresql/pgClient.ts';
-import { loadSql } from '#api/postgresql/sqlLoader.ts';
+import { getPg } from '#api/postgresql/connections/pgClient.ts';
+import { loadSql } from '#api/postgresql/connections/sqlLoader.ts';
 import type { LexisEntry } from './lexisSchema.ts';
 
 const sqlDir = new URL('../sql/', import.meta.url);

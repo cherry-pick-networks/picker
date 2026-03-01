@@ -3,7 +3,7 @@
 //
 
 import type { DiagnoseRequest } from './diagnoseSchema.ts';
-import { getItem } from '#api/search/bankService.ts';
+import { getItem } from '#api/search/services/bankService.ts';
 
 export type GetResponseTextFail = {
   ok: false;

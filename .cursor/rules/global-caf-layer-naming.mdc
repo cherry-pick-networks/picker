@@ -14,13 +14,12 @@ When creating or renaming **directory segments**, **document segments**, or
   allowlist specification. Canonical data:
   `pipeline/config/structureAddDirConfigSetsData.ts` (COMPONENT1_WORKLOAD,
   COMPONENT2_RESOURCE_TYPE, COMPONENT3_ENVIRONMENT, COMPONENT4_REGION;
-  Component 5 = 4-digit numeric). **C3 allowlist** includes environment
-  (prod, dev, test, qa, stage) and Azure resource type last segments only
-  (source: Tag support for resources; see MANUAL.md).
+  Component 5 = 4-digit numeric). **C3 allowlist** = Azure resource type
+  last segments only (source: Tag support for resources; see MANUAL.md).
 - **Component roles**: Component 1 = workload; Component 2 = resource type
-  (major as-is, non-major full form per CAF spec); Component 3 = environment
-  allowlist (environment values + Azure resource type last segments);
-  Component 4 = region; Component 5 = 4 digits or allowlist/document term.
+  (major as-is, non-major full form per CAF spec); Component 3 = C3
+  allowlist (Azure resource type last segments); Component 4 = region;
+  Component 5 = 4 digits or allowlist/document term.
 - Applies to: new directories, renamed path segments, document/rule segment
   names, and any naming of layer components. Run
   `deno task rules:summary -- directory` for §F, §D, §E.

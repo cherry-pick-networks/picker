@@ -1,7 +1,7 @@
 //  Ontology seed: SQL split, TOML load, insert schemes/concepts. Used by runSeedOntology.
 
-import { getPg } from '#api/postgresql/pgClient.ts';
-import { loadSql } from '#api/postgresql/sqlLoader.ts';
+import { getPg } from '#api/postgresql/connections/pgClient.ts';
+import { loadSql } from '#api/postgresql/connections/sqlLoader.ts';
 import { parse } from '@std/toml';
 
 const ontologyDir = new URL(

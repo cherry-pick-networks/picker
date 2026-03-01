@@ -9,7 +9,7 @@ import {
   parseUtterance,
   parseUtteranceWithFallback,
   resetLexisUtteranceCacheStats,
-} from '#api/search/utteranceParserService.ts';
+} from '#api/search/services/utteranceParserService.ts';
 
 const ALLOWED = new Set([
   'lexis-high-basic',

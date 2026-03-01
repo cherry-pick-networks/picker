@@ -13,7 +13,7 @@ import { ContentLlmService } from '#api/storage/ContentLlmService.ts';
 import { allowlistHas } from '#api/config/allowlistTypes.ts';
 import { getAllowlistDataOrLoad } from '#api/config/allowlistData.ts';
 import { GovernanceStores } from '#api/config/GovernanceStores.ts';
-import { getActor } from '#identity/actors/service.ts';
+import { getActor } from '#identity/app/actors/service.ts';
 
 export type DiagnoseOk = {
   ok: true;

@@ -24,7 +24,7 @@ import {
 } from '#api/config/governanceOntologyOpenApi.ts';
 import {
   registerIdentityAnalysisOpenApi,
-} from '#identity/analysis/identityOpenApi.ts';
+} from '#identity/log/analysis/identityOpenApi.ts';
 import {
   registerReportAssessmentExtendedOpenApi,
 } from '#reporting/config/assessment/reportExtendedOpenApi.ts';

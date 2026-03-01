@@ -14,7 +14,7 @@ Deno.test('getPath returns expected values from path-config.json paths', () => {
   assertEquals(getPath('todo'), 'docs/BACKLOG.md');
   assertEquals(getPath('contextScripts'), 'pipeline');
   assertEquals(getPath('context'), 'docs');
-  assertEquals(getPath('infraSchema'), 'api/postgresql/template_spec');
+  assertEquals(getPath('infraSchema'), 'api/postgresql/configurations');
   assertEquals(getPath('runtimeStore'), 'api/config/runtime/store');
 });
 

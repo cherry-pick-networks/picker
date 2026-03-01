@@ -1,6 +1,6 @@
 //  Prompt context: collect units/grades, build target/avoid. Used by promptContextService.
 
-import { IdentityStores } from '#identity/IdentityStores.ts';
+import { IdentityStores } from '#identity/sql/IdentityStores.ts';
 
 export type PromptContextInputLike = {
   actor_ids: string[];

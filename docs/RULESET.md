@@ -121,6 +121,9 @@ duplicate these rules in tool-specific configs.
   bypass (runs in CI)
 - `deno task dependency-check` — verify acyclic domain deps
   and allowed matrix (runs in CI)
+- `deno task logical-structure-check` — verify component
+  boundary, public API only, and dependency matrix (see
+  MANUAL.md § Modular monolith)
 - `deno task ts-filename-check` — verify api/, api/test/,
   pipeline/test/ TS filenames per §E and MANUAL.md (optional;
   run in pre-commit or CI)
@@ -537,9 +540,9 @@ names for enforced components. Allowlist source: MANUAL.md § CAF
 allowlist specification; canonical data:
 `pipeline/config/structureAddDirConfigSetsData.ts`
 (COMPONENT1_WORKLOAD, COMPONENT2_RESOURCE_TYPE, COMPONENT3_ENVIRONMENT
-includes environment values and Azure resource type last segments;
-Component 5 = 4-digit numeric. COMPONENT3_ENVIRONMENT, COMPONENT4_REGION
-are reference only. See MANUAL.md § CAF allowlist specification.).
+= Azure resource type last segments; Component 5 = 4-digit numeric.
+COMPONENT3_ENVIRONMENT, COMPONENT4_REGION are reference only. See
+MANUAL.md § CAF allowlist specification.).
 
 **Component 1, 2, 5 (CAF allowlist)**. Component 1 — CAF workload
 names (shared, client, application, etc.). Component 2 —

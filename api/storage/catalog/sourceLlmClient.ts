@@ -7,7 +7,7 @@ import {
   type SourceExtractOutput,
   SourceExtractOutputSchema,
 } from './sourceSchema.ts';
-import { chat } from '#api/postgresql/llmClient.ts';
+import { chat } from '#api/postgresql/services/llmClient.ts';
 
 export type SourceExtractLlmResult =
   | { ok: true; output: SourceExtractOutput }

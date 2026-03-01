@@ -1,6 +1,6 @@
 //  Anomaly detection: date ranges, fetch rates, one-actor drops. Used by anomalyServiceHelpers.
 
-import { IdentityStores } from '#identity/IdentityStores.ts';
+import { IdentityStores } from '#identity/sql/IdentityStores.ts';
 import type {
   AnomalyInput,
   AnomalyResult,

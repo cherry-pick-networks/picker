@@ -6,7 +6,7 @@ import { assertEquals } from '@std/assert';
 import {
   parseDays,
   parseDaysWithRegex,
-} from '#api/search/daysParser.ts';
+} from '#api/search/services/daysParser.ts';
 
 Deno.test('parseDaysWithRegex single day', () => {
   assertEquals(parseDaysWithRegex('17일차'), [17]);

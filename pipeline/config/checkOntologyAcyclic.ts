@@ -8,8 +8,8 @@
 // relation_type = 'requires' only.
 //
 
-import { getPg } from '#api/postgresql/pgClient.ts';
-import { loadSql } from '#api/postgresql/sqlLoader.ts';
+import { getPg } from '#api/postgresql/connections/pgClient.ts';
+import { loadSql } from '#api/postgresql/connections/sqlLoader.ts';
 
 const REQUIRES = 'requires';
 
