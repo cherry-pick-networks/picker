@@ -1,4 +1,4 @@
-import { ReportStores } from '#reporting/ReportStores.ts';
+import { ReportStores } from '#reporting/app/ReportStores.ts';
 import { IdentityStores } from '#identity/IdentityStores.ts';
 
 export interface ReviewEffortCorrelationInput {

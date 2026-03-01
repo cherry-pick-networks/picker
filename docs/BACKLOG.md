@@ -8,10 +8,10 @@ description: In-todo modules and infrastructure.
 Single source of truth for in-todo modules and
 infrastructure. Add only modules and infrastructure listed
 here; update this file first, then implement. API contract:
-sharepoint/context/documentation/openapi.yaml; route list:
+sharepoint/context/config/openapi.yaml; route list:
 application/routes.ts. Todo-check validates routes against
 openapi.yaml. Domain consolidation: see
-sharepoint/context/documentation/MANUAL.md § Domains and API
+sharepoint/context/config/MANUAL.md § Domains and API
 paths (6 + App).
 
 **Final implementation goal**: See
@@ -43,7 +43,7 @@ decisions.
 
 Roadmap and phases (copilot-assisted only, composite API
 decomposition, LLM boundary, client/UI trim) are in
-sharepoint/context/documentation/MANUAL.md § API and Copilot
+sharepoint/context/config/MANUAL.md § API and Copilot
 scope. Keep openapi.yaml and application/routes.ts aligned when
 adding or changing routes.
 

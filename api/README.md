@@ -32,6 +32,6 @@ Run via `deno task import:lexis-high-basic` (after `deno task seed:material`),
 ## Quick links
 
 - **Structure and suffix**:
-  [MANUAL.md](../sharepoint/context/documentation/MANUAL.md)
+  [MANUAL.md](../docs/config/MANUAL.md)
 - **Modules and API**:
   [BACKLOG.md](../sharepoint/context/BACKLOG.md)

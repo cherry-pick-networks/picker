@@ -2,7 +2,7 @@
 // Apply DDL in sharepoint/infra/schema/*.sql in order. Requires DATABASE_URL or
 // PG_* env. Run: deno task db:schema
 //
-import { getPath } from '#pipeline/pathConfig.ts';
+import { getPath } from '#pipeline/config/pathConfig.ts';
 import { getPg } from './pgClient.ts';
 
 function stripLeadingComments(block: string): string {

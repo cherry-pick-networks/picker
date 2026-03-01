@@ -2,7 +2,7 @@
 // Orchestrate curriculum dump → LLM mapping → optional file save.
 //
 
-import { getPath } from '#pipeline/pathConfig.ts';
+import { getPath } from '#pipeline/config/pathConfig.ts';
 import { buildDumpText } from './dumpService.ts';
 import { IdentityLlmService } from '#identity/IdentityLlmService.ts';
 import type { CurriculumMappingOutput } from './mappingSchema.ts';

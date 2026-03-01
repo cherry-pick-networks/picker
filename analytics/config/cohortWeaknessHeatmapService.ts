@@ -1,6 +1,6 @@
 //  Cohort weakness heatmap: concept × actor pass rates for Excel.
 
-import { ReportStores } from '#reporting/ReportStores.ts';
+import { ReportStores } from '#reporting/app/ReportStores.ts';
 
 export interface CohortWeaknessHeatmapInput {
   actor_ids: string[];

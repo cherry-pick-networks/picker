@@ -25,7 +25,7 @@ duplicate these rules in tool-specific configs.
   legacy UI (see MANUAL.md § API and Copilot scope).
 - **Auth**: All API routes except `GET /` require Entra ID
   OAuth 2.0 Bearer token; valid token yields full data. See
-  sharepoint/context/documentation/openapi.yaml and
+  sharepoint/context/config/openapi.yaml and
   application/routes.ts.
 
 ---
@@ -42,7 +42,7 @@ duplicate these rules in tool-specific configs.
 - **This file**: `sharepoint/context/RULESET.md` (sharepoint =
   Component 1; context = Component 2; ruleset as artifact in filename)
 - **Exceptions**: .git, .cursor, node_modules, dist, build,
-  coverage, vendor, .cache, temp, tests (confirm per repo)
+  coverage, vendor, .cache, temp (confirm per repo)
 - Do not add a sixth component. Do not use forbidden segments
   (see §E); CAF document standard only; non-major
   abbreviations must be spelled out (full spelling).
@@ -121,9 +121,9 @@ duplicate these rules in tool-specific configs.
   bypass (runs in CI)
 - `deno task dependency-check` — verify acyclic domain deps
   and allowed matrix (runs in CI)
-- `deno task ts-filename-check` — verify application/ and tests/
-  TS filenames per §E and MANUAL.md (optional; run in
-  pre-commit or CI)
+- `deno task ts-filename-check` — verify api/, api/test/,
+  pipeline/test/ TS filenames per §E and MANUAL.md (optional;
+  run in pre-commit or CI)
 - `deno task sql-filename-check` — verify all .sql (DDL in
   sharepoint/infra/schema, DML in application/*/sql) per MANUAL.md
   (optional; run in pre-commit or CI)
@@ -138,7 +138,7 @@ duplicate these rules in tool-specific configs.
   dependency-check, type-check-policy, audit.
 - `deno task todo-discovery -- <entry-file>` — list direct
   imports for AI session todo (see
-  sharepoint/context/documentation/POLICY.md)
+  sharepoint/context/config/POLICY.md)
 - `deno task rules:summary -- <task-type>` — list applicable
   RULESET.md § for task type (feature, refactor, docs,
   commit, migration, system, dependency, sql, directory,
@@ -154,7 +154,7 @@ duplicate these rules in tool-specific configs.
 - **Optional**: Status line
   `sharepoint/context/scripts/context-bar.sh`; setup
   `sharepoint/context/scripts/setup.sh`; see
-  `sharepoint/context/documentation/PRIMER.md` for tips-derived
+  `sharepoint/context/config/PRIMER.md` for tips-derived
   options (3rd layer).
 
 ---
@@ -189,7 +189,7 @@ duplicate these rules in tool-specific configs.
   function body 2–4 effective lines). (4) Test and commit —
   add or update tests, then commit per §B. One cycle = one
   entry file + its direct imports; see
-  sharepoint/context/documentation/POLICY.md for todo-discovery
+  sharepoint/context/config/POLICY.md for todo-discovery
   and prompt template. Optionally: after phase 2 approval,
   writing a failing test before phase 3 is allowed (TDD);
   state this in the same workflow.
@@ -293,7 +293,7 @@ duplicate these rules in tool-specific configs.
   15 words or about 40 characters. Example: "Add todo
   validation to POST /content/worksheets API". Full
   procedure and examples:
-  `sharepoint/context/documentation/PRIMER.md` (Session start).
+  `sharepoint/context/config/PRIMER.md` (Session start).
 
 ---
 
@@ -304,7 +304,7 @@ duplicate these rules in tool-specific configs.
   paste" into the chat (or attach the file). For blocked or
   paywalled sites (e.g. Reddit), use a fallback (e.g.
   reddit-fetch skill or Gemini CLI); see
-  `sharepoint/context/documentation/PRIMER.md` if used.
+  `sharepoint/context/config/PRIMER.md` if used.
 - **Output format**: Prefer Markdown for reports and docs;
   use a neutral format (e.g. paste via Notion) when copying
   to platforms that do not accept Markdown.
@@ -359,13 +359,13 @@ duplicate these rules in tool-specific configs.
   practices here.
 - **Human-readable docs**: Project summary and rules for
   people are in `sharepoint/context/` (2nd layer: CONTEXT.md)
-  and `sharepoint/context/documentation/` (3rd layer: PRIMER,
+  and `sharepoint/context/config/` (3rd layer: PRIMER,
   POLICY, etc.). Root README Documentation section lists only
   domain entry points (e.g. sharepoint/README.md); do not add
   deep links to docs there. Do not duplicate rule text in
   root README.
 - **AI-facing docs**: When writing or editing .md under
-  sharepoint/context/ (except RULESET.md and documentation/),
+  sharepoint/context/ (except RULESET.md and config/),
   follow §R.
 - **Changing RULESET.md**: Keep all rule text in Part B and
   update the Rule index and context mapping when adding or
@@ -382,7 +382,7 @@ this file Part B; add one mdc that references the relevant §
 for apply timing; refactor existing mdc per §J (plan first;
 create new then remove old; one migration per commit).
 Migration history and
-mapping: `sharepoint/context/documentation/POLICY.md`.
+mapping: `sharepoint/context/config/POLICY.md`.
 
 ---
 
@@ -488,7 +488,7 @@ the file or schema. Class names: PascalCase. Enum type
 names: PascalCase; enum members: use one style project-wide
 (UPPER_SNAKE_CASE or PascalCase). Re-exports of third-party
 types or functions: keep original names. Examples and domain
-exceptions: sharepoint/context/documentation/MANUAL.md (TS
+exceptions: sharepoint/context/config/MANUAL.md (TS
 symbol naming).
 
 ### §D. Document and directory format
@@ -523,7 +523,7 @@ Component 5; do not add a sixth level.
 Directory and document segment names use Component 1 through
 Component 5 from the **CAF allowlist only**. Single source:
 MANUAL.md § CAF allowlist specification
-(sharepoint/context/documentation/CAF_ALLOWLIST_SPEC.md).
+(sharepoint/context/config/CAF_ALLOWLIST_SPEC.md).
 Non-major resource-type abbreviations must be spelled out
 (per CAF spec Component 2). Use only allowed values for each
 component; no project-invented axes or term lists.
@@ -533,7 +533,7 @@ document segment at any level (Component 1 through Component 5)
 must use **only** terms from the CAF allowlist for that
 component. No ad-hoc or project-invented names. Allowlist
 source: MANUAL.md § CAF allowlist specification; canonical
-data: `pipeline/structureAddDirConfigSetsData.ts`
+data: `pipeline/config/structureAddDirConfigSetsData.ts`
 (COMPONENT1_WORKLOAD, COMPONENT2_RESOURCE_TYPE,
 COMPONENT3_ENVIRONMENT, COMPONENT4_REGION; Component 5 =
 4-digit numeric).
@@ -548,8 +548,8 @@ use only terms defined in the CAF allowlist or project
 documentation. Schema SQL under sharepoint/infra/schema/ follow
 MANUAL.md (Schema DDL file naming).
 
-TypeScript source files (application/, tests/,
-sharepoint/context/scripts/): Base filename (before .ts) must
+TypeScript source files (api/, api/test/, pipeline/test/,
+pipeline/config/): Base filename (before .ts) must
 match the default export name. camelCase for
 functions/modules, PascalCase for class/singleton; no dot or
 hyphen in the base name. Validated by ts-filename-check.
@@ -582,8 +582,8 @@ PascalCase, no dot; MANUAL.md).
 
 Exceptions: Maintain an explicit exception list; same list
 for docs and tooling. Typical entries: .git, .cursor,
-node_modules, dist, build, coverage, vendor, .cache, temp,
-tests (confirm per project). Update list and any validator
+node_modules, dist, build, coverage, vendor, .cache, temp
+(confirm per project). Update list and any validator
 together.
 
 Document exceptions: Maintain a separate explicit list for
@@ -593,7 +593,7 @@ the document-tree root index README.md may be exempt. Under
 sharepoint/context/, root-level documents use uppercase base
 names and are exempt from [Component5].md lowercase:
 RULESET.md, CONTEXT.md, HANDOFF.md, BACKLOG.md, SUMMARY.md.
-Other .md under sharepoint/context/ (e.g. in documentation/)
+Other .md under sharepoint/context/ (e.g. in config/)
 follow §D: [Component5].md only. Optional: one path may be
 listed to keep its current name (e.g. during migration).
 Update this list and any document-name validator together.
@@ -689,13 +689,13 @@ with segment naming, (1) list current files and target names
 per §D/§E, (2) rename (prefer non-referenced files first),
 (3) update in-tree references and links, (4) verify with
 document-name validation if available; detailed steps in
-documentation/POLICY.md or RULESET.md §J.
+config/POLICY.md or RULESET.md §J.
 
 ### §K. Todo document boundary
 
 Todo document: in-todo modules and infrastructure are in
 sharepoint/context/BACKLOG.md; API route allowlist is
-sharepoint/context/documentation/openapi.yaml; route list is
+sharepoint/context/config/openapi.yaml; route list is
 application/routes.ts. Update the relevant source before adding.
 Do not add new modules or infrastructure unless listed in
 BACKLOG.md; do not add API routes unless added to
@@ -707,7 +707,7 @@ Agent and todo: agent must not extend todo arbitrarily;
 propose todo doc changes for human approval, then implement
 only after todo is updated. Cross-domain service calls: must
 follow the allowed dependency matrix and remain acyclic (see
-sharepoint/context/documentation/MANUAL.md, § Domain
+sharepoint/context/config/MANUAL.md, § Domain
 dependency); update the matrix and check-domain-deps
 allowlist before adding a new cross-domain dependency.
 
@@ -766,12 +766,12 @@ comment-only lines excluded); split when longer. Scope:
 TypeScript source (e.g. `**/*.ts`); exclude node_modules,
 vendor, generated output. Exception: file-length check is
 not applied to test files (paths ending with `_test.ts` or
-under a `tests/` directory); line-length check still
-applies.
+under `api/test/` or `pipeline/test/`); line-length check
+still applies.
 
 Line-length and file-length exceptions: Single source of
 truth for exemptions is
-sharepoint/context/scripts/checkLineLengthConfig.ts (and this
+pipeline/config/checkLineLengthConfig.ts (and this
 doc). Line-length: no per-line exemptions; any line over 100
 chars is a violation. Split long strings or URLs across
 lines to stay under 100 chars. File-length exceptions: list
@@ -808,7 +808,7 @@ modules; do not barrel a single file. Do not split into
 one-function-per-file; keep related functions (same domain
 or caller) in the same file while staying under 100
 effective lines. Full procedure:
-sharepoint/context/documentation/ACTION.md (File length and
+sharepoint/context/config/ACTION.md (File length and
 split).
 
 Function body: block body 2–4 statements (AST direct
@@ -920,9 +920,9 @@ phase without such a response.
 
 Scope: documents under sharepoint/context/ that are consumed by
 AI; that is, all .md files there except RULESET.md and
-except files under sharepoint/context/documentation/. RULESET.md
+except files under sharepoint/context/config/. RULESET.md
 is the single source for rules and follows §I and Part B
-format; §R does not apply to it. Files under documentation/
+format; §R does not apply to it. Files under config/
 are for people and tips; §R does not apply there. Language:
 Use English only in those AI-facing docs (§C). Phrasing:
 Prefer positive phrasing ("Do X" over "Do not do Y"); see
@@ -946,7 +946,7 @@ examples where they help agents parse intent.
 
 Scope: SQL and DDL (e.g. sharepoint/infra/schema/*.sql as data;
 and when suggesting schema or DML). File naming for DDL
-files: sharepoint/context/documentation/MANUAL.md (Schema DDL
+files: sharepoint/context/config/MANUAL.md (Schema DDL
 file naming). The rules below are Celko-derived; adopt as
 mandatory or recommended per team agreement; checkable and
 review-friendly.

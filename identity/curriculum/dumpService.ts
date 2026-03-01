@@ -3,7 +3,7 @@
 // curriculum_slot / 52-weeks grid and grammar units for one LLM call.
 //
 
-import { getPath } from '#pipeline/pathConfig.ts';
+import { getPath } from '#pipeline/config/pathConfig.ts';
 import { IdentityStores } from '#identity/IdentityStores.ts';
 import { listGrammarUnits } from '#identity/schedule/grammarService.ts';
 

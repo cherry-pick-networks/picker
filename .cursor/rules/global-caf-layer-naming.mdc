@@ -10,9 +10,9 @@ When creating or renaming **directory segments**, **document segments**, or
 
 - Use **only** terms from the **CAF allowlist** for each component. Do not
   invent or use ad-hoc names.
-- **Allowlist source**: `sharepoint/context/documentation/MANUAL.md` § CAF
+- **Allowlist source**: `sharepoint/context/config/MANUAL.md` § CAF
   allowlist specification. Canonical data:
-  `pipeline/structureAddDirConfigSetsData.ts` (COMPONENT1_WORKLOAD,
+  `pipeline/config/structureAddDirConfigSetsData.ts` (COMPONENT1_WORKLOAD,
   COMPONENT2_RESOURCE_TYPE, COMPONENT3_ENVIRONMENT, COMPONENT4_REGION;
   Component 5 = 4-digit numeric).
 - **Component roles**: Component 1 = workload; Component 2 = resource type

@@ -10,7 +10,7 @@ When working on **grammar**, **lexis**, or **phonology** (English learning data)
 
 - **Content domain names**: Use only **grammar**, **lexis**, **phonology** for
   structural names. No synonyms (e.g. vocabulary,
-  pronunciation, phonics). See `sharepoint/context/documentation/MANUAL.md` §
+  pronunciation, phonics). See `sharepoint/context/config/MANUAL.md` §
   Naming conventions → Content domain names.
 - **Seed/infra**: Source metadata seed lives under **material** (`sharepoint/infra/seed/material/`, `deno task seed:material`); env vars `SOURCE_META_*`. Subdomain is material, not lexis.
 - **Difficulty / level**: Use **basic**, **intermediate**, **advanced** (lowercase

@@ -1,6 +1,6 @@
 //  Scripts store: base path. Used by scriptsStore, scriptsStoreRead, scriptsStoreWrite.
 
-import { getPath } from '#pipeline/pathConfig.ts';
+import { getPath } from '#pipeline/config/pathConfig.ts';
 
 export function getScriptsBase(): string {
   const base = Deno.env.get('SCRIPTS_BASE') ??

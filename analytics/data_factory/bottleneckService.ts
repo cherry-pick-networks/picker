@@ -1,7 +1,7 @@
 //  Bottleneck: concepts with low pass rate across actors.
 
 import { GovernanceStores } from '#api/config/GovernanceStores.ts';
-import { ReportStores } from '#reporting/ReportStores.ts';
+import { ReportStores } from '#reporting/app/ReportStores.ts';
 
 export interface BottleneckInput {
   actor_ids: string[];

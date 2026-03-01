@@ -98,7 +98,7 @@ session, say "Start from Phase 3" so the agent can restore
 context.
 
 **Phase flags**: See
-`sharepoint/context/documentation/POLICY.md` for [Phase 1/2/3].
+`sharepoint/context/config/POLICY.md` for [Phase 1/2/3].
 
 ---
 
@@ -199,7 +199,7 @@ approval, proceed to Phase 3 (S3a–S3e).
   (application/routes.ts, application/actor/profileService.ts,
   application/script/scriptsStore.ts) and run 100-char line check.
 - Deferred: Spec summary (e.g. current phase in CONTEXT.md
-  §5 or documentation/guide); then extend patch format (e.g.
+  §5 or config/guide); then extend patch format (e.g.
   ts-morph-based edits) or Thompson Sampling MAB.
 - Optional: Add more E2E or integration tests for other
   routes or edge cases as needed.
