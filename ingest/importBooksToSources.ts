@@ -5,7 +5,7 @@
 //
 
 import { createSource } from '#api/storage/catalog/service.ts';
-import { loadBookBody } from '#api/search/importBooksToSourcesHelpers.ts';
+import { loadBookBody } from '#api/search/jobs/importBooksToSourcesHelpers.ts';
 
 const BOOKS_ROOT =
   new URL('../temp/books/', import.meta.url).pathname;

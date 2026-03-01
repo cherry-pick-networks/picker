@@ -11,8 +11,8 @@ import { parseUtteranceWithLlm } from './catalog/lexisLlmClient.ts';
 import type { LexisUtteranceLlmResult } from './catalog/lexisLlmClient.ts';
 import { extractConcepts } from './catalog/sourceLlmClient.ts';
 import type { SourceExtractLlmResult } from './catalog/sourceLlmClient.ts';
-import { generateItemsViaLlm } from '#api/search/bankGenerateLlmClient.ts';
-import type { ItemGenerateLlmResult } from '#api/search/bankGenerateLlmClient.ts';
+import { generateItemsViaLlm } from '#api/search/services/bankGenerateLlmClient.ts';
+import type { ItemGenerateLlmResult } from '#api/search/services/bankGenerateLlmClient.ts';
 
 export type {
   DiagnoseLlmResult,

@@ -121,6 +121,9 @@ duplicate these rules in tool-specific configs.
   bypass (runs in CI)
 - `deno task dependency-check` — verify acyclic domain deps
   and allowed matrix (runs in CI)
+- `deno task logical-structure-check` — verify component
+  boundary, public API only, and dependency matrix (see
+  MANUAL.md § Modular monolith)
 - `deno task ts-filename-check` — verify api/, api/test/,
   pipeline/test/ TS filenames per §E and MANUAL.md (optional;
   run in pre-commit or CI)

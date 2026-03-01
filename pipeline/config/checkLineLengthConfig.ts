@@ -6,7 +6,7 @@ import { getPath } from './pathConfig.ts';
 
 //  File-length exempt paths; add only when splitting not feasible (100-char effective lines).
 export const FILE_LENGTH_EXEMPT = new Set([
-  'identity/schedule/fsrs.ts', // ported algorithm
+  'identity/app/schedule/fsrs.ts', // ported algorithm
   `${getPath('contextScripts')}/config/checkDomainDeps.ts`, // CI/utility allowlist
   `${getPath('contextScripts')}/config/commentToSingleLine.ts`, // one-off migration
   `${getPath('contextScripts')}/config/rewriteMergeAtTagBoundaries.ts`, // one-off rewrite

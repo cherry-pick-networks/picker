@@ -1,5 +1,5 @@
 import { ReportStores } from '#reporting/app/ReportStores.ts';
-import { IdentityStores } from '#identity/IdentityStores.ts';
+import { IdentityStores } from '#identity/sql/IdentityStores.ts';
 
 export interface ReviewEffortCorrelationInput {
   actor_id: string;

@@ -3,7 +3,7 @@
 import type { Context } from 'hono';
 import { getLexisAllowedSourceIds } from './config.ts';
 import { ContentStores } from '#api/storage/ContentStores.ts';
-import { parseUtteranceWithFallback } from '#api/search/utteranceParserService.ts';
+import { parseUtteranceWithFallback } from '#api/search/services/utteranceParserService.ts';
 
 function validateQuery(
   sourceId: string,

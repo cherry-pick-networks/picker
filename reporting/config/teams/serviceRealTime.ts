@@ -1,6 +1,6 @@
 //  Report teams: real-time intervention (review log). Used by service.ts.
 
-import { IdentityStores } from '#identity/IdentityStores.ts';
+import { IdentityStores } from '#identity/sql/IdentityStores.ts';
 import type { RealTimeInterventionQuery } from '#reporting/config/teams/schema.ts';
 
 async function listItemResponseLog(

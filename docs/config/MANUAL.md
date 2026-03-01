@@ -669,13 +669,13 @@ documented service API.
 | Domain / subdomain   | Public entry (file or export)                                                                                       | Used by                  |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------ |
 | report               | \*Endpoint.ts (bottleneck, anomaly, cohortWeaknessHeatmap, pacingDeviation, …), teamBriefingViewEndpoint            | app (route registration) |
-| identity/actors      | actorsEndpoint.ts                                                                                                   | app                      |
-| identity/schedule    | scheduleEndpoint.ts                                                                                                 | app                      |
-| identity/achievement | achievementEndpoint.ts                                                                                              | app                      |
-| identity/curriculum  | curriculumMappingEndpoint.ts                                                                                        | app                      |
-| identity/outlook     | \*Endpoint.ts (positiveReinforcement, weeklyWin, …)                                                                 | app                      |
-| identity/briefing    | actorBriefingViewEndpoint.ts                                                                                        | app                      |
-| identity/analysis    | identityAnalysisOpenApi.ts                                                                                          | app (OpenAPI)            |
+| identity/app/actors      | endpoint.ts (actors)                                                                                                | app                      |
+| identity/app/schedule    | endpoint.ts (schedule)                                                                                              | app                      |
+| identity/app/achievement | endpoint.ts                                                                                                         | app                      |
+| identity/app/curriculum | mappingEndpoint.ts                                                                                                   | app                      |
+| identity/app/outlook    | \*Endpoint.ts (positiveReinforcement, weeklyWin, …)                                                                  | app                      |
+| identity/app/briefing   | actorViewEndpoint.ts                                                                                                 | app                      |
+| identity/log/analysis   | identityOpenApi.ts                                                                                                   | app (OpenAPI)            |
 | content/bank         | endpoint.ts                                                                                                         | app                      |
 | content/assessment   | assessmentPromptContextEndpoint.ts, assessmentEngineOpenApi.ts, assessmentEvaluationOpenApi.ts                      | app                      |
 | content/review       | reviewMappingEndpoint.ts                                                                                            | app                      |

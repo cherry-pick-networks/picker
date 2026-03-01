@@ -53,6 +53,7 @@ use another editor or CLI, see § Using rules without Cursor.
 | `/clean-branches`            | Leave only main locally; sync with origin/main; delete other branches    | guide (this section)      |
 | `/rewrite-merge-at-boundaries` | Rewrite linear history so merges sit at type boundaries; result on new branch only | guide (this section)      |
 | `/rules-check` [task-type]   | Verify change against applicable §; delegate to rules-subagent if needed | guide Subagents for rules |
+| `/logical-structure-check`    | Run component boundary, public API, and dependency checks (same as CI)     | MANUAL.md § Modular monolith |
 | `/api-flatten-restore`      | Flatten api/ to root, delete dirs, run c2 script, distribute files, remove empty dirs | guide (this section)      |
 | `/identity-flatten-restore` | Flatten identity/ to root, delete dirs, distribute files, remove empty dirs         | guide (this section)      |
 

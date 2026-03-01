@@ -5,7 +5,7 @@
 
 import { assertEquals } from '@std/assert';
 import { app } from '../../main.ts';
-import { ActorBriefingViewSchema } from '#identity/briefing/actorViewSchema.ts';
+import { ActorBriefingViewSchema } from '#identity/config/presentation_instances/actorViewSchema.ts';
 import { hasDbEnv } from './dbEnv_test.ts';
 
 const handler = (req: Request) => app.fetch(req);

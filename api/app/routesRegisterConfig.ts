@@ -5,14 +5,14 @@
 
 import type { Hono } from 'hono';
 import registerReportRoutes from '#reporting/app/registerReportRoutes.ts';
-import registerIdentityRoutes from '#identity/registerIdentityRoutes.ts';
-import registerContentRoutes from '#api/search/registerContentRoutes.ts';
+import registerIdentityRoutes from '#identity/app/registerIdentityRoutes.ts';
+import registerContentRoutes from '#api/search/applications/registerContentRoutes.ts';
 import * as home from './homeHandler.ts';
 import * as kv from '#api/postgresql/keys/storageEndpoint.ts';
 import * as lexis from '#api/storage/catalog/lexisEndpoint.ts';
 import * as source from '#api/storage/catalog/sourceEndpoint.ts';
 import * as sourceDashboardView from '#api/storage/catalog/dashboardViewEndpoint.ts';
-import * as actorBriefingView from '#identity/briefing/actorViewEndpoint.ts';
+import * as actorBriefingView from '#identity/app/briefing/actorViewEndpoint.ts';
 import * as teamBriefingView from '#reporting/config/teams/briefingViewEndpoint.ts';
 
 function registerHomeAndKv(app: Hono) {
