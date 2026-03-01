@@ -1,6 +1,6 @@
 //  Item discrimination: build by actor/item, high-low split. Used by testItemDiscriminationService.
 
-import { ReportStores } from '#reporting/ReportStores.ts';
+import { ReportStores } from '#reporting/app/ReportStores.ts';
 
 type Row = Awaited<
   ReturnType<

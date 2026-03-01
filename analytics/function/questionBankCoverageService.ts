@@ -1,4 +1,4 @@
-import { ReportStores } from '#reporting/ReportStores.ts';
+import { ReportStores } from '#reporting/app/ReportStores.ts';
 
 export interface QuestionBankCoverageInput {
   scheme_id: string;

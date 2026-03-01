@@ -18,7 +18,7 @@ session. Keep the output in context.
 ## §R — AI document writing
 
 - AI-facing docs under sharepoint/context/ (except RULESET.md
-  and documentation/): English, positive phrasing, one idea
+  and config/): English, positive phrasing, one idea
   per block; reference store §, do not duplicate rule text.
 
 ## §D, §E — Document and directory naming

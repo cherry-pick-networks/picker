@@ -1,6 +1,6 @@
 //
 // Single source of route list for main.ts registration.
-// Todo-check validates this list against sharepoint/context/documentation/openapi.yaml.
+// Todo-check validates this list against sharepoint/context/config/openapi.yaml.
 //
 
 import type { Hono } from 'hono';

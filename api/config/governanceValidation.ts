@@ -3,7 +3,7 @@
 // sharepoint/runtime/store/. Ensures path stays under that base and rejects
 // escapes (e.g. ..).
 //
-import { getPath } from '#pipeline/pathConfig.ts';
+import { getPath } from '#pipeline/config/pathConfig.ts';
 
 const ALLOWED_BASE = getPath('runtimeStore');
 

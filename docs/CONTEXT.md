@@ -63,7 +63,7 @@ When writing or editing AI-facing docs in this folder
 | `realpath <path>`                  | Resolve absolute path outside current tree     |
 
 Optional tooling (status line, setup script, tips): see
-`sharepoint/context/documentation/PRIMER.md`.
+`sharepoint/context/config/PRIMER.md`.
 
 ---
 
@@ -109,7 +109,7 @@ Concretes: spec §44–§48 and RULESET.md.
 **References**: The spec (overview, governance, agents, data
 layout, protocol, implementation and safety). This repo:
 sharepoint/context/BACKLOG.md, sharepoint/context/RULESET.md.
-Minimal-scope plan: sharepoint/context/documentation/MANUAL.md §
+Minimal-scope plan: sharepoint/context/config/MANUAL.md §
 API and Copilot scope (copilot-assisted only, legacy removal
 phases). Other specs: web_spec, llm_models_spec (when
 present).
@@ -146,9 +146,9 @@ lists source_id and env_var; no copyright-sensitive content
 - **Rules (checkable)**: See Rules summary below; canonical
   source `sharepoint/context/RULESET.md` Part B.
 - **Reference (tips, not rules)**:
-  `sharepoint/context/documentation/PRIMER.md`
+  `sharepoint/context/config/PRIMER.md`
 - **Cursor chat commands** (Cursor only; slash command list
-  and when to use): `sharepoint/context/documentation/PRIMER.md`
+  and when to use): `sharepoint/context/config/PRIMER.md`
   § Cursor chat commands (project). For other editors: §
   Using rules without Cursor.
 - **Handoff**: `sharepoint/context/HANDOFF.md` (linked from
@@ -196,9 +196,9 @@ each § applies.
 - **Rules**: Stored in RULESET.md Part B; checkable
   (directory structure, naming, commit format, todo). Use
   RULESET.md when you need the exact rule text.
-- **Reference**: `sharepoint/context/documentation/PRIMER.md`
+- **Reference**: `sharepoint/context/config/PRIMER.md`
   holds usage tips and workflow habits; not checkable; for
   team or personal use.
 - **When in doubt**: State it as "Do X" with a concrete,
   checkable outcome and put it in RULESET.md; otherwise keep
-  it in documentation/PRIMER.md.
+  it in config/PRIMER.md.

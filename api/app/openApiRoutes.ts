@@ -27,19 +27,19 @@ import {
 } from '#identity/analysis/identityOpenApi.ts';
 import {
   registerReportAssessmentExtendedOpenApi,
-} from '#reporting/assessment/reportExtendedOpenApi.ts';
+} from '#reporting/config/assessment/reportExtendedOpenApi.ts';
 import {
   registerReportOntologyConceptDriftOpenApi,
-} from '#reporting/ontology/reportConceptDriftOpenApi.ts';
+} from '#reporting/config/ontology/reportConceptDriftOpenApi.ts';
 import {
   registerReportPlagiarismOpenApi,
-} from '#reporting/plagiarism/reportOpenApi.ts';
+} from '#reporting/config/plagiarism/reportOpenApi.ts';
 import {
   registerReportQueryOpenApi,
-} from '#reporting/query/reportOpenApi.ts';
+} from '#reporting/config/query/reportOpenApi.ts';
 import {
   registerReportTeamsOpenApi,
-} from '#reporting/teams/reportOpenApi.ts';
+} from '#reporting/config/teams/reportOpenApi.ts';
 
 function registerContentAndReportPart1(
   app: OpenAPIHono,

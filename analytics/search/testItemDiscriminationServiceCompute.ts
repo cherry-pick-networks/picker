@@ -1,6 +1,6 @@
 //  Item discrimination: compute per-item stats. Used by testItemDiscriminationService.
 
-import { ReportStores } from '#reporting/ReportStores.ts';
+import { ReportStores } from '#reporting/app/ReportStores.ts';
 import { buildByItem } from './testItemDiscriminationServiceHelpers.ts';
 
 type Row = Awaited<

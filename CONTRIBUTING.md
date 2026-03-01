@@ -51,7 +51,7 @@ feature requests.
 1. **Tests**: `deno test` must pass.
 2. **Todo check**: `deno task todo-check` must pass. If you
    add new API routes, add them to
-   [openapi.yaml](sharepoint/context/documentation/openapi.yaml)
+   [openapi.yaml](sharepoint/context/config/openapi.yaml)
    and [application/routes.ts](application/routes.ts) first. For new
    modules or infrastructure, add to
    [BACKLOG.md](sharepoint/context/BACKLOG.md) first. Then

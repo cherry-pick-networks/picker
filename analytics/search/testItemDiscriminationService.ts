@@ -1,6 +1,6 @@
 //  Item discrimination: high-group correct % minus low-group correct %.
 
-import { ReportStores } from '#reporting/ReportStores.ts';
+import { ReportStores } from '#reporting/app/ReportStores.ts';
 import { computeItems } from './testItemDiscriminationServiceCompute.ts';
 import {
   buildActorScores,

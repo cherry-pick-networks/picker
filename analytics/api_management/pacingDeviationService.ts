@@ -1,4 +1,4 @@
-import { ReportStores } from '#reporting/ReportStores.ts';
+import { ReportStores } from '#reporting/app/ReportStores.ts';
 
 export interface PacingDeviationInput {
   actor_id: string;

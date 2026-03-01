@@ -15,4 +15,4 @@ work request **feature-implementation** skill; for refactor request
 
 **TS filenames**: Base name = default export name; camelCase for
 function/module, PascalCase for class/singleton (RULESET.md §E). To Do / Not To Do
-checklist: sharepoint/context/documentation/MANUAL.md (TypeScript filename).
+checklist: sharepoint/context/config/MANUAL.md (TypeScript filename).

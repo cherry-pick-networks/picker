@@ -29,4 +29,4 @@ When invoked you will receive a task such as: find where something lives, which 
 
 - Paths: Use `getPath(key)` / `getPaths()` from pathConfig; avoid hardcoded paths. Key paths are in `config/path-config.json` under `paths`.
 - Structure: RULESET.md §2, §D–§F (directory components, segment names); §E (file naming, e.g. TS camelCase).
-- Docs: `sharepoint/context/documentation/` (PRIMER.md, MANUAL.md, CONTEXT.md, RULESET.md).
+- Docs: `sharepoint/context/config/` (PRIMER.md, MANUAL.md, CONTEXT.md, RULESET.md).
