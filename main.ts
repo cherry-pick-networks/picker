@@ -3,7 +3,7 @@ import { loadAllowlistData } from '#api/config/conceptStore.ts';
 import type { Hono } from 'hono';
 import { OpenAPIHono } from '@hono/zod-openapi';
 import { registerOpenApiRoutes } from '#api/app/openApiRoutes.ts';
-import { registerRoutes } from '#api/routes.ts';
+import { registerRoutes } from '#api/app/routes.ts';
 
 setAllowlistLoader(loadAllowlistData);
 const app = new OpenAPIHono();

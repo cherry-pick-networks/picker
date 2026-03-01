@@ -7,7 +7,7 @@ import {
   parseOpenApiPaths,
   routeKey,
 } from './checkTodoLib.ts';
-import { ROUTES } from '#api/routes.ts';
+import { ROUTES } from '#api/app/routes.ts';
 import { getPath } from './pathConfig.ts';
 import { parse } from '@std/yaml';
 

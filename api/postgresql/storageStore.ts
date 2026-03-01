@@ -3,7 +3,7 @@
 import { getPg } from '#api/postgresql/pgClient.ts';
 import { loadSql } from '#api/postgresql/sqlLoader.ts';
 
-const sqlDir = new URL('./sql_kv/', import.meta.url);
+const sqlDir = new URL('./key_vault/', import.meta.url);
 const SQL_LIST_KEYS_BY_PREFIX = await loadSql(
   sqlDir,
   'list_keys_by_prefix.sql',
