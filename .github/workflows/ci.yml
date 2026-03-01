@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: picker
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+    env:
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/picker
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cache Deno
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/deno
+          key: deno-${{ runner.os }}-${{ hashFiles('deno.lock') }}
+          restore-keys: |
+            deno-${{ runner.os }}-
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v2
+        with:
+          deno-version: '2.x'
+
+      - name: Lint
+        run: deno lint
+
+      - name: Format check
+        run: deno task format-check
+
+      - name: TS filename check
+        run: deno task ts-filename-check
+
+      - name: Apply DB schema
+        run: deno task db:schema
+
+      - name: Run tests
+        run: deno task test
+
+      - name: Todo check
+        run: deno task todo-check
+
+      - name: Boundary check
+        run: deno task boundary-check
+
+      - name: Dependency check
+        run: deno task dependency-check
+
+      - name: Type-check policy
+        run: deno task type-check-policy
+
+      - name: Audit dependencies
+        run: deno audit

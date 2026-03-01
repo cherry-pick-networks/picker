@@ -1,0 +1,7 @@
+{
+  "Agent session first message": {
+    "prefix": "agent-start",
+    "body": ["${1:[task or question in one short sentence]}"],
+    "description": "First message template for AI chat session (e.g. Cursor). See PRIMER.md Session start."
+  }
+}
