@@ -5,7 +5,7 @@
 
 import { assertEquals } from '@std/assert';
 import { app } from '../../main.ts';
-import { TeamBriefingViewResponseSchema } from '#system/report/teams/briefingViewSchema.ts';
+import { TeamBriefingViewResponseSchema } from '#reporting/teams/briefingViewSchema.ts';
 
 const handler = (req: Request) => app.fetch(req);
 

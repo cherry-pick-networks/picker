@@ -8,7 +8,7 @@ description: |
 # Migration and naming
 
 Apply RULESET.md **§J, §D, §E, §F**. Full text in
-shared/context/RULESET.md Part B only.
+sharepoint/context/RULESET.md Part B only.
 
 **Before editing**: Run
 `deno task rules:summary -- migration` (or use

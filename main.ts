@@ -1,9 +1,9 @@
-import { setAllowlistLoader } from '#system/governance/allowlistData.ts';
-import { loadAllowlistData } from '#system/governance/conceptStore.ts';
+import { setAllowlistLoader } from '#api/config/allowlistData.ts';
+import { loadAllowlistData } from '#api/config/conceptStore.ts';
 import type { Hono } from 'hono';
 import { OpenAPIHono } from '@hono/zod-openapi';
-import { registerOpenApiRoutes } from '#system/app/openApiRoutes.ts';
-import { registerRoutes } from '#system/routes.ts';
+import { registerOpenApiRoutes } from '#api/app/openApiRoutes.ts';
+import { registerRoutes } from '#api/routes.ts';
 
 setAllowlistLoader(loadAllowlistData);
 const app = new OpenAPIHono();

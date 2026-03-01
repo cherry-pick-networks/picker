@@ -6,7 +6,7 @@ is written to a **new branch** only; current branch is left
 unchanged.
 
 - **Run**: From repo root,
-  `deno run -A shared/context/scripts/rewriteMergeAtTagBoundaries.ts`
+  `deno run -A sharepoint/context/scripts/rewriteMergeAtTagBoundaries.ts`
   `[--dry-run] [--all | -n N] [--branch <result-branch>]`
 - **Default**: Last 35 commits, result branch
   `refactor/merge-at-tag-boundaries`. Use `-n 11` for last 11

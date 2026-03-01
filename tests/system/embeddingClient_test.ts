@@ -3,7 +3,7 @@
 //
 
 import { assertEquals } from '@std/assert';
-import { ContentEmbeddingService } from '#system/content/embeddingClient.ts';
+import { ContentEmbeddingService } from '#api/search/embeddingClient.ts';
 
 Deno.test(
   'getEmbedding with SEMANTIC_EMBED_MOCK returns fixed vector',

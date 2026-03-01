@@ -4,8 +4,8 @@
 //
 
 import { assertEquals } from '@std/assert';
-import { mutateScript } from '#system/governance/mutateService.ts';
-import { writeScript } from '#system/governance/scriptsStore.ts';
+import { mutateScript } from '#api/config/mutateService.ts';
+import { writeScript } from '#api/config/scriptsStore.ts';
 import { withTempScriptsStore } from './with_temp_scripts_store.ts';
 
 Deno.test('mutateScript returns 403 for path escape', async () => {

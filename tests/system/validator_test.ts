@@ -1,12 +1,12 @@
 import { assertEquals } from '@std/assert';
-import { verifyGovernance } from '#system/governance/governanceValidation.ts';
+import { verifyGovernance } from '#api/config/governanceValidation.ts';
 
 Deno.test('verifyGovernance allows empty path for list', () => {
   const r = verifyGovernance('read', '');
   assertEquals(r.allowed, true);
 });
 
-Deno.test('verifyGovernance allows path under shared/runtime/store', () => {
+Deno.test('verifyGovernance allows path under sharepoint/runtime/store', () => {
   assertEquals(
     verifyGovernance('read', 'hello.txt').allowed,
     true,
@@ -23,7 +23,7 @@ Deno.test('verifyGovernance rejects path escape', () => {
   if (!r.allowed) {
     assertEquals(
       r.reason,
-      'Path must be under shared/runtime/store/',
+      'Path must be under sharepoint/runtime/store/',
     );
   }
 });

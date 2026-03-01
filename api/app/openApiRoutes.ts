@@ -1,0 +1,83 @@
+//
+// Aggregates all OpenAPI route registrations.
+// Called from main.ts after registerRoutes().
+//
+
+import type { OpenAPIHono } from '@hono/zod-openapi';
+import {
+  registerAssessmentEngineOpenApi,
+} from '#api/search/assessmentEngineOpenApi.ts';
+import {
+  registerAssessmentEvaluationOpenApi,
+} from '#api/search/assessmentEvaluationOpenApi.ts';
+import {
+  registerDiagnoseOpenApi,
+} from '#api/search/diagnoseOpenApi.ts';
+import {
+  registerItemsAutoTagConfidenceOpenApi,
+} from '#api/search/bankAutoTagConfidenceOpenApi.ts';
+import {
+  registerGovernanceAssessmentOpenApi,
+} from '#api/config/governanceAssessmentOpenApi.ts';
+import {
+  registerGovernanceOntologyOpenApi,
+} from '#api/config/governanceOntologyOpenApi.ts';
+import {
+  registerIdentityAnalysisOpenApi,
+} from '#identity/analysis/identityOpenApi.ts';
+import {
+  registerReportAssessmentExtendedOpenApi,
+} from '#reporting/assessment/reportExtendedOpenApi.ts';
+import {
+  registerReportOntologyConceptDriftOpenApi,
+} from '#reporting/ontology/reportConceptDriftOpenApi.ts';
+import {
+  registerReportPlagiarismOpenApi,
+} from '#reporting/plagiarism/reportOpenApi.ts';
+import {
+  registerReportQueryOpenApi,
+} from '#reporting/query/reportOpenApi.ts';
+import {
+  registerReportTeamsOpenApi,
+} from '#reporting/teams/reportOpenApi.ts';
+
+function registerContentAndReportPart1(
+  app: OpenAPIHono,
+): void {
+  registerDiagnoseOpenApi(app);
+  registerIdentityAnalysisOpenApi(app);
+  registerReportQueryOpenApi(app);
+}
+
+function registerContentAndReportPart2(
+  app: OpenAPIHono,
+): void {
+  registerReportTeamsOpenApi(app);
+  registerAssessmentEngineOpenApi(app);
+  registerAssessmentEvaluationOpenApi(app);
+}
+
+function registerContentAndReportPart3(
+  app: OpenAPIHono,
+): void {
+  registerItemsAutoTagConfidenceOpenApi(app);
+  registerReportPlagiarismOpenApi(app);
+  registerReportAssessmentExtendedOpenApi(app);
+  registerReportOntologyConceptDriftOpenApi(app);
+}
+
+function registerContentAndReportRoutes(
+  app: OpenAPIHono,
+): void {
+  registerContentAndReportPart1(app);
+  registerContentAndReportPart2(app);
+  registerContentAndReportPart3(app);
+}
+
+export function registerOpenApiRoutes(
+  app: OpenAPIHono,
+): void {
+  registerContentAndReportRoutes(app);
+  registerGovernanceOntologyOpenApi(app);
+  registerGovernanceAssessmentOpenApi(app);
+}

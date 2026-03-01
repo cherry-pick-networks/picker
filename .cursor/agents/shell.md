@@ -11,13 +11,13 @@ When invoked you will receive a task such as: run pre-push, run rules:summary fo
 
 1. **Parse the request**: Extract the command to run and optional working directory (default: repo root). If the request maps to a known pattern (e.g. "pre-push" → `deno task pre-push`, "rules:summary refactor" → `deno task rules:summary -- refactor`), use that.
 
-2. **Check for dangerous commands**: If the command matches RULESET.md §7 patterns (`rm -rf`, `sudo`, `chmod 777`, `curl | sh`, `git reset --hard`, or broad destructive scope), do **not** run it. Return: "User confirmation required for destructive command" (or "This command may be destructive; confirm with the user before running."). Exception: project-approved scripts such as `sh shared/context/scripts/clean-local-branches.sh` or `deno task clean-branches` are allowed after a one-line warning (e.g. "Removes local branches except main; proceeding.").
+2. **Check for dangerous commands**: If the command matches RULESET.md §7 patterns (`rm -rf`, `sudo`, `chmod 777`, `curl | sh`, `git reset --hard`, or broad destructive scope), do **not** run it. Return: "User confirmation required for destructive command" (or "This command may be destructive; confirm with the user before running."). Exception: project-approved scripts such as `sh sharepoint/context/scripts/clean-local-branches.sh` or `deno task clean-branches` are allowed after a one-line warning (e.g. "Removes local branches except main; proceeding.").
 
 3. **Execute from repo root**: Run the command from the repository root unless the task specifies otherwise. For `deno task`, `./scripts/dev.sh`, and project scripts, repo root is required.
 
 4. **Report briefly**: Return only:
    - Exit code (0 = success).
-   - One or two sentence summary (e.g. "pre-push passed" or "pre-push failed: line-length-check in system/foo.ts").
+   - One or two sentence summary (e.g. "pre-push passed" or "pre-push failed: line-length-check in application/foo.ts").
    - If needed, last few lines of output or the error segment only. Do **not** paste full logs.
 
 **Common commands** (run from repo root)
@@ -26,6 +26,6 @@ When invoked you will receive a task such as: run pre-push, run rules:summary fo
 - `deno task rules:summary -- <task-type>` — applicable § for feature, refactor, docs, commit, migration, etc.
 - `deno task format-check`, `deno task type-check`, `deno lint` — single checks.
 - `git status`, `git branch` — short status/branch summary.
-- `sh shared/context/scripts/clean-local-branches.sh` or `deno task clean-branches` — leave only main locally; warn once then run if requested.
+- `sh sharepoint/context/scripts/clean-local-branches.sh` or `deno task clean-branches` — leave only main locally; warn once then run if requested.
 
 **Long-running commands**: If the command may run for a long time, prefer running in background when possible and report when done; or suggest exponential backoff (RULESET.md §8, PRIMER Tip 36). Keep the reply to the main agent short: exit code + summary only.

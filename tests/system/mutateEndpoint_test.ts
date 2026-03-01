@@ -4,7 +4,7 @@
 
 import { assertEquals } from '@std/assert';
 import { app } from '../../main.ts';
-import { writeScript } from '#system/governance/scriptsStore.ts';
+import { writeScript } from '#api/config/scriptsStore.ts';
 import { withTempScriptsStore } from './with_temp_scripts_store.ts';
 
 Deno.env.set('TEST_SKIP_ENTRA_AUTH', '1');

@@ -8,7 +8,7 @@ description: |
 # Refactor and commit
 
 Apply RULESET.md **§P, §B, §S, §T, §N, §A**. Full text in
-shared/context/RULESET.md Part B only; this skill gives a
+sharepoint/context/RULESET.md Part B only; this skill gives a
 short checklist.
 
 **Before editing**: Run

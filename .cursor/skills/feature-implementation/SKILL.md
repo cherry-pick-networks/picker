@@ -9,7 +9,7 @@ description: |
 # Feature implementation
 
 Apply RULESET.md **§Q, §P, §B, §S, §T, §N**. Full text in
-shared/context/RULESET.md Part B only; this skill gives a
+sharepoint/context/RULESET.md Part B only; this skill gives a
 short checklist.
 
 **Before editing**: Run `deno task rules:summary -- feature`

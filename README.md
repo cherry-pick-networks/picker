@@ -2,7 +2,7 @@
 
 Deno app: Hono (HTTP), Zod, ts-morph (AST), PostgreSQL.
 Entry: `main.ts`; client: `client.ts`. Routes from
-`system/routes.ts` and `system/app/*.config.ts`; dev uses
+`application/routes.ts` and `application/app/*.config.ts`; dev uses
 `main.ts`.
 
 ## Run
@@ -19,8 +19,8 @@ Entry: `main.ts`; client: `client.ts`. Routes from
 Domain entry points only; details are in each domain's
 README.
 
-- **Shared**: [shared/README.md](shared/README.md)
-- **System**: [system/README.md](system/README.md)
+- **Shared**: [sharepoint/README.md](sharepoint/README.md)
+- **System**: [application/README.md](application/README.md)
 
 ## Contributing
 

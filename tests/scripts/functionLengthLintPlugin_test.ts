@@ -1,5 +1,5 @@
 import { assertEquals } from '@std/assert';
-import plugin from '../../shared/context/scripts/functionLengthLintPlugin.ts';
+import plugin from '../../sharepoint/context/scripts/functionLengthLintPlugin.ts';
 
 const MSG_OK = (n: number) =>
   `Function body must have 2–4 statements (got ${n}).`;

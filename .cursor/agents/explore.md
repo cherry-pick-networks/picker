@@ -9,9 +9,9 @@ When invoked you will receive a task such as: find where something lives, which 
 
 **Procedure**
 
-1. **Parse the request**: Extract purpose (e.g. "where routes are registered"), optional scope (e.g. `system/`, `shared/context/`), file patterns (e.g. `*.ts`), and keywords/symbols.
+1. **Parse the request**: Extract purpose (e.g. "where routes are registered"), optional scope (e.g. `application/`, `sharepoint/context/`), file patterns (e.g. `*.ts`), and keywords/symbols.
 
-2. **Search within scope**: Use search/exploration tools only in the requested scope. Prefer pathConfig keys (root, config, system, shared, context, contextDocs, systemApp, systemContent, etc.) when referring to directories; see `shared/context/scripts/pathConfig.ts` and `config/path-config.json` `paths`.
+2. **Search within scope**: Use search/exploration tools only in the requested scope. Prefer pathConfig keys (root, config, system, shared, context, contextDocs, systemApp, systemContent, etc.) when referring to directories; see `sharepoint/context/scripts/pathConfig.ts` and `config/path-config.json` `paths`.
 
 3. **Summarize briefly**: Return a short summary built from:
    - Paths and file names
@@ -29,4 +29,4 @@ When invoked you will receive a task such as: find where something lives, which 
 
 - Paths: Use `getPath(key)` / `getPaths()` from pathConfig; avoid hardcoded paths. Key paths are in `config/path-config.json` under `paths`.
 - Structure: RULESET.md §2, §D–§F (directory components, segment names); §E (file naming, e.g. TS camelCase).
-- Docs: `shared/context/documentation/` (PRIMER.md, MANUAL.md, CONTEXT.md, RULESET.md).
+- Docs: `sharepoint/context/documentation/` (PRIMER.md, MANUAL.md, CONTEXT.md, RULESET.md).
