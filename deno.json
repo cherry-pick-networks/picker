@@ -93,7 +93,6 @@
     "@std/front-matter": "jsr:@std/front-matter@^1.0.9",
     "@std/fs": "jsr:@std/fs@^1.0.23",
     "@std/json": "jsr:@std/json@^1.0.3",
-    "@std/jsonc": "jsr:@std/jsonc@^1.0.2",
     "@std/path": "jsr:@std/path@^1.0.8",
     "@std/semver": "jsr:@std/semver@^1.0.8",
     "@std/toml": "jsr:@std/toml@^1.0.11",

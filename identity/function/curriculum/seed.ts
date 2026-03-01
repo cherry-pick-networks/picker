@@ -3,11 +3,15 @@
 // Run: deno task seed:curriculum
 //
 
+import { JsonParseStream } from '@std/json/parse-stream';
 import { getPg } from '#api/postgresql/connections/pgClient.ts';
 import { loadSql } from '#api/postgresql/connections/sqlLoader.ts';
 import { listGrammarUnits } from '#identity/app/schedule/grammarService.ts';
 
-const sqlDir = new URL('../../sql/curriculum/', import.meta.url);
+const sqlDir = new URL(
+  '../../sql/curriculum/',
+  import.meta.url,
+);
 const SQL_UPSERT_CURRICULUM_SLOT = await loadSql(
   sqlDir,
   'upsert_curriculum_slot.sql',
@@ -30,10 +34,27 @@ interface CurriculumJson {
   advanced?: { weeks: number[][] };
 }
 
+async function parseJsonStream(
+  raw: string,
+): Promise<CurriculumJson> {
+  const stream = new ReadableStream({
+    start(c) {
+      c.enqueue(new TextEncoder().encode(raw));
+      c.close();
+    },
+  });
+  const reader = stream
+    .pipeThrough(new TextDecoderStream())
+    .pipeThrough(new JsonParseStream())
+    .getReader();
+  const { value } = await reader.read();
+  return value as CurriculumJson;
+}
+
 // function-length-ignore — read + for-each-level seed.
 async function runSeed(): Promise<void> {
   const raw = await Deno.readTextFile(CURRICULUM_JSON);
-  const data = JSON.parse(raw) as CurriculumJson;
+  const data = await parseJsonStream(raw);
 
   const pg = await getPg();
 

@@ -114,6 +114,24 @@ async function getRevList(
   return revList.split('\n').filter(Boolean).reverse();
 }
 
+/** 작업 범위: merge가 하나 이상 나온 뒤, 부모가 1명인 첫 번째 커밋부터 포함 */
+async function trimFromFirstSingleParentAfterMerge(revs: string[]): Promise<string[]> {
+  let firstMergeIndex = -1;
+  for (let i = 0; i < revs.length; i++) {
+    if (await isMergeCommit(revs[i])) {
+      firstMergeIndex = i;
+      break;
+    }
+  }
+  const startFrom = firstMergeIndex >= 0 ? firstMergeIndex + 1 : 0;
+  for (let i = startFrom; i < revs.length; i++) {
+    if (!(await isMergeCommit(revs[i]))) {
+      return revs.slice(i);
+    }
+  }
+  return revs;
+}
+
 function ensureEnoughRevs(revs: string[]): void {
   if (revs.length >= 2) return;
   console.log('Not enough commits to rewrite');
@@ -221,6 +239,18 @@ async function getBase(revs: string[]): Promise<string> {
   } catch {
     return revs[0];
   }
+}
+
+async function isMergeCommit(rev: string): Promise<boolean> {
+  const { out } = await runGit(['rev-parse', '--verify', `${rev}^2`]);
+  return out.success;
+}
+
+async function segmentHasMergeCommits(revs: string[]): Promise<boolean> {
+  for (const rev of revs) {
+    if (await isMergeCommit(rev)) return true;
+  }
+  return false;
 }
 
 function logSegments(
@@ -456,7 +486,9 @@ async function getRevsAndCommits(opts: {
     }[];
   }
 > {
-  const revs = await getRevList(opts.all, opts.n);
+  let revs = await getRevList(opts.all, opts.n);
+  const trimmed = await trimFromFirstSingleParentAfterMerge(revs);
+  if (trimmed.length >= 2) revs = trimmed;
   ensureEnoughRevs(revs);
   const commits = await loadCommits(revs);
   return { revs, commits };

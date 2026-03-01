@@ -1,5 +1,6 @@
 //  OpenAI adapter: chat via api.openai.com. Used by llmAdapterOpenai.ts.
 
+import { retry } from '@std/async/retry';
 import type { ChatMessage } from './llmTypes.ts';
 
 const CHAT_URL =
@@ -69,7 +70,10 @@ export async function chat(
   options?: { responseFormat?: 'json_object' },
 ): Promise<string> {
   const body = buildChatBody(modelId, messages, options);
-  const res = await chatFetch(apiKey, body);
+  const res = await retry(
+    () => chatFetch(apiKey, body),
+    { maxAttempts: 3, minTimeout: 500 },
+  );
   const data = await parseChatRes(res);
   return parseChatContent(data);
 }
