@@ -78,6 +78,20 @@ resource types are spelled out** (no ad-hoc abbreviations).
 Use only the allowlist and mapping in CAF_ALLOWLIST_SPEC.md
 when generating or validating CAF-style names.
 
+**5-tier directory roles (summary)**. Max depth is **5 tiers**
+(Tier1 → Tier2 → Tier3 → Tier4 → Tier5); root is not
+counted. In this project: **Tier1** = scope/workload
+(shared, system). **Tier2** = resource type / domain (e.g.
+context, infra, app, content, identity, report).
+**Tier3** = subdomain or feature group (e.g. assessment,
+actors, seed, documentation). **Tier4** = one more level
+when needed (e.g. seed/ontology, material/sql,
+sql/db_list_all). **Tier5** = optional instance or numeric
+suffix (e.g. 01, 001); rarely used in directory paths
+here. New directories: add only via
+`deno task structure:add-dir -- <path>`; path must be in
+`config/structure_allowed_dirs.toml`.
+
 ### Tier1 — Workload (scope)
 
 Top-level directory: scope or workload. Allowed values
@@ -106,26 +120,34 @@ Consolidated: content (source + core + lexis), governance
 | sync           | Synchronization and replication                                       |
 | workflow       | Workflow and process orchestration                                    |
 
-### Tier3 — Environment
+### Tier3 — Subdomain / environment
 
-For **CAF-style resource names** only. Allowed values:
-prod, dev, test, qa, stage. See CAF_ALLOWLIST_SPEC.md Tier3.
-Project directory paths do not use an environment segment.
+- **In directory paths**: Subdomain or feature group under
+  Tier2 (e.g. content/assessment, identity/actors,
+  shared/infra/seed, shared/context/documentation). Allowed
+  segment names per §E.
+- **In CAF resource names**: Environment (prod, dev, test,
+  qa, stage). See CAF_ALLOWLIST_SPEC.md Tier3. Project
+  directory paths do not use environment as a segment.
 
-### Tier4 — Region
+### Tier4 — Further split / region
 
-For **CAF-style resource names** only. Allowed values (e.g.
-eastus, westeurope) in CAF_ALLOWLIST_SPEC.md Tier4. Not
-used in project directory paths.
+- **In directory paths**: One more level when needed (e.g.
+  shared/infra/seed/ontology, system/content/material/sql,
+  system/infra/sql/db_list_all).
+- **In CAF resource names**: Region (eastus, westeurope,
+  etc.). See CAF_ALLOWLIST_SPEC.md Tier4. Not used as a
+  segment in project directory paths.
 
 ### Tier5 — Instance
 
-- **In directory paths**: Third tier (suffix) under Tier2,
-  e.g. subdomain folders. Max depth remains 3 (Tier1 →
-  Tier2 → Tier5). Content and identity use Tier5 for
-  subdomains (see table below).
+- **In directory paths**: Optional; instance or numeric
+  suffix (2–4 digits per CAF). Rarely used; max depth
+  remains 5 tiers (Tier1 through Tier5).
 - **In CAF resource names**: Numeric instance (2–4 digits).
   See CAF_ALLOWLIST_SPEC.md Tier5.
+- Subdomains under system content/identity: see table
+  below (Tier3/Tier4 in practice).
 
 **TS filename** = default export name: camelCase for
 functions/modules (e.g. `profileEndpoint.ts`,
@@ -142,7 +164,7 @@ wrapper), config (wiring). Use camelCase (e.g.
 `profileEndpoint.ts`, `sourceExtractService.ts`). See
 RULESET.md §E.
 
-### Subdomains (system/Tier2/Tier5)
+### Subdomains (system/Tier2/Tier3 or Tier4)
 
 Under **content** and **identity**, Tier5 (third directory
 tier) groups files by subdomain. Max depth remains 3
