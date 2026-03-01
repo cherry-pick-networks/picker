@@ -7,7 +7,7 @@ import { parse } from '@std/toml';
 import { createSource } from '#api/search/material/service.ts';
 
 const MATERIAL_SOURCES_TOML = new URL(
-  '../api/postgresql/seed/material/material_sources.toml',
+  '../api/postgresql/storage/0001_book/material_sources.toml',
   import.meta.url,
 );
 

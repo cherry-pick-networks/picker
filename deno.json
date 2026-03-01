@@ -65,11 +65,15 @@
     "structure:add-dirs:pipeline": "deno task structure:add-c2-dirs && deno task structure:add-c3-dirs && deno task structure:add-c4-dirs",
     "structure:add-dirs:reporting": "deno task structure:add-c2-dirs:reporting && deno task structure:add-c3-dirs:reporting && deno task structure:add-c4-dirs:reporting",
     "structure:add-c2-dirs": "deno run -A pipeline/config/structureAddC2Dirs.ts",
+    "structure:add-c2-dirs:api": "deno run -A pipeline/config/structureAddC2Dirs.ts api",
+    "api:flatten-restore": "deno run -A pipeline/config/apiFlattenRestore.ts",
     "structure:add-c2-dirs:reporting": "deno run -A pipeline/config/structureAddC2Dirs.ts reporting",
     "structure:add-c3-dirs": "deno run -A pipeline/config/structureAddC2Dirs.ts c3",
     "structure:add-c3-dirs:reporting": "deno run -A pipeline/config/structureAddC2Dirs.ts c3 reporting",
     "structure:add-c4-dirs": "deno run -A pipeline/config/structureAddC2Dirs.ts c4",
     "structure:add-c4-dirs:reporting": "deno run -A pipeline/config/structureAddC2Dirs.ts c4 reporting",
+    "structure:add-c3-dirs:postgresql": "deno run -A pipeline/config/structureAddC2Dirs.ts c3 postgresql",
+    "structure:add-c4-dirs:postgresql": "deno run -A pipeline/config/structureAddC2Dirs.ts c4 postgresql",
     "clean-branches": "sh pipeline/config/clean-local-branches.sh"
   },
   "imports": {

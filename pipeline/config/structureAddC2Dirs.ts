@@ -3,7 +3,7 @@
 // Run from project root. Idempotent: existing dirs are left as-is.
 // Usage: deno run -A pipeline/structureAddC2Dirs.ts [component] [pathKey]
 //   component: c1 | c2 | c3 | c4 (default c2 if pathKey given as first arg).
-//   pathKey: pipeline | reporting (default pipeline).
+//   pathKey: pipeline | reporting | api (default pipeline).
 //   When base is pipeline or reporting (C1 workload), create only c2/c3/c4 — use structure:add-dirs:pipeline or structure:add-dirs:reporting.
 //   Backward compat: single arg "pipeline"|"reporting" → c2 + that pathKey.
 //
@@ -23,8 +23,12 @@ type ComponentKey = 'c1' | 'c2' | 'c3' | 'c4';
 const PATH_KEY_ARG: Record<string, PathKey> = {
   pipeline: 'contextScripts',
   reporting: 'applicationReport',
+  api: 'application',
+  postgresql: 'applicationInfra',
   contextScripts: 'contextScripts',
   applicationReport: 'applicationReport',
+  application: 'application',
+  applicationInfra: 'applicationInfra',
 };
 
 const COMPONENT_ARG: ComponentKey[] = ['c1', 'c2', 'c3', 'c4'];
