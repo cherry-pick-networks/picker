@@ -4,7 +4,7 @@ import {
 } from '#api/config/allowlistTypes.ts';
 import { getAllowlistDataOrLoad } from '#api/config/allowlistData.ts';
 import * as sourceSchema from './sourceSchema.ts';
-import { ContentStores } from '#api/search/ContentStores.ts';
+import { ContentStores } from '#api/storage/ContentStores.ts';
 
 const { SourceSchema } = sourceSchema;
 export type {

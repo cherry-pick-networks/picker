@@ -1,4 +1,4 @@
-import { ContentStores } from '#api/search/ContentStores.ts';
+import { ContentStores } from '#api/storage/ContentStores.ts';
 import type { Item, ItemPatch } from './bankSchema.ts';
 import {
   type CreateItemRequest as CreateItemRequestType,

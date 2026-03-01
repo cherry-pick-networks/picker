@@ -1,6 +1,6 @@
 //  Utterance parser cache: TTL, key, normalize, fromLlmOutput. Used by utteranceParserServiceCache.
 
-import type { LexisUtteranceLlmOutput } from '#api/search/material/lexisLlmSchema.ts';
+import type { LexisUtteranceLlmOutput } from '#api/storage/catalog/lexisLlmSchema.ts';
 import type { UtteranceParseResult } from './utteranceParserServiceTypes.ts';
 
 export function cacheTtlSec(): number {

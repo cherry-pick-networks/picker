@@ -1,7 +1,7 @@
 //  Utterance parser: LLM cache TTL, key, get/set, fetch. Used by utteranceParserService.
 
-import type { LexisUtteranceLlmOutput } from '#api/search/material/lexisLlmSchema.ts';
-import { ContentLlmService } from '#api/search/ContentLlmService.ts';
+import type { LexisUtteranceLlmOutput } from '#api/storage/catalog/lexisLlmSchema.ts';
+import { ContentLlmService } from '#api/storage/ContentLlmService.ts';
 import type { UtteranceParseResult } from './utteranceParserServiceTypes.ts';
 import {
   cacheKey,

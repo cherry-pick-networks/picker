@@ -3,8 +3,8 @@
 export {
   runRag,
   runSemanticItems,
-} from '#api/search/recommendRecommendationsServiceRunnersItems.ts';
+} from '#api/search/recommendation/recommendationsServiceRunnersItems.ts';
 export {
   runSemantic,
   runSemanticAndRag,
-} from '#api/search/recommendRecommendationsServiceRunnersSemantic.ts';
+} from '#api/search/recommendation/recommendationsServiceRunnersSemantic.ts';

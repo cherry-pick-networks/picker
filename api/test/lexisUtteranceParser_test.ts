@@ -3,7 +3,7 @@
 //
 
 import { assertEquals } from '@std/assert';
-import { clearLexisSourceKeywordCache } from '#api/search/material/matcherConfig.ts';
+import { clearLexisSourceKeywordCache } from '#api/storage/catalog/matcherConfig.ts';
 import {
   getLexisUtteranceCacheStats,
   parseUtterance,

@@ -10,9 +10,9 @@
 
 import { getPg } from '#api/postgresql/pgClient.ts';
 import { loadSql } from '#api/postgresql/sqlLoader.ts';
-import { loadHeadwords } from '#api/search/material/importHighBasicLoad.ts';
+import { loadHeadwords } from '#api/storage/catalog/importHighBasicLoad.ts';
 
-const lexisSqlDir = new URL('../api/search/material/sql/', import.meta.url);
+const lexisSqlDir = new URL('../api/storage/sql/', import.meta.url);
 const SQL_UPSERT_LEXIS_ENTRY = await loadSql(
   lexisSqlDir,
   'upsert_lexis_entry.sql',

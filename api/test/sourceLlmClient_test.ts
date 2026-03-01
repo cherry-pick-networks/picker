@@ -3,7 +3,7 @@
 //
 
 import { assertEquals } from '@std/assert';
-import { extractConcepts } from '#api/search/material/sourceLlmClient.ts';
+import { extractConcepts } from '#api/storage/catalog/sourceLlmClient.ts';
 
 Deno.test(
   'extractConcepts with SOURCE_EXTRACT_LLM_MOCK returns fixed output',

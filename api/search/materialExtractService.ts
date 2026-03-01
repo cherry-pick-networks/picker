@@ -9,9 +9,9 @@ import {
 } from '#api/config/allowlistTypes.ts';
 import { getAllowlistDataOrLoad } from '#api/config/allowlistData.ts';
 import type { Source } from './materialSourceSchema.ts';
-import { ContentLlmService } from '#api/search/ContentLlmService.ts';
+import { ContentLlmService } from '#api/storage/ContentLlmService.ts';
 import { getSource } from './materialService.ts';
-import { ContentStores } from '#api/search/ContentStores.ts';
+import { ContentStores } from '#api/storage/ContentStores.ts';
 
 export type ExtractOk = {
   ok: true;

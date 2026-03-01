@@ -2,7 +2,7 @@
 // GraphRAG: search chunks, embed-and-search. Used by ragService.ts.
 //
 
-import { ContentStores } from '#api/search/ContentStores.ts';
+import { ContentStores } from '#api/storage/ContentStores.ts';
 import { ContentEmbeddingService } from '#api/search/ContentEmbeddingService.ts';
 import {
   filterByConceptIds,

@@ -1,6 +1,6 @@
 //  Grammar sources: list (source_id, unit_id) from metadata.unit_ids.
 
-import { listSources } from '#api/search/material/service.ts';
+import { listSources } from '#api/storage/catalog/service.ts';
 
 const GRAMMAR_SOURCE_PREFIX = 'book-grammar-';
 

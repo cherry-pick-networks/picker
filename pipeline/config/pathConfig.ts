@@ -30,6 +30,8 @@ export type PathKey =
   | 'runtimeStore'
   | 'applicationApp'
   | 'applicationContent'
+  | 'applicationStorage'
+  | 'applicationLogicApp'
   | 'applicationGovernance'
   | 'applicationIdentity'
   | 'applicationInfra'

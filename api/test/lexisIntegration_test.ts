@@ -5,7 +5,7 @@
 
 import { assertEquals } from '@std/assert';
 import { app } from '../../main.ts';
-import { LexisEntrySchema } from '#api/search/material/lexisSchema.ts';
+import { LexisEntrySchema } from '#api/storage/catalog/lexisSchema.ts';
 import { hasDbEnv } from './dbEnv_test.ts';
 
 const handler = (req: Request) => app.fetch(req);

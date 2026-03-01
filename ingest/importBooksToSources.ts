@@ -4,7 +4,7 @@
 //   deno run -A ingest/importBooksToSources.ts
 //
 
-import { createSource } from '#api/search/material/service.ts';
+import { createSource } from '#api/storage/catalog/service.ts';
 import { loadBookBody } from '#api/search/importBooksToSourcesHelpers.ts';
 
 const BOOKS_ROOT =

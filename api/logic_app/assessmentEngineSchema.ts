@@ -10,7 +10,7 @@ import {
 import {
   DiagnoseRequestSchema,
   DiagnoseResponseSchema,
-} from '#api/search/diagnoseSchema.ts';
+} from './diagnoseSchema.ts';
 
 export const ActionTypeSchema = z.enum([
   'WRONG_ANSWER',

@@ -1,6 +1,6 @@
 //  Semantic item recommend: payload/concept filter, load, search. Used by semanticItemService.
 
-import { ContentStores } from '#api/search/ContentStores.ts';
+import { ContentStores } from '#api/storage/ContentStores.ts';
 import { ContentEmbeddingService } from '#api/search/ContentEmbeddingService.ts';
 
 export function payloadConceptId(

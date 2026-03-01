@@ -1,6 +1,6 @@
 //  Assembles source-dashboard view: source + lexis summary + related items.
 
-import { ContentStores } from '#api/search/ContentStores.ts';
+import { ContentStores } from '#api/storage/ContentStores.ts';
 import type { SourceDashboardView } from './materialDashboardViewSchema.ts';
 import { getSource } from './materialService.ts';
 

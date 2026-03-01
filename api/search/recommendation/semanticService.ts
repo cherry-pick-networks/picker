@@ -4,7 +4,7 @@
 //
 
 import { ContentEmbeddingService } from '#api/search/ContentEmbeddingService.ts';
-import type { Source } from '#api/search/material/sourceSchema.ts';
+import type { Source } from '#api/storage/catalog/sourceSchema.ts';
 import type { CopilotRecommendation } from './responseSchema.ts';
 import {
   filterByConceptIds,

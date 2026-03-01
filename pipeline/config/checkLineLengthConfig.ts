@@ -10,7 +10,7 @@ export const FILE_LENGTH_EXEMPT = new Set([
   `${getPath('contextScripts')}/config/checkDomainDeps.ts`, // CI/utility allowlist
   `${getPath('contextScripts')}/config/commentToSingleLine.ts`, // one-off migration
   `${getPath('contextScripts')}/config/rewriteMergeAtTagBoundaries.ts`, // one-off rewrite
-  'api/search/material/extractService.ts', // extract + validate + persist
+  'api/storage/catalog/extractService.ts', // extract + validate + persist
 ]);
 
 function isFileLengthExemptByPattern(rel: string): boolean {

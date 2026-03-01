@@ -4,7 +4,7 @@ import { getPg } from '#api/postgresql/pgClient.ts';
 import { loadSql } from '#api/postgresql/sqlLoader.ts';
 import type { LexisEntry } from './lexisSchema.ts';
 
-const sqlDir = new URL('./sql/', import.meta.url);
+const sqlDir = new URL('../sql/', import.meta.url);
 const SQL_LIST_ENTRIES = await loadSql(
   sqlDir,
   'list_entries_by_source_and_days.sql',

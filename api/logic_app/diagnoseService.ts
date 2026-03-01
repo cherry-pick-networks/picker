@@ -9,7 +9,7 @@ import type {
   DiagnoseResponse,
 } from './diagnoseSchema.ts';
 import { getResponseText } from './diagnoseInput.ts';
-import { ContentLlmService } from '#api/search/ContentLlmService.ts';
+import { ContentLlmService } from '#api/storage/ContentLlmService.ts';
 import { allowlistHas } from '#api/config/allowlistTypes.ts';
 import { getAllowlistDataOrLoad } from '#api/config/allowlistData.ts';
 import { GovernanceStores } from '#api/config/GovernanceStores.ts';
