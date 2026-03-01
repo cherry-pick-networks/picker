@@ -114,6 +114,9 @@ export const TIER2_RESOURCE_TYPE = new Set([
   'sql_kv',
   'db_list_all',
   'git_hooks',
+  // Project Tier2 (runtime store base)
+  'runtime',
+  'store',
 ]);
 
 /** Tier2: Abbreviation → full form mapping for non-major resource types (normalization). */
@@ -167,17 +170,48 @@ export const TIER2_ABBREV_TO_FULL: Readonly<Record<string, string>> = {
   wps: 'webpubsub',
 } as const;
 
-/** Tier3: Allowed environment segment values. */
+/** Tier3: Environment (CAF) + project subdomain/feature segment values per §E. */
 export const TIER3_ENVIRONMENT = new Set([
+  // CAF environment
   'prod',
   'dev',
   'test',
   'qa',
   'stage',
+  // Project Tier3 (subdomain / feature group)
+  'documentation',
+  'mapping',
+  'schema',
+  'seed',
+  'material',
+  'ontology',
+  'reference',
+  'assessment',
+  'bank',
+  'diagnose',
+  'instruction',
+  'recommend',
+  'review',
+  'achievement',
+  'actors',
+  'analysis',
+  'briefing',
+  'curriculum',
+  'outlook',
+  'schedule',
+  'analytics',
+  'plagiarism',
+  'query',
+  'teams',
+  'sql',
+  'sql_kv',
+  'db_list_all',
+  'store',
 ]);
 
-/** Tier4: Allowed region segment values (CAF example list). */
+/** Tier4: Region (CAF) + project Tier4 segment values per §E. */
 export const TIER4_REGION = new Set([
+  // CAF region example list
   'eastus',
   'eastus2',
   'westus',
@@ -198,4 +232,9 @@ export const TIER4_REGION = new Set([
   'eastasia',
   'japaneast',
   'koreacentral',
+  // Project Tier4 (sub-subdomain)
+  'material',
+  'ontology',
+  'sql',
+  'db_list_all',
 ]);
